@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
+import './retweet.dart';
+import './like.dart';
+import './comment.dart';
+
 class Tweet extends StatelessWidget {
   // final user;
   // final text;
@@ -37,7 +41,6 @@ class Tweet extends StatelessWidget {
     height: 200.0,
   );
 
-  int retweetCount = 2;
   int commentCount = 3;
   int likeCount = 4;
 
@@ -88,7 +91,7 @@ class Tweet extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    '@username' + ' · ',
+                    '@username . ',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
@@ -127,54 +130,12 @@ class Tweet extends StatelessWidget {
             //Row for retweet, comment, like
             Row(
               children: [
-                //Retweet
-                Container(
-                  child: Text(
-                    '$retweetCount',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  padding: EdgeInsets.all(5),
-                ),
-                Image.asset(
-                  'assets/images/retweet_icon.png',
-                  width: iconSize.toDouble(),
-                  height: iconSize.toDouble(),
-                ),
                 //Comment
-                Container(
-                  child: Text(
-                    '$commentCount',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  padding: EdgeInsets.all(5),
-                ),
-                Image.asset(
-                  'assets/images/comment_icon.png',
-                  width: iconSize.toDouble(),
-                  height: iconSize.toDouble(),
-                ),
+                Comment(commentCount, iconSize),
+                //Retweet
+                Retweet(5, false, iconSize),
                 //Like
-                Container(
-                  child: Text(
-                    '$likeCount',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  padding: EdgeInsets.all(5),
-                ),
-                Image.asset(
-                  'assets/images/like_icon.png',
-                  width: iconSize.toDouble(),
-                  height: iconSize.toDouble(),
-                ),
+                Like(likeCount, false, iconSize),
               ],
             ),
           ],

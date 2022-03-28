@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './tweet.dart';
+import './Tweets/tweet.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Tweet(),
+      home: Scaffold(
+        body: Tweet(),
+      ),
     );
   }
 }
