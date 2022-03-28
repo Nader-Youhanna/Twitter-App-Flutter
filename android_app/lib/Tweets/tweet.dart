@@ -68,82 +68,85 @@ class Tweet extends StatelessWidget {
   //     required this.isDeleted,
   //     required this.isRepost});
 
+  Tweet(this.tweetText, this.tweetImage, this.commentCount, this.likeCount);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //Image widget
-        userImage,
-        Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  child: Text(
-                    'Username',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+    return Card(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //Image widget
+          userImage,
+          Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    child: Text(
+                      'Username',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    padding: EdgeInsets.all(5),
                   ),
-                  padding: EdgeInsets.all(5),
-                ),
-                Container(
-                  child: Text(
-                    '@username . ',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
+                  Container(
+                    child: Text(
+                      '@username . ',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
                     ),
+                    padding: EdgeInsets.all(5),
                   ),
-                  padding: EdgeInsets.all(5),
-                ),
-                Container(
-                  child: Text(
-                    DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
+                  Container(
+                    child: Text(
+                      DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
                     ),
+                    padding: EdgeInsets.all(5),
                   ),
-                  padding: EdgeInsets.all(5),
-                ),
-              ],
-            ),
-            Container(
-              child: Text(
-                tweetText,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
+                ],
               ),
-              padding: EdgeInsets.all(5),
-            ),
-            if (tweetImage != null)
               Container(
-                child: tweetImage,
+                child: Text(
+                  tweetText,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
+                ),
                 padding: EdgeInsets.all(5),
               ),
+              if (tweetImage != null)
+                Container(
+                  child: tweetImage,
+                  padding: EdgeInsets.all(5),
+                ),
 
-            //Row for retweet, comment, like
-            Row(
-              children: [
-                //Comment
-                Comment(commentCount, iconSize),
-                //Retweet
-                Retweet(5, false, iconSize),
-                //Like
-                Like(likeCount, false, iconSize),
-                //Share
-                Share(iconSize),
-              ],
-            ),
-          ],
-        ),
-      ],
+              //Row for retweet, comment, like
+              Row(
+                children: [
+                  //Comment
+                  Comment(commentCount, iconSize),
+                  //Retweet
+                  Retweet(5, false, iconSize),
+                  //Like
+                  Like(likeCount, false, iconSize),
+                  //Share
+                  Share(iconSize),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
