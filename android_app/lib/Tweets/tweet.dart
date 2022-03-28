@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import './retweet.dart';
 import './like.dart';
 import './comment.dart';
+import './share.dart';
 
 class Tweet extends StatelessWidget {
   // final user;
@@ -136,6 +137,8 @@ class Tweet extends StatelessWidget {
                 Retweet(5, false, iconSize),
                 //Like
                 Like(likeCount, false, iconSize),
+                //Share
+                Share(iconSize),
               ],
             ),
           ],
