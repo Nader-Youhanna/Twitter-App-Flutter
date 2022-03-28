@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  final emailController = TextEditingController();
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
+  final emailController = TextEditingController();
+  var textEntered = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -57,6 +62,11 @@ class Login extends StatelessWidget {
                 labelText: 'Phone, email or username',
               ),
               controller: emailController,
+              onChanged: (_) {
+                setState(() {
+                  textEntered = true;
+                });
+              },
             ),
           ),
           const SizedBox(height: 400),
@@ -77,17 +87,17 @@ class Login extends StatelessWidget {
                     const StadiumBorder(
                       side: BorderSide(
                         color: Colors.grey,
-                        width: 1,
+                        width: 2,
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 125),
+              const SizedBox(width: 120),
               ElevatedButton(
                 child: const Text('Next'),
                 onPressed: () {},
-                style: (emailController.text.isEmpty)
+                style: (!textEntered)
                     ? ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(
                             Colors.grey.shade400),
@@ -102,6 +112,9 @@ class Login extends StatelessWidget {
                             MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.black),
+                        shape: MaterialStateProperty.all<StadiumBorder>(
+                          const StadiumBorder(),
+                        ),
                       ),
               ),
             ],
