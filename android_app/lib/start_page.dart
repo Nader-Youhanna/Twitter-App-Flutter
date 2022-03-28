@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
-  Image logoImage = const Image(
+  final Image logoImage = const Image(
     image: AssetImage('assets/images/logo_icon.png'),
-    width: 200.0,
-    height: 200.0,
   );
 
   @override
@@ -13,23 +11,39 @@ class StartPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Container(
+        SizedBox(
+          width: 110,
+          height: 120,
           child: logoImage,
         ),
-        const Text(
-          'See what\'s happening in the world right now.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'RalewayMedium',
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
+        const SizedBox(
+          width: 290,
+          child: Text(
+            'See what\'s happening in the world right now.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'RalewayMedium',
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              //color: Colors.purple,
+            ),
           ),
         ),
-        RaisedButton(
-          onPressed: () {},
-          child: const Text(
-            'Create Account',
+        Container(
+          height: 35,
+          width: 265,
+          child: ElevatedButton(
+            child: const Text(
+              'Create Account',
+            ),
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
+            ),
           ),
+        ),
+        Container(
+          height: 170,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
