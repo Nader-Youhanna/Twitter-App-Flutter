@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './Tweets/tweet.dart';
 import './start_page.dart';
 import './Log In/login.dart';
+import './Sign Up/sign_up.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Login(),
-        //body: StartPage(),
+        body: SignUp(),
+
         //body: Tweet(),
       ),
     );
