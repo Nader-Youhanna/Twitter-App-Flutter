@@ -80,7 +80,10 @@ flutter:
   fonts:
     - family: RalewayMedium
       fonts:
-        - asset: assets/fonts/Raleway-Medium.ttf        
+        - asset: assets/fonts/Raleway-Medium.ttf
+    - family: RalewayBold
+      fonts:
+        - asset: assets/fonts/Raleway-Bold.ttf        
     
   # fonts:
   #   - family: Schyler
