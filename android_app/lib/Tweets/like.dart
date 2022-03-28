@@ -45,6 +45,7 @@ class _LikeState extends State<Like> {
         'assets/images/like_icon.png',
         width: iconSize.toDouble(),
         height: iconSize.toDouble(),
+        color: likeColor,
       ),
       label: Text(
         likeCount.toString(),

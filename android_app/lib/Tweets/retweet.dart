@@ -46,6 +46,7 @@ class _RetweetState extends State<Retweet> {
         'assets/images/retweet_icon.png',
         width: iconSize.toDouble(),
         height: iconSize.toDouble(),
+        color: retweetColor,
       ),
       label: Text(
         retweetCount.toString(),
