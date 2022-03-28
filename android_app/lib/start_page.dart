@@ -20,6 +20,7 @@ class StartPage extends StatelessWidget {
           'See what\'s happening in the world right now.',
           textAlign: TextAlign.center,
           style: TextStyle(
+            fontFamily: 'RalewayMedium',
             fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
