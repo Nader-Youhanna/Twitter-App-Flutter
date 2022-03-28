@@ -32,6 +32,7 @@ class Tweet extends StatelessWidget {
 
   CircleAvatar userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
+    radius: 20.0,
   );
 
   String tweetText = "This is the text inside the tweet";
@@ -69,8 +70,10 @@ class Tweet extends StatelessWidget {
   //     required this.isRepost});
 
   Tweet(this.tweetText, this.tweetImage, this.commentCount, this.likeCount);
+
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
     return Card(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +81,7 @@ class Tweet extends StatelessWidget {
           //Image widget
           userImage,
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -86,7 +90,7 @@ class Tweet extends StatelessWidget {
                       'Username',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -119,10 +123,11 @@ class Tweet extends StatelessWidget {
                   tweetText,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 padding: EdgeInsets.all(5),
+                width: mediaQuery.size.width - userImage.radius! - 30,
               ),
               if (tweetImage != null)
                 Container(
