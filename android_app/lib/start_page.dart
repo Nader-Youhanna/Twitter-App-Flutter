@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
+import 'Sign Up/sign_up.dart';
+import 'Log In/login.dart';
 
 class StartPage extends StatelessWidget {
+  void goToSignUpPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return SignUp();
+      }),
+    );
+  }
+
+  void goToLoginPage(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Login();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,7 +60,9 @@ class StartPage extends StatelessWidget {
             child: const Text(
               'Create Account',
             ),
-            onPressed: () {},
+            onPressed: () {
+              goToSignUpPage(context);
+            },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
             ),
@@ -64,7 +86,9 @@ class StartPage extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                goToLoginPage(context);
+              },
               child: const Text(
                 'Log in',
                 style: TextStyle(
