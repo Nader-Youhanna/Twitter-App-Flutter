@@ -8,6 +8,7 @@ import './retweet.dart';
 import './like.dart';
 import './comment.dart';
 import './share.dart';
+import './tweetImage.dart';
 
 class Tweet extends StatelessWidget {
   // final user;
@@ -37,11 +38,11 @@ class Tweet extends StatelessWidget {
 
   String tweetText = "This is the text inside the tweet";
 
-  Image tweetImage = Image(
-    image: AssetImage('assets/images/test_image.png'),
-    width: 200.0,
-    height: 200.0,
-  );
+  List<String> tweetImages = [
+    'assets/images/test_image.png',
+    'assets/images/test_image.png',
+    'assets/images/test_image.png',
+  ];
 
   int commentCount = 3;
   int likeCount = 4;
@@ -69,7 +70,7 @@ class Tweet extends StatelessWidget {
   //     required this.isDeleted,
   //     required this.isRepost});
 
-  Tweet(this.tweetText, this.tweetImage, this.commentCount, this.likeCount);
+  Tweet(this.tweetText, this.tweetImages, this.commentCount, this.likeCount);
 
   @override
   Widget build(BuildContext context) {
@@ -129,11 +130,7 @@ class Tweet extends StatelessWidget {
                 padding: EdgeInsets.all(5),
                 width: mediaQuery.size.width - userImage.radius! - 30,
               ),
-              if (tweetImage != null)
-                Container(
-                  child: tweetImage,
-                  padding: EdgeInsets.all(5),
-                ),
+              if (tweetImages.length != 0) TweetImage(tweetImages),
 
               //Row for retweet, comment, like
               Row(
