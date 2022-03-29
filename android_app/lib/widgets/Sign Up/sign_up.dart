@@ -115,6 +115,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             SizedBox(
+              width: SignUp._widthOfTextFields,
               child: TextField(
                 keyboardType: TextInputType.datetime,
                 decoration: const InputDecoration(labelText: 'Date of birth'),
@@ -143,10 +144,7 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 290),
             Row(
               children: <Widget>[
-                const SizedBox(
-                  //width: 280),
-                  width: 100,
-                ),
+                const SizedBox(width: 280),
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {},
@@ -169,23 +167,6 @@ class _SignUpState extends State<SignUp> {
                             const StadiumBorder(),
                           ),
                         ),
-                ),
-                const SizedBox(
-                  //width: 280),
-                  width: 100,
-                ),
-                ElevatedButton(
-                  child: const Icon(Icons.add),
-                  onPressed: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      initialDate: DateTime.now(),
-                    ).then((_) {
-                      _goBack(context);
-                    });
-                  },
                 ),
               ],
             )
