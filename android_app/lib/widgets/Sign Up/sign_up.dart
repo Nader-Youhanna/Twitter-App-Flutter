@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 const SizedBox(
-                  width: 80,
+                  width: 60,
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),

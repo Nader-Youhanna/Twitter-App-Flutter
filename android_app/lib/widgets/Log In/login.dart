@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './enter_password.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,6 +11,14 @@ class _LoginState extends State<Login> {
   String _email = '';
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  void _enterPassword(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return EnterPasswordPage();
+      }),
+    );
   }
 
   @override
@@ -37,7 +46,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 const SizedBox(
-                  width: 80,
+                  width: 60,
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
@@ -109,7 +118,7 @@ class _LoginState extends State<Login> {
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {
-                    _goBack(context);
+                    _enterPassword(context);
                   },
                   style: (!_emailIsEntered)
                       ? ButtonStyle(
