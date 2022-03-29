@@ -6,12 +6,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  var _emailIsEntered = false;
-  String _email = '';
+  final emailController = TextEditingController();
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
+  var textEntered = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,14 +71,11 @@ class _LoginState extends State<Login> {
                 decoration: const InputDecoration(
                   labelText: 'Phone, email or username',
                 ),
-                //controller: emailController,
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    _email = value;
-                    setState(() {
-                      _emailIsEntered = true;
-                    });
-                  }
+                controller: emailController,
+                onChanged: (_) {
+                  setState(() {
+                    textEntered = true;
+                  });
                 },
               ),
             ),
@@ -108,10 +106,8 @@ class _LoginState extends State<Login> {
                 const SizedBox(width: 125),
                 ElevatedButton(
                   child: const Text('Next'),
-                  onPressed: () {
-                    _goBack(context);
-                  },
-                  style: (!_emailIsEntered)
+                  onPressed: () {},
+                  style: (!textEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey.shade400),

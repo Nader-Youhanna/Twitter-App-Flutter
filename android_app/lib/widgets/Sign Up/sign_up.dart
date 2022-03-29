@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends StatelessWidget {
   static const _widthOfTextFields = 320.0;
+  final _allIsEntered = false;
 
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  var _allIsEntered = false;
-
-  var _nameIsEntered = false;
-  var _name;
-  var _emailIsEntered = false;
-  var email;
-  var _dobIsEntered = false;
-  var _dob;
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -73,80 +60,30 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const SizedBox(height: 50),
-            SizedBox(
-              width: SignUp._widthOfTextFields,
+            const SizedBox(
+              width: _widthOfTextFields,
               child: TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                onSubmitted: (value) {
-                  setState(() {
-                    if (value.isNotEmpty) {
-                      _nameIsEntered = true;
-                      _name = value;
-                      if (_emailIsEntered && _dobIsEntered) {
-                        _allIsEntered = true;
-                      }
-                    } else {
-                      _nameIsEntered = false;
-                    }
-                  });
-                },
+                decoration: InputDecoration(labelText: 'Name'),
               ),
             ),
-            SizedBox(
-              width: SignUp._widthOfTextFields,
+            const SizedBox(
+              width: _widthOfTextFields,
               child: TextField(
-                decoration: const InputDecoration(
-                    labelText: 'Phone number or email address'),
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      if (value.isNotEmpty) {
-                        _emailIsEntered = true;
-                        email = value;
-                        if (_nameIsEntered && _dobIsEntered) {
-                          _allIsEntered = true;
-                        }
-                      } else {
-                        _emailIsEntered = false;
-                      }
-                    });
-                  }
-                },
+                decoration:
+                    InputDecoration(labelText: 'Phone number or email address'),
               ),
             ),
-            SizedBox(
+            const SizedBox(
+              width: _widthOfTextFields,
               child: TextField(
                 keyboardType: TextInputType.datetime,
-                decoration: const InputDecoration(labelText: 'Date of birth'),
-                onTap: () {
-                  showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    initialDate: DateTime.now(),
-                  ).then((value) {
-                    setState(() {
-                      if (value != null) {
-                        _dobIsEntered = true;
-                        _dob = value;
-                        if (_nameIsEntered && _emailIsEntered) {
-                          _allIsEntered = true;
-                        }
-                      } else {
-                        _dobIsEntered = false;
-                      }
-                    });
-                  });
-                },
+                decoration: InputDecoration(labelText: 'Date of birth'),
               ),
             ),
             const SizedBox(height: 290),
             Row(
               children: <Widget>[
-                const SizedBox(
-                  //width: 280),
-                  width: 100,
-                ),
+                const SizedBox(width: 280),
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {},
@@ -169,23 +106,6 @@ class _SignUpState extends State<SignUp> {
                             const StadiumBorder(),
                           ),
                         ),
-                ),
-                const SizedBox(
-                  //width: 280),
-                  width: 100,
-                ),
-                ElevatedButton(
-                  child: const Icon(Icons.add),
-                  onPressed: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      initialDate: DateTime.now(),
-                    ).then((_) {
-                      _goBack(context);
-                    });
-                  },
                 ),
               ],
             )
