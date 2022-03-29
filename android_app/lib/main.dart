@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './Tweets/tweet.dart';
-import './start_page.dart';
+import './widgets/start_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,8 +14,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: StartPage(),
-
-        //body: Tweet(),
       ),
     );
   }
