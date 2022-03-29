@@ -9,47 +9,36 @@ class Like extends StatefulWidget {
   Like(this.likeCount, this.isLiked, this.iconSize);
 
   @override
-  State<Like> createState() =>
-      _LikeState(this.likeCount, this.isLiked, this.iconSize);
+  State<Like> createState() => _LikeState();
 }
 
 class _LikeState extends State<Like> {
-  int likeCount;
-  Color likeColor = Colors.grey;
-  bool isLiked;
-  final int iconSize;
-
-  _LikeState(
-    this.likeCount,
-    this.isLiked,
-    this.iconSize,
-  );
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
       onPressed: () {
         print('Like Pressed');
         setState(() {
-          if (isLiked) {
-            likeColor = Colors.grey;
-            isLiked = false;
-            likeCount--;
+          if (widget.isLiked) {
+            widget.likeColor = Colors.grey;
+            widget.isLiked = false;
+            widget.likeCount--;
           } else {
-            likeColor = Colors.red;
-            isLiked = true;
-            likeCount++;
+            widget.likeColor = Colors.red;
+            widget.isLiked = true;
+            widget.likeCount++;
           }
         });
       },
       icon: Image.asset(
         'assets/images/like_icon.png',
-        width: iconSize.toDouble(),
-        height: iconSize.toDouble(),
-        color: likeColor,
+        width: widget.iconSize.toDouble(),
+        height: widget.iconSize.toDouble(),
+        color: widget.likeColor,
       ),
       label: Text(
-        likeCount.toString(),
-        style: TextStyle(color: likeColor),
+        widget.likeCount.toString(),
+        style: TextStyle(color: widget.likeColor),
       ),
     );
   }
