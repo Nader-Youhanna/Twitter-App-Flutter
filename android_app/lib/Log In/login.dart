@@ -7,6 +7,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final emailController = TextEditingController();
+
+  void _goBack(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+  }
+
   var textEntered = false;
   @override
   Widget build(BuildContext context) {
@@ -23,9 +28,14 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   width: 10,
                 ),
-                const Icon(
-                  Icons.arrow_back,
-                  size: 29,
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 29,
+                  ),
+                  onPressed: () {
+                    _goBack(context);
+                  },
                 ),
                 const SizedBox(
                   width: 80,
