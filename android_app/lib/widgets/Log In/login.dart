@@ -79,7 +79,6 @@ class _LoginState extends State<Login> {
                 decoration: const InputDecoration(
                   hintText: 'Phone, email or username',
                 ),
-                //controller: emailController,
                 onChanged: (value) {
                   if (value.isNotEmpty) {
                     _email = value;

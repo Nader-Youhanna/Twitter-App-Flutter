@@ -76,7 +76,20 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               width: SignUp._widthOfTextFields,
               child: TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  suffixIcon: _nameIsEntered
+                      ? const Icon(
+                          Icons.add_task_outlined,
+                          color: Colors.green,
+                        )
+                      : null,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _nameIsEntered = value.isNotEmpty;
+                  });
+                },
                 onSubmitted: (value) {
                   setState(() {
                     if (value.isNotEmpty) {
@@ -95,8 +108,20 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               width: SignUp._widthOfTextFields,
               child: TextField(
-                decoration: const InputDecoration(
-                    labelText: 'Phone number or email address'),
+                decoration: InputDecoration(
+                  labelText: 'Phone number or email address',
+                  suffixIcon: _emailIsEntered
+                      ? const Icon(
+                          Icons.add_task_outlined,
+                          color: Colors.green,
+                        )
+                      : null,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _emailIsEntered = value.isNotEmpty;
+                  });
+                },
                 onSubmitted: (value) {
                   if (value.isNotEmpty) {
                     setState(() {
@@ -118,7 +143,20 @@ class _SignUpState extends State<SignUp> {
               width: SignUp._widthOfTextFields,
               child: TextField(
                 keyboardType: TextInputType.datetime,
-                decoration: const InputDecoration(labelText: 'Date of birth'),
+                decoration: InputDecoration(
+                  labelText: 'Date of birth',
+                  suffixIcon: _dobIsEntered
+                      ? const Icon(
+                          Icons.add_task_outlined,
+                          color: Colors.green,
+                        )
+                      : null,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _dobIsEntered = value.isNotEmpty;
+                  });
+                },
                 onTap: () {
                   showDatePicker(
                     context: context,
