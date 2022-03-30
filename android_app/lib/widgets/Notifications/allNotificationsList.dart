@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -79,6 +80,7 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                 controller: _scrollController,
                 itemCount: notificationItems.length,
                 itemBuilder: (BuildContext context, int index) {
+                  //return notificationItems[index];
                   return Container(
                     //this container should contain actual notifications not list elements
                     height: 100,
