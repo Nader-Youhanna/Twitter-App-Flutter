@@ -10,15 +10,19 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   var _allIsEntered = false;
-
   var _nameIsEntered = false;
   var _name;
   var _emailIsEntered = false;
   var email;
   var _dobIsEntered = false;
   var _dob;
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  bool _isEmailValid(var email) {
+    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
   }
 
   @override
