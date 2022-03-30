@@ -16,7 +16,7 @@ class _LoginState extends State<Login> {
   void _enterPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return EnterPasswordPage();
+        return EnterPasswordPage(username: _email);
       }),
     );
   }
@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
               width: 330,
               child: TextField(
                 decoration: const InputDecoration(
-                  labelText: 'Phone, email or username',
+                  hintText: 'Phone, email or username',
                 ),
                 //controller: emailController,
                 onChanged: (value) {
