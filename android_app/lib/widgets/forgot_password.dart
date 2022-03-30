@@ -72,19 +72,23 @@ class _ForgorPasswordPageState extends State<ForgorPasswordPage> {
                 decoration: const InputDecoration(
                   hintText: 'Enter your email, phone number or username',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    _usernameIsEntered = value.isNotEmpty;
+                  });
+                },
                 onSubmitted: (value) {
                   setState(() {
                     _username = value;
-                    _usernameIsEntered = true;
+                    _usernameIsEntered = value.isNotEmpty;
                   });
                 },
               ),
             ),
-            const SizedBox(height: 400),
+            const SizedBox(height: 470),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                const SizedBox(width: 12),
-                const SizedBox(width: 125),
                 ElevatedButton(
                   onPressed: null,
                   child: const Text('Search'),
@@ -108,6 +112,7 @@ class _ForgorPasswordPageState extends State<ForgorPasswordPage> {
                           ),
                         ),
                 ),
+                SizedBox(width: 15),
               ],
             ),
           ],
