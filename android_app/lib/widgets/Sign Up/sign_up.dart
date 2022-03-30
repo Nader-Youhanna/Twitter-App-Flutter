@@ -84,7 +84,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Name',
                   suffixIcon: _nameIsEntered
                       ? const Icon(
-                          Icons.add_task_outlined,
+                          Icons.check_circle_outline,
                           color: Colors.green,
                         )
                       : null,
@@ -116,7 +116,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Phone number or email address',
                   suffixIcon: _emailIsEntered
                       ? const Icon(
-                          Icons.add_task_outlined,
+                          Icons.check_circle_outline,
                           color: Colors.green,
                         )
                       : null,
@@ -151,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Date of birth',
                   suffixIcon: _dobIsEntered
                       ? const Icon(
-                          Icons.add_task_outlined,
+                          Icons.check_circle_outline,
                           color: Colors.green,
                         )
                       : null,
