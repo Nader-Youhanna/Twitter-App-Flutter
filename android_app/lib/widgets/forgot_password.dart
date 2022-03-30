@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
-import './enter_password.dart';
-import '../forgot_password.dart';
 
-class Login extends StatefulWidget {
+class ForgorPasswordPage extends StatefulWidget {
   @override
-  State<Login> createState() => _LoginState();
+  State<ForgorPasswordPage> createState() => _ForgorPasswordPageState();
 }
 
-class _LoginState extends State<Login> {
-  var _emailIsEntered = false;
-  String _email = '';
+class _ForgorPasswordPageState extends State<ForgorPasswordPage> {
+  var _username;
+
+  var _usernameIsEntered = false;
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
-  }
-
-  void _enterPassword(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return EnterPasswordPage(username: _email);
-      }),
-    );
-  }
-
-  void _forgotPassword(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return ForgorPasswordPage();
-      }),
-    );
   }
 
   @override
@@ -72,7 +56,7 @@ class _LoginState extends State<Login> {
             const SizedBox(
               width: 320,
               child: Text(
-                'To get started, first enter your phone, email, or @username',
+                'Find your Sirius account',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontFamily: 'RalewayMedium',
@@ -86,15 +70,13 @@ class _LoginState extends State<Login> {
               width: 330,
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Phone, email or username',
+                  hintText: 'Enter your email, phone number or username',
                 ),
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    _email = value;
-                    setState(() {
-                      _emailIsEntered = true;
-                    });
-                  }
+                onSubmitted: (value) {
+                  setState(() {
+                    _username = value;
+                    _usernameIsEntered = true;
+                  });
                 },
               ),
             ),
@@ -102,35 +84,11 @@ class _LoginState extends State<Login> {
             Row(
               children: <Widget>[
                 const SizedBox(width: 12),
-                ElevatedButton(
-                  child: const Text(
-                    'Forgot Password?',
-                  ),
-                  onPressed: () {
-                    _forgotPassword(context);
-                  },
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    shape: MaterialStateProperty.all<StadiumBorder>(
-                      const StadiumBorder(
-                        side: BorderSide(
-                          color: Colors.grey,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 const SizedBox(width: 125),
                 ElevatedButton(
-                  child: const Text('Next'),
-                  onPressed: () {
-                    _enterPassword(context);
-                  },
-                  style: (!_emailIsEntered)
+                  onPressed: null,
+                  child: const Text('Search'),
+                  style: (!_usernameIsEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey.shade400),
