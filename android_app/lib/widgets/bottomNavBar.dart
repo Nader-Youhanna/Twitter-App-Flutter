@@ -5,6 +5,7 @@ import 'Sign Up/sign_up.dart';
 import 'Tweets/tweet.dart';
 import './timeline.dart';
 import './forgot_password.dart';
+import 'Messages/inbox.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar();
@@ -20,7 +21,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     ForgorPasswordPage(), //first element should be timeline but i couldn't initialize it
     Login(), //second item should be explore page->not yet created
     NotificationsPage(),
-    SignUp(), //last item should be messages page->not yet created
+    Inbox(), //last item should be messages page->not yet created
   ];
 
   void _onItemTapped(int index) {
