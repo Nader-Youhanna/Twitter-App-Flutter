@@ -19,10 +19,17 @@ class _InboxState extends State<Inbox> {
             onPressed: () => {}), //button should open to side bar,
         actions: [
           Container(
-            width: 250,
-            child: const TextField(
+            width: 260,
+            padding: EdgeInsets.all(12),
+            child: TextField(
               decoration: InputDecoration(
-                border: InputBorder.none,
+                contentPadding: const EdgeInsets.all(7.0),
+                hintStyle: const TextStyle(
+                  fontSize: 14,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 hintText: 'Search Direct Messages',
               ),
             ),
