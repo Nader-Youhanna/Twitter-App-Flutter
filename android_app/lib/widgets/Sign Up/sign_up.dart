@@ -9,11 +9,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _allIsEntered = false;
   var _nameIsEntered = false;
   var _name;
   var _emailIsEntered = false;
-  var email;
+  var _email;
   var _dobIsEntered = false;
   var _dob;
 
@@ -77,110 +78,139 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const SizedBox(height: 50),
-            SizedBox(
-              width: SignUp._widthOfTextFields,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  suffixIcon: _nameIsEntered
-                      ? const Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.green,
-                        )
-                      : null,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _nameIsEntered = value.isNotEmpty;
-                  });
-                },
-                onSubmitted: (value) {
-                  setState(() {
-                    if (value.isNotEmpty) {
-                      _nameIsEntered = true;
-                      _name = value;
-                      if (_emailIsEntered && _dobIsEntered) {
-                        _allIsEntered = true;
-                      }
-                    } else {
-                      _nameIsEntered = false;
-                    }
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              width: SignUp._widthOfTextFields,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Phone number or email address',
-                  suffixIcon: _emailIsEntered
-                      ? const Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.green,
-                        )
-                      : null,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _emailIsEntered = value.isNotEmpty;
-                  });
-                },
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      if (value.isNotEmpty) {
-                        _emailIsEntered = true;
-                        email = value;
-                        if (_nameIsEntered && _dobIsEntered) {
-                          _allIsEntered = true;
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    width: SignUp._widthOfTextFields,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        suffixIcon: _nameIsEntered
+                            ? const Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.green,
+                              )
+                            : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nameIsEntered = value.isNotEmpty;
+                        });
+                      },
+                      onSubmitted: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            _nameIsEntered = true;
+                            _name = value;
+                            if (_emailIsEntered && _dobIsEntered) {
+                              _allIsEntered = true;
+                            }
+                          } else {
+                            _nameIsEntered = false;
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: SignUp._widthOfTextFields,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Phone number or email address',
+                        suffixIcon: _emailIsEntered
+                            ? const Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.green,
+                              )
+                            : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          setState(() {
+                            _emailIsEntered = value.isNotEmpty;
+                            if (value.isNotEmpty) {
+                              _emailIsEntered = true;
+                              _email = value;
+                              if (_nameIsEntered && _dobIsEntered) {
+                                _allIsEntered = true;
+                              }
+                            } else {
+                              _emailIsEntered = false;
+                            }
+                          });
+                          if (_formKey.currentState!.validate()) {
+                            _email = value;
+                          }
+                        });
+                      },
+                      validator: (value) {
+                        if (value != null && _isEmailValid(value)) {
+                          return null;
+                        } else {
+                          return 'Please enter a valid email address';
                         }
-                      } else {
-                        _emailIsEntered = false;
-                      }
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              width: SignUp._widthOfTextFields,
-              child: TextField(
-                keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(
-                  labelText: 'Date of birth',
-                  suffixIcon: _dobIsEntered
-                      ? const Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.green,
-                        )
-                      : null,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _dobIsEntered = value.isNotEmpty;
-                  });
-                },
-                onTap: () {
-                  showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    initialDate: DateTime.now(),
-                  ).then((value) {
-                    setState(() {
-                      if (value != null) {
-                        _dobIsEntered = true;
-                        _dob = value;
-                        if (_nameIsEntered && _emailIsEntered) {
-                          _allIsEntered = true;
-                        }
-                      } else {
-                        _dobIsEntered = false;
-                      }
-                    });
-                  });
-                },
+                      },
+                      // onSubmitted: (value) {
+                      //   if (value.isNotEmpty) {
+                      //     setState(() {
+                      //       if (value.isNotEmpty) {
+                      //         _emailIsEntered = true;
+                      //         email = value;
+                      //         if (_nameIsEntered && _dobIsEntered) {
+                      //           _allIsEntered = true;
+                      //         }
+                      //       } else {
+                      //         _emailIsEntered = false;
+                      //       }
+                      //     });
+                      //   }
+                      // },
+                    ),
+                  ),
+                  SizedBox(
+                    width: SignUp._widthOfTextFields,
+                    child: TextField(
+                      keyboardType: TextInputType.datetime,
+                      decoration: InputDecoration(
+                        labelText: 'Date of birth',
+                        suffixIcon: _dobIsEntered
+                            ? const Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.green,
+                              )
+                            : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _dobIsEntered = value.isNotEmpty;
+                        });
+                      },
+                      onTap: () {
+                        showDatePicker(
+                          context: context,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                          initialDate: DateTime.now(),
+                        ).then((value) {
+                          setState(() {
+                            if (value != null) {
+                              _dobIsEntered = true;
+                              _dob = value;
+                              if (_nameIsEntered && _emailIsEntered) {
+                                _allIsEntered = true;
+                              }
+                            } else {
+                              _dobIsEntered = false;
+                            }
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 290),
