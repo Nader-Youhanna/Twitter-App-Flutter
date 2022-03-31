@@ -14,17 +14,64 @@ class MyNavigationBar extends StatefulWidget {
   _MyNavigationBarState createState() => _MyNavigationBarState();
 }
 
+List<Tweet> tweets = [
+  Tweet(
+    'This is the first tweet with one image',
+    [
+      'assets/images/test_image.png',
+    ],
+    3,
+    5,
+  ),
+  Tweet(
+    'This is the second tweet with two images',
+    [
+      'assets/images/test_image.png',
+      'assets/images/test_image.png',
+    ],
+    33,
+    700,
+  ),
+  Tweet(
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      [
+        'assets/images/test_image.png',
+        'assets/images/test_image.png',
+        'assets/images/test_image.png',
+      ],
+      1000,
+      99000),
+  Tweet(
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      [
+        'assets/images/test_image.png',
+        'assets/images/test_image.png',
+        'assets/images/test_image.png',
+        'assets/images/test_image.png',
+      ],
+      1000,
+      99000),
+  Tweet(
+    'This tweet has no images',
+    [],
+    0,
+    0,
+  ),
+];
+
 class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
-  final List<Tweet> tweet = [];
+
   final List<Widget> _widgetOptions = <Widget>[
-    const Center(
-        child: Text('Timeline should be here',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 24.0,
-                fontWeight: FontWeight
-                    .bold))), //first element should be timeline but i couldn't initialize it
+    Column(
+      children: [
+        Container(
+          width: 100,
+        ),
+        Timeline(tweets),
+      ],
+    ),
+    //first element should be timeline but i couldn't initialize it
     const Center(
         child: Text('Explore should be here',
             style: TextStyle(
@@ -105,7 +152,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.black,
-          iconSize: 20,
+          iconSize: 25,
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: _onItemTapped,

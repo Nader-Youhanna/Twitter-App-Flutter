@@ -24,8 +24,7 @@ class NotificationBar extends StatelessWidget {
       ],
       bottom: TabBar(
         indicatorColor: Colors.blue,
-        indicatorSize:
-            TabBarIndicatorSize.label, //TODO: inicator has yet to be rounded
+        indicatorSize: TabBarIndicatorSize.label,
         indicatorWeight: 3.0,
         indicator: MaterialIndicator(
           color: Colors.blue,
@@ -40,13 +39,13 @@ class NotificationBar extends StatelessWidget {
         labelColor: Colors.black,
         unselectedLabelColor: Colors.grey,
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
-        labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         tabs: _tabs.map((String name) => Tab(text: name)).toList(),
       ),
       title: const Text('Notifications',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 17.0,
+            fontSize: 20.0,
             //fontWeight: FontWeight.bold
           )),
     );

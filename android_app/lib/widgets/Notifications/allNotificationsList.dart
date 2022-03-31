@@ -112,7 +112,7 @@ class _AllNotificationsListState extends State<AllNotificationsList>
           : Container(
               child: Column(
                 children: [
-                  const SizedBox(height: 150),
+                  const SizedBox(height: 220),
                   RichText(
                     text: const TextSpan(
                       style: TextStyle(
@@ -124,15 +124,17 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                           text: 'Join the conversation\n',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 24.0,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
                           text:
                               'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 100, 99, 99),
-                              fontWeight: FontWeight.normal),
+                            color: Color.fromARGB(255, 100, 99, 99),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15.0,
+                          ),
                         ),
                       ],
                     ),
