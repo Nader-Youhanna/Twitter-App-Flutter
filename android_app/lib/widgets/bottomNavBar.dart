@@ -112,11 +112,12 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         actions: [
           Container(
             width: 260,
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(7.0),
+                contentPadding: const EdgeInsets.all(10.0),
                 hintStyle: const TextStyle(
+                  fontFamily: 'RalewayMedium',
                   fontSize: 14.5,
                 ),
                 border: OutlineInputBorder(
