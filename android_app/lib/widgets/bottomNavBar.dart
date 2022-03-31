@@ -6,6 +6,7 @@ import 'Tweets/tweet.dart';
 import './timeline.dart';
 import './forgot_password.dart';
 import 'Messages/inbox.dart';
+import './user_profile/profile.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar();
@@ -63,6 +64,14 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   String _appBarText = 'Timeline';
 
+  void _goToUserProfile(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile();
+      }),
+    );
+  }
+
   final List<Widget> _widgetOptions = <Widget>[
     Timeline(tweets),
     //first element should be timeline but i couldn't initialize it
@@ -108,7 +117,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
             icon: const Icon(Icons
                 .person_rounded), //should be changed to google profile icon
             color: Colors.black,
-            onPressed: () => {}), //button should open to side bar,
+            onPressed: () =>
+                {_goToUserProfile(context)}), //button should open to side bar,
         actions: [
           Container(
             width: 260,
