@@ -109,30 +109,34 @@ class _MentionsListState extends State<MentionsList>
               ],
             ])
           : Container(
-              child: RichText(
-                text: const TextSpan(
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black,
+              child: Column(
+                children: [
+                  const SizedBox(height: 150),
+                  RichText(
+                    text: const TextSpan(
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Join the conversation\n',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text:
+                              'When someone on Sirius mentions you in a Tweet or reply, you\'ll find it here.',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 100, 99, 99),
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
                   ),
-                  children: <TextSpan>[
-                    //TODO: try to center this text in the page
-                    TextSpan(
-                      text: 'Join the conversation\n',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text:
-                          'When someone on Sirius mentions you in a Tweet or reply, you\'ll find it here.',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 100, 99, 99),
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ],
-                ),
+                ],
               ),
               //padding: const EdgeInsets.all(30),
               margin: const EdgeInsets.all(30),
