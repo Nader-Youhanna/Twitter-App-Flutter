@@ -4,7 +4,7 @@ import './Log In/login.dart';
 import 'Sign Up/sign_up.dart';
 import 'Tweets/tweet.dart';
 import './timeline.dart';
-import './forgot_password.dart';
+import 'Log In/forgot_password.dart';
 import 'Messages/inbox.dart';
 import './user_profile/profile.dart';
 
