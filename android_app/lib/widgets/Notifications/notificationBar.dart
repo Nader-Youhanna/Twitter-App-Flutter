@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:android_app/widgets/user_profile/profile.dart';
 
 class NotificationBar extends StatelessWidget {
   const NotificationBar();
+  void _goToUserProfile(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile();
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +23,8 @@ class NotificationBar extends StatelessWidget {
           icon: const Icon(
               Icons.person_rounded), //should be changed to google profile icon
           color: Colors.black,
-          onPressed: () => {}), //button should open to side bar
+          onPressed: () =>
+              {_goToUserProfile(context)}), //button should open to side bar
       actions: [
         IconButton(
             icon: const Icon(Icons.settings_outlined),

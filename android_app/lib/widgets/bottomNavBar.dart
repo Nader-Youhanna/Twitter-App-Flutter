@@ -7,6 +7,7 @@ import './timeline.dart';
 import 'Log In/forgot_password.dart';
 import 'Messages/inbox.dart';
 import './user_profile/profile.dart';
+import 'Explore/explore_page.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar();
@@ -74,14 +75,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   final List<Widget> _widgetOptions = <Widget>[
     Timeline(tweets),
-    //first element should be timeline but i couldn't initialize it
-    const Center(
-        child: Text('Explore should be here',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 24.0,
-                fontWeight: FontWeight
-                    .bold))), //second item should be explore page->not yet created
+    ExplorePage(),
     const NotificationsPage(),
     Inbox(),
   ];
@@ -89,61 +83,12 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      switch (index) {
-        case 0:
-          _appBarText = 'Timeline';
-          break;
-        case 1:
-          _appBarText = 'Explore';
-          break;
-        case 2:
-          _appBarText = 'Notifications';
-          break;
-        case 3:
-          _appBarText = 'Messages';
-          break;
-      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //App bar test
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 2.0,
-        leading: IconButton(
-            icon: const Icon(Icons
-                .person_rounded), //should be changed to google profile icon
-            color: Colors.black,
-            onPressed: () =>
-                {_goToUserProfile(context)}), //button should open to side bar,
-        actions: [
-          Container(
-            width: 260,
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(10.0),
-                hintStyle: const TextStyle(
-                  fontFamily: 'RalewayMedium',
-                  fontSize: 14.5,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                hintText: _appBarText,
-              ),
-            ),
-          ),
-
-          IconButton(
-              icon: const Icon(Icons.settings_outlined),
-              color: Colors.black,
-              onPressed: () => {}), //button shoud direct to setings
-        ],
-      ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
