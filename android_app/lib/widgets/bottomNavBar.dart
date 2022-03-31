@@ -18,7 +18,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   final List<Tweet> tweet = [];
   final List<Widget> _widgetOptions = <Widget>[
-    ForgorPasswordPage(), //first element should be timeline but i couldn't initialize it
+    ForgotPasswordPage(), //first element should be timeline but i couldn't initialize it
     Login(), //second item should be explore page->not yet created
     NotificationsPage(),
     Inbox(), //last item should be messages page->not yet created

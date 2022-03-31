@@ -1,4 +1,5 @@
 import 'package:android_app/widgets/Messages/empty_inbox_body.dart';
+import 'package:android_app/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
 
 class Inbox extends StatefulWidget {
@@ -44,7 +45,7 @@ class _InboxState extends State<Inbox> {
         ],
       ),
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
-      //bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: MyNavigationBar(),
       floatingActionButton: FloatingActionButton(
         // button should open the what's happening page
         onPressed: () => {},
