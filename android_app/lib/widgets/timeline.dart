@@ -8,27 +8,24 @@ class Timeline extends StatefulWidget {
   Timeline(this.tweets);
 
   @override
-  State<Timeline> createState() => _TimelineState(tweets);
+  State<Timeline> createState() => _TimelineState();
 }
 
 class _TimelineState extends State<Timeline> {
-  final List<Tweet> tweets;
-
   final appBarHeight = 100.0;
   final bottomNavigationBarHeight = 100.0;
-  _TimelineState(this.tweets);
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
 
     return Container(
-      height: mediaQuery.size.height - appBarHeight - bottomNavigationBarHeight,
+      height: mediaQuery.size.height,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
-          return tweets[index];
+          return widget.tweets[index];
         },
-        itemCount: tweets.length,
+        itemCount: widget.tweets.length,
       ),
     );
   }
