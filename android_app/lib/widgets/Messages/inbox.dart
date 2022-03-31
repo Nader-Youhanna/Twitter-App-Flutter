@@ -45,7 +45,7 @@ class _InboxState extends State<Inbox> {
         ],
       ),
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
-      bottomNavigationBar: MyNavigationBar(),
+      // bottomNavigationBar: MyNavigationBar(),
       floatingActionButton: FloatingActionButton(
         // button should open the what's happening page
         onPressed: () => {},

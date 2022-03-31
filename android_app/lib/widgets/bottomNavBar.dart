@@ -18,27 +18,22 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   final List<Tweet> tweet = [];
   final List<Widget> _widgetOptions = <Widget>[
-<<<<<<< HEAD
     const Center(
-        child: Text(
-      'Timeline should be here',
-      style: TextStyle(
-          color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),
-    )), //first element should be timeline but i couldn't initialize it
+        child: Text('Timeline should be here',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 24.0,
+                fontWeight: FontWeight
+                    .bold))), //first element should be timeline but i couldn't initialize it
     const Center(
-        child: Text(
-      'Explore should be here',
-      style: TextStyle(
-          color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),
-    )), //second item should be explore page->not yet created
+        child: Text('Explore should be here',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 24.0,
+                fontWeight: FontWeight
+                    .bold))), //second item should be explore page->not yet created
     const NotificationsPage(),
-
-=======
-    ForgotPasswordPage(), //first element should be timeline but i couldn't initialize it
-    Login(), //second item should be explore page->not yet created
-    NotificationsPage(),
->>>>>>> origin/Development
-    Inbox(), //last item should be messages page->not yet created
+    Inbox(),
   ];
 
   void _onItemTapped(int index) {
