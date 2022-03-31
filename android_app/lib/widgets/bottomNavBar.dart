@@ -4,8 +4,9 @@ import './Log In/login.dart';
 import 'Sign Up/sign_up.dart';
 import 'Tweets/tweet.dart';
 import './timeline.dart';
-import './forgot_password.dart';
+import 'Log In/forgot_password.dart';
 import 'Messages/inbox.dart';
+import './user_profile/profile.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar();
@@ -61,16 +62,18 @@ List<Tweet> tweets = [
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
+  String _appBarText = 'Timeline';
+
+  void _goToUserProfile(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile();
+      }),
+    );
+  }
 
   final List<Widget> _widgetOptions = <Widget>[
-    Column(
-      children: [
-        Container(
-          width: 100,
-        ),
-        Timeline(tweets),
-      ],
-    ),
+    Timeline(tweets),
     //first element should be timeline but i couldn't initialize it
     const Center(
         child: Text('Explore should be here',
@@ -86,12 +89,61 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      switch (index) {
+        case 0:
+          _appBarText = 'Timeline';
+          break;
+        case 1:
+          _appBarText = 'Explore';
+          break;
+        case 2:
+          _appBarText = 'Notifications';
+          break;
+        case 3:
+          _appBarText = 'Messages';
+          break;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //App bar test
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 2.0,
+        leading: IconButton(
+            icon: const Icon(Icons
+                .person_rounded), //should be changed to google profile icon
+            color: Colors.black,
+            onPressed: () =>
+                {_goToUserProfile(context)}), //button should open to side bar,
+        actions: [
+          Container(
+            width: 260,
+            padding: const EdgeInsets.all(10),
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(10.0),
+                hintStyle: const TextStyle(
+                  fontFamily: 'RalewayMedium',
+                  fontSize: 14.5,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                hintText: _appBarText,
+              ),
+            ),
+          ),
+
+          IconButton(
+              icon: const Icon(Icons.settings_outlined),
+              color: Colors.black,
+              onPressed: () => {}), //button shoud direct to setings
+        ],
+      ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

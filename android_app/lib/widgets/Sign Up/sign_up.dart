@@ -9,12 +9,15 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+
   var _allIsEntered = false;
   var _nameIsEntered = false;
   var _name;
   var _emailIsEntered = false;
   var _emailIsValid = false;
+  var _passwordIsValid = false;
   var _email;
   var _dobIsEntered = false;
   var _dob;
@@ -26,6 +29,12 @@ class _SignUpState extends State<SignUp> {
   bool _isEmailValid(var email) {
     return (_emailIsValid =
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
+  }
+
+  bool _isPasswordValid(var password) {
+    return (_passwordIsValid = RegExp(
+            r"(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")
+        .hasMatch(password));
   }
 
   @override
@@ -81,7 +90,7 @@ class _SignUpState extends State<SignUp> {
             ),
             const SizedBox(height: 50),
             Form(
-              key: _formKey,
+              key: _mailKey,
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -89,6 +98,7 @@ class _SignUpState extends State<SignUp> {
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Name',
+                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: _nameIsEntered
                             ? const Icon(
                                 Icons.check_circle_outline,
@@ -122,6 +132,7 @@ class _SignUpState extends State<SignUp> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: 'Phone number or email address',
+                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: (_emailIsValid && _emailIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
@@ -148,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                               _emailIsEntered = false;
                             }
                           });
-                          if (_formKey.currentState!.validate()) {
+                          if (_mailKey.currentState!.validate()) {
                             _email = value;
                           }
                         });
@@ -183,6 +194,7 @@ class _SignUpState extends State<SignUp> {
                       keyboardType: TextInputType.datetime,
                       decoration: InputDecoration(
                         labelText: 'Date of birth',
+                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: _dobIsEntered
                             ? const Icon(
                                 Icons.check_circle_outline,

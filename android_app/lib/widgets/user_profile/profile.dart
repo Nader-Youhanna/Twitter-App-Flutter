@@ -25,6 +25,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  void _goBack(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     //String dropdownValue = 'One';
@@ -89,7 +93,9 @@ class _ProfileState extends State<Profile> {
             child: AppBar(
               leading: BackButton(
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  _goBack(context);
+                },
               ), //IconButton
               actions: <Widget>[
                 IconButton(
