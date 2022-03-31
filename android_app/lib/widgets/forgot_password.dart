@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ForgorPasswordPage extends StatefulWidget {
+class ForgotPasswordPage extends StatefulWidget {
   @override
-  State<ForgorPasswordPage> createState() => _ForgorPasswordPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgorPasswordPageState extends State<ForgorPasswordPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   var _username;
 
   var _usernameIsEntered = false;

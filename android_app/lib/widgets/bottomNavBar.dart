@@ -31,6 +31,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),
     )), //second item should be explore page->not yet created
     const NotificationsPage(),
+
     Inbox(), //last item should be messages page->not yet created
   ];
 

@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
   void _forgotPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return ForgorPasswordPage();
+        return ForgotPasswordPage();
       }),
     );
   }
