@@ -1,3 +1,4 @@
+import '../bottomNavBar.dart';
 import 'package:flutter/material.dart';
 
 class EnterPasswordPage extends StatefulWidget {
@@ -12,6 +13,14 @@ class EnterPasswordPage extends StatefulWidget {
 class _EnterPasswordPageState extends State<EnterPasswordPage> {
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  void _goToTimeline(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return MyNavigationBar();
+      }),
+    );
   }
 
   final _textFieldWidth = 330.0;
@@ -149,7 +158,9 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 const SizedBox(width: 125),
                 ElevatedButton(
                   child: const Text('Next'),
-                  onPressed: null,
+                  onPressed: () {
+                    _goToTimeline(context);
+                  },
                   style: (!_passwordIsEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
