@@ -206,7 +206,9 @@ class _SignUpState extends State<SignUp> {
                             if (value != null) {
                               _dobIsEntered = true;
                               _dob = value;
-                              if (_nameIsEntered && _emailIsEntered) {
+                              if (_nameIsEntered &&
+                                  _emailIsEntered &&
+                                  _emailIsValid) {
                                 _allIsEntered = true;
                               }
                             } else {
