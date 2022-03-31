@@ -14,6 +14,7 @@ class _SignUpState extends State<SignUp> {
   var _nameIsEntered = false;
   var _name;
   var _emailIsEntered = false;
+  var _emailIsValid = false;
   var _email;
   var _dobIsEntered = false;
   var _dob;
@@ -23,7 +24,8 @@ class _SignUpState extends State<SignUp> {
   }
 
   bool _isEmailValid(var email) {
-    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    return (_emailIsValid =
+        RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
 
   @override
@@ -120,12 +122,17 @@ class _SignUpState extends State<SignUp> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: 'Phone number or email address',
-                        suffixIcon: _emailIsEntered
+                        suffixIcon: (_emailIsValid && _emailIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.green,
                               )
-                            : null,
+                            : (_emailIsEntered && !_emailIsValid)
+                                ? const Icon(
+                                    Icons.cancel,
+                                    color: Colors.red,
+                                  )
+                                : null,
                       ),
                       onChanged: (value) {
                         setState(() {
