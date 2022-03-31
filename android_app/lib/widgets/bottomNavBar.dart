@@ -18,6 +18,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   final List<Tweet> tweet = [];
   final List<Widget> _widgetOptions = <Widget>[
+<<<<<<< HEAD
     const Center(
         child: Text(
       'Timeline should be here',
@@ -32,6 +33,11 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     )), //second item should be explore page->not yet created
     const NotificationsPage(),
 
+=======
+    ForgotPasswordPage(), //first element should be timeline but i couldn't initialize it
+    Login(), //second item should be explore page->not yet created
+    NotificationsPage(),
+>>>>>>> origin/Development
     Inbox(), //last item should be messages page->not yet created
   ];
 
