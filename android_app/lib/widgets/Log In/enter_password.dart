@@ -16,6 +16,9 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   }
 
   void _goToTimeline(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).pop();
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return MyNavigationBar();
