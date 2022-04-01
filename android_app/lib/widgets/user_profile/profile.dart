@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/timeline.dart';
+import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 
 class Choice {
   const Choice(
@@ -283,7 +284,9 @@ class _ProfileState extends State<Profile> {
                                   margin: EdgeInsets.only(top: 0.0, bottom: 10),
                                   padding: EdgeInsets.only(left: 10, right: 5),
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Accounts_page();
+                                      },
                                       child: Text(
                                         '${_followersCount} followers',
                                         textAlign: TextAlign.left,
@@ -298,7 +301,9 @@ class _ProfileState extends State<Profile> {
                                   margin: EdgeInsets.only(top: 0.0, bottom: 10),
                                   padding: EdgeInsets.only(left: 10, right: 32),
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Accounts_page();
+                                      },
                                       child: Text(
                                         '${_followingCount} following',
                                         textAlign: TextAlign.left,
