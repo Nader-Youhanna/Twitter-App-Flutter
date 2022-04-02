@@ -7,15 +7,16 @@ class TermsAndConditions extends StatelessWidget {
   static const _textFieldsFontSize = 18.0;
 
   static const termsText = '''
-      By signing up, you agree to the Terms of Service 
-      and Privacy Policy, including Cookie Use
-      Sirius may use your contact information, 
-      including your email address and phone
-      number for purposes outlined in our Privacy Policy,
-      like keeping your account secure and personalizing 
-      our services, including ads. Learn more. Others
-      will be able to find you by email or phone number,
-      when provided, unless you choose otherwise here.
+      By signing up, you agree to the Terms
+      of Service and Privacy Policy, including
+      Cookie Use Sirius may use your contact
+      information, including your email address
+      and phone number for purposes outlined in
+      our Privacy Policy, like keeping your account
+      secure and personalizing our services,
+      including ads. Learn more. Others will be able
+      to find you by email or phone number,when
+      provided, unless you choose otherwise here.
       ''';
 
   TermsAndConditions(
@@ -150,12 +151,13 @@ class TermsAndConditions extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 100),
+          const SizedBox(height: 80),
           const SizedBox(
             child: Text(
               TermsAndConditions.termsText,
               style: TextStyle(
                 fontFamily: 'RalewayMedium',
+                fontSize: 14.2,
               ),
             ),
           ),
