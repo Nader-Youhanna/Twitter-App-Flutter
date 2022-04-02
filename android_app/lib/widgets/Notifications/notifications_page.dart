@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import './notificationBar.dart';
-import './allNotificationsList.dart';
-import './mentionsList.dart';
+import 'notification_bar.dart';
+import 'all_notifications_list.dart';
+import 'mentions_list.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage();

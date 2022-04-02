@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Notifications/notificationsPage.dart';
+import 'Notifications/notifications_page.dart';
 import './Log In/login.dart';
 import 'Sign Up/sign_up.dart';
 import 'Tweets/tweet.dart';

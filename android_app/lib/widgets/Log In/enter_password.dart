@@ -1,4 +1,4 @@
-import '../bottomNavBar.dart';
+import '../bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class EnterPasswordPage extends StatefulWidget {

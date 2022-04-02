@@ -1,5 +1,5 @@
 import 'package:android_app/widgets/Messages/empty_inbox_body.dart';
-import 'package:android_app/widgets/bottomNavBar.dart';
+import 'package:android_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 
