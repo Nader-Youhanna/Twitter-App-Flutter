@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import './terms_and_conditions.dart';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -11,19 +11,33 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
 
   var _allIsEntered = false;
   var _nameIsEntered = false;
-  var _name;
   var _emailIsEntered = false;
+  var _dobIsEntered = false;
+  var _nameIsValid = false;
   var _emailIsValid = false;
   var _passwordIsValid = false;
+  var _name;
   var _email;
-  var _dobIsEntered = false;
-  var _dob;
+  var _dob = null;
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  void _goToTermsAndConditions(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return TermsAndConditions(
+          username: _name,
+          email: _email,
+          dob: '${_dob.month}/${_dob.day}/${_dob.year}',
+        );
+      }),
+    );
   }
 
   bool _isEmailValid(var email) {
@@ -35,6 +49,37 @@ class _SignUpState extends State<SignUp> {
     return (_passwordIsValid = RegExp(
             r"(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")
         .hasMatch(password));
+  }
+
+  bool _isNameValid(var name) {
+    return (_nameIsValid = !RegExp(r"nader").hasMatch(name));
+  }
+
+  Future _pickDate(BuildContext context) async {
+    final initialDate = DateTime.now();
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+
+    if (newDate == null) return;
+    setState(() {
+      _dobIsEntered = true;
+      if (_emailIsEntered && _emailIsValid && _nameIsEntered && _nameIsValid) {
+        _allIsEntered = true;
+      }
+      _dob = newDate;
+    });
+  }
+
+  String _getDate() {
+    if (_dob == null) {
+      return 'Date of Birth';
+    } else {
+      return '${_dob.month}/${_dob.day}/${_dob.year}';
+    }
   }
 
   @override
@@ -89,50 +134,56 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const SizedBox(height: 50),
-            Form(
-              key: _mailKey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
+            Column(
+              children: <Widget>[
+                Form(
+                  key: _nameKey,
+                  child: SizedBox(
                     width: SignUp._widthOfTextFields,
-                    child: TextField(
+                    child: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Name',
                         labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
-                        suffixIcon: _nameIsEntered
+                        suffixIcon: (_nameIsValid && _nameIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.green,
                               )
-                            : null,
+                            : (_nameIsEntered && !_nameIsValid)
+                                ? const Icon(
+                                    Icons.cancel,
+                                    color: Colors.red,
+                                  )
+                                : null,
                       ),
                       onChanged: (value) {
                         setState(() {
                           _nameIsEntered = value.isNotEmpty;
-                        });
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          if (value.isNotEmpty) {
-                            _nameIsEntered = true;
+                          if (_nameKey.currentState!.validate()) {
                             _name = value;
-                            if (_emailIsEntered && _dobIsEntered) {
-                              _allIsEntered = true;
-                            }
-                          } else {
-                            _nameIsEntered = false;
                           }
                         });
                       },
+                      validator: (value) {
+                        if (value != null && _isNameValid(value)) {
+                          return null;
+                        } else {
+                          return 'This username is already taken';
+                        }
+                      },
                     ),
                   ),
-                  SizedBox(
+                ),
+                Form(
+                  key: _mailKey,
+                  child: SizedBox(
                     width: SignUp._widthOfTextFields,
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: 'Phone number or email address',
-                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
+                        labelStyle:
+                            const TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: (_emailIsValid && _emailIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
@@ -147,18 +198,16 @@ class _SignUpState extends State<SignUp> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          setState(() {
-                            _emailIsEntered = value.isNotEmpty;
-                            if (value.isNotEmpty) {
-                              _emailIsEntered = true;
-                              _email = value;
-                              if (_nameIsEntered && _dobIsEntered) {
-                                _allIsEntered = true;
-                              }
-                            } else {
-                              _emailIsEntered = false;
+                          _emailIsEntered = value.isNotEmpty;
+                          if (value.isNotEmpty) {
+                            _emailIsEntered = true;
+                            _email = value;
+                            if (_nameIsEntered && _dobIsEntered) {
+                              _allIsEntered = true;
                             }
-                          });
+                          } else {
+                            _emailIsEntered = false;
+                          }
                           if (_mailKey.currentState!.validate()) {
                             _email = value;
                           }
@@ -171,68 +220,45 @@ class _SignUpState extends State<SignUp> {
                           return 'Please enter a valid email address';
                         }
                       },
-                      // onSubmitted: (value) {
-                      //   if (value.isNotEmpty) {
-                      //     setState(() {
-                      //       if (value.isNotEmpty) {
-                      //         _emailIsEntered = true;
-                      //         email = value;
-                      //         if (_nameIsEntered && _dobIsEntered) {
-                      //           _allIsEntered = true;
-                      //         }
-                      //       } else {
-                      //         _emailIsEntered = false;
-                      //       }
-                      //     });
-                      //   }
-                      // },
                     ),
                   ),
-                  SizedBox(
-                    width: SignUp._widthOfTextFields,
-                    child: TextField(
-                      keyboardType: TextInputType.datetime,
-                      decoration: InputDecoration(
-                        labelText: 'Date of birth',
-                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
-                        suffixIcon: _dobIsEntered
-                            ? const Icon(
-                                Icons.check_circle_outline,
-                                color: Colors.green,
-                              )
-                            : null,
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _dobIsEntered = value.isNotEmpty;
-                        });
-                      },
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                          initialDate: DateTime.now(),
-                        ).then((value) {
-                          setState(() {
-                            if (value != null) {
-                              _dobIsEntered = true;
-                              _dob = value;
-                              if (_nameIsEntered &&
-                                  _emailIsEntered &&
-                                  _emailIsValid) {
-                                _allIsEntered = true;
-                              }
-                            } else {
-                              _dobIsEntered = false;
-                            }
-                          });
-                        });
-                      },
+                ),
+                SizedBox(
+                  width: SignUp._widthOfTextFields,
+                  child: InkWell(
+                    onTap: () {
+                      _pickDate(context);
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(height: 17),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              (_dob == null)
+                                  ? 'Date of birth'
+                                  : '${_dob.month}/${_dob.day}/${_dob.year}',
+                              style: TextStyle(
+                                fontFamily: 'RalewayMedium',
+                                fontSize: 16,
+                                color: (_dob == null)
+                                    ? Colors.grey.shade600
+                                    : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Divider(
+                          height: 1,
+                          thickness: 1.4,
+                          color: Colors.grey.shade400,
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 290),
             Row(
@@ -240,7 +266,9 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(width: 280),
                 ElevatedButton(
                   child: const Text('Next'),
-                  onPressed: () {},
+                  onPressed: () {
+                    _goToTermsAndConditions(context);
+                  },
                   style: (!_allIsEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(

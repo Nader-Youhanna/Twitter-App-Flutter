@@ -22,7 +22,6 @@ class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //App bar test
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
@@ -58,9 +57,8 @@ class _InboxState extends State<Inbox> {
         ],
       ),
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
-      // bottomNavigationBar: MyNavigationBar(),
       floatingActionButton: FloatingActionButton(
-        // button should open the what's happening page
+        //New Message
         onPressed: () => {},
         child: const Icon(
           Icons.mail,
