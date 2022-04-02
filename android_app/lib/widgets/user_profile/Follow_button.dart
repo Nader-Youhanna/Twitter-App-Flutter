@@ -27,11 +27,9 @@ class _Follow_buttonState extends State<Follow_button> {
         ),
       ),
       onPressed: () {
-        if (widget._alreadyfollowed) {
-          widget._alreadyfollowed = false;
-        } else {
-          widget._alreadyfollowed = true;
-        }
+        setState(() {
+          widget._alreadyfollowed = !widget._alreadyfollowed;
+        });
       },
     );
   }

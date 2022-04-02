@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/user_profile/Follow_button.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/timeline.dart';
@@ -34,11 +35,11 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     //String dropdownValue = 'One';
     var _tabs = ["Tweets", "Tweets & replies", "Media", "Likes"];
-    var _followersCount;
-    var _followingCount;
+    var _followersCount = 0;
+    var _followingCount = 0;
 
-    bool _myProfile = true;
-    bool _alreadyFollowed = true;
+    bool _myProfile = false;
+    bool _alreadyFollowed = false;
 
     List<Tweet> tweets = [
       Tweet(
@@ -86,24 +87,25 @@ class _ProfileState extends State<Profile> {
     ];
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            appBarTheme:
+                AppBarTheme(backgroundColor: Colors.white, centerTitle: true),
+            tabBarTheme: TabBarTheme(labelColor: Colors.black)),
         home: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50.0),
             child: AppBar(
               leading: BackButton(
-                color: Colors.white,
+                color: Colors.black,
                 onPressed: () {
                   _goBack(context);
                 },
               ), //IconButton
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.search),
-                  tooltip: 'search Icon',
-                  onPressed: () {},
-                ),
+                    icon: Icon(Icons.search),
+                    tooltip: 'search Icon',
+                    onPressed: () {},
+                    color: Colors.black),
                 PopupMenuButton(
                   itemBuilder: (BuildContext context) {
                     return choices.map((Choice choice) {
@@ -199,37 +201,70 @@ class _ProfileState extends State<Profile> {
                                 ),
 
                                 Container(
-                                  margin: EdgeInsets.only(top: 0),
-                                  padding:
-                                      EdgeInsets.only(left: 154, right: 20),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      shadowColor: Colors.black,
-                                      side: BorderSide(
-                                          width: 1,
-                                          color:
-                                              Color.fromARGB(255, 68, 68, 68)),
-                                      minimumSize: Size(100, 30),
-                                    ),
-                                    child: Text(
-                                      _myProfile
-                                          ? 'Edit Profile'
-                                          : (_alreadyFollowed
-                                              ? 'unFollow'
-                                              : 'Follow'),
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (_myProfile) {
-                                      } else if (_alreadyFollowed) {
-                                      } else {}
-                                    },
-                                  ),
-                                )
+                                    margin: EdgeInsets.only(top: 0),
+                                    padding:
+                                        EdgeInsets.only(left: 154, right: 20),
+                                    child: _myProfile
+                                        ? ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              shape: StadiumBorder(),
+                                              shadowColor: Colors.black,
+                                              side: BorderSide(
+                                                  width: 1,
+                                                  color: Color.fromARGB(
+                                                      255, 68, 68, 68)),
+                                              minimumSize: Size(100, 30),
+                                            ),
+                                            child: Text(
+                                              'Edit Profile',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              setState(() {});
+                                            },
+                                          )
+                                        : Follow_button(_alreadyFollowed)
+                                    // child: ElevatedButton(
+                                    //   style: ElevatedButton.styleFrom(
+                                    //     primary: _myProfile
+                                    //         ? Colors.white
+                                    //         : (_alreadyFollowed
+                                    //             ? Colors.white
+                                    //             : Colors.black),
+                                    //     shape: StadiumBorder(),
+                                    //     shadowColor: Colors.black,
+                                    //     side: BorderSide(
+                                    //         width: 1,
+                                    //         color:
+                                    //             Color.fromARGB(255, 68, 68, 68)),
+                                    //     minimumSize: Size(100, 30),
+                                    //   ),
+                                    //   child: Text(
+                                    //     _myProfile
+                                    //         ? 'Edit Profile'
+                                    //         : (_alreadyFollowed
+                                    //             ? 'unFollow'
+                                    //             : 'Follow'),
+                                    //     style: TextStyle(
+                                    //       fontSize: 14,
+                                    //       color: _myProfile
+                                    //           ? Colors.black
+                                    //           : (_alreadyFollowed
+                                    //               ? Colors.black
+                                    //               : Colors.white),
+                                    //     ),
+                                    //   ),
+                                    //   onPressed: () {
+                                    //     setState(() {
+                                    //       _alreadyFollowed = !_alreadyFollowed;
+                                    //     });
+                                    //   },
+                                    // ),
+                                    )
                                 // else if (_myProfile == true)
                                 //   (Container(
                                 //     margin: EdgeInsets.only(top: 0),
@@ -276,7 +311,7 @@ class _ProfileState extends State<Profile> {
                                   "Bio",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 15.0),
+                                      color: Colors.black, fontSize: 15.0),
                                 )),
                             Row(
                               children: <Widget>[
@@ -285,7 +320,11 @@ class _ProfileState extends State<Profile> {
                                   padding: EdgeInsets.only(left: 10, right: 5),
                                   child: TextButton(
                                       onPressed: () {
-                                        Accounts_page();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Accounts_page()));
                                       },
                                       child: Text(
                                         '${_followersCount} followers',
@@ -302,7 +341,11 @@ class _ProfileState extends State<Profile> {
                                   padding: EdgeInsets.only(left: 10, right: 32),
                                   child: TextButton(
                                       onPressed: () {
-                                        Accounts_page();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Accounts_page()));
                                       },
                                       child: Text(
                                         '${_followingCount} following',
