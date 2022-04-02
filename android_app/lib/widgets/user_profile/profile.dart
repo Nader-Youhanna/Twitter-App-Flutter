@@ -95,17 +95,19 @@ class _ProfileState extends State<Profile> {
             preferredSize: Size.fromHeight(50.0),
             child: AppBar(
               leading: BackButton(
-                color: Colors.black,
+                color: Colors.white,
                 onPressed: () {
                   _goBack(context);
                 },
-              ), //IconButton
+              ),
+              //IconButton
               actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.search),
                     tooltip: 'search Icon',
                     onPressed: () {},
-                    color: Colors.black),
+                    color: Colors.white),
+
                 PopupMenuButton(
                   itemBuilder: (BuildContext context) {
                     return choices.map((Choice choice) {
@@ -199,72 +201,41 @@ class _ProfileState extends State<Profile> {
                                     backgroundColor: Colors.grey,
                                   ),
                                 ),
-
-                                Container(
-                                    margin: EdgeInsets.only(top: 0),
-                                    padding:
-                                        EdgeInsets.only(left: 154, right: 20),
-                                    child: _myProfile
-                                        ? ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Colors.white,
-                                              shape: StadiumBorder(),
-                                              shadowColor: Colors.black,
-                                              side: BorderSide(
-                                                  width: 1,
-                                                  color: Color.fromARGB(
-                                                      255, 68, 68, 68)),
-                                              minimumSize: Size(100, 30),
-                                            ),
-                                            child: Text(
-                                              'Edit Profile',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {});
-                                            },
-                                          )
-                                        : Follow_button(_alreadyFollowed)
-                                    // child: ElevatedButton(
-                                    //   style: ElevatedButton.styleFrom(
-                                    //     primary: _myProfile
-                                    //         ? Colors.white
-                                    //         : (_alreadyFollowed
-                                    //             ? Colors.white
-                                    //             : Colors.black),
-                                    //     shape: StadiumBorder(),
-                                    //     shadowColor: Colors.black,
-                                    //     side: BorderSide(
-                                    //         width: 1,
-                                    //         color:
-                                    //             Color.fromARGB(255, 68, 68, 68)),
-                                    //     minimumSize: Size(100, 30),
-                                    //   ),
-                                    //   child: Text(
-                                    //     _myProfile
-                                    //         ? 'Edit Profile'
-                                    //         : (_alreadyFollowed
-                                    //             ? 'unFollow'
-                                    //             : 'Follow'),
-                                    //     style: TextStyle(
-                                    //       fontSize: 14,
-                                    //       color: _myProfile
-                                    //           ? Colors.black
-                                    //           : (_alreadyFollowed
-                                    //               ? Colors.black
-                                    //               : Colors.white),
-                                    //     ),
-                                    //   ),
-                                    //   onPressed: () {
-                                    //     setState(() {
-                                    //       _alreadyFollowed = !_alreadyFollowed;
-                                    //     });
-                                    //   },
-                                    // ),
-                                    )
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: _myProfile
+                                            ? ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.white,
+                                                  shape: StadiumBorder(),
+                                                  shadowColor: Colors.black,
+                                                  side: BorderSide(
+                                                      width: 1,
+                                                      color: Color.fromARGB(
+                                                          255, 68, 68, 68)),
+                                                  minimumSize: Size(100, 30),
+                                                ),
+                                                child: Text(
+                                                  'Edit Profile',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {});
+                                                },
+                                              )
+                                            : Follow_button(_alreadyFollowed),
+                                      )
+                                    ],
+                                  ),
+                                ),
                                 // else if (_myProfile == true)
                                 //   (Container(
                                 //     margin: EdgeInsets.only(top: 0),
@@ -299,10 +270,12 @@ class _ProfileState extends State<Profile> {
                                   "username",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'PlayfairDisplay',
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 17.0),
+                                    color: Colors.black,
+                                    fontFamily: 'PlayfairDisplay',
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 )),
                             Container(
                                 margin: EdgeInsets.only(top: 10.0),
