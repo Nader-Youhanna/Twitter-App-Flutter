@@ -18,24 +18,20 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   Future<bool> _validateCredentials(String password) async {
-    print('A7a');
-    print(widget.username);
-    print(_password);
+    return true;
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(url, body: {
       'username': widget.username,
-      'password': _password,
+      'password': password,
     });
-    print('Here');
     print('Response body: ${response.body}');
 
-    final extractedMyInfo = json.decode(response.body) as List<dynamic>;
-    return true;
-    // if (extractedMyInfo[0]['success'] == true) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedMyInfo[0]['success'] == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void _goBack(BuildContext ctx) {
@@ -43,7 +39,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   }
 
   void _goToTimeline(BuildContext ctx) {
-    if (_validateCredentials() == true) {
+    if (_passwordIsEntered) {
       Navigator.of(ctx).pop();
       Navigator.of(ctx).pop();
       Navigator.of(ctx).pop();
@@ -52,8 +48,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           return MyNavigationBar();
         }),
       );
-    } else {
-      print('Wrong password');
     }
   }
 
@@ -154,16 +148,19 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                   ),
                   obscureText: !_passwordIsVisible,
                   onChanged: (value) {
-                    setState(() {
-                      _passwordIsEntered = value.isNotEmpty;
-                      if (_passwordKey.currentState!.validate()) {
+                    if (value.isNotEmpty) {
+                      setState(() {
                         _password = value;
-                        _passwordIsValid = true;
-                      }
-                    });
+                        _passwordIsEntered = true;
+                      });
+                    }
                   },
                   validator: (value) {
-                    if (value != null && _validateCredentials() == true) {
+                    if (value != null &&
+                        _validateCredentials(value) ==
+                            Future<bool>.value(true)) {
+                      _passwordIsValid = true;
+                      _password = value;
                       return null;
                     } else {
                       return 'Username or password is incorrect';
