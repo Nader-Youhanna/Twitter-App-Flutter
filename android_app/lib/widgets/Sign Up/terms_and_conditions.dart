@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../bottom_nav_bar.dart';
+import './choose_password.dart';
 
 class TermsAndConditions extends StatelessWidget {
   final username, email, dob;
@@ -26,13 +26,10 @@ class TermsAndConditions extends StatelessWidget {
     Navigator.of(ctx).pop();
   }
 
-  void _goToTimeline(BuildContext ctx) {
-    Navigator.of(ctx).pop();
-    Navigator.of(ctx).pop();
-    Navigator.of(ctx).pop();
+  void _goToChoosePassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return MyNavigationBar();
+        return ChoosePassword();
       }),
     );
   }
@@ -170,7 +167,7 @@ class TermsAndConditions extends StatelessWidget {
                 'Sign Up',
               ),
               onPressed: () {
-                _goToTimeline(context);
+                _goToChoosePassword(context);
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),

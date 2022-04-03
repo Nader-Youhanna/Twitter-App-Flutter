@@ -45,14 +45,8 @@ class _SignUpState extends State<SignUp> {
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
 
-  bool _isPasswordValid(var password) {
-    return (_passwordIsValid = RegExp(
-            r"(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")
-        .hasMatch(password));
-  }
-
   bool _isNameValid(var name) {
-    return (_nameIsValid = !RegExp(r"nader").hasMatch(name));
+    return (_nameIsValid = !RegExp(r"^nader$").hasMatch(name));
   }
 
   Future _pickDate(BuildContext context) async {
@@ -266,9 +260,11 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(width: 280),
                 ElevatedButton(
                   child: const Text('Next'),
-                  onPressed: () {
-                    _goToTermsAndConditions(context);
-                  },
+                  onPressed: (_allIsEntered)
+                      ? () {
+                          _goToTermsAndConditions(context);
+                        }
+                      : () {},
                   style: (!_allIsEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
