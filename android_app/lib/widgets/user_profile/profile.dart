@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/timeline.dart';
 import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Choice {
   const Choice(
@@ -27,18 +29,52 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  String username = '';
+  var _followersCount = 0;
+  var _followingCount = 0;
+  String bio = "";
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
+  Future<void> httpRequestGet() async {
+    var url = Uri.parse('http://localhost:3000/profile');
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    setState(() {
+      username = extractedMyInfo["username"];
+      bio = extractedMyInfo["bio"];
+    });
+    _followersCount = extractedMyInfo["followers"].length;
+    _followingCount = extractedMyInfo["following"].length;
+    print(username);
+  }
+
+  Future<void> httpRequestPost() async {
+    print('okay');
+    var url = Uri.parse('http://localhost:3000/posts');
+    var response =
+        await http.post(url, body: {'name': 'Nader', 'color': 'blue'});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
   @override
+  void initState() {
+    // TODO: implement initState
+
+    setState(() {
+      httpRequestGet();
+    });
+  }
+
   Widget build(BuildContext context) {
     //String dropdownValue = 'One';
     var _tabs = ["Tweets", "Tweets & replies", "Media", "Likes"];
-    var _followersCount = 0;
-    var _followingCount = 0;
-
-    bool _myProfile = false;
+    bool _myProfile = true;
     bool _alreadyFollowed = false;
 
     List<Tweet> tweets = [
@@ -227,9 +263,7 @@ class _ProfileState extends State<Profile> {
                                                     color: Colors.black,
                                                   ),
                                                 ),
-                                                onPressed: () {
-                                                  setState(() {});
-                                                },
+                                                onPressed: () {},
                                               )
                                             : Follow_button(_alreadyFollowed),
                                       )
@@ -267,7 +301,7 @@ class _ProfileState extends State<Profile> {
                                 margin: EdgeInsets.only(top: 0),
                                 padding: EdgeInsets.only(left: 15, right: 32),
                                 child: Text(
-                                  "username",
+                                  username,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -281,7 +315,7 @@ class _ProfileState extends State<Profile> {
                                 margin: EdgeInsets.only(top: 10.0),
                                 padding: EdgeInsets.only(left: 15, right: 32),
                                 child: Text(
-                                  "Bio",
+                                  bio,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 15.0),
