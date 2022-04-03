@@ -6,6 +6,8 @@ import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+const MY_IP_ADDRESS = '192.168.1.4';
+
 class Choice {
   const Choice(
       {required this.title, required this.icon, this.isEnable = false});
@@ -38,7 +40,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> httpRequestGet() async {
-    var url = Uri.parse('http://localhost:3000/profile');
+    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
