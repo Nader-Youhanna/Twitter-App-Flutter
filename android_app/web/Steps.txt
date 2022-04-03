@@ -7,6 +7,14 @@ TO SET UP A MOCK server
 3. Enter the following command: json-server --watch <FILENAME>
 Example: json-server --watch test.json
 
+4. Open the browser and enter the following URL: http://localhost:3000/
+
+If tou get a connection error you can try this command instead: json-server --watch --host <your IP address> test.json --port 8000
+and opening the following URL in the browser: http://<your IP address>:8000/
+To get your IP address: enter ipconfig in the command prompt
+
+Note: If you are using your real device (not an emulator), then you cannot use localhost
+
 ########################################
 TO SEND HTTP REQUESTS IN FLUTTER
 

@@ -2,12 +2,12 @@
   "posts": [
     {
       "id": 1,
-      "title": "Ismail",
+      "title": "some post",
       "author": "typicode"
     },
     {
       "id": 2,
-      "title": "Nader",
+      "title": "some other post",
       "author": "typicode"
     }
   ],
@@ -16,6 +16,20 @@
       "id": 1,
       "body": "some comment",
       "postId": 1
+    }
+  ],
+  "signup": [
+    {
+      "id": 1,
+      "username": "Ahmed",
+      "email": "ahmedmoh123@hotmail.com",
+      "dob": "22/02/2000"
+    },
+    {
+      "name": "naderr",
+      "email": "naderyouhanna@gmail.com",
+      "dob": "15/5/2000",
+      "id": 2
     }
   ],
   "profile": {

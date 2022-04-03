@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  http: ^0.13.4
 
 
   tab_indicator_styler: ^2.0.0

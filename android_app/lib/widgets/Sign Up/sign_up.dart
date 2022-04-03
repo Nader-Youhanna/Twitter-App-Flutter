@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import './terms_and_conditions.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+const MY_IP_ADDRESS = '192.168.1.4';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -20,7 +24,7 @@ class _SignUpState extends State<SignUp> {
   var _nameIsValid = false;
   var _emailIsValid = false;
   var _passwordIsValid = false;
-  var _name;
+  var _username;
   var _email;
   var _dob = null;
 
@@ -28,13 +32,25 @@ class _SignUpState extends State<SignUp> {
     Navigator.of(ctx).pop();
   }
 
+  void _sendDataToBackend() async {
+    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/signup');
+    var response = await http.post(url, body: {
+      'name': _username,
+      'email': _email,
+      'dob': '${_dob.day}/${_dob.month}/${_dob.year}'
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
   void _goToTermsAndConditions(BuildContext ctx) {
+    _sendDataToBackend();
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return TermsAndConditions(
-          username: _name,
+          username: _username,
           email: _email,
-          dob: '${_dob.month}/${_dob.day}/${_dob.year}',
+          dob: '${_dob.day}/${_dob.month}/${_dob.year}',
         );
       }),
     );
@@ -137,7 +153,8 @@ class _SignUpState extends State<SignUp> {
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Name',
-                        labelStyle: TextStyle(fontFamily: 'RalewayMedium'),
+                        labelStyle:
+                            const TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: (_nameIsValid && _nameIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
@@ -154,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                         setState(() {
                           _nameIsEntered = value.isNotEmpty;
                           if (_nameKey.currentState!.validate()) {
-                            _name = value;
+                            _username = value;
                           }
                         });
                       },
@@ -254,7 +271,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ],
             ),
-            const SizedBox(height: 290),
+            const SizedBox(height: 310),
             Row(
               children: <Widget>[
                 const SizedBox(width: 280),
