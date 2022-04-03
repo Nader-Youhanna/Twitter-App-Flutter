@@ -9,6 +9,11 @@
       "id": 2,
       "title": "some other post",
       "author": "typicode"
+    },
+    {
+      "name": "Nader",
+      "color": "blue",
+      "id": 3
     }
   ],
   "comments": [
@@ -33,6 +38,75 @@
     }
   ],
   "profile": {
-    "name": "typicode"
+    "username": "Nada",
+    "uid": "uid",
+    "emial": "email",
+    "photoUrl": "photoUrl",
+    "bio": "bio",
+    "phone": "phone",
+    "followers": [
+      {
+        "username": "account 1",
+        "bio": "bio"
+      },
+      {
+        "username": "account 2",
+        "bio": "bio"
+      },
+      {
+        "username": "account 3",
+        "bio": "bio"
+      },
+      {
+        "username": "account 4",
+        "bio": "bio"
+      },
+      {
+        "username": "account 5",
+        "bio": "bio"
+      },
+      {
+        "username": "account 6",
+        "bio": "bio"
+      },
+      {
+        "username": "account 7",
+        "bio": "bio"
+      }
+    ],
+    "following": [
+      {
+        "username": "account 1",
+        "bio": "bio"
+      },
+      {
+        "username": "account 2",
+        "bio": "bio"
+      },
+      {
+        "username": "account 3",
+        "bio": "bio"
+      },
+      {
+        "username": "account 4",
+        "bio": "bio"
+      },
+      {
+        "username": "account 5",
+        "bio": "bio"
+      },
+      {
+        "username": "account 6",
+        "bio": "bio"
+      },
+      {
+        "username": "account 7",
+        "bio": "bio"
+      },
+      {
+        "username": "account 8",
+        "bio": "bio"
+      }
+    ]
   }
 }
