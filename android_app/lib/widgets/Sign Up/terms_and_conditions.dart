@@ -3,6 +3,9 @@ import './choose_password.dart';
 
 class TermsAndConditions extends StatelessWidget {
   final username, email, dob;
+  TermsAndConditions(
+      {@required this.username, @required this.email, @required this.dob});
+
   static const _widthOfTextFields = 280.0;
   static const _textFieldsFontSize = 18.0;
 
@@ -19,9 +22,6 @@ class TermsAndConditions extends StatelessWidget {
       provided, unless you choose otherwise here.
       ''';
 
-  TermsAndConditions(
-      {@required this.username, @required this.email, @required this.dob});
-
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -29,7 +29,7 @@ class TermsAndConditions extends StatelessWidget {
   void _goToChoosePassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return ChoosePassword();
+        return ChoosePassword(username: username, email: email, dob: dob);
       }),
     );
   }

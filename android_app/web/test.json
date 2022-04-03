@@ -26,11 +26,20 @@
   "signup": [
     {
       "id": 1,
-      "username": "Ahmed",
+      "username": "ahmed",
       "email": "ahmedmoh123@hotmail.com",
-      "dob": "22/02/2000"
-    },
-
+      "dob": "22/02/2000",
+      "password": "12345"
+    }
+  ],
+  "login": [
+    {
+      "id": 1,
+      "username": "nader",
+      "email": "naderyouhanna@hotmail.com",
+      "dob": "15/05/2000",
+      "password": "12345"
+    }
   ],
   "profile": {
     "username": "Nada",

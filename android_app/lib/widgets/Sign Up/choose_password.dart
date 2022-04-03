@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import '../bottom_nav_bar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+const MY_IP_ADDRESS = '192.168.1.4';
 
 class ChoosePassword extends StatefulWidget {
+  final username, email, dob;
+  ChoosePassword(
+      {@required this.username, @required this.email, @required this.dob});
   @override
   State<ChoosePassword> createState() => _ChoosePasswordState();
 }
@@ -13,7 +20,21 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     Navigator.of(ctx).pop();
   }
 
+  void _sendDataToBackend() async {
+    print('Sent data to backend');
+    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/signup');
+    var response = await http.post(url, body: {
+      'name': widget.username,
+      'email': widget.email,
+      'dob': widget.dob,
+      'password': _password,
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
   void _goToTimeline(BuildContext ctx) {
+    _sendDataToBackend();
     Navigator.of(ctx).pop();
     Navigator.of(ctx).pop();
     Navigator.of(ctx).pop();

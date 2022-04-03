@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import './terms_and_conditions.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-const MY_IP_ADDRESS = '192.168.1.4';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -14,7 +10,6 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
 
   var _allIsEntered = false;
@@ -32,19 +27,7 @@ class _SignUpState extends State<SignUp> {
     Navigator.of(ctx).pop();
   }
 
-  void _sendDataToBackend() async {
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/signup');
-    var response = await http.post(url, body: {
-      'name': _username,
-      'email': _email,
-      'dob': '${_dob.day}/${_dob.month}/${_dob.year}'
-    });
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-  }
-
   void _goToTermsAndConditions(BuildContext ctx) {
-    _sendDataToBackend();
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return TermsAndConditions(
