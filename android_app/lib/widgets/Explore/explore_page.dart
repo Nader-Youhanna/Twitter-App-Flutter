@@ -26,17 +26,20 @@ class ExplorePage extends StatelessWidget {
                 {_goToUserProfile(context)}), //button should open to side bar,
         actions: [
           Container(
-            width: 260,
+            width: 290,
             padding: const EdgeInsets.all(10),
             child: TextField(
               decoration: InputDecoration(
+                filled: true,
                 contentPadding: const EdgeInsets.all(10.0),
+                fillColor: Color.fromARGB(255, 224, 231, 235),
                 hintStyle: const TextStyle(
                   fontSize: 14.5,
-                  fontFamily: 'RalewayMedium',
+                  color: Color.fromARGB(255, 100, 99, 99),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
                 ),
                 hintText: _appBarText,
               ),
@@ -49,8 +52,8 @@ class ExplorePage extends StatelessWidget {
               onPressed: () => {}), //button shoud direct to setings
         ],
       ),
-      body: Center(
-          child: Text('Explore should be implimented here',
+      body: const Center(
+          child: Text('Explore Page',
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 24.0,

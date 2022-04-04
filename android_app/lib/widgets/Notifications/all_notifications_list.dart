@@ -2,6 +2,10 @@ import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'notification_item.dart';
+import 'package:http/http.dart' as http;
+
+const MY_IP_ADDRESS = '192.168.1.4';
 
 class AllNotificationsList extends StatefulWidget {
   const AllNotificationsList();
@@ -15,7 +19,8 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   @override
   bool get wantKeepAlive => true;
   final ScrollController _scrollController = ScrollController();
-  List<String> notificationItems = [];
+  //List<String> notificationItems = [];
+  List<NotificationItem> notificationItems = [];
   bool loading = false;
   bool allLoaded = false;
 
@@ -30,12 +35,12 @@ class _AllNotificationsListState extends State<AllNotificationsList>
     });
 
     await Future.delayed(Duration(milliseconds: 1000)); //mock delay for await
-    List<String> newData = notificationItems.length >= 60
+    List<NotificationItem> newData = notificationItems.length >= 60
         ? []
         : List.generate(
             20,
             (index) =>
-                "List Item ${index + notificationItems.length}"); //generating mock list elements->TODO:get elements from apis
+                NotificationItem()); //generating mock list elements->TODO:get elements from apis
     if (newData.isNotEmpty) {
       notificationItems.addAll(newData);
     }
@@ -85,7 +90,8 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                     //this container should contain actual notifications not list elements
                     height: 100,
                     color: Colors.white,
-                    child: Center(child: Text(notificationItems[index])),
+                    //child: Center(child: Text(notificationItems[index])),
+                    child: notificationItems[index],
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
