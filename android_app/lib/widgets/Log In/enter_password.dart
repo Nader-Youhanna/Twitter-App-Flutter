@@ -18,7 +18,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   Future<bool> _validateCredentials(String password) async {
-    return true;
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(url, body: {
       'username': widget.username,
@@ -27,11 +26,12 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     print('Response body: ${response.body}');
 
     final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    if (extractedMyInfo[0]['success'] == true) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (extractedMyInfo[0]['success'] == 'true') {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return true;
   }
 
   void _goBack(BuildContext ctx) {
@@ -202,6 +202,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {
+                    _validateCredentials(_password);
                     _goToTimeline(context);
                   },
                   style: (!_passwordIsEntered)
