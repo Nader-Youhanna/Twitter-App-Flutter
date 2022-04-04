@@ -12,7 +12,7 @@ class NotificationItem extends StatelessWidget {
   CircleAvatar userImage = const CircleAvatar(
     backgroundImage: AssetImage(
         'assets/images/user_icon.png'), //should be dynamic and fetched from backend
-    radius: 25.0,
+    radius: 13.0,
   );
 
   @override
