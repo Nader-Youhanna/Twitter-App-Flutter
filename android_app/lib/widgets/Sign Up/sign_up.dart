@@ -3,6 +3,12 @@ import './terms_and_conditions.dart';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
+  var _emailIsValid = false;
+
+  bool isEmailValid(var email) {
+    return (_emailIsValid =
+        RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
+  }
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -17,7 +23,6 @@ class _SignUpState extends State<SignUp> {
   var _emailIsEntered = false;
   var _dobIsEntered = false;
   var _nameIsValid = false;
-  var _emailIsValid = false;
   var _passwordIsValid = false;
   var _username;
   var _email;
@@ -39,11 +44,6 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  bool _isEmailValid(var email) {
-    return (_emailIsValid =
-        RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
-  }
-
   bool _isNameValid(var name) {
     return (_nameIsValid = !RegExp(r"^nader$").hasMatch(name));
   }
@@ -60,7 +60,10 @@ class _SignUpState extends State<SignUp> {
     if (newDate == null) return;
     setState(() {
       _dobIsEntered = true;
-      if (_emailIsEntered && _emailIsValid && _nameIsEntered && _nameIsValid) {
+      if (_emailIsEntered &&
+          widget._emailIsValid &&
+          _nameIsEntered &&
+          _nameIsValid) {
         _allIsEntered = true;
       }
       _dob = newDate;
@@ -178,12 +181,12 @@ class _SignUpState extends State<SignUp> {
                         labelText: 'Phone number or email address',
                         labelStyle:
                             const TextStyle(fontFamily: 'RalewayMedium'),
-                        suffixIcon: (_emailIsValid && _emailIsEntered)
+                        suffixIcon: (widget._emailIsValid && _emailIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.green,
                               )
-                            : (_emailIsEntered && !_emailIsValid)
+                            : (_emailIsEntered && !widget._emailIsValid)
                                 ? const Icon(
                                     Icons.cancel,
                                     color: Colors.red,
@@ -208,7 +211,7 @@ class _SignUpState extends State<SignUp> {
                         });
                       },
                       validator: (value) {
-                        if (value != null && _isEmailValid(value)) {
+                        if (value != null && widget.isEmailValid(value)) {
                           return null;
                         } else {
                           return 'Please enter a valid email address';
