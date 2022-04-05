@@ -11,7 +11,7 @@ class User_Item extends StatelessWidget {
   bool FollowsBack = true;
   bool _alreadyfollowed = true;
   String bio =
-      "this is their bio text containig their description being demonnstrated";
+      "this is their bio text containig their description being demonstrated";
   CircleAvatar userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 25.0,
