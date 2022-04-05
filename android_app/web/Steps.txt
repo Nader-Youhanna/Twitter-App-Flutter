@@ -1,5 +1,9 @@
 TO SET UP A MOCK server
 
+First time only write this command in cmd
+npm install -g json-server
+
+
 1. Create a JSON file (there is one alrwady created called test.json)
 
 2. Open cmd in the folder containing the JSON file
