@@ -1,4 +1,0 @@
-1. Add green sa7 next to textfields     DONE
-2. DateTime Picker
-3. Buttons go Up when I press a textfield
-4. Check Email Validity                 DONE

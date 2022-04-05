@@ -41,7 +41,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     if (_passwordIsEntered) {
       Navigator.of(ctx).pop();
       Navigator.of(ctx).pop();
-      Navigator.of(ctx).pop();
       Navigator.of(ctx).push(
         MaterialPageRoute(builder: (_) {
           return MyNavigationBar();
