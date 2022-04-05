@@ -36,11 +36,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String username = '';
+  String username = 'username';
   var _followersCount = 0;
   var _followingCount = 0;
-  String bio = "";
+  String bio = "bio";
   String uid = "";
+  var selectedItem = "";
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -59,6 +60,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void _ShareProfile() {
+    print("share working");
     Share.share("/profile/${uid}");
   }
 
@@ -144,11 +146,6 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {},
                   color: Colors.white),
               PopupMenuButton(
-                onSelected: (value) {
-                  if (value.toString() == 'Share') {
-                    _ShareProfile;
-                  }
-                },
                 itemBuilder: (BuildContext context) {
                   return choices.map((Choice choice) {
                     return PopupMenuItem<Choice>(
@@ -156,6 +153,9 @@ class _ProfileState extends State<Profile> {
                       child: Text(choice.title),
                     );
                   }).toList();
+                },
+                onSelected: (value) {
+                  _ShareProfile;
                 },
               ),
             ],
