@@ -26,12 +26,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     print('Response body: ${response.body}');
 
     final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    // if (extractedMyInfo[0]['success'] == 'true') {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return true;
+    if (extractedMyInfo[0]['success'] == 'true') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void _goBack(BuildContext ctx) {

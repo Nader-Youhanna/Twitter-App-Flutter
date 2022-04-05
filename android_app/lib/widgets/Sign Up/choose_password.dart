@@ -7,6 +7,12 @@ const MY_IP_ADDRESS = '192.168.1.4';
 
 class ChoosePassword extends StatefulWidget {
   final username, email, dob;
+  var _passwordIsValid = false;
+
+  bool isPasswordValid(var password) {
+    return _passwordIsValid = password.length >= 8;
+  }
+
   ChoosePassword(
       {@required this.username, @required this.email, @required this.dob});
   @override
@@ -50,12 +56,6 @@ class _ChoosePasswordState extends State<ChoosePassword> {
   var _password;
 
   var _passwordIsVisible = false;
-
-  var _passwordIsValid = false;
-
-  bool _isPasswordValid(var password) {
-    return _passwordIsValid = password.length >= 8;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,12 +141,12 @@ class _ChoosePasswordState extends State<ChoosePassword> {
                     setState(() {
                       if (_passwordKey.currentState!.validate()) {
                         _password = value;
-                        _passwordIsValid = true;
+                        widget._passwordIsValid = true;
                       }
                     });
                   },
                   validator: (value) {
-                    if (value != null && _isPasswordValid(value)) {
+                    if (value != null && widget.isPasswordValid(value)) {
                       return null;
                     } else {
                       return 'Password must be 8 characters or more';
@@ -166,12 +166,12 @@ class _ChoosePasswordState extends State<ChoosePassword> {
                 const SizedBox(width: 280),
                 ElevatedButton(
                   child: const Text('Next'),
-                  onPressed: _passwordIsValid
+                  onPressed: widget._passwordIsValid
                       ? () {
                           _goToTimeline(context);
                         }
                       : () {},
-                  style: (!_passwordIsValid)
+                  style: (!widget._passwordIsValid)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey.shade400),
