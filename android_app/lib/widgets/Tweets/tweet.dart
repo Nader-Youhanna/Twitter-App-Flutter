@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 
 import './retweet.dart';
@@ -11,66 +10,50 @@ import './share.dart';
 import './tweetImage.dart';
 
 class Tweet extends StatelessWidget {
-  // final user;
-  // final text;
-  // final images;
-  // final date;
-  // final int likes;
-  // final retweets;
-  // final comments;
-  // final bool isLiked;
-  // final bool isRetweeted;
-  // final bool isShared;
-  // final bool isReply;
-  // final bool isReplyAll;
-  // final bool isDirectMessage;
-  // final bool isMention;
-  // final bool isPinned;
-  // final bool isSaved;
-  // final bool isEdited;
-  // final bool isDeleted;
-  // final bool isRepost;
+  final int
+      _userId; //The user who tweeted it. This is needed to get profilePicture, userName and userDisplayName
 
-  CircleAvatar userImage = CircleAvatar(
+  final DateTime _createdAt;
+  final String _tweetText;
+  final CircleAvatar _userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 20.0,
-  );
+  ); //This will be the profile picture of the user who tweeted it. Get it from userId
+  final List<String> _tweetImages;
+  final List<int>
+      _favouriters; //List of userIds of users who favourited this tweet
+  final List<int>
+      _retweeters; //List of userIds of users who retweeted this tweet
+  final List<int>
+      _commenters; //List of userIds of users who commented on this tweet
+  final int _iconSize = 20;
 
-  String tweetText = "This is the text inside the tweet";
+  late String _username;
+  late String _displayName;
 
-  List<String> tweetImages = [
-    'assets/images/test_image.png',
-    'assets/images/test_image.png',
-    'assets/images/test_image.png',
-  ];
+  Tweet(
+    Key? key,
+    this._userId,
+    this._createdAt,
+    this._tweetText,
+    this._tweetImages,
+    this._favouriters,
+    this._retweeters,
+    this._commenters,
+  ) {
+    //Get username and displayName from userId
+    _username = '@username . ';
+    _displayName = 'Display Name';
+  }
 
-  int commentCount = 3;
-  int likeCount = 4;
-
-  int iconSize = 20;
-
-  // Tweet(
-  //     {required this.user,
-  //     required this.text,
-  //     required this.images,
-  //     required this.date,
-  //     required this.likes,
-  //     required this.retweets,
-  //     required this.comments,
-  //     required this.isLiked,
-  //     required this.isRetweeted,
-  //     required this.isShared,
-  //     required this.isReply,
-  //     required this.isReplyAll,
-  //     required this.isDirectMessage,
-  //     required this.isMention,
-  //     required this.isPinned,
-  //     required this.isSaved,
-  //     required this.isEdited,
-  //     required this.isDeleted,
-  //     required this.isRepost});
-
-  Tweet(this.tweetText, this.tweetImages, this.commentCount, this.likeCount);
+  Tweet.jsonTweet(List jsonTweet)
+      : this._userId = jsonTweet[0],
+        this._createdAt = DateTime.parse(jsonTweet[1]),
+        this._tweetText = jsonTweet[2],
+        this._tweetImages = jsonTweet[3],
+        this._favouriters = jsonTweet[4],
+        this._retweeters = jsonTweet[5],
+        this._commenters = jsonTweet[6];
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +63,16 @@ class Tweet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Image widget
-          userImage,
+          _userImage,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
+                  //User display name
                   Container(
                     child: Text(
-                      'Username',
+                      _displayName,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.black,
@@ -97,9 +81,10 @@ class Tweet extends StatelessWidget {
                     ),
                     padding: EdgeInsets.all(5),
                   ),
+                  //User name
                   Container(
                     child: Text(
-                      '@username . ',
+                      _username,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -107,6 +92,7 @@ class Tweet extends StatelessWidget {
                     ),
                     padding: EdgeInsets.all(5),
                   ),
+                  //Created date
                   Container(
                     child: Text(
                       DateFormat('dd/MM/yyyy').format(DateTime.now()),
@@ -119,30 +105,31 @@ class Tweet extends StatelessWidget {
                   ),
                 ],
               ),
+              //Tweet text
               Container(
                 child: Text(
-                  tweetText,
+                  _tweetText,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.black,
                   ),
                 ),
                 padding: EdgeInsets.all(5),
-                width: mediaQuery.size.width - userImage.radius! - 30,
+                width: mediaQuery.size.width - _userImage.radius! - 30,
               ),
-              if (tweetImages.length != 0) TweetImage(tweetImages),
+              if (_tweetImages.isNotEmpty) TweetImage(_tweetImages),
 
               //Row for retweet, comment, like
               Row(
                 children: [
                   //Comment
-                  Comment(commentCount, iconSize),
+                  Comment(_commenters.length, _iconSize),
                   //Retweet
-                  Retweet(5, false, iconSize),
+                  Retweet(5, false, _iconSize),
                   //Like
-                  Like(likeCount, false, iconSize),
+                  Like(_favouriters.length, false, _iconSize),
                   //Share
-                  Share(iconSize),
+                  Share(_iconSize),
                 ],
               ),
             ],
