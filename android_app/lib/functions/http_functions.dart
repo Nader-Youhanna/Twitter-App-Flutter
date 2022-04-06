@@ -1,19 +1,23 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<void> httpRequestPost(String urlStr) async {
+Future<void> httpRequestPost(String urlStr, Map jsonText) async {
   var url = Uri.parse(urlStr);
-  var response = await http.post(url, body: {'name': 'Nader', 'color': 'blue'});
+  var body = json.encode(jsonText);
+  var response = await http.post(url, body: body);
   print('Response status: ${response.statusCode}');
   print('Response body: ${response.body}');
+  return json.decode(response.body);
 }
 
-Future<void> httpRequestGet() async {
-  var url = Uri.parse('http://localhost:3000/posts');
+Future<List<dynamic>> httpRequestGet(String urlStr, Map? jsonText) async {
+  var url = Uri.parse(urlStr);
+  if (jsonText != null) {
+    url = url.replace(queryParameters: jsonText as Map<String, String>);
+  }
   var response = await http.get(url);
   print('Response status: ${response.statusCode}');
   //print('Response body: ${response.body}');
 
-  final extractedMyInfo = json.decode(response.body) as List<dynamic>;
-  print(extractedMyInfo[1]['title']);
+  return json.decode(response.body) as List<dynamic>;
 }
