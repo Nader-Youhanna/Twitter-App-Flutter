@@ -33,10 +33,8 @@ class _Accounts_pageState extends State<Accounts_page> {
 
     return MaterialApp(
       theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            centerTitle: true,
-          ),
+          appBarTheme:
+              AppBarTheme(backgroundColor: Colors.white, centerTitle: true),
           tabBarTheme: TabBarTheme(labelColor: Colors.black)),
       home: DefaultTabController(
         length: _tabs.length,
