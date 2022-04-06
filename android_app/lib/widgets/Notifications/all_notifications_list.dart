@@ -4,8 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'notification_item.dart';
 import 'package:http/http.dart' as http;
-
-const MY_IP_ADDRESS = '192.168.1.4';
+import '../../constants.dart';
 
 class AllNotificationsList extends StatefulWidget {
   const AllNotificationsList();

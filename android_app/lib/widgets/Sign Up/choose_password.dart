@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import '../bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-const MY_IP_ADDRESS = '192.168.1.4';
+import '../../constants.dart';
 
 class ChoosePassword extends StatefulWidget {
   final username, email, dob;

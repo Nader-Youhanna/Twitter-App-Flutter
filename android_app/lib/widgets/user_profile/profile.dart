@@ -7,8 +7,7 @@ import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
-
-const MY_IP_ADDRESS = '192.168.1.4';
+import '../../constants.dart';
 
 class Choice {
   const Choice(
