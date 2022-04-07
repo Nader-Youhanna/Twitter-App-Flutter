@@ -10,6 +10,7 @@ import './user_profile/profile.dart';
 import 'Explore/explore_page.dart';
 
 import '../functions/http_functions.dart';
+import '../constants.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar();
@@ -17,8 +18,6 @@ class MyNavigationBar extends StatefulWidget {
   @override
   _MyNavigationBarState createState() => _MyNavigationBarState();
 }
-
-List<Tweet> tweets = [];
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
@@ -33,7 +32,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   }
 
   final List<Widget> _widgetOptions = <Widget>[
-    Timeline(tweets),
+    Timeline(),
     ExplorePage(),
     const NotificationsPage(),
     Inbox(),

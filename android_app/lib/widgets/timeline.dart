@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+
+import '../functions/http_functions.dart';
+import '../constants.dart';
 import './Tweets/tweet.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 
 class Timeline extends StatefulWidget {
-  final List<Tweet> tweets;
-
-  Timeline(this.tweets);
+  List<Tweet> tweets = <Tweet>[];
 
   @override
   State<Timeline> createState() => _TimelineState();
 }
 
 class _TimelineState extends State<Timeline> {
-  final appBarHeight = 100.0;
-  final bottomNavigationBarHeight = 100.0;
+  final _appBarHeight = 100.0;
+  final _bottomNavigationBarHeight = 100.0;
 
   final _appBarText = 'Search';
   void _goToUserProfile(BuildContext ctx) {
@@ -73,5 +74,26 @@ class _TimelineState extends State<Timeline> {
         ),
       ),
     );
+  }
+
+  void _getTweets() async {
+    print("Adding tweets");
+    httpRequestGet("http://" + MY_IP_ADDRESS + "/tweets/", null).then((value) {
+      setState(() {
+        widget.tweets.clear();
+        for (var i = 0; i < value.length; i++) {
+          //print("Value " + value[0]['tweetText']);
+          widget.tweets.add(Tweet.jsonTweet(value[i]));
+          //}
+          //print(value);
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _getTweets());
   }
 }

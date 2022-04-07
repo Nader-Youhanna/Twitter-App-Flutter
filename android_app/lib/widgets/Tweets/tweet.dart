@@ -19,41 +19,30 @@ class Tweet extends StatelessWidget {
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 20.0,
   ); //This will be the profile picture of the user who tweeted it. Get it from userId
-  final List<String> _tweetImages;
-  final List<int>
-      _favouriters; //List of userIds of users who favourited this tweet
-  final List<int>
-      _retweeters; //List of userIds of users who retweeted this tweet
-  final List<int>
-      _commenters; //List of userIds of users who commented on this tweet
+  List<String> _tweetImages = <String>[];
+  List<int> _favouriters =
+      <int>[]; //List of userIds of users who favourited this tweet
+  List<int> _retweeters =
+      <int>[]; //List of userIds of users who retweeted this tweet
+  List<int> _commenters =
+      <int>[]; //List of userIds of users who commented on this tweet
   final int _iconSize = 20;
 
   late String _username;
   late String _displayName;
 
-  Tweet(
-    Key? key,
-    this._userId,
-    this._createdAt,
-    this._tweetText,
-    this._tweetImages,
-    this._favouriters,
-    this._retweeters,
-    this._commenters,
-  ) {
-    //Get username and displayName from userId
+  Tweet.jsonTweet(Map<String, dynamic> jsonTweet)
+      : _userId = jsonTweet['userId'] as int,
+        _createdAt = DateTime.parse(jsonTweet['createdAt']),
+        _tweetText = jsonTweet['tweetText'] as String {
+    _tweetImages = List<String>.from(jsonTweet['images']);
+    _favouriters = List<int>.from(jsonTweet['favouriters']);
+    _retweeters = List<int>.from(jsonTweet['retweeters']);
+    _commenters = List<int>.from(jsonTweet['replies']);
+
     _username = '@username . ';
     _displayName = 'Display Name';
   }
-
-  Tweet.jsonTweet(List jsonTweet)
-      : this._userId = jsonTweet[0],
-        this._createdAt = DateTime.parse(jsonTweet[1]),
-        this._tweetText = jsonTweet[2],
-        this._tweetImages = jsonTweet[3],
-        this._favouriters = jsonTweet[4],
-        this._retweeters = jsonTweet[5],
-        this._commenters = jsonTweet[6];
 
   @override
   Widget build(BuildContext context) {

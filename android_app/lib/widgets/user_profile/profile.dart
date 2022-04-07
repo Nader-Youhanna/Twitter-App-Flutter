@@ -78,10 +78,6 @@ class _ProfileState extends State<Profile> {
     bool _myProfile = true;
     bool _alreadyFollowed = false;
 
-    List<Tweet> tweets = [
-      //Tweet.jsonTweet(),
-    ];
-
     return MaterialApp(
       theme: ThemeData(
           appBarTheme:
@@ -302,10 +298,10 @@ class _ProfileState extends State<Profile> {
             },
             body: TabBarView(
               children: [
-                Timeline(tweets),
-                Timeline(tweets),
-                Timeline(tweets),
-                Timeline(tweets),
+                Timeline(),
+                Timeline(),
+                Timeline(),
+                Timeline(),
               ],
             ),
           ),
