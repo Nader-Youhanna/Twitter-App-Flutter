@@ -1,1 +1,1 @@
-const MY_IP_ADDRESS = '192.168.1.4';
+const MY_IP_ADDRESS = '10.0.2.2:3000';
