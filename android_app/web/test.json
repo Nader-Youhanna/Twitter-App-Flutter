@@ -85,7 +85,7 @@
       "password": "12345"
     }
   ],
-  "profile": {
+  "profile": [{
     "username": "Nada",
     "uid": "uid",
     "emial": "email",
@@ -99,4 +99,18 @@
       }
     ]
   }
+],
+
+"SearchSuggestions": [
+  "Brazil",
+  "canada",
+  "Russia",
+  "Egypt",
+ "Lebanon",
+  "United States",
+  "Argetina",
+  "PERU",
+  "Sudan",
+  "Catalania"
+]
 }
