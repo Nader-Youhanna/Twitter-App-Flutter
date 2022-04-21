@@ -78,7 +78,8 @@ class _TimelineState extends State<Timeline> {
 
   void _getTweets() async {
     print("Adding tweets");
-    httpRequestGet("http://" + MY_IP_ADDRESS + "/tweets/", null).then((value) {
+    httpRequestGet("http://" + MY_IP_ADDRESS + ":3000/tweets/", null)
+        .then((value) {
       setState(() {
         widget.tweets.clear();
         for (var i = 0; i < value.length; i++) {
