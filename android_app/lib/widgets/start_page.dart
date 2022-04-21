@@ -86,9 +86,12 @@ class StartPage extends StatelessWidget {
                     //fit: BoxFit.fill,
                   ),
                   const SizedBox(width: 15),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Sign Up with Google'),
+                  SizedBox(
+                    width: 176,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Sign Up with Google'),
+                    ),
                   ),
                 ],
               ),
@@ -99,11 +102,14 @@ class StartPage extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 80),
-                  const Icon(Icons.facebook, size: 26),
+                  const Icon(Icons.facebook, size: 26, color: Colors.blue),
                   const SizedBox(width: 15),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Sign Up with Facebook'),
+                  SizedBox(
+                    width: 176,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Sign Up with Facebook'),
+                    ),
                   ),
                 ],
               ),
