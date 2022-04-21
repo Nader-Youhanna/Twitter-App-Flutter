@@ -57,6 +57,7 @@ class NotificationBar extends StatelessWidget {
             fontSize: 20.0,
             //fontWeight: FontWeight.bold
           )),
+      elevation: 0.5,
     );
   }
 }

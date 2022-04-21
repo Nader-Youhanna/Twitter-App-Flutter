@@ -4,60 +4,60 @@
       "userId": 1,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "tweetText": "Hello World",
-      "images" : [
+      "images": [
         "assets/images/test_image.png"
       ],
       "favouriters": [],
-      "retweeters":[],
-      "replies":[]
+      "retweeters": [],
+      "replies": []
     },
     {
       "userId": 2,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "tweetText": "Hello World",
-      "images" : [
+      "images": [
         "assets/images/test_image.png",
         "assets/images/test_image.png"
       ],
       "favouriters": [],
-      "retweeters":[],
-      "replies":[]
+      "retweeters": [],
+      "replies": []
     },
     {
       "userId": 3,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "tweetText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "images" : [
+      "images": [
         "assets/images/test_image.png",
         "assets/images/test_image.png",
         "assets/images/test_image.png"
       ],
       "favouriters": [],
-      "retweeters":[],
-      "replies":[]
+      "retweeters": [],
+      "replies": []
     },
     {
       "userId": 4,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "tweetText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "images" : [
+      "images": [
         "assets/images/test_image.png",
         "assets/images/test_image.png",
         "assets/images/test_image.png",
         "assets/images/test_image.png"
       ],
       "favouriters": [],
-      "retweeters":[],
-      "replies":[]
+      "retweeters": [],
+      "replies": []
     },
     {
       "userId": 5,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "tweetText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "images" : [      ],
+      "images": [],
       "favouriters": [],
-      "retweeters":[],
-      "replies":[]
+      "retweeters": [],
+      "replies": []
     }
   ],
   "comments": [
@@ -83,34 +83,79 @@
       "email": "naderyouhanna@hotmail.com",
       "dob": "15/05/2000",
       "password": "12345"
+    },
+    {
+      "username": "df",
+      "password": "df",
+      "id": 2
+    },
+    {
+      "username": "sd",
+      "password": "sd",
+      "id": 3
+    },
+    {
+      "username": "wer",
+      "password": "sdf",
+      "id": 4
+    },
+    {
+      "username": "ha",
+      "password": "vb",
+      "id": 5
+    },
+    {
+      "username": "good ",
+      "password": "vb",
+      "id": 6
+    },
+    {
+      "username": "hj",
+      "password": "vb",
+      "id": 7
+    },
+    {
+      "username": "bj",
+      "password": "vnn",
+      "id": 8
+    },
+    {
+      "username": "vn",
+      "password": "bj",
+      "id": 9
+    },
+    {
+      "username": "hah",
+      "password": "bab",
+      "id": 10
     }
   ],
-  "profile": [{
-    "username": "Nada",
-    "uid": "uid",
-    "emial": "email",
-    "photoUrl": "photoUrl",
-    "bio": "bio",
-    "phone": "phone",
-    "followers": [
-      {
-        "username": "account 1",
-        "bio": "bio"
-      }
-    ]
-  }
-],
-
-"SearchSuggestions": [
-  "Brazil",
-  "canada",
-  "Russia",
-  "Egypt",
- "Lebanon",
-  "United States",
-  "Argetina",
-  "PERU",
-  "Sudan",
-  "Catalania"
-]
+  "profile": [
+    {
+      "username": "Nada",
+      "uid": "uid",
+      "emial": "email",
+      "photoUrl": "photoUrl",
+      "bio": "bio",
+      "phone": "phone",
+      "followers": [
+        {
+          "username": "account 1",
+          "bio": "bio"
+        }
+      ]
+    }
+  ],
+  "SearchSuggestions": [
+    "Brazil",
+    "canada",
+    "Russia",
+    "Egypt",
+    "Lebanon",
+    "United States",
+    "Argetina",
+    "PERU",
+    "Sudan",
+    "Catalania"
+  ]
 }

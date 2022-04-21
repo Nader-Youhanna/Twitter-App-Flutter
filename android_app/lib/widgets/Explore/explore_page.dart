@@ -4,6 +4,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 import './search_bar_explore.dart';
+import './user_search_item.dart';
+
+CircleAvatar userImages = const CircleAvatar(
+  backgroundImage: AssetImage('assets/images/user_icon.png'),
+  radius: 25.0,
+);
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -23,7 +29,13 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 
-  List<String> searchResults = [];
+  List<UserSearch> searchResults = List<UserSearch>.generate(
+    10,
+    (i) => i % 6 == 0
+        ? UserSearch('habibaAssem16', '@habibaAssem', userImages)
+        : UserSearch('NoraMattar56', '@NoraaM', userImages),
+  );
+
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/SearchSuggestions');
     var response = await http.get(url);
@@ -34,61 +46,83 @@ class _ExplorePageState extends State<ExplorePage> {
     setState(() {
       searchResults = extractedMyInfo['SearchSuggestions'];
     });
-    print('EshTa8alllllllllll');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0.5,
-        leading: IconButton(
-            icon: const Icon(Icons
-                .person_rounded), //should be changed to google profile icon
-            color: Colors.black,
-            onPressed: () =>
-                {_goToUserProfile(context)}), //button should open to side bar,
-        actions: [
-          Container(
-            width: 290,
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-                showCursor: false,
-                readOnly: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(10.0),
-                  fillColor: Color.fromARGB(255, 229, 233, 235),
-                  hintStyle: const TextStyle(
-                    fontSize: 14.5,
-                    color: Color.fromARGB(255, 100, 99, 99),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                  hintText: _appBarText,
-                ),
-                onTap: () {
-                  showSearch(
-                      context: context,
-                      delegate: MySearchDelegate(searchResults));
-                }),
-          ),
-
-          IconButton(
-              icon: const Icon(Icons.settings_outlined),
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: Colors.grey[50],
+          pinned: true,
+          floating: true,
+          elevation: 0.5,
+          leading: IconButton(
+              icon: const Icon(Icons
+                  .person_rounded), //should be changed to google profile icon
               color: Colors.black,
-              onPressed: () => {}), //button shoud direct to setings
-        ],
-      ),
-      body: const Center(
-          child: Text('Explore Page',
-              style: TextStyle(
+              onPressed: () => {
+                    _goToUserProfile(context)
+                  }), //button should open to side bar,
+          actions: [
+            Container(
+              width: 290,
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                  showCursor: false,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(10.0),
+                    fillColor: Color.fromARGB(255, 229, 233, 235),
+                    hintStyle: const TextStyle(
+                      fontSize: 14.5,
+                      color: Color.fromARGB(255, 100, 99, 99),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: _appBarText,
+                  ),
+                  onTap: () {
+                    //redirects us to the page with the searching elements
+                    showSearch(
+                        context: context,
+                        delegate: MySearchDelegate(searchResults));
+                  }),
+            ),
+
+            IconButton(
+                icon: const Icon(Icons.settings_outlined),
+                color: Colors.black,
+                onPressed: () => {}), //button shoud direct to setings
+          ],
+          bottom: AppBar(
+            title: const Text('Trends',
+                style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold))),
-    );
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                )),
+            backgroundColor: Colors.grey[50],
+            elevation: 0.0,
+            leading: null,
+            automaticallyImplyLeading: false,
+          ),
+        ),
+        SliverList(
+          //should be the list of trending topics
+          delegate: SliverChildBuilderDelegate(
+            // The builder function returns a ListTile with a title that
+            // this is temporary
+            (context, index) => searchResults[index],
+            childCount: 10,
+          ),
+        ),
+        // UserSearch('habiba', '@habibaAssem', userImage),
+      ],
+    ));
   }
 }

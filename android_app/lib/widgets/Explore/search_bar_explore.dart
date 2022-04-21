@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import './user_search_item.dart';
 
 class MySearchDelegate extends SearchDelegate {
-  List<String> searchResults = [];
+  List<UserSearch> searchResults = [];
+
   MySearchDelegate(this.searchResults);
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(
           Icons.arrow_back,
+          //Icons.abc,
           color: Colors.black,
         ),
         onPressed: () {
@@ -31,25 +34,21 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   //this is where we display the result of our search
-  Widget buildResults(BuildContext context) => Center(
-        child: Text(query,
-            style: const TextStyle(
-              fontSize: 64,
-            )),
-      );
+  Widget buildResults(BuildContext context) {
+    return Container(
+      child: const Text(
+        "Search result",
+        style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // final message = 'Try searching for people, topics or keywords';
-    List<String> suggestions = searchResults.where((searchResult) {
-      final result = searchResult.toLowerCase();
+    List<UserSearch> Usersuggestions = searchResults.where((searchResult) {
+      final result = searchResult.username.toLowerCase();
       final input = query.toLowerCase();
-
-      // if (query == '') {
-      //   return false;
-      // } else {
       return result.contains(input);
-      //}
     }).toList();
 
     return query.isEmpty
@@ -69,13 +68,13 @@ class MySearchDelegate extends SearchDelegate {
                 const Divider(
               height: 1,
             ),
-            itemCount: suggestions.length,
+            itemCount: Usersuggestions.length,
             itemBuilder: (context, index) {
-              final suggestion = suggestions[index];
-              return ListTile(
-                title: Text(suggestion),
+              final suggestion = Usersuggestions[index];
+              return GestureDetector(
+                child: suggestion,
                 onTap: () {
-                  query = suggestion;
+                  query = suggestion.username;
                 },
               );
             },
