@@ -42,7 +42,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       Navigator.of(ctx).pop();
       Navigator.of(ctx).push(
         MaterialPageRoute(builder: (_) {
-          return MyNavigationBar();
+          return MyNavigationBar(
+            username: widget.username,
+            userID: 0,
+            isAdmin: false,
+          );
         }),
       );
     }

@@ -14,11 +14,15 @@ import '../constants.dart';
 
 class MyNavigationBar extends StatefulWidget {
   //setting up default credentails for each user
-  String username = 'Default user';
-  int userId = 0;
-  bool isAdmin = false;
-  MyNavigationBar();
-  // MyNavigationBar(this.username, this.userId, this.isAdmin);
+  final String username;
+  final int userID;
+  final bool isAdmin;
+  //MyNavigationBar();
+  MyNavigationBar({
+    required this.username,
+    required this.userID,
+    required this.isAdmin,
+  });
 
   @override
   _MyNavigationBarState createState() => _MyNavigationBarState();
@@ -31,9 +35,6 @@ class MyNavigationBar extends StatefulWidget {
 class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   String _appBarText = 'Timeline';
-  String usernameState = MyNavigationBar().username;
-  int userIdState = MyNavigationBar().userId;
-  bool isAdminState = MyNavigationBar().isAdmin;
 
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -44,10 +45,28 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   }
 
   late final List<Widget> _widgetOptions = <Widget>[
+    // Timeline(
+    //   widget.username,
+    //   widget.userID,
+    //   widget.isAdmin,
+    // ),
     Timeline(),
-    ExplorePage(usernameState, userIdState, isAdminState),
-    NotificationsPage(usernameState, userIdState, isAdminState),
+    ExplorePage(
+      widget.username,
+      widget.userID,
+      widget.isAdmin,
+    ),
+    NotificationsPage(
+      widget.username,
+      widget.userID,
+      widget.isAdmin,
+    ),
     Inbox(),
+    // Inbox(
+    //   widget.username,
+    //   widget.userID,
+    //   widget.isAdmin,
+    // ),
   ];
 
   void _onItemTapped(int index) {
