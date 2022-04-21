@@ -27,7 +27,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
 
   void _sendDataToBackend() async {
     print('Sent data to backend');
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/signup');
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
     var response = await http.post(url, body: {
       'name': widget.username,
       'email': widget.email,
@@ -45,7 +45,11 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     Navigator.of(ctx).pop();
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return MyNavigationBar();
+        return MyNavigationBar(
+          username: widget.username,
+          userID: 0,
+          isAdmin: false,
+        );
       }),
     );
   }
