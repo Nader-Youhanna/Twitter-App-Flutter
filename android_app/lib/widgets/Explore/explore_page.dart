@@ -12,7 +12,11 @@ CircleAvatar userImages = const CircleAvatar(
 );
 
 class ExplorePage extends StatefulWidget {
-  const ExplorePage({Key? key}) : super(key: key);
+  //setting up default credentails for each user
+  String username = 'Default user';
+  int userId = 0;
+  bool isAdmin = false;
+  ExplorePage(this.username, this.userId, this.isAdmin);
 
   @override
   State<ExplorePage> createState() => _ExplorePageState();

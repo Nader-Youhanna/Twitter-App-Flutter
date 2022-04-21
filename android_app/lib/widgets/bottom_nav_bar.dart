@@ -13,15 +13,27 @@ import '../functions/http_functions.dart';
 import '../constants.dart';
 
 class MyNavigationBar extends StatefulWidget {
+  //setting up default credentails for each user
+  String username = 'Default user';
+  int userId = 0;
+  bool isAdmin = false;
   MyNavigationBar();
+  // MyNavigationBar(this.username, this.userId, this.isAdmin);
 
   @override
   _MyNavigationBarState createState() => _MyNavigationBarState();
+
+  String getUserName() {
+    return this.username;
+  }
 }
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
   int _selectedIndex = 0;
   String _appBarText = 'Timeline';
+  String usernameState = MyNavigationBar().username;
+  int userIdState = MyNavigationBar().userId;
+  bool isAdminState = MyNavigationBar().isAdmin;
 
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -31,10 +43,10 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     );
   }
 
-  final List<Widget> _widgetOptions = <Widget>[
+  late final List<Widget> _widgetOptions = <Widget>[
     Timeline(),
-    ExplorePage(),
-    const NotificationsPage(),
+    ExplorePage(usernameState, userIdState, isAdminState),
+    NotificationsPage(usernameState, userIdState, isAdminState),
     Inbox(),
   ];
 
