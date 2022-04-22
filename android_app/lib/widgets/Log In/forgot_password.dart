@@ -2,29 +2,36 @@ import 'package:android_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+Future<void> _sendResetLink(String email) async {
+  var url = Uri.parse('http://$MY_IP_ADDRESS:3000/forgot-password');
+  var response = await http.post(
+    url,
+    body: {
+      'email': email,
+    },
+  );
+}
+
+var _email;
+
 class ForgotPasswordPage extends StatefulWidget {
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  var _username;
+  final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
 
-  var _usernameIsEntered = false;
+  var _emailIsEntered = false;
   var _searchButtonClicked = false;
-
+  var _emailIsValid = false;
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
-  Future<void> _searchForPassword(String username) async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/forgot-password');
-    var response = await http.post(
-      url,
-      body: {
-        'email': _username,
-      },
-    );
+  bool _isEmailValid(var email) {
+    return (_emailIsValid =
+        RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
 
   @override
@@ -95,21 +102,28 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             const SizedBox(height: 20),
             SizedBox(
               width: 330,
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter your email',
+              child: Form(
+                key: _mailKey,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your email',
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _emailIsEntered = value.isNotEmpty;
+                      if (_mailKey.currentState!.validate()) {
+                        _emailIsValid = _isEmailValid(value);
+                      }
+                    });
+                  },
+                  validator: (value) {
+                    if (value != null && _isEmailValid(value)) {
+                      return null;
+                    } else {
+                      return 'Please enter a valid email address';
+                    }
+                  },
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    _usernameIsEntered = value.isNotEmpty;
-                  });
-                },
-                onSubmitted: (value) {
-                  setState(() {
-                    _username = value;
-                    _usernameIsEntered = value.isNotEmpty;
-                  });
-                },
               ),
             ),
             !_searchButtonClicked
@@ -119,14 +133,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _searchButtonClicked = true;
-                      _searchForPassword(_username);
-                    });
-                  },
+                  onPressed: (_emailIsEntered && _emailIsValid)
+                      ? () {
+                          setState(() {
+                            _searchButtonClicked = true;
+                            _sendResetLink(_email);
+                          });
+                        }
+                      : null,
                   child: const Text('Search'),
-                  style: (!_usernameIsEntered)
+                  style: (!(_emailIsEntered && _emailIsValid))
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey.shade400),
@@ -163,8 +179,8 @@ class VerificationCodeMessage extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 30),
         const Text(
-          '''We have sent a confirmation
-        code to your email''',
+          '''We have sent a reset link
+          to your email''',
           style: TextStyle(
             fontSize: 17,
             fontFamily: 'RalewayMedium',
@@ -172,8 +188,12 @@ class VerificationCodeMessage extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: null,
-          child: const Text('Resend email'),
+          onPressed: () {
+            _sendResetLink(_email);
+          },
+          child: const Text(
+            'Resend email',
+          ),
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
             backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
