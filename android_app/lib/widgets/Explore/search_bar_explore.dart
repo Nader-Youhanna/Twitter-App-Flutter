@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
 import './user_search_item.dart';
+import 'search_item.dart';
+import '../user_profile/profile.dart';
+
+CircleAvatar userImages = const CircleAvatar(
+  //will be removed once apis are connected
+  backgroundImage: AssetImage('assets/images/user_icon.png'),
+  radius: 25.0,
+);
 
 class MySearchDelegate extends SearchDelegate {
-  List<UserSearch> searchResults = [];
+  void _goToUserProfile(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile();
+      }),
+    );
+  }
+
+  List<SearchItem> searchResults;
 
   MySearchDelegate(this.searchResults);
   @override
@@ -45,8 +61,12 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<UserSearch> Usersuggestions = searchResults.where((searchResult) {
-      final result = searchResult.username.toLowerCase();
+    List<SearchItem> Usersuggestions = searchResults.where((searchResult) {
+      final result;
+      if (searchResult.type == 0)
+        result = searchResult.tweetText.toLowerCase();
+      else
+        result = searchResult.username.toLowerCase();
       final input = query.toLowerCase();
       return result.contains(input);
     }).toList();
@@ -73,9 +93,10 @@ class MySearchDelegate extends SearchDelegate {
               final suggestion = Usersuggestions[index];
               return GestureDetector(
                 child: suggestion,
-                onTap: () {
-                  query = suggestion.username;
-                },
+                onTap: suggestion.type ==
+                        1 //this means the suggestion item is a user
+                    ? () => _goToUserProfile(context)
+                    : () => {}, //this means the suggestion item is a tweet
               );
             },
           );

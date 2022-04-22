@@ -5,8 +5,11 @@ import 'dart:convert';
 import '../../constants.dart';
 import './search_bar_explore.dart';
 import './user_search_item.dart';
+import './search_item.dart';
+import './trending_topic.dart';
 
 CircleAvatar userImages = const CircleAvatar(
+  //will be removed once apis are connected
   backgroundImage: AssetImage('assets/images/user_icon.png'),
   radius: 25.0,
 );
@@ -33,13 +36,23 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 
-  List<UserSearch> searchResults = List<UserSearch>.generate(
-    10,
-    (i) => i % 6 == 0
-        ? UserSearch('habibaAssem16', '@habibaAssem', userImages)
-        : UserSearch('NoraMattar56', '@NoraaM', userImages),
-  );
-
+  List<TrendingTopic> trends = List<TrendingTopic>.generate(
+      30, (index) => TrendingTopic("#testingHashtag", index, index + 100));
+  List<SearchItem> searchResults = List<SearchItem>.generate(
+      10,
+      (i) => i % 6 == 0
+          ? SearchItem(1,
+              username: 'habibaAssem16',
+              handle: '@habibaAssem',
+              userImage: userImages)
+          : SearchItem(
+              0,
+              tweetText:
+                  "testing with a variaty of letters and words like hospital, gym, night",
+              username: 'NoraMattar',
+              handle: '@habibaAssem',
+              userImage: userImages,
+            ));
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/SearchSuggestions');
     var response = await http.get(url);
@@ -121,7 +134,7 @@ class _ExplorePageState extends State<ExplorePage> {
           delegate: SliverChildBuilderDelegate(
             // The builder function returns a ListTile with a title that
             // this is temporary
-            (context, index) => searchResults[index],
+            (context, index) => trends[index],
             childCount: 10,
           ),
         ),
