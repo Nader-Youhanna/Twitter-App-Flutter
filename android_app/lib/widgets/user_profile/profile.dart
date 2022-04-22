@@ -28,7 +28,11 @@ const List<Choice> choices = <Choice>[
 ];
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  String username = 'Default user';
+  int userId = 0;
+  bool isAdmin = false;
+
+  Profile(this.username, this.userId, this.isAdmin);
 
   @override
   State<Profile> createState() => _ProfileState();
