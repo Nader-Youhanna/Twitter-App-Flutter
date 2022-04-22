@@ -13,6 +13,9 @@ Future<void> _sendResetLink(String email) async {
 }
 
 var _email;
+var _emailIsEntered = false;
+var _searchButtonClicked = false;
+var _emailIsValid = false;
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -22,9 +25,6 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
 
-  var _emailIsEntered = false;
-  var _searchButtonClicked = false;
-  var _emailIsValid = false;
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -111,6 +111,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   onChanged: (value) {
                     setState(() {
                       _emailIsEntered = value.isNotEmpty;
+                      _email = value;
                       if (_mailKey.currentState!.validate()) {
                         _emailIsValid = _isEmailValid(value);
                       }
@@ -188,19 +189,33 @@ class VerificationCodeMessage extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: () {
-            _sendResetLink(_email);
-          },
+          onPressed: (_emailIsEntered && _emailIsValid)
+              ? () {
+                  _sendResetLink(_email);
+                }
+              : null,
           child: const Text(
             'Resend email',
           ),
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-            shape: MaterialStateProperty.all<StadiumBorder>(
-              const StadiumBorder(),
-            ),
-          ),
+          style: (!(_emailIsEntered && _emailIsValid))
+              ? ButtonStyle(
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey.shade400),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey.shade600),
+                  shape: MaterialStateProperty.all<StadiumBorder>(
+                    const StadiumBorder(),
+                  ),
+                )
+              : ButtonStyle(
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  shape: MaterialStateProperty.all<StadiumBorder>(
+                    const StadiumBorder(),
+                  ),
+                ),
         ),
         const SizedBox(height: 390),
       ],

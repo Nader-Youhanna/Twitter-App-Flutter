@@ -89,7 +89,6 @@
       "password": "nido",
       "id": 2
     }
-    
   ],
   "profile": [
     {
@@ -106,6 +105,9 @@
         }
       ]
     }
+  ],
+  "forgot-password": [
+    
   ],
   "SearchSuggestions": [
     "Brazil",
