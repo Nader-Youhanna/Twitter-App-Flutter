@@ -102,18 +102,34 @@ class _SignUpState extends State<SignUp> {
                     _goBack(context);
                   },
                 ),
+
+                //New logo
                 const SizedBox(
-                  width: 60,
+                  width: 70,
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: Image.asset(
-                    'assets/images/logo_icon.png',
-                    width: 120,
-                    height: 50,
-                    fit: BoxFit.fill,
+                const Text(
+                  'Sirius',
+                  style: TextStyle(
+                    fontSize: 38,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'RalewayMedium',
                   ),
                 ),
+
+                //Old logo
+                // const SizedBox(
+                //   width: 60,
+                // ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(18),
+                //   child: Image.asset(
+                //     'assets/images/logo_icon.png',
+                //     width: 120,
+                //     height: 50,
+                //     fit: BoxFit.fill,
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(height: 30),

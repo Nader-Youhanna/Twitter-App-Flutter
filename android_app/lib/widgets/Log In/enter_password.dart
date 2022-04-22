@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../bottom_nav_bar.dart';
 import '../../constants.dart';
+import 'forgot_password.dart';
 
 class EnterPasswordPage extends StatefulWidget {
   final username;
@@ -73,6 +74,14 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     Navigator.of(ctx).pop();
   }
 
+  void _forgotPassword(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return ForgotPasswordPage();
+      }),
+    );
+  }
+
   void _goToTimeline(BuildContext ctx) {
     if (_passwordIsEntered) {
       Navigator.of(ctx).pop();
@@ -118,18 +127,33 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     _goBack(context);
                   },
                 ),
+
+                //New logo
                 const SizedBox(
-                  width: 60,
+                  width: 70,
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: Image.asset(
-                    'assets/images/logo_icon.png',
-                    width: 120,
-                    height: 50,
-                    fit: BoxFit.fill,
+                const Text(
+                  'Sirius',
+                  style: TextStyle(
+                    fontSize: 38,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'RalewayMedium',
                   ),
                 ),
+                //Old logo
+                // const SizedBox(
+                //   width: 60,
+                // ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(18),
+                //   child: Image.asset(
+                //     'assets/images/logo_icon.png',
+                //     width: 120,
+                //     height: 50,
+                //     fit: BoxFit.fill,
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(height: 30),
@@ -219,7 +243,9 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                   child: const Text(
                     'Forgot Password?',
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _forgotPassword(context);
+                  },
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.black),
@@ -240,15 +266,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                   child: const Text('Next'),
                   onPressed: () {
                     setState(() {
-                      //This code works well with the get request
-                      //but not well when we call validator for showing
-                      //the red text
-                      // _validateCredentials(_password).then((isValid) {
-                      //   if (isValid) _goToTimeline(context);
-                      // });
-
-                      //---------------
-                      print("Ok");
                       if (_passwordKey.currentState!.validate()) {
                         _goToTimeline(context);
                       }
