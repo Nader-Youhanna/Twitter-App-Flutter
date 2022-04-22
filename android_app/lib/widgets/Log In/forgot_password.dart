@@ -1,4 +1,6 @@
+import 'package:android_app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -9,9 +11,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   var _username;
 
   var _usernameIsEntered = false;
+  var _searchButtonClicked = false;
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  Future<void> _searchForPassword(String username) async {
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/forgot-password');
+    var response = await http.post(
+      url,
+      body: {
+        'email': _username,
+      },
+    );
   }
 
   @override
@@ -84,7 +97,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               width: 330,
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Enter your email, phone number or username',
+                  hintText: 'Enter your email',
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -99,12 +112,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 },
               ),
             ),
-            const SizedBox(height: 470),
+            !_searchButtonClicked
+                ? const SizedBox(height: 470)
+                : VerificationCodeMessage(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: null,
+                  onPressed: () {
+                    setState(() {
+                      _searchButtonClicked = true;
+                      _searchForPassword(_username);
+                    });
+                  },
                   child: const Text('Search'),
                   style: (!_usernameIsEntered)
                       ? ButtonStyle(
@@ -132,6 +152,38 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class VerificationCodeMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 30),
+        const Text(
+          '''We have sent a confirmation
+        code to your email''',
+          style: TextStyle(
+            fontSize: 17,
+            fontFamily: 'RalewayMedium',
+          ),
+        ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: null,
+          child: const Text('Resend email'),
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            shape: MaterialStateProperty.all<StadiumBorder>(
+              const StadiumBorder(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 390),
+      ],
     );
   }
 }

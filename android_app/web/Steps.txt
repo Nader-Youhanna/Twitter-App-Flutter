@@ -32,7 +32,7 @@ TO SEND HTTP REQUESTS IN FLUTTER
 
 Future<void> httpRequestPost() async {
     
-    var url = Uri.parse('http://localhost:3000/posts');
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/posts');
     var response =
         await http.post(url, body: {'name': 'Nader', 'color': 'blue'});
     print('Response status: ${response.statusCode}');
@@ -42,7 +42,7 @@ Future<void> httpRequestPost() async {
 
 Future<void> httpRequestGet() async {
     
-    var url = Uri.parse('http://localhost:3000/posts');
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/posts');
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     //print('Response body: ${response.body}');
