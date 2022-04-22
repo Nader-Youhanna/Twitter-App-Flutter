@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
+import 'dart:async';
 
 class EnterPasswordPage extends StatefulWidget {
   final username;
@@ -17,19 +18,41 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   Future<bool> _validateCredentials(String password) async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
-    var response = await http.post(url, body: {
-      'username': widget.username,
-      'password': password,
-    });
-    print('Response body: ${response.body}');
-
-    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    if (extractedMyInfo[0]['success'] == 'true') {
-      return true;
-    } else {
+    if (password == "nido")
       return false;
+    else
+      return true;
+    //Real server response:
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    // var response = await http.post(url, body: {
+    //   'username': widget.username,
+    //   'password': password,
+    // });
+    // print('Response body: ${response.body}');
+
+    // final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    // if (extractedMyInfo[0]['success'] == 'true') {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    //TO BE REMOVED WHEN INTEGRATING WITH BACKEND
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    var response = await http.get(url);
+    final extractedMyInfo = json.decode(response.body) as List<dynamic>;
+    print(extractedMyInfo);
+    for (int i = 0; i < extractedMyInfo.length; i++) {
+      if (extractedMyInfo[i]['username'] == widget.username &&
+          extractedMyInfo[i]['password'] == password) {
+        return true;
+      }
     }
+    return false;
+  }
+
+  var x;
+  Future<int> foo() async {
+    return 1;
   }
 
   void _goBack(BuildContext ctx) {
@@ -53,7 +76,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   }
 
   final _textFieldWidth = 330.0;
-
   var _password;
   var _passwordIsEntered = false;
   var _passwordIsVisible = false;
@@ -106,6 +128,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                   fontFamily: 'RalewayMedium',
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  //color: _passwordIsValid ? Colors.blue : Colors.red,
                 ),
               ),
             ),
@@ -136,38 +159,40 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
               child: Form(
                 key: _passwordKey,
                 child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _passwordIsVisible = !_passwordIsVisible;
-                        });
-                      },
-                      icon: const Icon(Icons.remove_red_eye),
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _passwordIsVisible = !_passwordIsVisible;
+                          });
+                        },
+                        icon: const Icon(Icons.remove_red_eye),
+                      ),
                     ),
-                  ),
-                  obscureText: !_passwordIsVisible,
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      setState(() {
-                        _password = value;
-                        _passwordIsEntered = true;
+                    obscureText: !_passwordIsVisible,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          _password = value;
+                          _passwordIsEntered = true;
+                        });
+                      }
+                    },
+                    validator: (value) {
+                      _validateCredentials(_password).then((value) {
+                        if (value) {
+                          _passwordIsValid = true;
+                        } else {
+                          _passwordIsValid = false;
+                        }
                       });
-                    }
-                  },
-                  validator: (value) {
-                    if (value != null &&
-                        _validateCredentials(value) ==
-                            Future<bool>.value(true)) {
-                      _passwordIsValid = true;
-                      _password = value;
-                      return null;
-                    } else {
-                      return 'Username or password is incorrect';
-                    }
-                  },
-                ),
+                      if (_passwordIsValid) {
+                        return null;
+                      } else {
+                        return "Username or password is incorrect";
+                      }
+                    }),
               ),
             ),
             const SizedBox(height: 380),
@@ -203,8 +228,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {
-                    _validateCredentials(_password);
-                    _goToTimeline(context);
+                    setState(() {
+                      _passwordKey.currentState!.validate();
+                      if (_passwordIsValid) _goToTimeline(context);
+                    });
                   },
                   style: (!_passwordIsEntered)
                       ? ButtonStyle(

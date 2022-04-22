@@ -85,49 +85,9 @@
       "password": "12345"
     },
     {
-      "username": "df",
-      "password": "df",
+      "username": "nido",
+      "password": "nido",
       "id": 2
-    },
-    {
-      "username": "sd",
-      "password": "sd",
-      "id": 3
-    },
-    {
-      "username": "wer",
-      "password": "sdf",
-      "id": 4
-    },
-    {
-      "username": "ha",
-      "password": "vb",
-      "id": 5
-    },
-    {
-      "username": "good ",
-      "password": "vb",
-      "id": 6
-    },
-    {
-      "username": "hj",
-      "password": "vb",
-      "id": 7
-    },
-    {
-      "username": "bj",
-      "password": "vnn",
-      "id": 8
-    },
-    {
-      "username": "vn",
-      "password": "bj",
-      "id": 9
-    },
-    {
-      "username": "hah",
-      "password": "bab",
-      "id": 10
     }
   ],
   "profile": [
