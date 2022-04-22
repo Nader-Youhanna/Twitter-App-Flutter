@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../functions/http_functions.dart';
 import '../constants.dart';
 import './Tweets/tweet.dart';
-import 'package:android_app/widgets/user_profile/profile.dart';
+import '../widgets/user_profile/profile.dart';
 
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
@@ -13,10 +13,12 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  final _appBarHeight = 100.0;
-  final _bottomNavigationBarHeight = 100.0;
-
   final _appBarText = 'Search';
+
+  late String _ipAddress;
+
+  late String _port;
+
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
@@ -28,7 +30,7 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
-
+    _setIPAddress(MY_IP_ADDRESS);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -73,20 +75,32 @@ class _TimelineState extends State<Timeline> {
           itemCount: widget.tweets.length,
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        //add tweet
+        onPressed: () => _startAddTweet(context, 'Hi'),
+        child: const Icon(Icons.add),
+      ),
     );
+  }
+
+  void _setIPAddress(String ipAddressPort) {
+    if (MY_IP_ADDRESS.indexOf(':') != -1) {
+      _ipAddress = MY_IP_ADDRESS.substring(0, MY_IP_ADDRESS.indexOf(':'));
+      _port = MY_IP_ADDRESS.substring(MY_IP_ADDRESS.indexOf(':') + 1);
+    } else {
+      _ipAddress = MY_IP_ADDRESS;
+      _port = '3000';
+    }
   }
 
   void _getTweets() async {
     print("Adding tweets");
-    httpRequestGet("http://" + MY_IP_ADDRESS + ":3000/tweets/", null)
+    httpRequestGet("http://" + _ipAddress + ":" + _port + "/tweets/", null)
         .then((value) {
       setState(() {
         widget.tweets.clear();
         for (var i = 0; i < value.length; i++) {
-          //print("Value " + value[0]['tweetText']);
           widget.tweets.add(Tweet.jsonTweet(value[i]));
-          //}
-          //print(value);
         }
       });
     });
@@ -96,5 +110,56 @@ class _TimelineState extends State<Timeline> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => _getTweets());
+  }
+
+  void _startAddTweet(BuildContext ctx, String tweetText) async {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (bCtx) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                  },
+                  child: Text('Cancel'),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Tweet'),
+                ),
+              ],
+            ),
+            //add tweet
+            Text('Add Tweet\n Tweet text is here'),
+          ],
+        );
+      },
+      isScrollControlled: true,
+      enableDrag: false,
+      useRootNavigator: true,
+    );
+    var data = <String, dynamic>{
+      'userId': 1,
+      'createdAt': '2020-01-01T00:00:00.000Z',
+      'tweetText': tweetText,
+      'images': [],
+      'favouriters': [],
+      'retweeters': [],
+      'replies': [],
+    };
+    //var response = await _addTweet(data);
+    _getTweets();
+  }
+
+  Future<void> _addTweet(Map<String, dynamic> data) async {
+    return await httpRequestPost("http://" + MY_IP_ADDRESS + "/tweets/", data);
   }
 }
