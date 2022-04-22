@@ -42,7 +42,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     //MOCK SERVER
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(url, body: {
-      'name': widget.username,
+      'username': widget.username,
       'email': widget.email,
       'dob': widget.dob,
       'password': _password,
