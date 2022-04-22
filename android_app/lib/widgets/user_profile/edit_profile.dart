@@ -45,15 +45,17 @@ class _Edit_ProfileState extends State<Edit_Profile> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Profile()),
+                MaterialPageRoute(builder: (context) => Profile("", 1, false)),
               );
             },
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Profile()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Profile("", 1, false)));
               },
               child: Text(
                 'Save',

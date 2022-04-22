@@ -22,7 +22,7 @@ class _TimelineState extends State<Timeline> {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile();
+        return Profile("", 1, false);
       }),
     );
   }
