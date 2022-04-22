@@ -20,33 +20,19 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   String lastValidatedPassword = "";
   String lastRejectedPassword = "";
 
-  bool _validateCredentials(String password) {
+  String? _validateCredentials(String password) {
     //TO BE REMOVED IN DISCUSSION
-    //return null;
+    return null;
 
     if (lastValidatedPassword == password) {
-      return true;
+      return null;
     } else if (lastRejectedPassword == password) {
-      return false;
+      return 'Username or password is Invalid';
     } else {
       _validateCredentialsAsync(password);
-      return false;
+      return "Validation in Progress";
     }
   }
-
-  // String? _validateCredentials(String password) {
-  //   //TO BE REMOVED IN DISCUSSION
-  //   //return null;
-
-  //   if (lastValidatedPassword == password) {
-  //     return null;
-  //   } else if (lastRejectedPassword == password) {
-  //     return 'Username or password is Invalid';
-  //   } else {
-  //     _validateCredentialsAsync(password);
-  //     return "Validation in Progress";
-  //   }
-  // }
 
   Future<void> _validateCredentialsAsync(String password) async {
     //Real server response:
@@ -212,9 +198,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     if (value == null) {
                       return 'Incorrect';
                     } else {
-                      return _validateCredentials(value) == true
-                          ? null
-                          : 'Username or password is Invalid';
+                      return _validateCredentials(value);
                     }
                   },
                 ),
