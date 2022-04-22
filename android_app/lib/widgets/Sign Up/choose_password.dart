@@ -27,7 +27,20 @@ class _ChoosePasswordState extends State<ChoosePassword> {
 
   void _sendDataToBackend() async {
     print('Sent data to backend');
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
+
+    //Bckend Server
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
+    // var response = await http.post(url, body: {
+    //   'name': widget.username,
+    //   'email': widget.email,
+    //   'dob': widget.dob,
+    //   'password': _password,
+    // });
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
+
+    //MOCK SERVER
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(url, body: {
       'name': widget.username,
       'email': widget.email,

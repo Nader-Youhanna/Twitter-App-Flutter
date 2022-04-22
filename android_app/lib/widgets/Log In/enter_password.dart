@@ -1,9 +1,9 @@
-import '../bottom_nav_bar.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../bottom_nav_bar.dart';
 import '../../constants.dart';
-import 'dart:async';
 
 class EnterPasswordPage extends StatefulWidget {
   final username;
@@ -17,11 +17,24 @@ class EnterPasswordPage extends StatefulWidget {
 class _EnterPasswordPageState extends State<EnterPasswordPage> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
-  Future<bool> _validateCredentials(String password) async {
-    if (password == "nido")
-      return false;
-    else
-      return true;
+  String lastValidatedPassword = "";
+  String lastRejectedPassword = "";
+
+  String? _validateCredentials(String password) {
+    //TO BE REMOVED IN DISCUSSION
+    return null;
+
+    if (lastValidatedPassword == password) {
+      return null;
+    } else if (lastRejectedPassword == password) {
+      return 'Username or password is Invalid';
+    } else {
+      _validateCredentialsAsync(password);
+      return "Validation in Progress";
+    }
+  }
+
+  Future<void> _validateCredentialsAsync(String password) async {
     //Real server response:
     // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     // var response = await http.post(url, body: {
@@ -32,11 +45,14 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
     // final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
     // if (extractedMyInfo[0]['success'] == 'true') {
-    //   return true;
+    //   lastValidatedPassword = password;
     // } else {
-    //   return false;
+    //   lastRejectedPassword = password;
     // }
-    //TO BE REMOVED WHEN INTEGRATING WITH BACKEND
+    // _passwordKey.currentState!
+    //     .validate(); // this will re-initiate the validation
+
+    //MOCK SERVER
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.get(url);
     final extractedMyInfo = json.decode(response.body) as List<dynamic>;
@@ -44,15 +60,13 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     for (int i = 0; i < extractedMyInfo.length; i++) {
       if (extractedMyInfo[i]['username'] == widget.username &&
           extractedMyInfo[i]['password'] == password) {
-        return true;
+        lastValidatedPassword = password;
       }
     }
-    return false;
-  }
+    lastRejectedPassword = password;
 
-  var x;
-  Future<int> foo() async {
-    return 1;
+    _passwordKey.currentState!
+        .validate(); // this will re-initiate the validation
   }
 
   void _goBack(BuildContext ctx) {
@@ -159,40 +173,35 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
               child: Form(
                 key: _passwordKey,
                 child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _passwordIsVisible = !_passwordIsVisible;
-                          });
-                        },
-                        icon: const Icon(Icons.remove_red_eye),
-                      ),
-                    ),
-                    obscureText: !_passwordIsVisible,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    suffixIcon: IconButton(
+                      onPressed: () {
                         setState(() {
-                          _password = value;
-                          _passwordIsEntered = true;
+                          _passwordIsVisible = !_passwordIsVisible;
                         });
-                      }
-                    },
-                    validator: (value) {
-                      _validateCredentials(_password).then((value) {
-                        if (value) {
-                          _passwordIsValid = true;
-                        } else {
-                          _passwordIsValid = false;
-                        }
+                      },
+                      icon: const Icon(Icons.remove_red_eye),
+                    ),
+                  ),
+                  obscureText: !_passwordIsVisible,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        _password = value;
+                        _passwordIsEntered = true;
                       });
-                      if (_passwordIsValid) {
-                        return null;
-                      } else {
-                        return "Username or password is incorrect";
-                      }
-                    }),
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.always,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Incorrect';
+                    } else {
+                      return _validateCredentials(value);
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 380),
@@ -229,8 +238,18 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                   child: const Text('Next'),
                   onPressed: () {
                     setState(() {
-                      _passwordKey.currentState!.validate();
-                      if (_passwordIsValid) _goToTimeline(context);
+                      //This code works well with the get request
+                      //but not well when we call validator for showing
+                      //the red text
+                      // _validateCredentials(_password).then((isValid) {
+                      //   if (isValid) _goToTimeline(context);
+                      // });
+
+                      //---------------
+                      print("Ok");
+                      if (_passwordKey.currentState!.validate()) {
+                        _goToTimeline(context);
+                      }
                     });
                   },
                   style: (!_passwordIsEntered)
