@@ -36,6 +36,7 @@ class StartPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
             return MyNavigationBar(
+              name: 'Nader',
               username: 'Nader',
               userID: 0,
               isAdmin: false,

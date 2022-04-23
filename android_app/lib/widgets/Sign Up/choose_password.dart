@@ -33,6 +33,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return MyNavigationBar(
+          name: widget.name,
           username: widget.username,
           userID: 0,
           isAdmin: false,
@@ -62,10 +63,13 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     //MOCK SERVER
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(url, body: {
+      'name': widget.name,
       'username': widget.username,
       'email': widget.email,
-      'dob': widget.dob,
+      'birthdate': widget.dob,
       'password': _password,
+      'country': 'Egypt',
+      'city': 'Cairo'
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

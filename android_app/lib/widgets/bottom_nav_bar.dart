@@ -14,11 +14,13 @@ import '../constants.dart';
 
 class MyNavigationBar extends StatefulWidget {
   //setting up default credentails for each user
+  final String name;
   final String username;
   final int userID;
   final bool isAdmin;
   //MyNavigationBar();
   MyNavigationBar({
+    required this.name,
     required this.username,
     required this.userID,
     required this.isAdmin,
@@ -46,9 +48,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   late final List<Widget> _widgetOptions = <Widget>[
     // Timeline(
-    //   widget.username,
-    //   widget.userID,
-    //   widget.isAdmin,
+    //   name: widget.name,
+    //   username: widget.username,
     // ),
     Timeline(),
     ExplorePage(

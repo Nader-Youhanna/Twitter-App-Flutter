@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
 class SideBar extends StatelessWidget {
+  final name, username;
+  @override
+  SideBar({
+    @required this.name,
+    @required this.username,
+  });
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Nader'),
-            accountEmail: const Text('naderyouhanna@gmail.com'),
+            accountName: Text(name),
+            accountEmail: Text('@' + username),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(

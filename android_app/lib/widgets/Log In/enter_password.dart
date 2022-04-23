@@ -7,12 +7,11 @@ import '../../constants.dart';
 import 'forgot_password.dart';
 
 class EnterPasswordPage extends StatefulWidget {
+  String name = 'Nader';
   final username;
-  final email;
 
   EnterPasswordPage({
     @required this.username,
-    @required this.email,
   });
 
   @override
@@ -65,6 +64,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     for (int i = 0; i < extractedMyInfo.length; i++) {
       if (extractedMyInfo[i]['username'] == widget.username &&
           extractedMyInfo[i]['password'] == password) {
+        widget.name = extractedMyInfo[i]['name'];
         lastValidatedPassword = password;
       }
     }
@@ -93,6 +93,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       Navigator.of(ctx).push(
         MaterialPageRoute(builder: (_) {
           return MyNavigationBar(
+            name: widget.name,
             username: widget.username,
             userID: 0,
             isAdmin: false,
