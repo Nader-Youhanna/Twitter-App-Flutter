@@ -8,13 +8,15 @@ import '../../constants.dart';
 class VerifyPassword extends StatefulWidget {
   var _passwordIsCorrect = false;
   var password;
+  String email;
   var _passwordIsValid = false;
+  bool ISemail;
 
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
 
-  VerifyPassword(this.password);
+  VerifyPassword(this.password, this.email, this.ISemail);
   @override
   State<VerifyPassword> createState() => _VerifyPasswordState();
 }
@@ -70,6 +72,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
               width: 320,
               child: Text(
                 'Re-enter your Sirius password to continue',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'RalewayMedium',
                   fontSize: 15,
@@ -140,7 +143,11 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                                 ? (Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => UpdateEmail())))
+                                        builder: (widget.ISemail)
+                                            ? (context) =>
+                                                UpdateEmail(widget.email)
+                                            : (context) =>
+                                                UpdateEmail(widget.email))))
                                 : showAlertDialog(context));
                       },
                       child: Text('Next', style: TextStyle(fontSize: 14)),
