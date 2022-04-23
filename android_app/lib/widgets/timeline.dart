@@ -4,6 +4,7 @@ import '../functions/http_functions.dart';
 import '../constants.dart';
 import './Tweets/tweet.dart';
 import '../widgets/user_profile/profile.dart';
+import './side_bar.dart';
 
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
@@ -32,6 +33,7 @@ class _TimelineState extends State<Timeline> {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
     return Scaffold(
+      drawer: SideBar(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
