@@ -77,7 +77,7 @@ class _TimelineState extends State<Timeline> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => _startAddTweet(context, 'Hi'),
+        onPressed: () => _startAddTweet(context),
         child: const Icon(Icons.add),
       ),
     );
@@ -93,7 +93,7 @@ class _TimelineState extends State<Timeline> {
     }
   }
 
-  void _getTweets() async {
+  Future<void> _getTweets() async {
     print("Adding tweets");
     httpRequestGet("http://" + _ipAddress + ":" + _port + "/tweets/", null)
         .then((value) {
@@ -112,7 +112,9 @@ class _TimelineState extends State<Timeline> {
     WidgetsBinding.instance!.addPostFrameCallback((_) => _getTweets());
   }
 
-  void _startAddTweet(BuildContext ctx, String tweetText) async {
+  void _startAddTweet(BuildContext ctx) async {
+    String tweetText = "";
+    var tweetTextController = TextEditingController();
     showModalBottomSheet(
       context: ctx,
       builder: (bCtx) {
@@ -132,13 +134,43 @@ class _TimelineState extends State<Timeline> {
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    tweetText = tweetTextController.text;
+                    print(tweetText);
+                    var data = <String, dynamic>{
+                      'userId': 1,
+                      'createdAt': '2020-01-01T00:00:00.000Z',
+                      'tweetText': tweetText,
+                      'images': [],
+                      'favouriters': [],
+                      'retweeters': [],
+                      'replies': [],
+                    };
+                    await _addTweet(data);
+                    print("Tweet added");
+                    await _getTweets();
+                    print("Tweets retrieved");
+                    Navigator.pop(ctx);
+                  },
                   child: Text('Tweet'),
                 ),
               ],
             ),
             //add tweet
-            Text('Add Tweet\n Tweet text is here'),
+            Container(
+              padding: const EdgeInsets.all(10),
+              //take input text from user
+              child: TextField(
+                decoration: InputDecoration.collapsed(
+                  hintStyle: const TextStyle(
+                    fontFamily: 'RalewayMedium',
+                    fontSize: 14.5,
+                  ),
+                  hintText: 'What\'s happening?',
+                ),
+                controller: tweetTextController,
+              ),
+            )
           ],
         );
       },
@@ -146,20 +178,10 @@ class _TimelineState extends State<Timeline> {
       enableDrag: false,
       useRootNavigator: true,
     );
-    var data = <String, dynamic>{
-      'userId': 1,
-      'createdAt': '2020-01-01T00:00:00.000Z',
-      'tweetText': tweetText,
-      'images': [],
-      'favouriters': [],
-      'retweeters': [],
-      'replies': [],
-    };
-    //var response = await _addTweet(data);
-    _getTweets();
   }
 
   Future<void> _addTweet(Map<String, dynamic> data) async {
-    return await httpRequestPost("http://" + MY_IP_ADDRESS + "/tweets/", data);
+    return await httpRequestPost(
+        "http://" + _ipAddress + ":" + _port + "/tweets/", data);
   }
 }
