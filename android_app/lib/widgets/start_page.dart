@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Sign Up/sign_up.dart';
 import 'Log In/login.dart';
+import '../providers/google_sign_in.dart';
 
 class StartPage extends StatelessWidget {
   void goToSignUpPage(BuildContext ctx) {
@@ -97,18 +100,28 @@ class StartPage extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 80),
-                  Image.asset(
-                    'assets/images/google_logo.png',
-                    width: 25,
-                    //height: 70,
-                    //fit: BoxFit.fill,
-                  ),
-                  const SizedBox(width: 15),
                   SizedBox(
-                    width: 176,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Sign Up with Google'),
+                    width: 205,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.google,
+                        color: Colors.red,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.grey.shade700,
+                        minimumSize: const Size(
+                          double.infinity,
+                          50,
+                        ),
+                      ),
+                      label: const Text('Sign Up with Google'),
                     ),
                   ),
                 ],
@@ -120,13 +133,22 @@ class StartPage extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 80),
-                  const Icon(Icons.facebook, size: 26, color: Colors.blue),
-                  const SizedBox(width: 15),
                   SizedBox(
-                    width: 176,
-                    child: ElevatedButton(
+                    width: 210,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xff3c5c9c),
+                        minimumSize: const Size(
+                          double.infinity,
+                          50,
+                        ),
+                      ),
+                      icon: const Icon(
+                        Icons.facebook,
+                        size: 29,
+                      ),
                       onPressed: () {},
-                      child: const Text('Sign Up with Facebook'),
+                      label: const Text('Sign Up with Facebook'),
                     ),
                   ),
                 ],

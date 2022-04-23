@@ -49,12 +49,11 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future _pickDate(BuildContext context) async {
-    final initialDate = DateTime.now();
     final newDate = await showDatePicker(
       context: context,
-      initialDate: initialDate,
+      initialDate: DateTime(2000, 05, 15),
       firstDate: DateTime(1950),
-      lastDate: DateTime(DateTime.now().year + 1),
+      lastDate: DateTime.now(),
     );
 
     if (newDate == null) return;
@@ -194,7 +193,7 @@ class _SignUpState extends State<SignUp> {
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        labelText: 'Phone number or email address',
+                        labelText: 'Email address',
                         labelStyle:
                             const TextStyle(fontFamily: 'RalewayMedium'),
                         suffixIcon: (widget._emailIsValid && _emailIsEntered)
