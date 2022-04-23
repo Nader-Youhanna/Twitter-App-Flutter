@@ -43,6 +43,9 @@ class Tweet extends StatelessWidget {
     _username = '@username . ';
     _displayName = 'Display Name';
   }
+  String getTweetText() {
+    return _tweetText;
+  }
 
   @override
   Widget build(BuildContext context) {

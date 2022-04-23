@@ -4,13 +4,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'notification_item.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../constants.dart';
 import '../../functions/http_functions.dart';
 
 class AllNotificationsList extends StatefulWidget {
   AllNotificationsList();
 
-  List<NotificationItem> notificationList = <NotificationItem>[];
+  // List<NotificationItem> notificationList = <NotificationItem>[];
   @override
   State<AllNotificationsList> createState() => _AllNotificationsListState();
 }
@@ -25,32 +26,25 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   bool allLoaded = false;
 
 //Function to get the list of notifications and their types from backend
-  void _getNotifications() async {
+  Future<List<NotificationItem>> _getNotifications() async {
+    List<NotificationItem> notificationList = <NotificationItem>[];
+    var data = [];
     print("Adding notifications");
-    httpRequestGet("http://${MY_IP_ADDRESS}:3000/notifications", null)
-        .then((value) {
-      setState(() {
-        widget.notificationList.clear();
-        for (var i = 0; i < value.length; i++) {
-          widget.notificationList
-              .add(NotificationItem.jsonNotification(value[i]));
-        }
-      });
-    });
-  }
-
-  addingLoading() async {
-    if (allLoaded) {
-      return;
+    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/notifications");
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        notificationList =
+            data.map((e) => NotificationItem.jsonNotification(e)).toList();
+      } else {
+        print("fetch error");
+      }
+    } on Exception catch (e) {
+      print('error: $e');
     }
-    _getNotifications();
-    setState(() {
-      loading = true;
-    });
 
-    setState(() {
-      loading = false;
-    });
+    return notificationList;
   }
 
   @override
@@ -58,18 +52,8 @@ class _AllNotificationsListState extends State<AllNotificationsList>
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => addingLoading()); //function is called everytime we open the page
-    ;
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >=
-              _scrollController.position.maxScrollExtent &&
-          !loading) {
-        //this means that we reached the bottom of the page and we are no longer loading
-
-        addingLoading();
-      }
-    });
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _getNotifications()); //function is called everytime we open the page
   }
 
   @override
@@ -82,79 +66,99 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
-      child: widget.notificationList.isNotEmpty
-          ? Stack(children: [
-              ListView.separated(
-                padding: const EdgeInsets.all(5),
-                controller: _scrollController,
-                itemCount: widget.notificationList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  //return notificationItems[index];
-                  return Container(
-                    //this container should contain actual notifications not list elements
-                    height: 100,
-                    color: Colors.white,
-                    //child: Center(child: Text(notificationItems[index])),
-                    child: widget.notificationList[index],
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(
-                  height: 1,
-                ),
-              ),
-              if (loading) ...[
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  child: Container(
-                    width: 400,
-                    height: 80,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ])
-          : Container(
-              child: Column(
-                children: [
-                  const SizedBox(height: 220),
-                  RichText(
-                    text: const TextSpan(
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Join the conversation\n',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
+    return FutureBuilder<List<NotificationItem>>(
+        future: _getNotifications(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              List<NotificationItem> data = snapshot.data!;
+              return Container(
+                child: data.isNotEmpty
+                    ? Stack(children: [
+                        ListView.builder(
+                          clipBehavior: Clip.hardEdge,
+                          padding: const EdgeInsets.all(0),
+                          controller: _scrollController,
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              //this container should contain actual notifications not list elements
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    offset: Offset(0.0, 1.0), //(x,y)
+                                    blurRadius: 1.0,
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(0),
+                              height: 100,
+                              //color: Colors.white,
+                              child: data[index],
+                            );
+                          },
+                          // separatorBuilder: (BuildContext context, int index) =>
+                          //     const Divider(
+                          //   height: 0.1,
+                          // ),
                         ),
-                        TextSpan(
-                          text:
-                              'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 100, 99, 99),
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                          ),
+                        if (loading) ...[
+                          Positioned(
+                            left: 0,
+                            bottom: 0,
+                            child: Container(
+                              width: 400,
+                              height: 80,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ])
+                    : Container(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 220),
+                            RichText(
+                              text: const TextSpan(
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Join the conversation\n',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 100, 99, 99),
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              //padding: const EdgeInsets.all(30),
-              margin: const EdgeInsets.all(30),
-            ),
-    );
+                        //padding: const EdgeInsets.all(30),
+                        margin: const EdgeInsets.all(30),
+                      ),
+              );
+          }
+        });
   }
 }

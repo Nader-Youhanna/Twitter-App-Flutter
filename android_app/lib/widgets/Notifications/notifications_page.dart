@@ -5,12 +5,16 @@ import 'notification_bar.dart';
 import 'all_notifications_list.dart';
 import 'mentions_list.dart';
 
-class NotificationsPage extends StatelessWidget {
+class NotificationsPage extends StatefulWidget {
   //setting up default credentails for each user
   String username = 'Default user';
   int userId = 0;
   bool isAdmin = false;
   NotificationsPage(this.username, this.userId, this.isAdmin);
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
