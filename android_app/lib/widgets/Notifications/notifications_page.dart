@@ -8,9 +8,9 @@ import 'mentions_list.dart';
 class NotificationsPage extends StatelessWidget {
   //setting up default credentails for each user
   String username = 'Default user';
-  int userId = 0;
+  String token = '';
   bool isAdmin = false;
-  NotificationsPage(this.username, this.userId, this.isAdmin);
+  NotificationsPage(this.username, this.token, this.isAdmin);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

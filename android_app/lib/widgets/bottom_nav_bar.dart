@@ -16,13 +16,13 @@ class MyNavigationBar extends StatefulWidget {
   //setting up default credentails for each user
   final String name;
   final String username;
-  final int userID;
+  final String token;
   final bool isAdmin;
   //MyNavigationBar();
   MyNavigationBar({
     required this.name,
     required this.username,
-    required this.userID,
+    required this.token,
     required this.isAdmin,
   });
 
@@ -54,20 +54,19 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     Timeline(),
     ExplorePage(
       widget.username,
-      widget.userID,
+      widget.token,
       widget.isAdmin,
     ),
     NotificationsPage(
       widget.username,
-      widget.userID,
+      widget.token,
       widget.isAdmin,
     ),
-    Inbox(),
-    // Inbox(
-    //   widget.username,
-    //   widget.userID,
-    //   widget.isAdmin,
-    // ),
+
+    Inbox(
+      username: widget.username,
+      token: widget.token,
+    ),
   ];
 
   void _onItemTapped(int index) {

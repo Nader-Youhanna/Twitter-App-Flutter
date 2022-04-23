@@ -38,7 +38,7 @@ class StartPage extends StatelessWidget {
             return MyNavigationBar(
               name: 'Nader',
               username: 'Nader',
-              userID: 0,
+              token: '',
               isAdmin: false,
             );
           } else if (snapshot.hasError) {

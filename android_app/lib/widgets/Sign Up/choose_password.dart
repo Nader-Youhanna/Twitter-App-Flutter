@@ -35,7 +35,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
         return MyNavigationBar(
           name: widget.name,
           username: widget.username,
-          userID: 0,
+          token: '',
           isAdmin: false,
         );
       }),

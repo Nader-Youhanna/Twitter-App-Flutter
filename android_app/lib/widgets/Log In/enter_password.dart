@@ -95,7 +95,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           return MyNavigationBar(
             name: widget.name,
             username: widget.username,
-            userID: 0,
+            token: '',
             isAdmin: false,
           );
         }),
@@ -235,7 +235,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 380),
+            const SizedBox(height: 395),
             const Divider(
               height: 2,
               thickness: 0.9,

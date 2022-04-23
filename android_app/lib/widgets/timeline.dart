@@ -33,7 +33,7 @@ class _TimelineState extends State<Timeline> {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
     return Scaffold(
-      drawer: SideBar(),
+      drawer: SideBar(name: 'nido', username: 'nido123'),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
