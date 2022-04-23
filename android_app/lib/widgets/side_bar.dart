@@ -22,7 +22,6 @@ class SideBar extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.fill,
                 image: AssetImage('assets/images/cover_image_sidebar.jpg'),
-                ),
               ),
             ),
           ),
