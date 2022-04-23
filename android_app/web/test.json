@@ -103,6 +103,13 @@
       "username": "nido",
       "password": "nido",
       "id": 2
+    },
+    {
+      "username": "nido",
+      "email": "naderyouhanna@gmail.com",
+      "dob": "15/5/2000",
+      "password": "nghghgjjnjkk",
+      "id": 3
     }
   ],
   "profile": [
@@ -121,111 +128,111 @@
       ]
     }
   ],
-  "forgot-password": [
-    
-  ],
+  "forgot-password": [],
   "search": [
     {
-      "username":"Habiba",
-     "handle":"@HabibaAssem77"
+      "username": "Habiba",
+      "handle": "@HabibaAssem77"
     },
     {
-      "username":"Nora",
-     "handle":"@NoraMo55"
+      "username": "Nora",
+      "handle": "@NoraMo55"
     },
     {
-      "username":"Noran",
-      "handle":"@NouraanAhmed4"
+      "username": "Noran",
+      "handle": "@NouraanAhmed4"
     },
     {
-      "username":"Hassan",
-      "handle":"@HassanAbdallah"
+      "username": "Hassan",
+      "handle": "@HassanAbdallah"
     }
-
   ],
   "trends": [
     {
-      "hashtag":"#Testing",
-      "retweets":"700k"
-    },
-    {   "hashtag":"#Ramadan_karim",
-      "retweets":"550k"
-
+      "hashtag": "#Testing",
+      "retweets": "700k"
     },
     {
-       "hashtag":"#Computer_science",
-       "retweets":"4,299"
+      "hashtag": "#Ramadan_karim",
+      "retweets": "550k"
     },
     {
-      "hashtag":"#Software_engineering",
-      "retweets":"3,177"
+      "hashtag": "#Computer_science",
+      "retweets": "4,299"
     },
     {
-      "hashtag":"#quiz_EM",
-      "retweets":"8,900"
+      "hashtag": "#Software_engineering",
+      "retweets": "3,177"
     },
     {
-      "hashtag":"#sham_el_nesim",
-      "retweets":"7000"
-
+      "hashtag": "#quiz_EM",
+      "retweets": "8,900"
     },
     {
-      "hashtag":"#faculty",
-      "retweets":"250"
+      "hashtag": "#sham_el_nesim",
+      "retweets": "7000"
     },
     {
-      "hashtag":"#Corona",
-      "retweets":"800k"
-
+      "hashtag": "#faculty",
+      "retweets": "250"
     },
     {
-      "hashtag":"#test_scrolling",
-      "retweets":"300"
+      "hashtag": "#Corona",
+      "retweets": "800k"
     },
     {
-      "hashtag":"#test_scrolling",
-      "retweets":"300"
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
     },
     {
-      "hashtag":"#test_scrolling",
-      "retweets":"300"
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
     },
     {
-      "hashtag":"#test_scrolling",
-      "retweets":"300"
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
     },
     {
-      "hashtag":"#test_scrolling",
-      "retweets":"300"
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
     }
-
-
   ],
   "notifications": [
     {
-      "username":"Habiba",
-      "type":"like"
+      "username": "Habiba",
+      "type": "like"
     },
-    {  "username":"Nada",
-      "type":"block"
+    {
+      "username": "Nada",
+      "type": "block"
     },
-    {  "username":"Ahmed",
-      "type":"like"
+    {
+      "username": "Ahmed",
+      "type": "like"
     },
-    {  "username":"Mostafa",
-      "type":"retweet"
+    {
+      "username": "Mostafa",
+      "type": "retweet"
     },
-    {  "username":"Sherif",
-      "type":"like"
+    {
+      "username": "Sherif",
+      "type": "like"
     },
-    {  "username":"Sarah",
-      "type":"retweet"
+    {
+      "username": "Sarah",
+      "type": "retweet"
     },
-    {  "username":"Ismail",
-      "type":"like"
+    {
+      "username": "Ismail",
+      "type": "like"
     },
-    {  "username":"Ashraf",
-      "type":"block"
+    {
+      "username": "Ashraf",
+      "type": "block"
     }
   ]
 }
