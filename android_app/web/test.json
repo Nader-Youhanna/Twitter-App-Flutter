@@ -109,16 +109,108 @@
   "forgot-password": [
     
   ],
-  "SearchSuggestions": [
-    "Brazil",
-    "canada",
-    "Russia",
-    "Egypt",
-    "Lebanon",
-    "United States",
-    "Argetina",
-    "PERU",
-    "Sudan",
-    "Catalania"
+  "search": [
+    {
+      "username":"Habiba",
+     "handle":"@HabibaAssem77"
+    },
+    {
+      "username":"Nora",
+     "handle":"@NoraMo55"
+    },
+    {
+      "username":"Noran",
+      "handle":"@NouraanAhmed4"
+    },
+    {
+      "username":"Hassan",
+      "handle":"@HassanAbdallah"
+    }
+
+  ],
+  "trends": [
+    {
+      "hashtag":"#Testing",
+      "retweets":"700k"
+    },
+    {   "hashtag":"#Ramadan_karim",
+      "retweets":"550k"
+
+    },
+    {
+       "hashtag":"#Computer_science",
+       "retweets":"4,299"
+    },
+    {
+      "hashtag":"#Software_engineering",
+      "retweets":"3,177"
+    },
+    {
+      "hashtag":"#quiz_EM",
+      "retweets":"8,900"
+    },
+    {
+      "hashtag":"#sham_el_nesim",
+      "retweets":"7000"
+
+    },
+    {
+      "hashtag":"#faculty",
+      "retweets":"250"
+    },
+    {
+      "hashtag":"#Corona",
+      "retweets":"800k"
+
+    },
+    {
+      "hashtag":"#test_scrolling",
+      "retweets":"300"
+    },
+    {
+      "hashtag":"#test_scrolling",
+      "retweets":"300"
+    },
+    {
+      "hashtag":"#test_scrolling",
+      "retweets":"300"
+    },
+    {
+      "hashtag":"#test_scrolling",
+      "retweets":"300"
+    },
+    {
+      "hashtag":"#test_scrolling",
+      "retweets":"300"
+    }
+
+
+  ],
+  "notifications": [
+    {
+      "username":"Habiba",
+      "type":"like"
+    },
+    {  "username":"Nada",
+      "type":"block"
+    },
+    {  "username":"Ahmed",
+      "type":"like"
+    },
+    {  "username":"Mostafa",
+      "type":"retweet"
+    },
+    {  "username":"Sherif",
+      "type":"like"
+    },
+    {  "username":"Sarah",
+      "type":"retweet"
+    },
+    {  "username":"Ismail",
+      "type":"like"
+    },
+    {  "username":"Ashraf",
+      "type":"block"
+    }
   ]
 }

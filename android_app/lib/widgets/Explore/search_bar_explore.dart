@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './user_search_item.dart';
 import 'search_item.dart';
 import '../user_profile/profile.dart';
+import './building_suggestions.dart';
 
 CircleAvatar userImages = const CircleAvatar(
   //will be removed once apis are connected
@@ -18,9 +19,9 @@ class MySearchDelegate extends SearchDelegate {
     );
   }
 
-  List<SearchItem> searchResults;
+  BuildingSuggestions _suggestionsList = BuildingSuggestions();
 
-  MySearchDelegate(this.searchResults);
+  MySearchDelegate();
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(
@@ -50,27 +51,15 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   //this is where we display the result of our search
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: const Text(
-        "Search result",
-        style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
+  Widget buildResults(BuildContext context) => Container(
+        child: const Text(
+          "Search result",
+          style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),
+        ),
+      );
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<SearchItem> Usersuggestions = searchResults.where((searchResult) {
-      final result;
-      if (searchResult.type == 0)
-        result = searchResult.tweetText.toLowerCase();
-      else
-        result = searchResult.username.toLowerCase();
-      final input = query.toLowerCase();
-      return result.contains(input);
-    }).toList();
-
     return query.isEmpty
         ? const Center(
             heightFactor: 5,
@@ -83,23 +72,37 @@ class MySearchDelegate extends SearchDelegate {
               ),
             ),
           )
-        : ListView.separated(
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(
-              height: 1,
-            ),
-            itemCount: Usersuggestions.length,
-            itemBuilder: (context, index) {
-              final suggestion = Usersuggestions[index];
-              return GestureDetector(
-                child: suggestion,
-                onTap: suggestion.type ==
-                        1 //this means the suggestion item is a user
-                    ? () => _goToUserProfile(context)
-                    : () => {}, //this means the suggestion item is a tweet
-              );
-            },
-          );
+        : FutureBuilder<List<SearchItem>>(
+            future: _suggestionsList.getSearchItems(query: query),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                default:
+                  List<SearchItem> data = snapshot.data!;
+                  return ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(
+                      height: 1,
+                    ),
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final suggestion = data[index];
+                      return GestureDetector(
+                        child: suggestion,
+                        onTap: suggestion.username != ' '
+                            //this means the suggestion item is a user
+                            ? () => _goToUserProfile(context)
+                            : () => close(
+                                //we will not need this function this is temporary
+                                context,
+                                suggestion
+                                    .tweetText), //this means the suggestion item is a tweet
+                      );
+                    },
+                  );
+              }
+            });
   }
 
   @override

@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'notification_item.dart';
 import 'package:http/http.dart' as http;
 import '../../constants.dart';
+import '../../functions/http_functions.dart';
 
 class AllNotificationsList extends StatefulWidget {
-  const AllNotificationsList();
+  AllNotificationsList();
 
+  List<NotificationItem> notificationList = <NotificationItem>[];
   @override
   State<AllNotificationsList> createState() => _AllNotificationsListState();
 }
@@ -18,35 +20,36 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   @override
   bool get wantKeepAlive => true;
   final ScrollController _scrollController = ScrollController();
-  //List<String> notificationItems = [];
-  List<NotificationItem> notificationItems = [];
+
   bool loading = false;
   bool allLoaded = false;
 
-//mocking what would happen with actual apis
-  mockFetch() async {
+//Function to get the list of notifications and their types from backend
+  void _getNotifications() async {
+    print("Adding notifications");
+    httpRequestGet("http://${MY_IP_ADDRESS}:3000/notifications", null)
+        .then((value) {
+      setState(() {
+        widget.notificationList.clear();
+        for (var i = 0; i < value.length; i++) {
+          widget.notificationList
+              .add(NotificationItem.jsonNotification(value[i]));
+        }
+      });
+    });
+  }
+
+  addingLoading() async {
     if (allLoaded) {
       return;
     }
-
+    _getNotifications();
     setState(() {
       loading = true;
     });
 
-    await Future.delayed(Duration(milliseconds: 1000)); //mock delay for await
-    List<NotificationItem> newData = notificationItems.length >= 60
-        ? []
-        : List.generate(
-            20,
-            (index) =>
-                NotificationItem()); //generating mock list elements->TODO:get elements from apis
-    if (newData.isNotEmpty) {
-      notificationItems.addAll(newData);
-    }
-
     setState(() {
       loading = false;
-      allLoaded = newData.isEmpty;
     });
   }
 
@@ -54,14 +57,17 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   void initState() {
     // TODO: implement initState
     super.initState();
-    mockFetch();
+
+    WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => addingLoading()); //function is called everytime we open the page
+    ;
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent &&
           !loading) {
         //this means that we reached the bottom of the page and we are no longer loading
 
-        mockFetch();
+        addingLoading();
       }
     });
   }
@@ -77,12 +83,12 @@ class _AllNotificationsListState extends State<AllNotificationsList>
   Widget build(BuildContext context) {
     super.build(context);
     return Container(
-      child: notificationItems.isNotEmpty
+      child: widget.notificationList.isNotEmpty
           ? Stack(children: [
               ListView.separated(
                 padding: const EdgeInsets.all(5),
                 controller: _scrollController,
-                itemCount: notificationItems.length,
+                itemCount: widget.notificationList.length,
                 itemBuilder: (BuildContext context, int index) {
                   //return notificationItems[index];
                   return Container(
@@ -90,7 +96,7 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                     height: 100,
                     color: Colors.white,
                     //child: Center(child: Text(notificationItems[index])),
-                    child: notificationItems[index],
+                    child: widget.notificationList[index],
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>

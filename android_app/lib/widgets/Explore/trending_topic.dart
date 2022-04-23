@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class TrendingTopic extends StatelessWidget {
   String hashtag = '';
   int trendingNumber = 1;
-  int numberOfTweets = 0;
-  TrendingTopic(this.hashtag, this.trendingNumber, this.numberOfTweets);
+  String numberOfTweets = "0";
 
+  //function to set the list of trending topics that we get once we open explore page
+  TrendingTopic.jsonTrend(Map<String, dynamic> jsonTrend) {
+    hashtag = jsonTrend['hashtag'] as String;
+    numberOfTweets = jsonTrend['retweets'] as String;
+  }
+
+  //construnctions the strings that are going to be displayed
   late String header = trendingNumber.toString() + " . Trending";
-  late String retweets = numberOfTweets.toString() + " Tweets";
+  late String retweets = numberOfTweets + " Tweets";
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +23,32 @@ class TrendingTopic extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Color.fromARGB(255, 106, 112, 125),
-          fontSize: 13,
+          fontSize: 15,
         ),
       ),
-      subtitle: Text(
-        hashtag,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 13,
-        ),
+      subtitle: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            hashtag,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            retweets,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 106, 112, 125),
+              fontSize: 13,
+            ),
+          ),
+        ],
       ),
       trailing: PopupMenuButton(
         //button to display the see less list
@@ -45,7 +67,7 @@ class TrendingTopic extends StatelessWidget {
           ];
         },
       ),
-      // isThreeLine: true,
+      isThreeLine: true,
     );
   }
 }

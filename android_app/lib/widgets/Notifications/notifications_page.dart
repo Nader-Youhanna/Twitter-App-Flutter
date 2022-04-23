@@ -24,7 +24,7 @@ class NotificationsPage extends StatelessWidget {
                 const NotificationBar(), //the bar that gives us either the all notifications page or the mentions page
               ];
             },
-            body: const TabBarView(
+            body: TabBarView(
               children: <Widget>[
                 AllNotificationsList(), //getting and displaying the list of all notifications
                 MentionsList(), //getting and displaying the list of all mentions

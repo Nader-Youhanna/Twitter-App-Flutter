@@ -7,6 +7,7 @@ import './search_bar_explore.dart';
 import './user_search_item.dart';
 import './search_item.dart';
 import './trending_topic.dart';
+import '../../functions/http_functions.dart';
 
 CircleAvatar userImages = const CircleAvatar(
   //will be removed once apis are connected
@@ -19,6 +20,7 @@ class ExplorePage extends StatefulWidget {
   String username = 'Default user';
   int userId = 0;
   bool isAdmin = false;
+  List<TrendingTopic> trends = <TrendingTopic>[];
   ExplorePage(this.username, this.userId, this.isAdmin);
 
   @override
@@ -26,7 +28,6 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  //const ExplorePage({});
   var _appBarText = 'Search Twitter';
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -36,32 +37,24 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 
-  List<TrendingTopic> trends = List<TrendingTopic>.generate(
-      30, (index) => TrendingTopic("#testingHashtag", index, index + 100));
-  List<SearchItem> searchResults = List<SearchItem>.generate(
-      10,
-      (i) => i % 6 == 0
-          ? SearchItem(1,
-              username: 'habibaAssem16',
-              handle: '@habibaAssem',
-              userImage: userImages)
-          : SearchItem(
-              0,
-              tweetText:
-                  "testing with a variaty of letters and words like hospital, gym, night",
-              username: 'NoraMattar',
-              handle: '@habibaAssem',
-              userImage: userImages,
-            ));
-  Future<void> httpRequestGet() async {
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/SearchSuggestions');
-    var response = await http.get(url);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _getTrendingTopics()); //function is called everytime we open the page
+  }
 
-    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    setState(() {
-      searchResults = extractedMyInfo['SearchSuggestions'];
+//Function to get the list of trending topics and their number of tweets from backend
+  void _getTrendingTopics() async {
+    print("Adding trending topiicss");
+    httpRequestGet("http://${MY_IP_ADDRESS}:3000/trends", null).then((value) {
+      setState(() {
+        widget.trends.clear();
+        for (var i = 0; i < value.length; i++) {
+          widget.trends.add(TrendingTopic.jsonTrend(value[i]));
+          widget.trends[i].trendingNumber = i;
+        }
+      });
     });
   }
 
@@ -105,9 +98,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   ),
                   onTap: () {
                     //redirects us to the page with the searching elements
-                    showSearch(
-                        context: context,
-                        delegate: MySearchDelegate(searchResults));
+                    showSearch(context: context, delegate: MySearchDelegate());
                   }),
             ),
 
@@ -130,15 +121,12 @@ class _ExplorePageState extends State<ExplorePage> {
           ),
         ),
         SliverList(
-          //should be the list of trending topics
+          //This function renders the list of trending topics
           delegate: SliverChildBuilderDelegate(
-            // The builder function returns a ListTile with a title that
-            // this is temporary
-            (context, index) => trends[index],
-            childCount: 10,
+            (context, index) => widget.trends[index],
+            childCount: widget.trends.length,
           ),
         ),
-        // UserSearch('habiba', '@habibaAssem', userImage),
       ],
     ));
   }
