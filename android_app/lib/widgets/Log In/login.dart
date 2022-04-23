@@ -8,8 +8,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  var _emailIsEntered = false;
-  String _email = '';
+  var _usernameIsEntered = false;
+  String _username = '';
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
   void _enterPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return EnterPasswordPage(username: _email);
+        return EnterPasswordPage(username: _username);
       }),
     );
   }
@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
             const SizedBox(
               width: 320,
               child: Text(
-                'To get started, first enter your phone, email, or @username',
+                'To get started, first enter your @username',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontFamily: 'RalewayMedium',
@@ -100,13 +100,13 @@ class _LoginState extends State<Login> {
               width: 330,
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Phone, email or username',
+                  hintText: 'Username',
                 ),
                 onChanged: (value) {
                   if (value.isNotEmpty) {
-                    _email = value;
+                    _username = value;
                     setState(() {
-                      _emailIsEntered = true;
+                      _usernameIsEntered = true;
                     });
                   }
                 },
@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     _enterPassword(context);
                   },
-                  style: (!_emailIsEntered)
+                  style: (!_usernameIsEntered)
                       ? ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               Colors.grey.shade400),

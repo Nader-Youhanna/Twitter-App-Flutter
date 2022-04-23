@@ -33,6 +33,8 @@ class _SignUpState extends State<SignUp> {
   }
 
   void _goToTermsAndConditions(BuildContext ctx) {
+    print("Username: " + _username);
+    print("Email: " + _email);
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return TermsAndConditions(

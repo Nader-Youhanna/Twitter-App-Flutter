@@ -12,14 +12,36 @@ class ChoosePassword extends StatefulWidget {
     return _passwordIsValid = password.length >= 8;
   }
 
-  ChoosePassword(
-      {@required this.username, @required this.email, @required this.dob});
+  ChoosePassword({
+    @required this.username,
+    @required this.email,
+    @required this.dob,
+  });
   @override
   State<ChoosePassword> createState() => _ChoosePasswordState();
 }
 
 class _ChoosePasswordState extends State<ChoosePassword> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+
+  void _goToTimeline(BuildContext ctx) {
+    print("Username: " + widget.username);
+    print("Email: " + widget.email);
+    _sendDataToBackend();
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return MyNavigationBar(
+          //email: widget.email,
+          username: widget.username,
+          userID: 0,
+          isAdmin: false,
+        );
+      }),
+    );
+  }
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -49,22 +71,6 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-  }
-
-  void _goToTimeline(BuildContext ctx) {
-    _sendDataToBackend();
-    Navigator.of(ctx).pop();
-    Navigator.of(ctx).pop();
-    Navigator.of(ctx).pop();
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return MyNavigationBar(
-          username: widget.username,
-          userID: 0,
-          isAdmin: false,
-        );
-      }),
-    );
   }
 
   final _textFieldWidth = 320.0;

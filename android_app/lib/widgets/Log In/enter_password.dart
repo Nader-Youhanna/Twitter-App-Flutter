@@ -8,8 +8,12 @@ import 'forgot_password.dart';
 
 class EnterPasswordPage extends StatefulWidget {
   final username;
+  final email;
 
-  EnterPasswordPage({@required this.username});
+  EnterPasswordPage({
+    @required this.username,
+    @required this.email,
+  });
 
   @override
   State<EnterPasswordPage> createState() => _EnterPasswordPageState();
