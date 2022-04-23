@@ -10,7 +10,18 @@
       ],
       "favouriters": [],
       "retweeters": [],
-      "replies": []
+      "replies": [
+        {
+          "userId" : 1,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World"
+        },
+        {
+          "userId" : 2,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World2"
+        }
+      ]
     },
     {
       "id": 2,
