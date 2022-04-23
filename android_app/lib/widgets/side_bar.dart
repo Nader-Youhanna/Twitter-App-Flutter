@@ -1,3 +1,4 @@
+import 'Settings/settings_main.dart';
 import './Messages/inbox.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -134,12 +135,21 @@ class SideBar extends StatelessWidget {
               );
             },
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return Settings();
+                  },
+                ),
+              );
+            },
+            leading: const Icon(
               Icons.settings,
               size: 27,
             ),
-            title: Text(
+            title: const Text(
               'Settings',
               style: TextStyle(
                 fontSize: 17,
