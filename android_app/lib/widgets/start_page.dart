@@ -26,18 +26,6 @@ void goToLoginPage(BuildContext ctx) {
 }
 
 class StartPage extends StatelessWidget {
-  void _goToTimeline(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return MyNavigationBar(
-          username: 'Nader',
-          userID: 0,
-          isAdmin: false,
-        );
-      }),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -6,6 +6,7 @@ class SignUp extends StatefulWidget {
   var _emailIsValid = false;
 
   bool isEmailValid(var email) {
+    print(email);
     return (_emailIsValid =
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
@@ -16,17 +17,19 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _mailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _usernameKey = GlobalKey<FormState>();
 
   var _allIsEntered = false;
-  var _nameIsEntered = false;
+  var _usernameIsEntered = false;
   var _emailIsEntered = false;
   var _dobIsEntered = false;
-  var _nameIsValid = false;
+  var _nameIsEntered = false;
+  var _usernameIsValid = false;
   var _passwordIsValid = false;
   var _username;
   var _email;
   var _dob = null;
+  var _name;
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -38,6 +41,7 @@ class _SignUpState extends State<SignUp> {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return TermsAndConditions(
+          name: _name,
           username: _username,
           email: _email,
           dob: '${_dob.day}/${_dob.month}/${_dob.year}',
@@ -46,8 +50,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  bool _isNameValid(var name) {
-    return (_nameIsValid = !RegExp(r"^nader$").hasMatch(name));
+  bool _isUserNameValid(var name) {
+    return (_usernameIsValid = !RegExp(r"^nader$").hasMatch(name));
   }
 
   Future _pickDate(BuildContext context) async {
@@ -61,10 +65,11 @@ class _SignUpState extends State<SignUp> {
     if (newDate == null) return;
     setState(() {
       _dobIsEntered = true;
-      if (_emailIsEntered &&
+      if (_nameIsEntered &&
+          _emailIsEntered &&
           widget._emailIsValid &&
-          _nameIsEntered &&
-          _nameIsValid) {
+          _usernameIsEntered &&
+          _usernameIsValid) {
         _allIsEntered = true;
       }
       _dob = newDate;
@@ -149,37 +154,67 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 50),
             Column(
               children: <Widget>[
+                SizedBox(
+                  width: SignUp._widthOfTextFields,
+                  child: TextField(
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        _name = value;
+                        setState(() {
+                          _nameIsEntered = true;
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: const TextStyle(fontFamily: 'RalewayMedium'),
+                      suffixIcon: (_nameIsEntered)
+                          ? const Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.green,
+                            )
+                          : (_usernameIsEntered && !_usernameIsValid)
+                              ? const Icon(
+                                  Icons.cancel,
+                                  color: Colors.red,
+                                )
+                              : null,
+                    ),
+                  ),
+                ),
                 Form(
-                  key: _nameKey,
+                  key: _usernameKey,
                   child: SizedBox(
                     width: SignUp._widthOfTextFields,
                     child: TextFormField(
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _usernameIsEntered = value.isNotEmpty;
+                            if (_usernameKey.currentState!.validate()) {
+                              _username = value;
+                            }
+                          },
+                        );
+                      },
                       decoration: InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Username',
                         labelStyle:
                             const TextStyle(fontFamily: 'RalewayMedium'),
-                        suffixIcon: (_nameIsValid && _nameIsEntered)
+                        suffixIcon: (_usernameIsValid && _usernameIsEntered)
                             ? const Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.green,
                               )
-                            : (_nameIsEntered && !_nameIsValid)
+                            : (_usernameIsEntered && !_usernameIsValid)
                                 ? const Icon(
                                     Icons.cancel,
                                     color: Colors.red,
                                   )
                                 : null,
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          _nameIsEntered = value.isNotEmpty;
-                          if (_nameKey.currentState!.validate()) {
-                            _username = value;
-                          }
-                        });
-                      },
                       validator: (value) {
-                        if (value != null && _isNameValid(value)) {
+                        if (value != null && _isUserNameValid(value)) {
                           return null;
                         } else {
                           return 'This username is already taken';
@@ -216,7 +251,9 @@ class _SignUpState extends State<SignUp> {
                           if (value.isNotEmpty) {
                             _emailIsEntered = true;
                             _email = value;
-                            if (_nameIsEntered && _dobIsEntered) {
+                            if (_nameIsEntered &&
+                                _usernameIsEntered &&
+                                _dobIsEntered) {
                               _allIsEntered = true;
                             }
                           } else {
@@ -274,7 +311,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ],
             ),
-            const SizedBox(height: 310),
+            const SizedBox(height: 260),
             Row(
               children: <Widget>[
                 const SizedBox(width: 280),

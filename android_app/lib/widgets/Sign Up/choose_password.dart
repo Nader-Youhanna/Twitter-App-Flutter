@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../../constants.dart';
 
 class ChoosePassword extends StatefulWidget {
-  final username, email, dob;
+  final name, username, email, dob;
   var _passwordIsValid = false;
 
   bool isPasswordValid(var password) {
@@ -13,6 +13,7 @@ class ChoosePassword extends StatefulWidget {
   }
 
   ChoosePassword({
+    @required this.name,
     @required this.username,
     @required this.email,
     @required this.dob,
@@ -25,8 +26,6 @@ class _ChoosePasswordState extends State<ChoosePassword> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   void _goToTimeline(BuildContext ctx) {
-    print("Username: " + widget.username);
-    print("Email: " + widget.email);
     _sendDataToBackend();
     Navigator.of(ctx).pop();
     Navigator.of(ctx).pop();
@@ -34,7 +33,6 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return MyNavigationBar(
-          //email: widget.email,
           username: widget.username,
           userID: 0,
           isAdmin: false,

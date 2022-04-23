@@ -7,12 +7,12 @@ class SideBar extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Nader'),
-            accountEmail: Text('naderyouhanna@gmail.com'),
+            accountName: const Text('Nader'),
+            accountEmail: const Text('naderyouhanna@gmail.com'),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
-                  'assets/images/user_icon.png',
+                  'assets/images/user_icon2.png',
                   fit: BoxFit.fill,
                 ),
               ),

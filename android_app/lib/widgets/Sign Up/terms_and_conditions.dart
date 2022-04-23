@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import './choose_password.dart';
 
 class TermsAndConditions extends StatelessWidget {
-  final username, email, dob;
+  final name, username, email, dob;
   TermsAndConditions({
+    @required this.name,
     @required this.username,
     @required this.email,
     @required this.dob,
@@ -30,11 +31,10 @@ class TermsAndConditions extends StatelessWidget {
   }
 
   void _goToChoosePassword(BuildContext ctx) {
-    print("Username: " + username);
-    print("Email: " + email);
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return ChoosePassword(
+          name: name,
           username: username,
           email: email,
           dob: dob,
@@ -65,18 +65,33 @@ class TermsAndConditions extends StatelessWidget {
                   _goBack(context);
                 },
               ),
+              //New logo
               const SizedBox(
-                width: 60,
+                width: 70,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: Image.asset(
-                  'assets/images/logo_icon.png',
-                  width: 120,
-                  height: 50,
-                  fit: BoxFit.fill,
+              const Text(
+                'Sirius',
+                style: TextStyle(
+                  fontSize: 38,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'RalewayMedium',
                 ),
               ),
+
+              //Old logo
+              // const SizedBox(
+              //   width: 60,
+              // ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(18),
+              //   child: Image.asset(
+              //     'assets/images/logo_icon.png',
+              //     width: 120,
+              //     height: 50,
+              //     fit: BoxFit.fill,
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 30),
