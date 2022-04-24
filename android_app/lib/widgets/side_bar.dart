@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'Settings/settings_main.dart';
 import './Messages/inbox.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
+import 'Admin View/admin_view_main.dart';
 import 'user_profile/profile.dart';
 import 'Notifications/notifications_page.dart';
 
@@ -185,12 +186,21 @@ class SideBar extends StatelessWidget {
           ),
           Visibility(
             visible: isAdmin,
-            child: const ListTile(
-              leading: Icon(
+            child: ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return AdminViewMain();
+                    },
+                  ),
+                );
+              },
+              leading: const Icon(
                 Icons.admin_panel_settings,
                 size: 27,
               ),
-              title: Text(
+              title: const Text(
                 'Admin View',
                 style: TextStyle(
                   fontSize: 17,
