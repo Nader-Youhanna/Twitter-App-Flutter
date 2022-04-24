@@ -12,12 +12,12 @@
       "retweeters": [],
       "replies": [
         {
-          "userId" : 1,
+          "userId": 1,
           "createdAt": "2020-01-01T00:00:00.000Z",
           "commentText": "Hello World"
         },
         {
-          "userId" : 2,
+          "userId": 2,
           "createdAt": "2020-01-01T00:00:00.000Z",
           "commentText": "Hello World2"
         }
@@ -84,6 +84,26 @@
       "retweeters": [],
       "replies": [],
       "id": 6
+    },
+    {
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "habiba",
+      "images": [],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [],
+      "id": 7
+    },
+    {
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "hihihi",
+      "images": [],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [],
+      "id": 8
     }
   ],
   "comments": [
@@ -138,6 +158,13 @@
       "country": "Egypt",
       "city": "Cairo",
       "id": 5
+    },
+    {
+      "username": "h",
+      "email": "b@h.co",
+      "dob": "1/5/2000",
+      "password": "hjjjjjjj",
+      "id": 6
     }
   ],
   "profile": [
@@ -373,6 +400,100 @@
         "retweeters": [],
         "replies": []
       }
+    }
+  ],
+  "openTrend": [
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 1
+    },
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 2
+    },
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 3
+    },
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 4
+    },
+    {
+      "hashtag": "#Software_engineering",
+      "id": 5
+    },
+    {
+      "hashtag": "#Software_engineering",
+      "id": 6
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 7
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 8
+    },
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 9
+    },
+    {
+      "hashtag": "#Ramadan_karim",
+      "id": 10
+    }
+  ],
+  "trendingTweets": [
+    {
+      "id": 1,
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "Hello World",
+      "images": [
+        "assets/images/test_image.png"
+      ],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [
+        {
+          "userId": 1,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World"
+        },
+        {
+          "userId": 2,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World2"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "Hello World",
+      "images": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": []
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "images": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": []
     }
   ]
 }

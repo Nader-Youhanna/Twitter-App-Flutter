@@ -101,26 +101,7 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                               child: data[index],
                             );
                           },
-                          // separatorBuilder: (BuildContext context, int index) =>
-                          //     const Divider(
-                          //   height: 0.1,
-                          // ),
                         ),
-                        if (loading) ...[
-                          Positioned(
-                            left: 0,
-                            bottom: 0,
-                            child: Container(
-                              width: 400,
-                              height: 80,
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
                       ])
                     : Container(
                         child: Column(
