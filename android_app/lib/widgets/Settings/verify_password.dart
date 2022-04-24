@@ -116,7 +116,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                         value == widget.password) {
                       widget._passwordIsCorrect = true;
                     } else {
-                      return 'Password incorrext';
+                      return 'Password incorrect';
                     }
                   },
                 ),
