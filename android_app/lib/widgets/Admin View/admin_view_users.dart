@@ -7,8 +7,8 @@ class AdminViewUsers extends StatelessWidget {
     return Container(
       child: ListView(
         children: [
-          AdminViewUser(),
-          AdminViewUser(),
+          AdminViewUser('Nader', 'nido7'),
+          AdminViewUser('Ahmed', 'ahmedMoh123'),
         ],
       ),
     );
