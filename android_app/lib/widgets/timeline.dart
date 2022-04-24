@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../functions/http_functions.dart';
+import '../functions/tweet_functions.dart';
 import '../constants.dart';
 import './Tweets/tweet.dart';
 import '../widgets/user_profile/profile.dart';
@@ -83,14 +83,14 @@ class _TimelineState extends State<Timeline> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => _startAddTweet(context),
+        onPressed: () => startAddTweet(context, _ipAddress, _port),
         child: const Icon(Icons.add),
       ),
     );
   }
 
   void _setIPAddress(String ipAddressPort) {
-    if (MY_IP_ADDRESS.indexOf(':') != -1) {
+    if (MY_IP_ADDRESS.contains(':')) {
       _ipAddress = MY_IP_ADDRESS.substring(0, MY_IP_ADDRESS.indexOf(':'));
       _port = MY_IP_ADDRESS.substring(MY_IP_ADDRESS.indexOf(':') + 1);
     } else {
@@ -99,95 +99,14 @@ class _TimelineState extends State<Timeline> {
     }
   }
 
-  Future<void> _getTweets() async {
-    print("Adding tweets");
-    httpRequestGet("http://" + _ipAddress + ":" + _port + "/tweets/", null)
-        .then((value) {
-      setState(() {
-        widget.tweets.clear();
-        for (var i = 0; i < value.length; i++) {
-          widget.tweets.add(Tweet.jsonTweet(value[i], false));
-        }
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _getTweets());
-  }
-
-  void _startAddTweet(BuildContext ctx) async {
-    String tweetText = "";
-    var tweetTextController = TextEditingController();
-    showModalBottomSheet(
-      context: ctx,
-      builder: (bCtx) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                  },
-                  child: Text('Cancel'),
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () async {
-                    tweetText = tweetTextController.text;
-                    print(tweetText);
-                    var data = <String, dynamic>{
-                      'userId': 1,
-                      'createdAt': '2020-01-01T00:00:00.000Z',
-                      'tweetText': tweetText,
-                      'images': [],
-                      'favouriters': [],
-                      'retweeters': [],
-                      'replies': [],
-                    };
-                    await _addTweet(data);
-                    print("Tweet added");
-                    await _getTweets();
-                    print("Tweets retrieved");
-                    Navigator.pop(ctx);
-                  },
-                  child: Text('Tweet'),
-                ),
-              ],
-            ),
-            //add tweet
-            Container(
-              padding: const EdgeInsets.all(10),
-              //take input text from user
-              child: TextField(
-                decoration: const InputDecoration.collapsed(
-                  hintStyle: TextStyle(
-                    fontFamily: 'RalewayMedium',
-                    fontSize: 14.5,
-                  ),
-                  hintText: 'What\'s happening?',
-                ),
-                controller: tweetTextController,
-              ),
-            )
-          ],
-        );
-      },
-      isScrollControlled: true,
-      enableDrag: false,
-      useRootNavigator: true,
-    );
-  }
-
-  Future<void> _addTweet(Map<String, dynamic> data) async {
-    return await httpRequestPost(
-        "http://" + _ipAddress + ":" + _port + "/tweets/", data);
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      List<Tweet> serverTweets = await getTweets(_ipAddress, _port);
+      setState(() {
+        widget.tweets = serverTweets;
+      });
+    });
   }
 }
