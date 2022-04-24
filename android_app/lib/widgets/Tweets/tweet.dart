@@ -32,13 +32,16 @@ class Tweet extends StatelessWidget {
   late String _username;
   late String _displayName;
 
-  late bool _hideButtons;
+  final bool _hideButtons;
+  bool _hideReplyTo;
 
-  Tweet.jsonTweet(Map<String, dynamic> jsonTweet, bool hideButtons)
+  Tweet.jsonTweet(
+      Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
       : _userId = jsonTweet['userId'] as int,
         _createdAt = DateTime.parse(jsonTweet['createdAt']),
         _tweetText = jsonTweet['tweetText'] as String,
-        _hideButtons = hideButtons {
+        _hideButtons = hideButtons,
+        _hideReplyTo = hideReplyTo {
     _tweetImages = List<String>.from(jsonTweet['images']);
     _favouriters = List<int>.from(jsonTweet['favouriters']);
     _retweeters = List<int>.from(jsonTweet['retweeters']);
@@ -46,9 +49,6 @@ class Tweet extends StatelessWidget {
 
     _username = '@username';
     _displayName = 'Display Name';
-  }
-  String getTweetText() {
-    return _tweetText;
   }
 
   Map<String, dynamic> toJson() => {
@@ -67,7 +67,7 @@ class Tweet extends StatelessWidget {
     return InkWell(
       onTap: () {
         print("Tweet pressed");
-        print(_commenters.length);
+        print("No. of replies = " + _commenters.length.toString());
         showModalBottomSheet(
             isScrollControlled: true,
             enableDrag: false,
@@ -75,7 +75,11 @@ class Tweet extends StatelessWidget {
             context: context,
             builder: (bCtx) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                  ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(Icons.arrow_back),
@@ -140,6 +144,18 @@ class Tweet extends StatelessWidget {
                     ),
                   ],
                 ),
+                //Replying to
+                if (!this._hideReplyTo)
+                  Container(
+                    child: Text(
+                      "Replying to @username . ",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(5),
+                  ),
                 //Tweet text
                 Container(
                   child: Text(
@@ -160,7 +176,7 @@ class Tweet extends StatelessWidget {
                     children: [
                       //Comment
                       CommentButton(_commenters.length, _iconSize,
-                          Tweet.jsonTweet(toJson(), true)),
+                          Tweet.jsonTweet(toJson(), true, true)),
                       //Retweet
                       Retweet(5, false, _iconSize),
                       //Like
@@ -179,5 +195,41 @@ class Tweet extends StatelessWidget {
 
   String getUserName() {
     return _username;
+  }
+
+  String getDisplayName() {
+    return _displayName;
+  }
+
+  String getTweetText() {
+    return _tweetText;
+  }
+
+  List<String> getTweetImages() {
+    return _tweetImages;
+  }
+
+  List<int> getFavouriters() {
+    return _favouriters;
+  }
+
+  List<int> getRetweeters() {
+    return _retweeters;
+  }
+
+  List<Map<String, dynamic>> getCommenters() {
+    return _commenters;
+  }
+
+  int getUserId() {
+    return _userId;
+  }
+
+  DateTime getCreatedAt() {
+    return _createdAt;
+  }
+
+  CircleAvatar getUserImage() {
+    return _userImage;
   }
 }

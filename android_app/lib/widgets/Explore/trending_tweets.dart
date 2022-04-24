@@ -41,7 +41,7 @@ class _TrendingTweetsState extends State<TrendingTweets> {
       var response = await http.get(url);
       if (response.statusCode == 200) {
         data = json.decode(response.body);
-        tweetList = data.map((e) => Tweet.jsonTweet(e, false)).toList();
+        tweetList = data.map((e) => Tweet.jsonTweet(e, false, true)).toList();
       } else {
         print("fetch error");
       }

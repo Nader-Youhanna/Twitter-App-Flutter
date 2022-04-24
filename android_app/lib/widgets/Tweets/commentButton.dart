@@ -45,6 +45,9 @@ class _CommentButtonState extends State<CommentButton> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -60,7 +63,7 @@ class _CommentButtonState extends State<CommentButton> {
                         //TODO Send comment to server
                         Navigator.pop(ctx);
                       },
-                      child: Text('Reply'),
+                      child: const Text('Reply'),
                     ),
                   ],
                 ),
@@ -71,10 +74,13 @@ class _CommentButtonState extends State<CommentButton> {
                   padding: const EdgeInsets.all(10),
                   child: Text('Replying to ' + widget._userName),
                 ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Tweet your reply',
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Tweet your reply',
+                    ),
                   ),
                 ),
               ],

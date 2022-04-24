@@ -11,12 +11,12 @@ Future<void> addTweet(
 
 Future<List<Tweet>> getTweets(String ipAddress, String port) async {
   print("Adding tweets");
-  var mapTweet = await httpRequestGet(
+  List<dynamic> mapTweet = await httpRequestGet(
       "http://" + ipAddress + ":" + port + "/tweets/", null);
 
   List<Tweet> tweets = <Tweet>[];
   for (int i = 0; i < mapTweet.length; i++) {
-    tweets.add(Tweet.jsonTweet(mapTweet[i], false));
+    tweets.add(Tweet.jsonTweet(mapTweet[i], false, true));
   }
 
   return tweets;
@@ -32,6 +32,9 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
