@@ -22,10 +22,11 @@ class _SettingsState extends State<Settings> {
     Navigator.of(ctx).pop();
   }
 
-  String username = "";
-  String email = "";
-  String phone = "";
-  String country = "";
+  String username = "Nada";
+  String email = "nadatarek2710@gmail.com";
+  String phone = "123";
+  String country = "Egypt";
+  String Password = "12345678";
 
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
@@ -103,7 +104,7 @@ class _SettingsState extends State<Settings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AccountInfo(
-                                    username, email, phone, country)),
+                                    username, email, phone, country, Password)),
                           );
                         },
                       ),

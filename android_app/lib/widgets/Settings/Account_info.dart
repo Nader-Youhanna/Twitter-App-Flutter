@@ -1,4 +1,5 @@
 import 'package:android_app/widgets/Settings/update_username.dart';
+import 'package:android_app/widgets/Settings/verify_password.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,9 @@ class AccountInfo extends StatefulWidget {
   String email;
   String phone;
   String country;
-  AccountInfo(this.username, this.email, this.phone, this.country);
+  var password;
+  AccountInfo(
+      this.username, this.email, this.phone, this.country, this.password);
   @override
   State<AccountInfo> createState() => _AccountInfoState();
 }
@@ -78,7 +81,13 @@ class _AccountInfoState extends State<AccountInfo> {
                     trailing: Text('${widget.username}')),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VerifyPassword(
+                              widget.password, widget.email, false)));
+                },
                 child: ListTile(
                     title: Text(
                       'Phone',
@@ -90,7 +99,13 @@ class _AccountInfoState extends State<AccountInfo> {
                     trailing: Text('${widget.phone}')),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VerifyPassword(
+                              widget.password, widget.email, true)));
+                },
                 child: ListTile(
                     title: Text(
                       'Email',

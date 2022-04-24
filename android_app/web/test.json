@@ -12,12 +12,12 @@
       "retweeters": [],
       "replies": [
         {
-          "userId": 1,
+          "userId" : 1,
           "createdAt": "2020-01-01T00:00:00.000Z",
           "commentText": "Hello World"
         },
         {
-          "userId": 2,
+          "userId" : 2,
           "createdAt": "2020-01-01T00:00:00.000Z",
           "commentText": "Hello World2"
         }
@@ -138,13 +138,6 @@
       "country": "Egypt",
       "city": "Cairo",
       "id": 5
-    },
-    {
-      "username": "ahmed69k",
-      "email": "ahmedassem04@gmail.com",
-      "dob": "10/6/2004",
-      "password": "Ahmed162ieu",
-      "id": 6
     }
   ],
   "profile": [

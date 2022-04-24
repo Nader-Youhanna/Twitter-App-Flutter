@@ -61,6 +61,16 @@ class Tweet extends StatelessWidget {
         'replies': _commenters,
       };
 
+  Map<String, dynamic> toJson() => {
+        'userId': _userId,
+        'createdAt': _createdAt.toString(),
+        'tweetText': _tweetText,
+        'images': _tweetImages,
+        'favouriters': _favouriters,
+        'retweeters': _retweeters,
+        'replies': _commenters,
+      };
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
