@@ -28,6 +28,7 @@ class _SettingsState extends State<Settings> {
   String phone = "123";
   String country = "Egypt";
   String Password = "12345678";
+  bool isPrivate = false;
 
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
@@ -147,7 +148,7 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Audience()));
+                                  builder: (context) => Audience(isPrivate)));
                         },
                       ),
                     ),
