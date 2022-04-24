@@ -5,6 +5,7 @@ import '../bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
+import './update_phone.dart';
 
 class VerifyPassword extends StatefulWidget {
   var _passwordIsCorrect = false;
@@ -147,8 +148,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                                         builder: (widget.ISemail)
                                             ? (context) =>
                                                 UpdateEmail(widget.email)
-                                            : (context) =>
-                                                UpdateEmail(widget.email))))
+                                            : (context) => UpdatePhone())))
                                 : showAlertDialog(context));
                       },
                       child: Text('Next', style: TextStyle(fontSize: 14)),

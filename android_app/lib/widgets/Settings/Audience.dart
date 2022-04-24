@@ -103,6 +103,7 @@ class _AudienceState extends State<Audience> {
               width: 320,
               child: Text(
                 'Only show your Tweets to people who follow you.',
+                textAlign: TextAlign.left,
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 15,
