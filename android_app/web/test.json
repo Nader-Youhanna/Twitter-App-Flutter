@@ -10,7 +10,18 @@
       ],
       "favouriters": [],
       "retweeters": [],
-      "replies": []
+      "replies": [
+        {
+          "userId": 1,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World"
+        },
+        {
+          "userId": 2,
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "commentText": "Hello World2"
+        }
+      ]
     },
     {
       "id": 2,
@@ -110,6 +121,30 @@
       "dob": "15/5/2000",
       "password": "nghghgjjnjkk",
       "id": 3
+    },
+    {
+      "username": "naderr",
+      "email": "naderyouhanna@gmail.com",
+      "dob": "15/5/2000",
+      "password": "nader12345667",
+      "id": 4
+    },
+    {
+      "name": "nido",
+      "username": "nido",
+      "email": "naderyouhanna@gmail.com",
+      "birthdate": "15/5/2000",
+      "password": "ndkrmfkmrkg",
+      "country": "Egypt",
+      "city": "Cairo",
+      "id": 5
+    },
+    {
+      "username": "ahmed69k",
+      "email": "ahmedassem04@gmail.com",
+      "dob": "10/6/2004",
+      "password": "Ahmed162ieu",
+      "id": 6
     }
   ],
   "profile": [
@@ -205,7 +240,7 @@
     {
       "username": "Habiba",
       "type": "like",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -223,7 +258,7 @@
     {
       "username": "Nada",
       "type": "block",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -241,7 +276,7 @@
     {
       "username": "Ahmed",
       "type": "like",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -259,7 +294,7 @@
     {
       "username": "Mostafa",
       "type": "retweet",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -277,7 +312,7 @@
     {
       "username": "Sherif",
       "type": "like",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -295,7 +330,7 @@
     {
       "username": "Sarah",
       "type": "retweet",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -313,7 +348,7 @@
     {
       "username": "Ismail",
       "type": "like",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",
@@ -331,7 +366,7 @@
     {
       "username": "Ashraf",
       "type": "block",
-      "notificationTweet":{
+      "notificationTweet": {
         "id": 3,
         "userId": 3,
         "createdAt": "2020-01-01T00:00:00.000Z",

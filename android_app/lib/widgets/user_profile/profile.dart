@@ -302,10 +302,10 @@ class _ProfileState extends State<Profile> {
             },
             body: TabBarView(
               children: [
-                Timeline(),
-                Timeline(),
-                Timeline(),
-                Timeline(),
+                Timeline(username, username),
+                Timeline(username, username),
+                Timeline(username, username),
+                Timeline(username, username),
               ],
             ),
           ),

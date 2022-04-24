@@ -9,6 +9,10 @@ import './side_bar.dart';
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
 
+  String _name = "";
+  String _userName = "";
+
+  Timeline(this._name, this._userName);
   @override
   State<Timeline> createState() => _TimelineState();
 }
@@ -33,7 +37,7 @@ class _TimelineState extends State<Timeline> {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
     return Scaffold(
-      drawer: SideBar(),
+      drawer: SideBar(name: 'nido', username: 'nido123'),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
@@ -102,7 +106,7 @@ class _TimelineState extends State<Timeline> {
       setState(() {
         widget.tweets.clear();
         for (var i = 0; i < value.length; i++) {
-          widget.tweets.add(Tweet.jsonTweet(value[i]));
+          widget.tweets.add(Tweet.jsonTweet(value[i], false));
         }
       });
     });
@@ -163,8 +167,8 @@ class _TimelineState extends State<Timeline> {
               padding: const EdgeInsets.all(10),
               //take input text from user
               child: TextField(
-                decoration: InputDecoration.collapsed(
-                  hintStyle: const TextStyle(
+                decoration: const InputDecoration.collapsed(
+                  hintStyle: TextStyle(
                     fontFamily: 'RalewayMedium',
                     fontSize: 14.5,
                   ),

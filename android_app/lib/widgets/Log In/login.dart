@@ -112,7 +112,12 @@ class _LoginState extends State<Login> {
                 },
               ),
             ),
-            const SizedBox(height: 400),
+            const SizedBox(height: 435),
+            const Divider(
+              height: 2,
+              thickness: 0.9,
+            ),
+            const SizedBox(height: 10),
             Row(
               children: <Widget>[
                 const SizedBox(width: 12),

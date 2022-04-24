@@ -17,7 +17,7 @@ class NotificationItem extends StatelessWidget {
   NotificationItem.jsonNotification(Map<String, dynamic> jsonNotification) {
     username = jsonNotification['username'] as String;
     notificationType = jsonNotification['type'] as String;
-    tweet = Tweet.jsonTweet(jsonNotification['notificationTweet']);
+    tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false);
   }
   bool type = true;
   String getType() {

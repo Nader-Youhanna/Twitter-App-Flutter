@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 
 class Inbox extends StatefulWidget {
+  final token;
+  final username;
+  @override
+  Inbox({
+    @required this.token,
+    @required this.username,
+  });
   @override
   State<Inbox> createState() => _InboxState();
 }

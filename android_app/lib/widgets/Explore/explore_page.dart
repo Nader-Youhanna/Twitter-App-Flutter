@@ -18,7 +18,7 @@ CircleAvatar userImages = const CircleAvatar(
 class ExplorePage extends StatefulWidget {
   //setting up default credentails for each user
   String username = 'Default user';
-  int userId = 0;
+  String userId = '';
   bool isAdmin = false;
   List<TrendingTopic> trends = <TrendingTopic>[];
   ExplorePage(this.username, this.userId, this.isAdmin);
