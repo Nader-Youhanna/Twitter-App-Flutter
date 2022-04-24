@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
+import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
@@ -44,6 +44,7 @@ class _Update_usernameState extends State<Update_username> {
         ),
       ),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
@@ -70,6 +71,8 @@ class _Update_usernameState extends State<Update_username> {
                   onPressed: () {
                     setState(() {
                       httpRequestPost();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Settings()));
                     });
                   },
                   child: Text(
@@ -82,94 +85,99 @@ class _Update_usernameState extends State<Update_username> {
             ],
           ),
         ),
-        body: Container(
+        body: SingleChildScrollView(
           padding: EdgeInsets.all(20),
-          alignment: Alignment.center,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Row(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Current",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "${widget._username}",
+                    style: TextStyle(fontSize: 18),
+                  )
+                ],
+              ),
+              const SizedBox(height: 30),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  //padding: EdgeInsets.only(top: 20),
                   children: <Widget>[
                     Text(
-                      "Current",
+                      'New',
+                      textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${widget._username}",
-                      style: TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "New",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ]),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 320,
+                //mainAxisAlignment: MainAxisAlignment.start,
+                child: Form(
+                  child: SizedBox(
+                    width: 320,
+                    child: TextFormField(
+                      autofocus: false,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle:
+                            const TextStyle(fontFamily: 'RalewayMedium'),
+                        suffixIcon: (_nameIsValid && _nameIsEntered)
+                            ? Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.green,
+                              )
+                            : (_nameIsEntered && !_nameIsValid)
+                                ? Icon(
+                                    Icons.check_circle_outline,
+                                    color: Colors.red,
+                                  )
+                                : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nameIsEntered = value.isNotEmpty;
+                          if (_nameKey.currentState!.validate()) {
+                            widget._username = value;
+                          }
+                        });
+                      },
+                      validator: (value) {
+                        if (value != null && _isNameValid(value)) {
+                          return null;
+                        } else {
+                          return 'This username is already taken';
+                        }
+                      },
+                    ),
                   ),
                 ),
-                const SizedBox(height: 50),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Form(
-                        key: _nameKey,
-                        child: SizedBox(
-                          width: 320,
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              labelText: 'Username',
-                              labelStyle:
-                                  const TextStyle(fontFamily: 'RalewayMedium'),
-                              suffixIcon: (_nameIsValid && _nameIsEntered)
-                                  ? Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.green,
-                                    )
-                                  : (_nameIsEntered && !_nameIsValid)
-                                      ? Icon(
-                                          Icons.check_circle_outline,
-                                          color: Colors.red,
-                                        )
-                                      : null,
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                _nameIsEntered = value.isNotEmpty;
-                                if (_nameKey.currentState!.validate()) {
-                                  widget._username = value;
-                                }
-                              });
-                            },
-                            validator: (value) {
-                              if (value != null && _isNameValid(value)) {
-                                return null;
-                              } else {
-                                return 'This username is already taken';
-                              }
-                            },
-                          ),
-                        ))
-                  ],
-                ),
-              ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
