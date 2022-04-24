@@ -1,5 +1,6 @@
 import 'package:android_app/widgets/Settings/update_username.dart';
 import 'package:android_app/widgets/Settings/verify_password.dart';
+import 'package:android_app/widgets/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 import 'package:http/http.dart' as http;
@@ -139,7 +140,10 @@ class _AccountInfoState extends State<AccountInfo> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => StartPage()));
+                  },
                 ))
               ])
             ],

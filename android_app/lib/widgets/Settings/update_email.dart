@@ -169,7 +169,8 @@ class _UpdateEmailState extends State<UpdateEmail> {
           ),
           TextButton(
             onPressed: () {
-              _goBack(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Settings()));
             },
             child: Text(
               'Cancel',

@@ -1,4 +1,5 @@
 import 'package:android_app/widgets/Settings/update_email.dart';
+import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:flutter/material.dart';
 import '../bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
@@ -158,7 +159,8 @@ class _VerifyPasswordState extends State<VerifyPassword> {
             ),
             TextButton(
               onPressed: () {
-                _goBack(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Settings()));
               },
               child: Text(
                 'Cancel',
