@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './terms_and_conditions.dart';
+import './confirm_email.dart';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -35,14 +35,14 @@ class _SignUpState extends State<SignUp> {
     Navigator.of(ctx).pop();
   }
 
-  void _goToTermsAndConditions(BuildContext ctx) {
+  void _goToConfirmEmail(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return TermsAndConditions(
+        return ConfirmEmail(
           name: _name,
           username: _username,
           email: _email,
-          dob: '${_dob.day}/${_dob.month}/${_dob.year}',
+          dob: _dob,
         );
       }),
     );
@@ -317,7 +317,7 @@ class _SignUpState extends State<SignUp> {
                   child: const Text('Next'),
                   onPressed: (_allIsEntered)
                       ? () {
-                          _goToTermsAndConditions(context);
+                          _goToConfirmEmail(context);
                         }
                       : () {},
                   style: (!_allIsEntered)
