@@ -5,6 +5,7 @@ import '../../constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:android_app/widgets/user_profile/profile.dart';
+import './search_bar_explore.dart';
 
 class TrendingTweets extends StatefulWidget {
   @required
@@ -91,23 +92,29 @@ class _TrendingTweetsState extends State<TrendingTweets> {
                       width: 290,
                       padding: const EdgeInsets.all(10),
                       child: TextField(
-                        showCursor: false,
-                        readOnly: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          contentPadding: const EdgeInsets.all(10.0),
-                          fillColor: Color.fromARGB(255, 229, 233, 235),
-                          hintStyle: const TextStyle(
-                            fontSize: 14.5,
-                            color: Color.fromARGB(255, 100, 99, 99),
+                          showCursor: false,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            contentPadding: const EdgeInsets.all(10.0),
+                            fillColor: Color.fromARGB(255, 229, 233, 235),
+                            hintStyle: const TextStyle(
+                              fontSize: 14.5,
+                              color: Color.fromARGB(255, 100, 99, 99),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: widget.topic,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                          hintText: widget.topic,
-                        ),
-                      ),
+                          onTap: () async {
+                            await showSearch(
+                              context: context,
+                              delegate: MySearchDelegate(),
+                              query: widget.topic,
+                            );
+                          }),
                     ),
                     PopupMenuButton(
                       //button to display the see less list

@@ -117,10 +117,17 @@ class _ExplorePageState extends State<ExplorePage> {
                             ),
                             hintText: _appBarText,
                           ),
+                          // onTap: () {
+                          //   //redirects us to the page with the searching elements
+                          //   showSearch(
+                          //       context: context,
+                          //       delegate: MySearchDelegate(' '));
+                          // }
                           onTap: () {
-                            //redirects us to the page with the searching elements
                             showSearch(
-                                context: context, delegate: MySearchDelegate());
+                              context: context,
+                              delegate: MySearchDelegate(),
+                            );
                           }),
                     ),
 
@@ -152,13 +159,50 @@ class _ExplorePageState extends State<ExplorePage> {
                       return Center(child: CircularProgressIndicator());
                     default:
                       List<TrendingTopic> data = snapshot.data!;
-                      return ListView.builder(
-                          clipBehavior: Clip.hardEdge,
-                          padding: const EdgeInsets.all(0),
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return data[index];
-                          });
+                      for (int i = 0; i < data.length; i++) {
+                        data[i].trendingNumber = i + 1;
+                      }
+                      return data.isNotEmpty
+                          ? ListView.builder(
+                              clipBehavior: Clip.hardEdge,
+                              padding: const EdgeInsets.all(0),
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return data[index];
+                              })
+                          : Container(
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 220),
+                                  RichText(
+                                    text: const TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Nothing to see here\n',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 34.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        TextSpan(
+                                          text: '__ yet.',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 34.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //padding: const EdgeInsets.all(30),
+                              margin: const EdgeInsets.all(30),
+                            );
                   }
                 })));
   }

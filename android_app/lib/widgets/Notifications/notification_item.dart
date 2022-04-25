@@ -77,6 +77,7 @@ class NotificationItem extends StatelessWidget {
           trailing: PopupMenuButton(
             //button to display the see less list
             elevation: 20,
+
             itemBuilder: (BuildContext context) {
               return [
                 const PopupMenuItem<Text>(

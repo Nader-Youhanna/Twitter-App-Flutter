@@ -22,6 +22,7 @@ class MySearchDelegate extends SearchDelegate {
   BuildingSuggestions _suggestionsList = BuildingSuggestions();
 
   MySearchDelegate();
+
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(
@@ -107,6 +108,7 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   String get searchFieldLabel => 'Search Twitter';
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     // You can use Theme.of(context) directly too
