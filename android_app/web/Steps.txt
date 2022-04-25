@@ -30,23 +30,51 @@ TO SEND HTTP REQUESTS IN FLUTTER
 
 3. Use the following functions for get and post
 
+
+Example of a post request
 Future<void> httpRequestPost() async {
-    
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/posts');
-    var response =
-        await http.post(url, body: {'name': 'Nader', 'color': 'blue'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  var url = Uri.parse('http://34.236.108.123:3000/signup');
+
+  var response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, String>{
+        "username": "nido",
+        "name": "Nader",
+        "email": "naderyouhanna@gmail.com",
+        "password": "nader-password",
+        "birthdate": "2000-05-15",
+        "country": "Egypt",
+        "city": "Cairo"
+      },
+    ),
+  );
+
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
 }
 
 
+Example of a get request
 Future<void> httpRequestGet() async {
-    
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/posts');
-    var response = await http.get(url);
-    print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
-    
-    final extractedMyInfo = json.decode(response.body) as List<dynamic>;
-    print(extractedMyInfo[1]['title']);
+  var url = Uri.parse('http://34.236.108.123:3000/home');
+
+  var response = await http.get(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' +
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjQ5NzZiYjIwYzdhMjMzNDFhNGUxYiIsImlhdCI6MTY1MDkyNDg3NywiZXhwIjoxNjU5NTY0ODc3fQ.S1ZBOjDv6TcU48AEmn-8nHkgGiasZfj6Id2kk9ocYS4'
+    },
+  );
+
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
 }
+
+
+
+TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjQ5NzZiYjIwYzdhMjMzNDFhNGUxYiIsImlhdCI6MTY1MDkyNDg3NywiZXhwIjoxNjU5NTY0ODc3fQ.S1ZBOjDv6TcU48AEmn-8nHkgGiasZfj6Id2kk9ocYS4

@@ -2,13 +2,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:http/http.dart';
-
-Future<void> httpRequestPost(
-    String urlStr, Map? reqBody, Map? reqHeaders) async {
+Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   var url = Uri.parse(urlStr);
   var body = json.encode(reqBody);
-  var response = await http.post(url, body: body, headers: reqHeaders);
+  var response = await http.post(
+    url,
+    body: body,
+    headers: reqHeaders as Map<String, String>,
+  );
+  print(response.body);
   return json.decode(response.body);
 }
 
