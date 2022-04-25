@@ -48,7 +48,7 @@ class NotificationItem extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: () => {_viewTweet(context)},
+          onTap: type ? () => {_viewTweet(context)} : () => {},
           leading: userImage, //should be dynamic and fetched from backend
           title: RichText(
             text: TextSpan(

@@ -40,8 +40,8 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        _getTrendingTopics()); //function is called everytime we open the page
+    // WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    //     _getTrendingTopics()); //function is called everytime we open the page
   }
 
 //Function to get the list of trending topics and their number of tweets from backend

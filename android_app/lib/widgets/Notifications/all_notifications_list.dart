@@ -16,11 +16,11 @@ class AllNotificationsList extends StatefulWidget {
   State<AllNotificationsList> createState() => _AllNotificationsListState();
 }
 
-class _AllNotificationsListState extends State<AllNotificationsList>
-    with AutomaticKeepAliveClientMixin<AllNotificationsList> {
-  @override
-  bool get wantKeepAlive => true;
-  final ScrollController _scrollController = ScrollController();
+class _AllNotificationsListState extends State<AllNotificationsList> {
+  //with AutomaticKeepAliveClientMixin<AllNotificationsList> {
+  // @override
+  // bool get wantKeepAlive => true;
+  // final ScrollController _scrollController = ScrollController();
 
   bool loading = false;
   bool allLoaded = false;
@@ -52,20 +52,12 @@ class _AllNotificationsListState extends State<AllNotificationsList>
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        _getNotifications()); //function is called everytime we open the page
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _scrollController.dispose();
+    // WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    //     _getNotifications()); //function is called everytime we open the page
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return FutureBuilder<List<NotificationItem>>(
         future: _getNotifications(),
         builder: (context, snapshot) {
@@ -81,7 +73,6 @@ class _AllNotificationsListState extends State<AllNotificationsList>
                           child: ListView.builder(
                             clipBehavior: Clip.hardEdge,
                             padding: const EdgeInsets.all(0),
-                            controller: _scrollController,
                             itemCount: data.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
