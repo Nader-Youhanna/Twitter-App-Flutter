@@ -160,19 +160,6 @@ class SideBar extends StatelessWidget {
           ),
           const ListTile(
             leading: Icon(
-              Icons.monetization_on,
-              size: 27,
-            ),
-            title: Text(
-              'Monetization',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'RalewayMedium',
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: Icon(
               Icons.description,
               size: 27,
             ),
@@ -206,6 +193,23 @@ class SideBar extends StatelessWidget {
                   fontSize: 17,
                   fontFamily: 'RalewayMedium',
                 ),
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            leading: const Icon(
+              Icons.logout,
+              size: 27,
+            ),
+            title: const Text(
+              'Logout',
+              style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'RalewayMedium',
               ),
             ),
           ),
