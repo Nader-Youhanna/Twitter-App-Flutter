@@ -1,3 +1,4 @@
+import 'package:android_app/constants.dart';
 import 'package:flutter/material.dart';
 
 import './http_functions.dart';
@@ -5,18 +6,30 @@ import '../widgets/Tweets/tweet.dart';
 
 Future<void> addTweet(
     Map<String, dynamic> data, String ipAddress, String port) async {
+  Map<String, dynamic> headers = {
+    "authorization": token,
+    "Content-Type": "application/json"
+  };
   return await httpRequestPost(
-      "http://" + ipAddress + ":" + port + "/tweets/", data);
+    "http://" + ipAddress + ":" + port + "/tweets/",
+    data,
+    headers,
+  );
 }
 
 Future<List<Tweet>> getTweets(String ipAddress, String port) async {
   print("Adding tweets");
-  List<dynamic> mapTweet = await httpRequestGet(
-      "http://" + ipAddress + ":" + port + "/tweets/", null);
+  Map<String, dynamic> headers = {
+    "authorization": token,
+    "Content-Type": "application/json"
+  };
+  Map<String, dynamic> mapTweet = await httpRequestGet(
+      "http://" + ipAddress + ":" + port + "/home/", headers);
 
+  //print("=========" + mapTweet['data'][0].toString());
   List<Tweet> tweets = <Tweet>[];
   for (int i = 0; i < mapTweet.length; i++) {
-    tweets.add(Tweet.jsonTweet(mapTweet[i], false, true));
+    tweets.add(Tweet.jsonTweet(mapTweet['data'][i], false, true));
   }
 
   return tweets;

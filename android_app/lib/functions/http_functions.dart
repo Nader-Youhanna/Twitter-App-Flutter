@@ -4,6 +4,12 @@ import 'dart:async';
 
 Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   var url = Uri.parse(urlStr);
+  if (reqBody == null) {
+    reqBody = <String, dynamic>{};
+  }
+  if (reqHeaders == null) {
+    reqHeaders = <String, String>{};
+  }
   var body = json.encode(reqBody);
   var response = await http.post(
     url,
@@ -14,22 +20,26 @@ Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   return json.decode(response.body);
 }
 
-Future<List<dynamic>> httpRequestGet(String urlStr, Map? jsonText) async {
+Future<Map<String, dynamic>> httpRequestGet(
+    String urlStr, Map? headersMap) async {
   var url = Uri.parse(urlStr);
-  var request = Request('GET', url);
 
-  if (jsonText != null) {
-    request.body = json.encode(jsonText);
+  var request = http.Request('GET', url);
+
+  if (headersMap != null) {
+    request.headers['Content-Type'] = headersMap['Content-Type'];
+    request.headers['authorization'] = headersMap['authorization'];
   }
 
-  // var response = await http.get(url,headers: {
-  //   "Content-Type": "application/json",
-  // });
-  var response = await request.send();
+  var streamedResponse = await request.send();
 
-  String strResponse = await response.stream.bytesToString();
+  var response = await http.Response.fromStream(streamedResponse);
 
+  //Print the last 10 characters of the response body
+  //print(response.body.substring(response.body.length - 15));
   print('Response status: ${response.statusCode}');
-  print('Response body: $strResponse');
-  return json.decode(strResponse);
+  //print('Response body: ${response.body.substring(1000)}');
+  var temp = json.decode(response.body) as Map<String, dynamic>;
+
+  return temp;
 }
