@@ -4,12 +4,11 @@ import 'dart:async';
 
 import 'package:http/http.dart';
 
-Future<void> httpRequestPost(String urlStr, Map jsonText) async {
+Future<void> httpRequestPost(
+    String urlStr, Map? reqBody, Map? reqHeaders) async {
   var url = Uri.parse(urlStr);
-  var body = json.encode(jsonText);
-  var response = await http.post(url, body: body, headers: {
-    "Content-Type": "application/json",
-  });
+  var body = json.encode(reqBody);
+  var response = await http.post(url, body: body, headers: reqHeaders);
   return json.decode(response.body);
 }
 
