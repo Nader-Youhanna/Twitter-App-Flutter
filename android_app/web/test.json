@@ -204,12 +204,56 @@
   ],
   "trends": [
     {
+      "hashtag": "#Ramadan_karim",
+      "retweets": "550k"
+    },
+    {
       "hashtag": "#Testing",
       "retweets": "700k"
     },
     {
-      "hashtag": "#Ramadan_karim",
-      "retweets": "550k"
+      "hashtag": "#Computer_science",
+      "retweets": "4,299"
+    },
+    {
+      "hashtag": "#Software_engineering",
+      "retweets": "3,177"
+    },
+    {
+      "hashtag": "#quiz_EM",
+      "retweets": "8,900"
+    },
+    {
+      "hashtag": "#sham_el_nesim",
+      "retweets": "7000"
+    },
+    {
+      "hashtag": "#faculty",
+      "retweets": "250"
+    },
+    {
+      "hashtag": "#Corona",
+      "retweets": "800k"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "biba",
+      "retweets": "300"
     },
     {
       "hashtag": "#Computer_science",
@@ -570,6 +614,30 @@
     {
       "hashtag": "#faculty",
       "id": 42
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 43
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 44
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 45
+    },
+    {
+      "hashtag": "#Computer_science",
+      "id": 46
+    },
+    {
+      "hashtag": "#faculty",
+      "id": 47
+    },
+    {
+      "hashtag": "#faculty",
+      "id": 48
     }
   ],
   "trendingTweets": [

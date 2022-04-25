@@ -164,13 +164,20 @@ class _TrendingTweetsState extends State<TrendingTweets> {
                       return Center(child: CircularProgressIndicator());
                     default:
                       List<Tweet> data = snapshot.data!;
-                      return ListView.builder(
-                          clipBehavior: Clip.hardEdge,
-                          padding: const EdgeInsets.all(0),
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return data[index];
-                          });
+                      return RefreshIndicator(
+                        child: ListView.builder(
+                            clipBehavior: Clip.hardEdge,
+                            padding: const EdgeInsets.all(0),
+                            itemCount: data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return data[index];
+                            }),
+                        onRefresh: () async {
+                          _getTrendingTweets();
+                          setState(() {});
+                        },
+                        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                      );
                   }
                 })));
   }

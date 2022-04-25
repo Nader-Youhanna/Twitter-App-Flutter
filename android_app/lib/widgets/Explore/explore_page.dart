@@ -60,7 +60,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Future<List<TrendingTopic>> _getTrendingTopics() async {
     List<TrendingTopic> topicList = <TrendingTopic>[];
     var data = [];
-    print("fetching trending tweets based on topic");
+    print("fetching trending topics");
     var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/trends");
     try {
       var response = await http.get(url);
@@ -163,13 +163,21 @@ class _ExplorePageState extends State<ExplorePage> {
                         data[i].trendingNumber = i + 1;
                       }
                       return data.isNotEmpty
-                          ? ListView.builder(
-                              clipBehavior: Clip.hardEdge,
-                              padding: const EdgeInsets.all(0),
-                              itemCount: data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return data[index];
-                              })
+                          ? RefreshIndicator(
+                              child: ListView.builder(
+                                  clipBehavior: Clip.hardEdge,
+                                  padding: const EdgeInsets.all(0),
+                                  itemCount: data.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return data[index];
+                                  }),
+                              onRefresh: () async {
+                                _getTrendingTopics();
+                                setState(() {});
+                              },
+                              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                            )
                           : Container(
                               child: Column(
                                 children: [

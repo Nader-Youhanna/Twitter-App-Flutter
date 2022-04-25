@@ -77,31 +77,38 @@ class _AllNotificationsListState extends State<AllNotificationsList>
               return Container(
                 child: data.isNotEmpty
                     ? Stack(children: [
-                        ListView.builder(
-                          clipBehavior: Clip.hardEdge,
-                          padding: const EdgeInsets.all(0),
-                          controller: _scrollController,
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              //this container should contain actual notifications not list elements
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    offset: Offset(0.0, 1.0), //(x,y)
-                                    blurRadius: 1.0,
-                                  ),
-                                ],
-                              ),
-                              padding: const EdgeInsets.all(0),
-                              height: 100,
-                              //color: Colors.white,
-                              child: data[index],
-                            );
+                        RefreshIndicator(
+                          child: ListView.builder(
+                            clipBehavior: Clip.hardEdge,
+                            padding: const EdgeInsets.all(0),
+                            controller: _scrollController,
+                            itemCount: data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                //this container should contain actual notifications not list elements
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black,
+                                      offset: Offset(0.0, 1.0), //(x,y)
+                                      blurRadius: 1.0,
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(0),
+                                height: 100,
+                                //color: Colors.white,
+                                child: data[index],
+                              );
+                            },
+                          ),
+                          onRefresh: () async {
+                            _getNotifications();
+                            setState(() {});
                           },
-                        ),
+                          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                        )
                       ])
                     : Container(
                         child: Column(
