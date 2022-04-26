@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
             const SizedBox(
               width: 320,
               child: Text(
-                'To get started, first enter your @username',
+                'To get started, first enter your email',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontFamily: 'RalewayMedium',
@@ -100,7 +100,7 @@ class _LoginState extends State<Login> {
               width: 330,
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Username',
+                  hintText: 'Email',
                 ),
                 onChanged: (value) {
                   if (value.isNotEmpty) {

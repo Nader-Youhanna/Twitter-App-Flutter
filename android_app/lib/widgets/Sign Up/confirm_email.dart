@@ -21,7 +21,7 @@ class ConfirmEmail extends StatelessWidget {
           name: name,
           username: username,
           email: email,
-          dob: '${dob.day}/${dob.month}/${dob.year}',
+          dob: dob,
         );
       }),
     );

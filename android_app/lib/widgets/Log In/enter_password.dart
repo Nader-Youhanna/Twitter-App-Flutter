@@ -25,8 +25,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   String lastRejectedPassword = "";
 
   bool _validateCredentials(String password) {
-    //TO BE REMOVED IN DISCUSSION
-
     if (lastValidatedPassword == password) {
       return true;
     } else if (lastRejectedPassword == password) {
@@ -39,35 +37,48 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
   Future<void> _validateCredentialsAsync(String password) async {
     //Real server response:
-    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
-    // var response = await http.post(url, body: {
-    //   'username': widget.username,
-    //   'password': password,
-    // });
-    // print('Response body: ${response.body}');
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(
+        <String, String>{
+          'email': widget.username,
+          'password': password,
+        },
+      ),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
-    // final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    // if (extractedMyInfo[0]['success'] == 'true') {
-    //   lastValidatedPassword = password;
-    // } else {
-    //   lastRejectedPassword = password;
-    // }
+    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedMyInfo['status'] == 'Success') {
+      lastValidatedPassword = password;
+      print('Success');
+      print(lastValidatedPassword);
+      _goToTimeline(context);
+    } else {
+      lastRejectedPassword = password;
+    }
+    _validateCredentials(password);
     // _passwordKey.currentState!
     //     .validate(); // this will re-initiate the validation
 
     //MOCK SERVER
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
-    var response = await http.get(url);
-    final extractedMyInfo = json.decode(response.body) as List<dynamic>;
-    print(extractedMyInfo);
-    for (int i = 0; i < extractedMyInfo.length; i++) {
-      if (extractedMyInfo[i]['username'] == widget.username &&
-          extractedMyInfo[i]['password'] == password) {
-        widget.name = extractedMyInfo[i]['name'];
-        lastValidatedPassword = password;
-      }
-    }
-    lastRejectedPassword = password;
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    // var response = await http.get(url);
+    // final extractedMyInfo = json.decode(response.body) as List<dynamic>;
+    // print(extractedMyInfo);
+    // for (int i = 0; i < extractedMyInfo.length; i++) {
+    //   if (extractedMyInfo[i]['username'] == widget.username &&
+    //       extractedMyInfo[i]['password'] == password) {
+    //     widget.name = extractedMyInfo[i]['name'];
+    //     lastValidatedPassword = password;
+    //   }
+    // }
+    // lastRejectedPassword = password;
 
     _passwordKey.currentState!
         .validate(); // this will re-initiate the validation
@@ -221,7 +232,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                       });
                     }
                   },
-                  autovalidateMode: AutovalidateMode.always,
+                  //autovalidateMode: AutovalidateMode.always,
                   validator: (value) {
                     if (value == null) {
                       return 'Incorrect';

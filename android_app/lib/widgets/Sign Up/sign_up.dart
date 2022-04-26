@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
           name: _name,
           username: _username,
           email: _email,
-          dob: _dob,
+          dob: '${_dob.year}-${_dob.month}-${_dob.day}',
         );
       }),
     );

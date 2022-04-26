@@ -49,30 +49,39 @@ class _ChoosePasswordState extends State<ChoosePassword> {
   void _sendDataToBackend() async {
     print('Sent data to backend');
 
-    //Bckend Server
-    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
+    //Backend Server
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{
+          'username': widget.username,
+          'name': widget.username,
+          'email': widget.email,
+          'password': _password,
+          'birthdate': widget.dob,
+        },
+      ),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    //MOCK SERVER
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     // var response = await http.post(url, body: {
-    //   'name': widget.username,
+    //   'name': widget.name,
+    //   'username': widget.username,
     //   'email': widget.email,
-    //   'dob': widget.dob,
+    //   'birthdate': widget.dob,
     //   'password': _password,
+    //   'country': 'Egypt',
+    //   'city': 'Cairo'
     // });
     // print('Response status: ${response.statusCode}');
     // print('Response body: ${response.body}');
-
-    //MOCK SERVER
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
-    var response = await http.post(url, body: {
-      'name': widget.name,
-      'username': widget.username,
-      'email': widget.email,
-      'birthdate': widget.dob,
-      'password': _password,
-      'country': 'Egypt',
-      'city': 'Cairo'
-    });
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
   }
 
   final _textFieldWidth = 320.0;
