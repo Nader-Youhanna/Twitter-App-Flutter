@@ -14,20 +14,18 @@ class AllNotificationsList extends StatefulWidget {
 
   // List<NotificationItem> notificationList = <NotificationItem>[];
   @override
-  State<AllNotificationsList> createState() => _AllNotificationsListState();
+  State<AllNotificationsList> createState() => AllNotificationsListState();
 }
 
-class _AllNotificationsListState extends State<AllNotificationsList> {
+///class that creates the notification's list
+class AllNotificationsListState extends State<AllNotificationsList> {
   //with AutomaticKeepAliveClientMixin<AllNotificationsList> {
   // @override
   // bool get wantKeepAlive => true;
   // final ScrollController _scrollController = ScrollController();
 
-  bool loading = false;
-  bool allLoaded = false;
-
-//Function to get the list of notifications and their types from backend
-  Future<List<NotificationItem>> _getNotifications() async {
+  ///Function to get the list of notifications and their types from backend
+  Future<List<NotificationItem>> getNotifications() async {
     List<NotificationItem> notificationList = <NotificationItem>[];
     var data = [];
     print("Adding notifications");
@@ -62,7 +60,7 @@ class _AllNotificationsListState extends State<AllNotificationsList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<NotificationItem>>(
-        future: _getNotifications(),
+        future: getNotifications(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -98,7 +96,7 @@ class _AllNotificationsListState extends State<AllNotificationsList> {
                             },
                           ),
                           onRefresh: () async {
-                            _getNotifications();
+                            getNotifications();
                             setState(() {});
                           },
                           triggerMode: RefreshIndicatorTriggerMode.anywhere,

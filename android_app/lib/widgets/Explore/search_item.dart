@@ -6,6 +6,7 @@ const CircleAvatar userImages = const CircleAvatar(
   radius: 25.0,
 );
 
+///class to create the elements that appear in the search suggestion list (its data is fetched from server)
 class SearchItem extends StatelessWidget {
   late String username;
   late String _handle;
@@ -19,6 +20,8 @@ class SearchItem extends StatelessWidget {
   //     this.username = '',
   //     this.handle = '',
   //     this.userImage = userImages});
+
+  ///named constructor to map the data fetched from servers
   SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem) {
     // _tweetText = jsonSearchItem['tweetText'] as String;
     username = jsonSearchItem['username'] as String;

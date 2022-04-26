@@ -3,12 +3,19 @@ import '../../functions/http_functions.dart';
 import '../../constants.dart';
 import './trending_tweets.dart';
 
+/// class to create the elements that appear in the trending page (its data (hashtag, number of tweets) is fetched from the server)
 class TrendingTopic extends StatefulWidget {
   String hashtag = '';
+
+  ///the trending topic
   int trendingNumber = 1;
+
+  ///the number displayed with the topic
   String numberOfTweets = "0";
 
-  //function to set the list of trending topics that we get once we open explore page
+  ///the number of tweets for each topic
+
+  ///named constructor to map the data fetched from server
   TrendingTopic.jsonTrend(Map<String, dynamic> jsonTrend) {
     hashtag = jsonTrend['hashtag'] as String;
     numberOfTweets = jsonTrend['retweets'] as String;
@@ -16,8 +23,10 @@ class TrendingTopic extends StatefulWidget {
   @override
   State<TrendingTopic> createState() => _TrendingTopicState();
 
-  //construnctions the strings that are going to be displayed
+  ///construnctions the header string that is going to be displayed befor the topic
   late String header = trendingNumber.toString() + " . Trending";
+
+  ///construnctions the string that contains the number of tweets
   late String retweets = numberOfTweets + " Tweets";
 }
 

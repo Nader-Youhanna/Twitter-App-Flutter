@@ -2,24 +2,36 @@ import 'package:flutter/material.dart';
 import '../Tweets/tweet.dart';
 import './notification_tweet.dart';
 
+///class to  create the elements that apears in the notifications list
 class NotificationItem extends StatelessWidget {
   NotificationItem();
 
   String username = "username";
+
+  ///the username of the user that triggered the notification
+
   String notificationType = " ";
+
+  ///the notification type (like, retweet, block)
+
   late Tweet tweet;
+
+  ///the tweet that the notification is concerned with
+
   CircleAvatar userImage = const CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 13.0,
   );
 
-//function to set the list of notifications that we get when we open notifications list
+//named constructor to map the elements fetched from server
   NotificationItem.jsonNotification(Map<String, dynamic> jsonNotification) {
     username = jsonNotification['username'] as String;
     notificationType = jsonNotification['type'] as String;
     tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
   }
   bool type = true;
+
+  ///function that constructs notification string according to the type fetched from server
   String getType() {
     String msg = ' ';
     if (notificationType == 'like') {

@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../../functions/http_functions.dart';
 import '../../constants.dart';
 
-//this is a class to get the suggestion list for the search bar
+///this is a class built to fetch the suggestion list for the search bar from server
 class BuildingSuggestions {
   List<SearchItem> searchResults = [];
   var data = [];

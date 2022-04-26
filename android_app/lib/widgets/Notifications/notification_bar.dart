@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 
+///class to create the notification's sliding bar
 class NotificationBar extends StatelessWidget {
   const NotificationBar();
   void _goToUserProfile(BuildContext ctx) {

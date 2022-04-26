@@ -16,7 +16,7 @@ CircleAvatar userImages = const CircleAvatar(
 );
 
 class ExplorePage extends StatefulWidget {
-  //setting up default credentails for each user
+  ///setting up default credentails for each user (username , token , and if the user is an admin)
   String username = 'Default user';
   String token = '';
   bool isAdmin = false;
@@ -24,10 +24,11 @@ class ExplorePage extends StatefulWidget {
   ExplorePage(this.username, this.token, this.isAdmin);
 
   @override
-  State<ExplorePage> createState() => _ExplorePageState();
+  State<ExplorePage> createState() => ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> {
+///class to create the explore page with the search bar and the list of trends
+class ExplorePageState extends State<ExplorePage> {
   var _appBarText = 'Search Twitter';
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -57,7 +58,8 @@ class _ExplorePageState extends State<ExplorePage> {
   //     });
   //   });
   // }
-  Future<List<TrendingTopic>> _getTrendingTopics() async {
+  ///Function to fetch the list of trending topics and their number of tweets from backend
+  Future<List<TrendingTopic>> getTrendingTopics() async {
     List<TrendingTopic> topicList = <TrendingTopic>[];
     var data = [];
     print("fetching trending topics");
@@ -152,7 +154,7 @@ class _ExplorePageState extends State<ExplorePage> {
               ];
             },
             body: FutureBuilder<List<TrendingTopic>>(
-                future: _getTrendingTopics(),
+                future: getTrendingTopics(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -173,7 +175,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                     return data[index];
                                   }),
                               onRefresh: () async {
-                                _getTrendingTopics();
+                                getTrendingTopics();
                                 setState(() {});
                               },
                               triggerMode: RefreshIndicatorTriggerMode.anywhere,

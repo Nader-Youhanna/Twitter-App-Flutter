@@ -10,6 +10,7 @@ CircleAvatar userImages = const CircleAvatar(
   radius: 25.0,
 );
 
+///class to create search bar withh suggestions list and results it extends a predefined class in flutter which is SearchDelegate
 class MySearchDelegate extends SearchDelegate {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -23,6 +24,7 @@ class MySearchDelegate extends SearchDelegate {
 
   MySearchDelegate();
 
+  ///function to create leading icon in search bar
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(
@@ -35,6 +37,7 @@ class MySearchDelegate extends SearchDelegate {
         },
       );
 
+  ///function to create trailing icon in search bar
   @override
   List<Widget>? buildActions(BuildContext context) => query.isEmpty
       ? []
@@ -51,7 +54,8 @@ class MySearchDelegate extends SearchDelegate {
         ];
 
   @override
-  //this is where we display the result of our search
+
+  ///Function to display search results (needs to be overrriden but it is not used in this case)
   Widget buildResults(BuildContext context) => Container(
         child: const Text(
           "Search result",
@@ -59,6 +63,7 @@ class MySearchDelegate extends SearchDelegate {
         ),
       );
 
+  ///function to display the search suggestions as the user is writting the query
   @override
   Widget buildSuggestions(BuildContext context) {
     return query.isEmpty
@@ -109,6 +114,7 @@ class MySearchDelegate extends SearchDelegate {
   @override
   String get searchFieldLabel => 'Search Twitter';
 
+  ///function to customize the search bar theme (colors, text fonts..)
   @override
   ThemeData appBarTheme(BuildContext context) {
     // You can use Theme.of(context) directly too

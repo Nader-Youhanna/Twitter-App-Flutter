@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Tweets/tweet.dart';
 
+///Class that holds the page that displays the tweet with whivh the notification is concerned
 class NotificationTweet extends StatelessWidget {
   Tweet tweet;
   NotificationTweet(this.tweet);

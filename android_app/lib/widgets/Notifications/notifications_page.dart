@@ -5,11 +5,14 @@ import 'notification_bar.dart';
 import 'all_notifications_list.dart';
 import 'mentions_list.dart';
 
+///the whole page that holds the notification bar the notification's list and the mentions list
 class NotificationsPage extends StatelessWidget {
-  //setting up default credentails for each user
+  ///setting up default credentails for each user: page should have available the user credentials
   String username = 'Default user';
   String token = '';
   bool isAdmin = false;
+
+  ///constructor to set the user credentials
   NotificationsPage(this.username, this.token, this.isAdmin);
   @override
   Widget build(BuildContext context) {

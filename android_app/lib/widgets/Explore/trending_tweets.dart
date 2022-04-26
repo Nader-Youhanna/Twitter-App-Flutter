@@ -7,17 +7,22 @@ import 'dart:convert';
 import 'package:android_app/widgets/user_profile/profile.dart';
 import './search_bar_explore.dart';
 
+///class to create the page with the tweets concerning a specific topic
 class TrendingTweets extends StatefulWidget {
   @required
+
+  ///the trending topic is the only data memeber in the class
   String topic = "";
 
+  ///class takes the concerned topic in its constructor
   TrendingTweets(this.topic);
   late Map<String, dynamic> mapTopic = {"hashtag": topic};
   @override
-  State<TrendingTweets> createState() => _TrendingTweetsState();
+  State<TrendingTweets> createState() => TrendingTweetsState();
 }
 
-class _TrendingTweetsState extends State<TrendingTweets> {
+///class to create the states of teh page
+class TrendingTweetsState extends State<TrendingTweets> {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
@@ -26,14 +31,14 @@ class _TrendingTweetsState extends State<TrendingTweets> {
     );
   }
 
-  //sends topic to backend to get list of tweets
-  Future<void> _sendTrend(Map<String, dynamic> data) async {
+  ///sends topic to backend to get list of tweets
+  Future<void> sendTrend(Map<String, dynamic> data) async {
     return await httpRequestPost("http://${MY_IP_ADDRESS}:3000/openTrend/",
         data, <String, String>{"": ""});
   }
 
-//Function to get the list of trending tweets and their types from backend
-  Future<List<Tweet>> _getTrendingTweets() async {
+  ///Function to get the list of trending tweets and their types from backend
+  Future<List<Tweet>> getTrendingTweets() async {
     List<Tweet> tweetList = <Tweet>[];
     var data = [];
     print("fetching trending tweets based on topic");
@@ -58,11 +63,13 @@ class _TrendingTweetsState extends State<TrendingTweets> {
   }
 
   @override
+
+  ///at every callback to the page we send a new request for the list of tweets
   void initState() {
     super.initState();
-    _sendTrend(widget.mapTopic);
+    sendTrend(widget.mapTopic);
     WidgetsBinding.instance!
-        .addPostFrameCallback((_) => _sendTrend(widget.mapTopic));
+        .addPostFrameCallback((_) => sendTrend(widget.mapTopic));
   }
 
   @override
@@ -157,7 +164,7 @@ class _TrendingTweetsState extends State<TrendingTweets> {
               ];
             },
             body: FutureBuilder<List<Tweet>>(
-                future: _getTrendingTweets(),
+                future: getTrendingTweets(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -173,7 +180,7 @@ class _TrendingTweetsState extends State<TrendingTweets> {
                               return data[index];
                             }),
                         onRefresh: () async {
-                          _getTrendingTweets();
+                          getTrendingTweets();
                           setState(() {});
                         },
                         triggerMode: RefreshIndicatorTriggerMode.anywhere,
