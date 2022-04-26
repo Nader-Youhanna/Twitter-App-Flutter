@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/users_list_item.dart';
 
+///class to show list of followers
 class Followers_page extends StatefulWidget {
   final List<User_Item> Users_List;
   Followers_page(this.Users_List);

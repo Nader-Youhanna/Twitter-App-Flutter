@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/users_list_item.dart';
 import 'package:android_app/widgets/user_profile/followers_List_scroll.dart';
 
+///class that shows the followers & following accounts of the user
 class Accounts_page extends StatefulWidget {
   const Accounts_page({Key? key}) : super(key: key);
 

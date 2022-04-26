@@ -3,6 +3,7 @@ import '../../constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+///class to create Audience settings page which allows the user to choose priavcy of their account
 class Audience extends StatefulWidget {
   //const Audience({Key? key}) : super(key: key);
   bool isPrivate = false;
@@ -16,6 +17,7 @@ class _AudienceState extends State<Audience> {
     Navigator.of(ctx).pop();
   }
 
+  ///function to fetch data from mock server
   Future<void> httpRequestPost() async {
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
     var response =

@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
 import '../../constants.dart';
 
+///class that creates a single choice item in a pop up menu
 class Choice {
   const Choice(
       {required this.title, required this.icon, this.isEnable = false});
@@ -17,6 +18,7 @@ class Choice {
   final String title;
 }
 
+/// a list of choices included in a pop up menue
 const List<Choice> choices = <Choice>[
   Choice(
     title: 'Share',
@@ -27,6 +29,7 @@ const List<Choice> choices = <Choice>[
   Choice(title: 'Report', icon: Icons.directions_bike),
 ];
 
+///class tat creates user profile page, whether this user is myself or another user
 class Profile extends StatefulWidget {
   String username = 'Default user';
   int userId = 0;
@@ -49,6 +52,7 @@ class _ProfileState extends State<Profile> {
     Navigator.of(ctx).pop();
   }
 
+  ///function that sends a get request to the mock server to get the user's information
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
     var response = await http.get(url);
@@ -62,6 +66,7 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  ///function to create a sharable link of the current profile
   void _ShareProfile() {
     print("share working");
     Share.share("/profile/${uid}");

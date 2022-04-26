@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
 import '../../constants.dart';
 
+///class to create settings page with navigators to each settings options
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -31,6 +32,7 @@ class _SettingsState extends State<Settings> {
   String Password = "12345678";
   bool isPrivate = false;
 
+  ///function to fetch user data from mock server (username, email, phone and country)
   Future<void> httpRequestGet() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
     var response = await http.get(url);

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 
+///class to create Account information page to update the user's account information(username,email,phone,country,password)
 class AccountInfo extends StatefulWidget {
   String username;
   String email;

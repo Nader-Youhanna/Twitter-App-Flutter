@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///class that creates the follow/unfollow button and changes it state based of following or not
 class Follow_button extends StatefulWidget {
   bool _alreadyfollowed;
   Follow_button(this._alreadyfollowed);

@@ -4,8 +4,8 @@ import 'package:android_app/widgets/user_profile/users_list_item.dart';
 //import './tweetsOnly.dart';
 import 'package:android_app/widgets/user_profile/Follow_button.dart';
 
+///class that creates single item that appears in users (followers and following accounts) lists
 class User_Item extends StatelessWidget {
-  //String uid = '';
   String username = "username";
   String handle = "@username";
   bool FollowsBack = true;
@@ -18,7 +18,6 @@ class User_Item extends StatelessWidget {
   );
   User_Item(this.username, this.handle, this.FollowsBack, this._alreadyfollowed,
       this.bio);
-  // const User_Item({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

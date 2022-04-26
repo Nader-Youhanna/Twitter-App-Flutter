@@ -4,12 +4,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 
+///class to create updat email page
 class UpdateEmail extends StatefulWidget {
   // const UpdateEmail({Key? key}) : super(key: key);
   static const _widthOfTextFields = 320.0;
   String email;
   var _emailIsValid = false;
 
+  ///function to check validity of email address and that it is in the correct format
   bool isEmailValid(var email) {
     print(email);
     return (_emailIsValid =
@@ -185,6 +187,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
     );
   }
 
+  ///function that creates an Alert dialog with an ok buttin which appears with a specific text and can be discarded by the user
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = FlatButton(
