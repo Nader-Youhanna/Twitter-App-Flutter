@@ -63,14 +63,8 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
                 onPressed: () async {
                   tweetText = tweetTextController.text;
                   print(tweetText);
-                  var data = <String, dynamic>{
-                    'userId': 1,
-                    'createdAt': '2020-01-01T00:00:00.000Z',
-                    'tweetText': tweetText,
-                    'images': [],
-                    'favouriters': [],
-                    'retweeters': [],
-                    'replies': [],
+                  var data = {
+                    "body": tweetText,
                   };
                   await addTweet(data, ipAddress, port);
                   print("Tweet added");
