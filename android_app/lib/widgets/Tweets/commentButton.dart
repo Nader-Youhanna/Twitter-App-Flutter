@@ -1,4 +1,4 @@
-import '/widgets/Tweets/tweet.dart';
+import './tweet.dart';
 import 'package:flutter/material.dart';
 
 /// This class is used to represent comment button in a tweet.

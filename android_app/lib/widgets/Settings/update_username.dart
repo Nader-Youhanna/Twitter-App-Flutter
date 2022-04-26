@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 
+///class to create the update username settings page
 class Update_username extends StatefulWidget {
   // const Update_username({Key? key}) : super(key: key);
   var _username;
@@ -18,10 +19,12 @@ class _Update_usernameState extends State<Update_username> {
   var _nameIsEntered = false;
   var _nameIsValid = false;
 
+  ///function to check validity of name and whether it has a match in the server
   bool _isNameValid(var name) {
     return (_nameIsValid = !RegExp(r"^nader$").hasMatch(name));
   }
 
+  ///function to send post request to server with the new username
   Future<void> httpRequestPost() async {
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
     var response =

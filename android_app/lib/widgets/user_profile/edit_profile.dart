@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
 
+///class that creates the edit profile settings page (incomplete)
 class Edit_Profile extends StatefulWidget {
   const Edit_Profile({Key? key}) : super(key: key);
 

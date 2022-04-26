@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../../constants.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 
+///class to create the update phone settings page
 class UpdatePhone extends StatefulWidget {
   const UpdatePhone({Key? key}) : super(key: key);
 
@@ -15,6 +16,8 @@ class UpdatePhone extends StatefulWidget {
 class _UpdatePhoneState extends State<UpdatePhone> {
   var _isPhoneEntered = false;
   String _phone = '';
+
+  ///function to send post request for the updated phone number to the mock server
   Future<void> httpRequestPost() async {
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
     var response = await http.post(url, body: {'phone': '${_phone}'});
@@ -160,6 +163,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
     );
   }
 
+  ///function that creates an Alert dialog with an ok buttin which appears with a specific text and can be discarded by the user
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = FlatButton(

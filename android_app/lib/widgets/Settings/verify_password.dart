@@ -7,6 +7,7 @@ import 'dart:convert';
 import '../../constants.dart';
 import './update_phone.dart';
 
+///class that creates a page that verifies the user's current password for extra privacy before changing important information
 class VerifyPassword extends StatefulWidget {
   var _passwordIsCorrect = false;
   var password;
@@ -14,6 +15,7 @@ class VerifyPassword extends StatefulWidget {
   var _passwordIsValid = false;
   bool ISemail;
 
+  ///function to check validity of input password
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
@@ -176,6 +178,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
     );
   }
 
+  ///function that creates an Alert dialog with an ok buttin which appears with a specific text and can be discarded by the user
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = FlatButton(

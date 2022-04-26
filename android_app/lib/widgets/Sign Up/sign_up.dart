@@ -6,7 +6,6 @@ class SignUp extends StatefulWidget {
   var _emailIsValid = false;
 
   bool isEmailValid(var email) {
-    print(email);
     return (_emailIsValid =
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }

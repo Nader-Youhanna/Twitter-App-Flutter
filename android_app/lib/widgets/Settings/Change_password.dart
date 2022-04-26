@@ -4,10 +4,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 
+///class to create the change password settings page
 class ChangePassword extends StatefulWidget {
   String Password;
   var _passwordIsValid = false;
 
+  ///function to check validity of password (>=8  characters)
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
@@ -29,6 +31,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _textFieldWidth = 320.0;
   var _passwordIsVisible = false;
   bool _passwordIsCorrect = false;
+
+  ///function to post the new password into the mock server
   Future<void> httpRequestPost() async {
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
     var response = await http.post(url, body: {'password': '${_newPassword}'});
@@ -36,6 +40,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     print('Response body: ${response.body}');
   }
 
+  ///function to navigate to previous page
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -263,6 +268,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+  ///function that creates an Alert dialog with an ok buttin which appears with a specific text and can be discarded by the user
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = FlatButton(
