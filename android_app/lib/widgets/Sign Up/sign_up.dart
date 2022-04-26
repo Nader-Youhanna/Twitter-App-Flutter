@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './confirm_email.dart';
+import './choose_password.dart';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -37,14 +37,16 @@ class _SignUpState extends State<SignUp> {
 
   void _goToConfirmEmail(BuildContext ctx) {
     Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return ConfirmEmail(
-          name: _name,
-          username: _username,
-          email: _email,
-          dob: _dob,
-        );
-      }),
+      MaterialPageRoute(
+        builder: (_) {
+          return ChoosePassword(
+            name: _name,
+            username: _username,
+            email: _email,
+            dob: _dob,
+          );
+        },
+      ),
     );
   }
 
