@@ -17,6 +17,7 @@ var _emailIsEntered = false;
 var _searchButtonClicked = false;
 var _emailIsValid = false;
 
+///This is the forgot password page
 class ForgotPasswordPage extends StatefulWidget {
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();

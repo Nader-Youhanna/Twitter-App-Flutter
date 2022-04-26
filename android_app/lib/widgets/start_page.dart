@@ -7,6 +7,7 @@ import 'Log In/login.dart';
 import '../providers/google_sign_in.dart';
 import './bottom_nav_bar.dart';
 
+///This is a navigation function that redirects to login page
 void goToSignUpPage(BuildContext ctx) {
   Navigator.of(ctx).push(
     MaterialPageRoute(builder: (_) {
@@ -15,6 +16,7 @@ void goToSignUpPage(BuildContext ctx) {
   );
 }
 
+///This is a navigation function that redirects to login page
 void goToLoginPage(BuildContext ctx) {
   Navigator.of(ctx).push(
     MaterialPageRoute(
@@ -25,6 +27,7 @@ void goToLoginPage(BuildContext ctx) {
   );
 }
 
+///This is the first Page that gets loaded
 class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,7 @@ class StartPage extends StatelessWidget {
   }
 }
 
+///This is the Sign Up part of the start page
 class SignUpWidget extends StatefulWidget {
   @override
   State<SignUpWidget> createState() => _SignUpWidgetState();

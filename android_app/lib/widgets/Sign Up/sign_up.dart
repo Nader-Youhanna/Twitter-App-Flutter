@@ -5,6 +5,7 @@ class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
   var _emailIsValid = false;
 
+  ///This function validates an email and returns a boolean
   bool isEmailValid(var email) {
     return (_emailIsValid =
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
@@ -30,10 +31,12 @@ class _SignUpState extends State<SignUp> {
   var _dob = null;
   var _name;
 
+  ///This is a navigation function that redirects to previous page
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
+  ///This is a navigation function that redirects to confirm email page
   void _goToConfirmEmail(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {

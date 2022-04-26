@@ -6,6 +6,7 @@ import '../bottom_nav_bar.dart';
 import '../../constants.dart';
 import 'forgot_password.dart';
 
+///This is the enter password page
 class EnterPasswordPage extends StatefulWidget {
   String name = 'Nader';
   final username;

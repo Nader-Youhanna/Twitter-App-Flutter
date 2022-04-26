@@ -6,6 +6,7 @@ import 'Admin View/admin_view_main.dart';
 import 'user_profile/profile.dart';
 import 'Notifications/notifications_page.dart';
 
+///This is the Sidebar that opens when you swipe or click the left corner icon
 class SideBar extends StatelessWidget {
   final name, username;
   final isAdmin = true;
@@ -18,6 +19,7 @@ class SideBar extends StatelessWidget {
     //@required this.isAdmin,
   });
 
+  ///This is a navigation function that redirects to login page
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {

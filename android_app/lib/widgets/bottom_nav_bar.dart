@@ -8,10 +8,10 @@ import 'Log In/forgot_password.dart';
 import 'Messages/inbox.dart';
 import './user_profile/profile.dart';
 import 'Explore/explore_page.dart';
-
 import '../functions/http_functions.dart';
 import '../constants.dart';
 
+///This is the bottom most navigation bar that holds the icons for other pages(home, notifications, inbox etc..)
 class MyNavigationBar extends StatefulWidget {
   //setting up default credentails for each user
   final String name;

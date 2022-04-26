@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './enter_password.dart';
 import 'forgot_password.dart';
 
+///This is the login page
 class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
@@ -14,6 +15,7 @@ class _LoginState extends State<Login> {
     Navigator.of(ctx).pop();
   }
 
+  ///This is a navigation function that redirects to the enter password page
   void _enterPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
@@ -22,6 +24,7 @@ class _LoginState extends State<Login> {
     );
   }
 
+  ///This is a navigation function that redirects to the forgot password page
   void _forgotPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
