@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This class is used to represent retweet button in a tweet.
 class Retweet extends StatefulWidget {
   int retweetCount = 0;
   Color retweetColor = Colors.grey;

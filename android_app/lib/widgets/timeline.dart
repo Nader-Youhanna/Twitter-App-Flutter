@@ -7,6 +7,7 @@ import '../widgets/user_profile/profile.dart';
 import './side_bar.dart';
 import './Settings/settings_main.dart';
 
+/// This class is used to represent the timeline page.
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
 

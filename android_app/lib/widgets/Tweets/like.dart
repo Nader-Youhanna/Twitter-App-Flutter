@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This class is used to represent like button in a tweet.
 class Like extends StatefulWidget {
   int likeCount = 0;
   Color likeColor = Colors.grey;

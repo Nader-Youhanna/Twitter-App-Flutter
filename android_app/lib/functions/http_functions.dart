@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+/// This function returns the response of the http POST request. It takes URL, body and headers as parameters.
 Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   var url = Uri.parse(urlStr);
   if (reqBody == null) {
@@ -20,6 +21,7 @@ Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   return json.decode(response.body);
 }
 
+/// This function returns the response of the http POST request. It takes URL, body and headers as parameters.
 Future<Map<String, dynamic>> httpRequestGet(
     String urlStr, Map? headersMap) async {
   var url = Uri.parse(urlStr);

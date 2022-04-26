@@ -9,6 +9,7 @@ import './commentButton.dart';
 import './share.dart';
 import './tweetImage.dart';
 
+/// This class is used to represent a tweet.
 class Tweet extends StatelessWidget {
   String _key;
   late String _username;
@@ -232,30 +233,37 @@ class Tweet extends StatelessWidget {
     );
   }
 
+  /// Returns the username
   String getUserName() {
     return _username;
   }
 
+  /// Returns the display name
   String getDisplayName() {
     return _displayName;
   }
 
+  /// Returns the tweet text
   String getTweetText() {
     return _tweetBody;
   }
 
+  /// Returns the tweet media
   List<String> getTweetImages() {
     return _tweetMedia;
   }
 
+  /// Returns the favouriters count
   int getFavouriters() {
     return _favouritersCount;
   }
 
+  /// Returns the retweeters count
   int getRetweetersCount() {
     return _retweetersCount;
   }
 
+  /// Returns the replies count
   int getCommentersCount() {
     return _repliesCount;
   }
@@ -264,10 +272,12 @@ class Tweet extends StatelessWidget {
   //   return _userId;
   // }
 
+  /// Returns the created date
   DateTime getCreatedAt() {
     return _createdAt;
   }
 
+  /// Returns the user date
   CircleAvatar getUserImage() {
     return _userImage;
   }

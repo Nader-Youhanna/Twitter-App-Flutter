@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This class is used to represent share button in a tweet.
 class Share extends StatelessWidget {
   final int iconSize;
 

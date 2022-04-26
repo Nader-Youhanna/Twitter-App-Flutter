@@ -1,6 +1,7 @@
 import '/widgets/Tweets/tweet.dart';
 import 'package:flutter/material.dart';
 
+/// This class is used to represent comment button in a tweet.
 class CommentButton extends StatefulWidget {
   int _commentators;
   final Color commentColor = Colors.grey;
@@ -33,6 +34,7 @@ class _CommentButtonState extends State<CommentButton> {
     );
   }
 
+  /// This function opens the modal sheet to add a new comment and send it to the backend.
   void _addComment(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,

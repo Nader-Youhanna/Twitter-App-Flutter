@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This class is used to represent media in a tweet.
 class TweetImage extends StatelessWidget {
   final List<String> imageUrl;
   final double imageHeight = 200.0;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './http_functions.dart';
 import '../widgets/Tweets/tweet.dart';
 
+///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
 Future<void> addTweet(
     Map<String, dynamic> data, String ipAddress, String port) async {
   Map<String, dynamic> headers = {
@@ -17,6 +18,7 @@ Future<void> addTweet(
   );
 }
 
+/// This function get the tweets from the [ipAddress] and port [port] of the backend and return the response.
 Future<List<Tweet>> getTweets(String ipAddress, String port) async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
@@ -35,6 +37,7 @@ Future<List<Tweet>> getTweets(String ipAddress, String port) async {
   return tweets;
 }
 
+/// This function opens the modal sheet to add a new tweet and send it to the [ipAddress] and port [port].
 void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
   String tweetText = "";
   var tweetTextController = TextEditingController();
