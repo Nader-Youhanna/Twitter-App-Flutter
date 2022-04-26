@@ -5,6 +5,7 @@ import '../constants.dart';
 import './Tweets/tweet.dart';
 import '../widgets/user_profile/profile.dart';
 import './side_bar.dart';
+import './Settings/settings_main.dart';
 
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
@@ -18,17 +19,29 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final _appBarText = 'Search';
-
   late String _ipAddress;
 
   late String _port;
 
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return Profile("", 1, false);
-      }),
+      MaterialPageRoute(
+        builder: (_) {
+          return Profile("", 1, false);
+        },
+      ),
+    );
+  }
+
+  void _goToSettings(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Settings();
+        },
+      ),
     );
   }
 
@@ -37,16 +50,20 @@ class _TimelineState extends State<Timeline> {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
     return Scaffold(
+      key: _scaffoldKey,
       drawer: SideBar(name: 'nido', username: 'nido123'),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
         leading: IconButton(
-            icon: const Icon(Icons
-                .person_rounded), //should be changed to google profile icon
-            color: Colors.black,
-            onPressed: () =>
-                {_goToUserProfile(context)}), //button should open to side bar,
+          icon: const Icon(
+              Icons.person_rounded), //should be changed to google profile icon
+          color: Colors.black,
+          onPressed: () {
+            // _goToUserProfile(context);
+            _scaffoldKey.currentState!.openDrawer();
+          },
+        ),
         actions: [
           Container(
             width: 260,
@@ -67,9 +84,12 @@ class _TimelineState extends State<Timeline> {
           ),
 
           IconButton(
-              icon: const Icon(Icons.settings_outlined),
-              color: Colors.black,
-              onPressed: () => {}), //button shoud direct to setings
+            icon: const Icon(Icons.settings_outlined),
+            color: Colors.black,
+            onPressed: () {
+              _goToSettings(context);
+            },
+          ), //button shoud direct to setings
         ],
       ),
       body: Container(
