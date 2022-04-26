@@ -131,40 +131,14 @@
       "password": "12345"
     },
     {
-      "username": "nido",
-      "password": "nido",
-      "id": 2
-    },
-    {
-      "username": "nido",
-      "email": "naderyouhanna@gmail.com",
-      "dob": "15/5/2000",
-      "password": "nghghgjjnjkk",
-      "id": 3
-    },
-    {
-      "username": "naderr",
-      "email": "naderyouhanna@gmail.com",
-      "dob": "15/5/2000",
-      "password": "nader12345667",
-      "id": 4
-    },
-    {
-      "name": "nido",
+      "name": "Nader",
       "username": "nido",
       "email": "naderyouhanna@gmail.com",
       "birthdate": "15/5/2000",
-      "password": "ndkrmfkmrkg",
+      "password": "nido12345",
       "country": "Egypt",
       "city": "Cairo",
-      "id": 5
-    },
-    {
-      "username": "h",
-      "email": "b@h.co",
-      "dob": "1/5/2000",
-      "password": "hjjjjjjj",
-      "id": 6
+      "id": 2
     }
   ],
   "profile": [

@@ -26,7 +26,6 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
   bool _validateCredentials(String password) {
     //TO BE REMOVED IN DISCUSSION
-    return true;
 
     if (lastValidatedPassword == password) {
       return true;
