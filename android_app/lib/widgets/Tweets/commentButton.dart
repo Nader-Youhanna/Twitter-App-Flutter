@@ -1,4 +1,4 @@
-import '/widgets/Tweets/tweet.dart';
+import './tweet.dart';
 import 'package:flutter/material.dart';
 
 class CommentButton extends StatefulWidget {
