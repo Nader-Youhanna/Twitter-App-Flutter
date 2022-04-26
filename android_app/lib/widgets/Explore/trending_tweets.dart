@@ -28,8 +28,8 @@ class _TrendingTweetsState extends State<TrendingTweets> {
 
   //sends topic to backend to get list of tweets
   Future<void> _sendTrend(Map<String, dynamic> data) async {
-    return await httpRequestPost(
-        "http://${MY_IP_ADDRESS}:3000/openTrend/", data);
+    return await httpRequestPost("http://${MY_IP_ADDRESS}:3000/openTrend/",
+        data, <String, String>{"": ""});
   }
 
 //Function to get the list of trending tweets and their types from backend

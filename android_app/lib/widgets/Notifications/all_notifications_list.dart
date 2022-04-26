@@ -9,6 +9,7 @@ import '../../constants.dart';
 import '../../functions/http_functions.dart';
 
 class AllNotificationsList extends StatefulWidget {
+  //constructor should take user token from notifications page
   AllNotificationsList();
 
   // List<NotificationItem> notificationList = <NotificationItem>[];
@@ -47,11 +48,13 @@ class _AllNotificationsListState extends State<AllNotificationsList> {
     return notificationList;
   }
 
+//should impliment function to send token to backend
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+//function to send token should be put here
     // WidgetsBinding.instance!.addPostFrameCallback((_) =>
     //     _getNotifications()); //function is called everytime we open the page
   }
