@@ -24,7 +24,7 @@ class _SettingsState extends State<Settings> {
     Navigator.of(ctx).pop();
   }
 
-  String username = "Nada";
+  String username = "Remonda";
   String email = "nadatarek2710@gmail.com";
   String phone = "123";
   String country = "Egypt";

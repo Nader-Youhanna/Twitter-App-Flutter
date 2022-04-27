@@ -28,7 +28,7 @@ Future<List<Tweet>> getTweets(String ipAddress, String port) async {
 
   //print("=========" + mapTweet['data'][0].toString());
   List<Tweet> tweets = <Tweet>[];
-  for (int i = 0; i < mapTweet.length; i++) {
+  for (int i = 0; i < mapTweet['data'].length; i++) {
     tweets.add(Tweet.jsonTweet(mapTweet['data'][i], false, true));
   }
 
@@ -46,7 +46,7 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(12),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

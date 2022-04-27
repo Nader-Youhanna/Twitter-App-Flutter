@@ -28,7 +28,8 @@ Future<Map<String, dynamic>> httpRequestGet(
 
   if (headersMap != null) {
     request.headers['Content-Type'] = headersMap['Content-Type'];
-    request.headers['authorization'] = headersMap['authorization'];
+    request.headers['authorization'] =
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjg4ZWM5OWEzNjc3NWIzNDZlNmEyZSIsImlhdCI6MTY1MTA1MDA0NSwiZXhwIjoxNjU5NjkwMDQ1fQ.0SN29hZpZ7kyHWQbm8MiFBLOtGLmbcei43kwLFfSJHQ';
   }
 
   var streamedResponse = await request.send();
