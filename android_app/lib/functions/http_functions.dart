@@ -2,44 +2,32 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
+import 'package:http/http.dart';
+
+Future<void> httpRequestPost(
+    String urlStr, Map? reqBody, Map<String, String> reqHeaders) async {
   var url = Uri.parse(urlStr);
-  if (reqBody == null) {
-    reqBody = <String, dynamic>{};
-  }
-  if (reqHeaders == null) {
-    reqHeaders = <String, String>{};
-  }
   var body = json.encode(reqBody);
-  var response = await http.post(
-    url,
-    body: body,
-    headers: reqHeaders as Map<String, String>,
-  );
-  print(response.body);
+  var response = await http.post(url, body: body, headers: reqHeaders);
   return json.decode(response.body);
 }
 
-Future<Map<String, dynamic>> httpRequestGet(
-    String urlStr, Map? headersMap) async {
+Future<List<dynamic>> httpRequestGet(String urlStr, Map? jsonText) async {
   var url = Uri.parse(urlStr);
+  var request = Request('GET', url);
 
-  var request = http.Request('GET', url);
-
-  if (headersMap != null) {
-    request.headers['Content-Type'] = headersMap['Content-Type'];
-    request.headers['authorization'] = headersMap['authorization'];
+  if (jsonText != null) {
+    request.body = json.encode(jsonText);
   }
 
-  var streamedResponse = await request.send();
+  // var response = await http.get(url,headers: {
+  //   "Content-Type": "application/json",
+  // });
+  var response = await request.send();
 
-  var response = await http.Response.fromStream(streamedResponse);
+  String strResponse = await response.stream.bytesToString();
 
-  //Print the last 10 characters of the response body
-  //print(response.body.substring(response.body.length - 15));
   print('Response status: ${response.statusCode}');
-  //print('Response body: ${response.body.substring(1000)}');
-  var temp = json.decode(response.body) as Map<String, dynamic>;
-
-  return temp;
+  print('Response body of GET: $strResponse');
+  return json.decode(strResponse);
 }

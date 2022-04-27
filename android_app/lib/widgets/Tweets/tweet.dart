@@ -10,94 +10,55 @@ import './share.dart';
 import './tweetImage.dart';
 
 class Tweet extends StatelessWidget {
-  String _key;
-  late String _username;
-  late String _displayName;
-  String _email;
+  final int
+      _userId; //The user who tweeted it. This is needed to get profilePicture, userName and userDisplayName
+
+  final DateTime _createdAt;
+  final String _tweetText;
   final CircleAvatar _userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 20.0,
   ); //This will be the profile picture of the user who tweeted it. Get it from userId
-  final String _tweetBody;
-  List<String> _tweetMedia = <String>[];
-  int _repliesCount;
-  int _retweetersCount;
-  int _favouritersCount;
-  final DateTime _updatedAt;
-  final DateTime _createdAt;
-  late final List<String> _taggedUsers;
-
-  //The user who tweeted it. This is needed to get profilePicture, userName and userDisplayName
-  //final int _userId;
-
+  List<String> _tweetImages = <String>[];
+  List<int> _favouriters =
+      <int>[]; //List of userIds of users who favourited this tweet
+  List<int> _retweeters =
+      <int>[]; //List of userIds of users who retweeted this tweet
+  List<Map<String, dynamic>> _commenters = <
+      Map<String,
+          dynamic>>[]; //List of userIds of users who commented on this tweet
   final int _iconSize = 20;
+
+  late String _username;
+  late String _displayName;
 
   final bool _hideButtons;
   bool _hideReplyTo;
 
   Tweet.jsonTweet(
       Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
-      : _key = jsonTweet['key'] as String,
-        _username = jsonTweet['username'] as String,
-        _displayName = jsonTweet['name'] as String,
-        _email = jsonTweet['email'] as String,
-        _tweetBody = jsonTweet['tweetBody'] as String,
-        _repliesCount = jsonTweet['repliesCount'] as int,
-        _retweetersCount = jsonTweet['retweetersCount'] as int,
-        _favouritersCount = jsonTweet['favoritersCount'] as int,
-        _updatedAt = DateTime.parse(jsonTweet['updatedAt'] as String),
-        _createdAt = DateTime.parse(jsonTweet['createdAt'] as String),
-
-        //_userId = jsonTweet['userId'] as int,
-        _hideButtons = hideButtons,
-        _hideReplyTo = hideReplyTo {
-    _tweetMedia = List<String>.from(jsonTweet['tweetMedia']);
-
-    _taggedUsers = List<String>.from(jsonTweet['taggedUsers']);
-  }
-  /*
-    Tweet.jsonTweet(
-      Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
       : _userId = jsonTweet['userId'] as int,
         _createdAt = DateTime.parse(jsonTweet['createdAt']),
-        _tweetBody = jsonTweet['tweetText'] as String,
+        _tweetText = jsonTweet['tweetText'] as String,
         _hideButtons = hideButtons,
         _hideReplyTo = hideReplyTo {
-    _tweetMedia = List<String>.from(jsonTweet['images']);
-    _favouritersCount = List<int>.from(jsonTweet['favouriters']);
-    _retweetersCount = List<int>.from(jsonTweet['retweeters']);
-    _repliesCount = List<Map<String, dynamic>>.from(jsonTweet['replies']);
+    _tweetImages = List<String>.from(jsonTweet['images']);
+    _favouriters = List<int>.from(jsonTweet['favouriters']);
+    _retweeters = List<int>.from(jsonTweet['retweeters']);
+    _commenters = List<Map<String, dynamic>>.from(jsonTweet['replies']);
 
     _username = '@username';
     _displayName = 'Display Name';
   }
 
-
-  */
-  // Map<String, dynamic> toJson() => {
-  //       'userId': _userId,
-  //       'createdAt': _createdAt.toString(),
-  //       'tweetText': _tweetBody,
-  //       'images': _tweetMedia,
-  //       'favouriters': _favouritersCount,
-  //       'retweeters': _retweetersCount,
-  //       'replies': _repliesCount,
-  //     };
-
   Map<String, dynamic> toJson() => {
-        'key': _key,
-        'username': _username,
-        'name': _displayName,
-        'email': _email,
-        'tweetBody': _tweetBody,
-        'tweetMedia': _tweetMedia,
-        'repliesCount': _repliesCount,
-        'retweetersCount': _retweetersCount,
-        'favoritersCount': _favouritersCount,
-        'updatedAt': _updatedAt.toString(),
+        'userId': _userId,
         'createdAt': _createdAt.toString(),
-        'taggedUsers': _taggedUsers,
-        //'userId': _userId,
+        'tweetText': _tweetText,
+        'images': _tweetImages,
+        'favouriters': _favouriters,
+        'retweeters': _retweeters,
+        'replies': _commenters,
       };
 
   @override
@@ -106,7 +67,7 @@ class Tweet extends StatelessWidget {
     return InkWell(
       onTap: () {
         print("Tweet pressed");
-        print("No. of replies = " + _repliesCount.toString());
+        print("No. of replies = " + _commenters.length.toString());
         showModalBottomSheet(
             isScrollControlled: true,
             enableDrag: false,
@@ -127,8 +88,8 @@ class Tweet extends StatelessWidget {
                     child: ListView(
                       children: [
                         this,
-                        // for (var com in _repliesCount)
-                        //   Text(com['commentText'] as String),
+                        for (var com in _commenters)
+                          Text(com['commentText'] as String),
                       ],
                     ),
                   ),
@@ -198,7 +159,7 @@ class Tweet extends StatelessWidget {
                 //Tweet text
                 Container(
                   child: Text(
-                    _tweetBody,
+                    _tweetText,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -207,19 +168,19 @@ class Tweet extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   width: mediaQuery.size.width - _userImage.radius! - 30,
                 ),
-                if (_tweetMedia.isNotEmpty) TweetImage(_tweetMedia),
+                if (_tweetImages.isNotEmpty) TweetImage(_tweetImages),
 
                 //Row for retweet, comment, like
                 if (!_hideButtons)
                   Row(
                     children: [
                       //Comment
-                      CommentButton(_repliesCount, _iconSize,
+                      CommentButton(_commenters.length, _iconSize,
                           Tweet.jsonTweet(toJson(), true, true)),
                       //Retweet
                       Retweet(5, false, _iconSize),
                       //Like
-                      Like(_favouritersCount, false, _iconSize),
+                      Like(_favouriters.length, false, _iconSize),
                       //Share
                       Share(_iconSize),
                     ],
@@ -241,28 +202,28 @@ class Tweet extends StatelessWidget {
   }
 
   String getTweetText() {
-    return _tweetBody;
+    return _tweetText;
   }
 
   List<String> getTweetImages() {
-    return _tweetMedia;
+    return _tweetImages;
   }
 
-  int getFavouriters() {
-    return _favouritersCount;
+  List<int> getFavouriters() {
+    return _favouriters;
   }
 
-  int getRetweetersCount() {
-    return _retweetersCount;
+  List<int> getRetweeters() {
+    return _retweeters;
   }
 
-  int getCommentersCount() {
-    return _repliesCount;
+  List<Map<String, dynamic>> getCommenters() {
+    return _commenters;
   }
 
-  // int getUserId() {
-  //   return _userId;
-  // }
+  int getUserId() {
+    return _userId;
+  }
 
   DateTime getCreatedAt() {
     return _createdAt;
