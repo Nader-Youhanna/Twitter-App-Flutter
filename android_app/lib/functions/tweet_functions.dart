@@ -23,9 +23,11 @@ Future<List<Tweet>> getTweets(String ipAddress, String port) async {
   return tweets;
 }
 
-void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
+Future<List<Tweet>> startAddTweet(
+    BuildContext ctx, String ipAddress, String port) async {
   String tweetText = "";
   var tweetTextController = TextEditingController();
+  var recTweet;
   showModalBottomSheet(
     context: ctx,
     builder: (bCtx) {
@@ -62,7 +64,7 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
                   };
                   await addTweet(data, ipAddress, port);
                   print("Tweet added");
-                  await getTweets(ipAddress, port);
+                  recTweet = await getTweets(ipAddress, port);
                   print("Tweets retrieved");
                   Navigator.pop(ctx);
                 },
@@ -92,4 +94,5 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
     enableDrag: false,
     useRootNavigator: true,
   );
+  return recTweet;
 }

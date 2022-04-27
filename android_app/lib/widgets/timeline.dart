@@ -83,7 +83,12 @@ class _TimelineState extends State<Timeline> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => startAddTweet(context, _ipAddress, _port),
+        onPressed: () async {
+          await startAddTweet(context, _ipAddress, _port);
+          widget.tweets.clear();
+          widget.tweets = await getTweets(_ipAddress, _port);
+          setState(() {});
+        },
         child: const Icon(Icons.add),
       ),
     );

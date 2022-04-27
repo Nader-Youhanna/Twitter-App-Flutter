@@ -59,11 +59,12 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.get(url);
     final extractedMyInfo = json.decode(response.body) as List<dynamic>;
-    print(extractedMyInfo);
+    print("EXTRACTED INFO: ");
+    print(extractedMyInfo.toString());
     for (int i = 0; i < extractedMyInfo.length; i++) {
       if (extractedMyInfo[i]['username'] == widget.username &&
           extractedMyInfo[i]['password'] == password) {
-        widget.name = extractedMyInfo[i]['name'];
+        widget.name = extractedMyInfo[i]['username'];
         lastValidatedPassword = password;
       }
     }

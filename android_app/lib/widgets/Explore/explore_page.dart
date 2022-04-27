@@ -98,7 +98,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           }), //button should open to side bar,
                   actions: [
                     Container(
-                      width: 290,
+                      width: 250,
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                           showCursor: false,

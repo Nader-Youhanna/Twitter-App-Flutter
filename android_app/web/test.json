@@ -134,6 +134,36 @@
       "retweeters": [],
       "replies": [],
       "id": 13
+    },    
+    {
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "hello",
+      "images": [],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [],
+      "id": 15
+    },
+    {
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "hiii",
+      "images": [],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [],
+      "id": 16
+    },
+    {
+      "userId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetText": "hello",
+      "images": [],
+      "favouriters": [],
+      "retweeters": [],
+      "replies": [],
+      "id": 17
     }
   ],
   "comments": [
@@ -162,6 +192,7 @@
     },
     {
       "username": "nido",
+      "name": "Nido",
       "password": "nido",
       "id": 2
     },
@@ -216,6 +247,10 @@
   "forgot-password": [],
   "search": [
     {
+      "username":"Remonda",
+      "handle":"@remoo"
+    },
+    {
       "username": "Habiba",
       "handle": "@HabibaAssem77"
     },
@@ -230,6 +265,22 @@
     {
       "username": "Hassan",
       "handle": "@HassanAbdallah"
+    },
+    {
+      "username":"Nader",
+      "handle":"@nido"
+    },
+    {
+      "username":"Nader",
+      "handle":"@nido"
+    },
+    {
+      "username":"Ahmed",
+      "handle":"@ahmedmoh123"
+    },
+    {
+      "username":"Moaz",
+      "handle":"@momo56"
     }
   ],
   "trends": [
