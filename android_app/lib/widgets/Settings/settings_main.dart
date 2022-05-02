@@ -1,6 +1,7 @@
 import 'package:android_app/widgets/Settings/Account_info.dart';
 import 'package:android_app/widgets/Settings/Audience.dart';
 import 'package:android_app/widgets/Settings/Change_password.dart';
+import 'package:android_app/widgets/Settings/Deactivate_account.dart';
 import 'package:android_app/widgets/user_profile/Follow_button.dart';
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class _SettingsState extends State<Settings> {
     Navigator.of(ctx).pop();
   }
 
-  String username = "Nada";
+  String Name = "Nada";
+  String username = "Nadausername";
   String email = "nadatarek2710@gmail.com";
   String phone = "123";
   String country = "Egypt";
@@ -194,7 +196,13 @@ class _SettingsState extends State<Settings> {
                       ),
                       trailing: IconButton(
                         icon: Icon(Icons.arrow_forward),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Deactivate(Name, username, isPrivate)));
+                        },
                       ),
                     )
                   ],

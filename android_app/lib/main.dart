@@ -1,3 +1,6 @@
+import 'package:android_app/widgets/Settings/ConfirmPassDeactivate.dart';
+import 'package:android_app/widgets/Settings/Deactivate_account.dart';
+import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './widgets/start_page.dart';
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
         home: Scaffold(
-          body: StartPage(),
+          body: ConfirmforDeactivate(),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:android_app/widgets/user_profile/Follow_button.dart';
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/timeline.dart';
 import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
 import 'package:http/http.dart' as http;
@@ -48,6 +47,7 @@ class _ProfileState extends State<Profile> {
   String bio = "bio";
   String uid = "";
   var selectedItem = "";
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
