@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/Push%20Notifications/push_notifications.dart';
 import 'package:flutter/material.dart';
 import 'Notifications/notifications_page.dart';
 import './Log In/login.dart';
@@ -78,6 +79,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NotificationGenerator(),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
