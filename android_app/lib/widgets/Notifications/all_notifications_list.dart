@@ -34,8 +34,10 @@ class AllNotificationsListState extends State<AllNotificationsList> {
       var response = await http.get(url);
       if (response.statusCode == 200) {
         data = json.decode(response.body);
-        notificationList =
-            data.map((e) => NotificationItem.jsonNotification(e)).toList();
+        if (data != null) {
+          notificationList =
+              data.map((e) => NotificationItem.jsonNotification(e)).toList();
+        }
       } else {
         print("fetch error");
       }

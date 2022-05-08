@@ -123,42 +123,43 @@ class TrendingTweetsState extends State<TrendingTweets> {
                             );
                           }),
                     ),
-                    PopupMenuButton(
-                      //button to display the see less list
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: Colors.blueGrey,
-                      ),
-                      elevation: 10,
-                      itemBuilder: (BuildContext context) {
-                        return [
-                          const PopupMenuItem<Text>(
-                            child: Text(
-                              "Search settings", //this is supposed to be static
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          const PopupMenuItem<Text>(
-                            child: Text(
-                              "Save this search", //this is supposed to be static
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          const PopupMenuItem<Text>(
-                            child: Text(
-                              "Share", //this is supposed to be static
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          )
-                        ];
-                      },
-                    ),
+                    // PopupMenuButton(
+                    //   //button to display the see less list
+                    //   icon: const Icon(
+                    //     Icons.more_vert,
+                    //     color: Colors.blueGrey,
+                    //   ),
+                    //   elevation: 10,
+                    //   itemBuilder: (BuildContext context) {
+                    //     return [
+                    //       const PopupMenuItem<Text>(
+                    //         child: Text(
+                    //           "Search settings", //this is supposed to be static
+                    //           style: TextStyle(
+                    //             fontSize: 13,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       const PopupMenuItem<Text>(
+                    //         child: Text(
+                    //           "Save this search", //this is supposed to be static
+                    //           style: TextStyle(
+                    //             fontSize: 13,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       const PopupMenuItem<Text>(
+                    //         child: Text(
+                    //           "Share", //this is supposed to be static
+                    //           style: TextStyle(
+                    //             fontSize: 13,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     ];
+                    //   },
+                    // ),
+                    SizedBox(width: 40),
                   ],
                 ),
               ];

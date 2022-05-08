@@ -9,15 +9,12 @@ class NotificationItem extends StatelessWidget {
   String username = "username";
 
   ///the username of the user that triggered the notification
-
   String notificationType = " ";
 
   ///the notification type (like, retweet, block)
-
   late Tweet tweet;
 
   ///the tweet that the notification is concerned with
-
   CircleAvatar userImage = const CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 13.0,
@@ -29,16 +26,21 @@ class NotificationItem extends StatelessWidget {
     notificationType = jsonNotification['type'] as String;
     tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
   }
+  bool type = true;
 
   ///function that constructs notification string according to the type fetched from server
   String getType() {
     String msg = ' ';
     if (notificationType == 'like') {
       msg = '  liked your tweet';
+      type = true;
     } else if (notificationType == 'retweet') {
       msg = '  retweeted your tweet';
+      type = true;
+    } else if (notificationType == 'block') {
+      msg = '  blocked you';
+      type = false;
     }
-
     return msg;
   }
 
@@ -55,7 +57,7 @@ class NotificationItem extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: () => {_viewTweet(context)},
+          onTap: type ? () => {_viewTweet(context)} : () => {},
           leading: userImage, //should be dynamic and fetched from backend
           title: RichText(
             text: TextSpan(
@@ -72,13 +74,14 @@ class NotificationItem extends StatelessWidget {
               ],
             ),
           ),
-          subtitle: Text(
-            tweet.getTweetText(),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ) //the tweet text fetched from backend
-          //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
-          ,
+          subtitle: type
+              ? Text(
+                  tweet.getTweetText(),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ) //the tweet text fetched from backend
+              //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
+              : Text(''),
 
           trailing: PopupMenuButton(
             //button to display the see less list
