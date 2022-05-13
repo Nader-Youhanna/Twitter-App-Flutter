@@ -9,7 +9,8 @@ class Deactivate extends StatefulWidget {
   String name;
   String username;
   bool isPrivate;
-  Deactivate(this.name, this.username, this.isPrivate);
+  String password;
+  Deactivate(this.name, this.username, this.isPrivate, this.password);
   @override
   State<Deactivate> createState() => _DeactivateState();
 }
@@ -208,12 +209,13 @@ class _DeactivateState extends State<Deactivate> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ConfirmforDeactivate()));
+                                builder: (context) =>
+                                    ConfirmforDeactivate(widget.password)));
                       },
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

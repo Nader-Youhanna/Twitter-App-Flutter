@@ -200,8 +200,8 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Deactivate(Name, username, isPrivate)));
+                                  builder: (context) => Deactivate(
+                                      Name, username, isPrivate, Password)));
                         },
                       ),
                     )

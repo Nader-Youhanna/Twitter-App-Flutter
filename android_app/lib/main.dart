@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
         home: Scaffold(
-          body: StartPage(),
+          body: Settings(),
         ),
       ),
     ));

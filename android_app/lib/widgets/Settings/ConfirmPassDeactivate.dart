@@ -1,16 +1,26 @@
+import 'package:android_app/widgets/Settings/Deactivate_account.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:flutter/gestures.dart';
 
 class ConfirmforDeactivate extends StatefulWidget {
-  const ConfirmforDeactivate({Key? key}) : super(key: key);
+  //const ConfirmforDeactivate({Key? key}) : super(key: key);
+  var _passwordIsCorrect = false;
+  var _passwordIsValid = false;
+  var password;
+  bool isPasswordValid(var password) {
+    return _passwordIsValid = password.length >= 8;
+  }
 
+  ConfirmforDeactivate(this.password);
   @override
   State<ConfirmforDeactivate> createState() => _ConfirmforDeactivateState();
 }
 
 class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+  var _password;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +48,10 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                 Icons.cancel_outlined,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => Settings())));
+              },
             ),
           ),
         ),
@@ -81,12 +94,89 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                 width: double.infinity,
                 child: TextFormField(
                   decoration: InputDecoration(hintText: 'Password'),
+                  onChanged: (value) {
+                    setState(() {
+                      if (_passwordKey.currentState!.validate()) {
+                        _password = value;
+                        widget._passwordIsValid = true;
+                      }
+                    });
+                  },
+                  validator: (value) {
+                    if (value != null &&
+                        widget.isPasswordValid(value) &&
+                        value == widget.password) {
+                      widget._passwordIsCorrect = true;
+                    } else {
+                      return 'Password incorrect';
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 280,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          // _password == null
+                          //     ? (showAlertDialog(context))
+                          //     : (widget._passwordIsCorrect
+                          //         ? ()
+                          //         : showAlertDialog(context));
+                        },
+                        child:
+                            Text('Deactivate', style: TextStyle(fontSize: 17)),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  ///function that creates an Alert dialog with an ok buttin which appears with a specific text and can be discarded by the user
+  showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Password incorrect"),
+      content: Text("please re-enter password"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
