@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
 import '../../constants.dart';
-import 'package:android_app/widgets/Settings/notifications_settings.dart';
 
 ///class to create settings page with navigators to each settings options
 class Settings extends StatefulWidget {
@@ -179,13 +178,7 @@ class _SettingsState extends State<Settings> {
                       ),
                       trailing: IconButton(
                         icon: Icon(Icons.arrow_forward),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      notificationsSettings(username)));
-                        },
+                        onPressed: () {},
                       ),
                     ),
                     ListTile(
