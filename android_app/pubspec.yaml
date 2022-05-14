@@ -34,7 +34,7 @@ dependencies:
   tab_indicator_styler: ^2.0.0
   md2_tab_indicator: ^1.0.2
   
-#for sending notifications
+  #for sending notifications
   firebase_core: ^1.16.0
   firebase_messaging: ^11.3.0
   overlay_support: ^1.2.1
