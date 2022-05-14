@@ -6,13 +6,16 @@ import 'Sign Up/sign_up.dart';
 import 'Log In/login.dart';
 import '../providers/google_sign_in.dart';
 import './bottom_nav_bar.dart';
+import 'package:flutter/foundation.dart';
 
 ///This is a navigation function that redirects to login page
 void goToSignUpPage(BuildContext ctx) {
   Navigator.of(ctx).push(
-    MaterialPageRoute(builder: (_) {
-      return SignUp();
-    }),
+    MaterialPageRoute(
+      builder: (_) {
+        return SignUp();
+      },
+    ),
   );
 }
 
@@ -29,6 +32,12 @@ void goToLoginPage(BuildContext ctx) {
 
 ///This is the first Page that gets loaded
 class StartPage extends StatelessWidget {
+  bool isAndroid = true;
+
+  void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +71,12 @@ class SignUpWidget extends StatefulWidget {
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
+  bool isAndroid = true;
+
+  void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -70,7 +85,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           //New logo
-          const SizedBox(height: 55),
+          //const SizedBox(height: 55),
+          SizedBox(
+              height: MediaQuery.of(context).size.height * (55 / 740.6666)),
           const Text(
             'Sirius',
             style: TextStyle(
@@ -80,8 +97,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               fontFamily: 'RalewayMedium',
             ),
           ),
-          const SizedBox(
-            height: 140,
+          //const SizedBox(height: 140),
+          SizedBox(
+            height: isAndroid
+                ? MediaQuery.of(context).size.height * (140 / 740.6666)
+                : MediaQuery.of(context).size.height * (120 / 740.6666),
           ),
 
           //Old logo
@@ -100,9 +120,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           // const SizedBox(
           //   height: 175,
           // ),
-          const SizedBox(
-            width: 290,
-            child: Text(
+          SizedBox(
+            width: MediaQuery.of(context).size.width * (290 / 360),
+            child: const Text(
               'See what\'s happening in the world right now.',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -112,12 +132,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
-          ),
+          //const SizedBox(height: 40),
+          SizedBox(height: MediaQuery.of(context).size.height * (40 / 740.666)),
           SizedBox(
-            height: 35,
-            width: 265,
+            // height: 35,
+            // width: 265,
+            height: MediaQuery.of(context).size.height * (35 / 740.666),
+            width: isAndroid
+                ? MediaQuery.of(context).size.width * (265 / 360)
+                : MediaQuery.of(context).size.width * 0.12,
             child: ElevatedButton(
               child: const Text(
                 'Create Account',
@@ -130,15 +153,29 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
             ),
           ),
-          const SizedBox(height: 45),
+          //const SizedBox(height: 45),
+          SizedBox(
+            height: isAndroid
+                ? MediaQuery.of(context).size.height * (45 / 740.666666)
+                : MediaQuery.of(context).size.height * (120 / 740.666666),
+          ),
           //Google and Facebook
           SizedBox(
-            height: 40,
+            //height: 40,
+            height: MediaQuery.of(context).size.height * (40 / 740.666666),
             child: Row(
               children: [
-                const SizedBox(width: 80),
+                //const SizedBox(width: 80),
                 SizedBox(
-                  width: 205,
+                  width: isAndroid
+                      ? MediaQuery.of(context).size.width * (80 / 360)
+                      : MediaQuery.of(context).size.width * 0.43,
+                ),
+                SizedBox(
+                  //width: 205,
+                  width: isAndroid
+                      ? MediaQuery.of(context).size.width * (205 / 360)
+                      : MediaQuery.of(context).size.width * 0.145,
                   child: ElevatedButton.icon(
                     onPressed: () {
                       print('Ok');
@@ -165,14 +202,29 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          //const SizedBox(height: 20),
           SizedBox(
-            height: 40,
+              height: isAndroid
+                  ? MediaQuery.of(context).size.height * (20 / 740.666666)
+                  : MediaQuery.of(context).size.height * (5 / 740)),
+          SizedBox(
+            //height: 40,
+            height: isAndroid
+                ? MediaQuery.of(context).size.height * (40 / 740.666666)
+                : MediaQuery.of(context).size.height * 0.06,
             child: Row(
               children: [
-                const SizedBox(width: 80),
+                //const SizedBox(width: 80),
                 SizedBox(
-                  width: 210,
+                  width: isAndroid
+                      ? MediaQuery.of(context).size.width * (80 / 360)
+                      : MediaQuery.of(context).size.width * 0.43,
+                ),
+                SizedBox(
+                  //width: 210,
+                  width: isAndroid
+                      ? MediaQuery.of(context).size.width * (210 / 360)
+                      : MediaQuery.of(context).size.width * 0.145,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       primary: const Color(0xff3c5c9c),
@@ -192,7 +244,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ],
             ),
           ),
-          const SizedBox(height: 150),
+          //const SizedBox(height: 150),
+          SizedBox(
+              height: MediaQuery.of(context).size.height * (150 / 740.6666)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

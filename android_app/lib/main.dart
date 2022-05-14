@@ -15,7 +15,7 @@ Future main() async {
   } else {
     await Firebase.initializeApp(
       // Replace with actual values
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
         apiKey: "XXX",
         appId: "XXX",
         messagingSenderId: "XXX",
