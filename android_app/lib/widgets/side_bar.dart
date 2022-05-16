@@ -182,7 +182,9 @@ class SideBar extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) {
-                      return AdminViewMain();
+                      return AdminViewMain(
+                        selectedIndex: 0,
+                      );
                     },
                   ),
                 );

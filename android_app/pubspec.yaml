@@ -46,6 +46,7 @@ dependencies:
   #Google Icon
   font_awesome_flutter: ^10.1.0
   
+  
 
   #Verification code
   flutter_verification_code: ^1.1.3
