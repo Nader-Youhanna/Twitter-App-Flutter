@@ -126,7 +126,11 @@ class _LoginState extends State<Login> {
                 },
               ),
             ),
-            const SizedBox(height: 435),
+            //const SizedBox(height: 435),
+            SizedBox(
+                height: isAndroid
+                    ? MediaQuery.of(context).size.height * (435 / 740.6666)
+                    : MediaQuery.of(context).size.height * (570 / 1000)),
             const Divider(
               height: 2,
               thickness: 0.9,
@@ -134,7 +138,11 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 10),
             Row(
               children: <Widget>[
-                const SizedBox(width: 12),
+                //const SizedBox(width: 12),
+                SizedBox(
+                    width: isAndroid
+                        ? MediaQuery.of(context).size.width * (12 / 360)
+                        : MediaQuery.of(context).size.width * (250 / 1000)),
                 ElevatedButton(
                   child: const Text(
                     'Forgot Password?',
@@ -157,7 +165,12 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 125),
+                //const SizedBox(width: 125),
+                SizedBox(
+                  width: isAndroid
+                      ? MediaQuery.of(context).size.width * (125 / 360)
+                      : MediaQuery.of(context).size.width * (200 / 1000),
+                ),
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {
