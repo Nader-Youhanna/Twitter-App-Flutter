@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'messages_users_list.dart';
 
 class EmptyInboxBody extends StatelessWidget {
   @override
@@ -43,7 +44,7 @@ class EmptyInboxBody extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
                       ),
-                      onPressed: () => startAddNewMessage(context),
+                      onPressed: () => _goToUsersList(context),
                       child: const Text(
                         'Write a message',
                       ),
@@ -55,6 +56,14 @@ class EmptyInboxBody extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _goToUsersList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) {
+        return MessagesUsersList();
+      }),
     );
   }
 
