@@ -47,9 +47,10 @@ class StartPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
+            final user = FirebaseAuth.instance.currentUser;
             return MyNavigationBar(
-              name: 'Nader',
-              username: 'Nader',
+              name: user!.displayName!,
+              username: user.displayName!,
               token: '',
               isAdmin: false,
             );
@@ -157,7 +158,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           SizedBox(
             height: isAndroid
                 ? MediaQuery.of(context).size.height * (45 / 740.666666)
-                : MediaQuery.of(context).size.height * (120 / 740.666666),
+                : MediaQuery.of(context).size.height * (60 / 740.666666),
           ),
           //Google and Facebook
           SizedBox(
@@ -206,7 +207,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           SizedBox(
               height: isAndroid
                   ? MediaQuery.of(context).size.height * (20 / 740.666666)
-                  : MediaQuery.of(context).size.height * (5 / 740)),
+                  : MediaQuery.of(context).size.height * (20 / 740)),
           SizedBox(
             //height: 40,
             height: isAndroid

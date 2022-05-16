@@ -31,13 +31,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OverlaySupport(
-        child: ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        home: Scaffold(
-          body: StartPage(),
+      child: ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: StartPage(),
+          ),
         ),
       ),
-    ));
+    );
   }
 }

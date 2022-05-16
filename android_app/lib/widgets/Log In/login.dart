@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './enter_password.dart';
 import 'forgot_password.dart';
+import 'package:flutter/foundation.dart';
 
 ///This is the login page
 class Login extends StatefulWidget {
@@ -11,6 +12,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var _usernameIsEntered = false;
   String _username = '';
+  bool isAndroid = true;
+
+  void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+  }
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -40,14 +47,16 @@ class _LoginState extends State<Login> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(
-              height: 35,
-            ),
+            //const SizedBox(height: 35),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * (35 / 740.6666)),
             Row(
               children: <Widget>[
-                const SizedBox(
-                  width: 12,
-                ),
+                //const SizedBox(width: 12),
+                SizedBox(
+                    width: isAndroid
+                        ? MediaQuery.of(context).size.width * (12 / 360.0)
+                        : MediaQuery.of(context).size.width * (5 / 360.0)),
                 IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
@@ -58,9 +67,11 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 //New logo
-                const SizedBox(
-                  width: 70,
-                ),
+                //const SizedBox(width: 70),
+                SizedBox(
+                    width: isAndroid
+                        ? MediaQuery.of(context).size.width * (70 / 360.0)
+                        : MediaQuery.of(context).size.width * (150 / 360.0)),
                 const Text(
                   'Sirius',
                   style: TextStyle(
