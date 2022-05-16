@@ -46,7 +46,8 @@ dependencies:
   #Google Icon
   font_awesome_flutter: ^10.1.0
   
-  
+  #Pie Chart
+  fl_chart: ^0.50.5
 
   #Verification code
   flutter_verification_code: ^1.1.3
