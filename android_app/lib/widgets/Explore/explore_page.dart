@@ -3,11 +3,13 @@ import 'package:android_app/widgets/user_profile/profile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
+import '../../functions/tweet_functions.dart';
 import './search_bar_explore.dart';
 import './user_search_item.dart';
 import './search_item.dart';
 import './trending_topic.dart';
 import '../../functions/http_functions.dart';
+import 'package:flutter/foundation.dart';
 
 CircleAvatar userImages = const CircleAvatar(
   //will be removed once apis are connected
@@ -38,8 +40,10 @@ class ExplorePageState extends State<ExplorePage> {
     );
   }
 
+  bool isAndroid = true;
   @override
   void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     super.initState();
     // WidgetsBinding.instance!.addPostFrameCallback((_) =>
     //     _getTrendingTopics()); //function is called everytime we open the page
@@ -81,139 +85,148 @@ class ExplorePageState extends State<ExplorePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    print("height: $height \n");
+    print("width is $width");
     return Scaffold(
-        body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  backgroundColor: Colors.grey[50],
-                  pinned: true,
-                  floating: true,
-                  elevation: 0.5,
-                  leading: IconButton(
-                      icon: const Icon(Icons
-                          .person_rounded), //should be changed to google profile icon
-                      color: Colors.black,
-                      onPressed: () => {
-                            _goToUserProfile(context)
-                          }), //button should open to side bar,
-                  actions: [
-                    Container(
-                      width: 290,
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                          showCursor: false,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            filled: true,
-                            contentPadding: const EdgeInsets.all(10.0),
-                            fillColor: Color.fromARGB(255, 229, 233, 235),
-                            hintStyle: const TextStyle(
-                              fontSize: 14.5,
-                              color: Color.fromARGB(255, 100, 99, 99),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintText: _appBarText,
+      body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.grey[50],
+                pinned: true,
+                floating: true,
+                elevation: 0.5,
+                leading: IconButton(
+                    icon: const Icon(Icons
+                        .person_rounded), //should be changed to google profile icon
+                    color: Colors.black,
+                    onPressed: () => {
+                          _goToUserProfile(context)
+                        }), //button should open to side bar,
+                actions: [
+                  Container(
+                    width: isAndroid ? width * (290 / 392.7) : 290,
+                    padding: const EdgeInsets.all(10),
+                    child: TextField(
+                        showCursor: false,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          contentPadding: const EdgeInsets.all(10.0),
+                          fillColor: Color.fromARGB(255, 229, 233, 235),
+                          hintStyle: const TextStyle(
+                            fontSize: 14.5,
+                            color: Color.fromARGB(255, 100, 99, 99),
                           ),
-                          // onTap: () {
-                          //   //redirects us to the page with the searching elements
-                          //   showSearch(
-                          //       context: context,
-                          //       delegate: MySearchDelegate(' '));
-                          // }
-                          onTap: () {
-                            showSearch(
-                              context: context,
-                              delegate: MySearchDelegate(),
-                            );
-                          }),
-                    ),
-
-                    IconButton(
-                        icon: const Icon(Icons.settings_outlined),
-                        color: Colors.black,
-                        onPressed: () => {}), //button shoud direct to setings
-                  ],
-                  bottom: AppBar(
-                    title: const Text('Trends',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    backgroundColor: Colors.grey[50],
-                    elevation: 0.0,
-                    leading: null,
-                    automaticallyImplyLeading: false,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintText: _appBarText,
+                        ),
+                        // onTap: () {
+                        //   //redirects us to the page with the searching elements
+                        //   showSearch(
+                        //       context: context,
+                        //       delegate: MySearchDelegate(' '));
+                        // }
+                        onTap: () {
+                          showSearch(
+                            context: context,
+                            delegate: MySearchDelegate(),
+                          );
+                        }),
                   ),
+
+                  IconButton(
+                      icon: const Icon(Icons.settings_outlined),
+                      color: Colors.black,
+                      onPressed: () => {}), //button shoud direct to setings
+                ],
+                bottom: AppBar(
+                  title: const Text('Trends',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  backgroundColor: Colors.grey[50],
+                  elevation: 0.0,
+                  leading: null,
+                  automaticallyImplyLeading: false,
                 ),
-              ];
-            },
-            body: FutureBuilder<List<TrendingTopic>>(
-                future: getTrendingTopics(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      List<TrendingTopic> data = snapshot.data!;
-                      for (int i = 0; i < data.length; i++) {
-                        data[i].trendingNumber = i + 1;
-                      }
-                      return data.isNotEmpty
-                          ? RefreshIndicator(
-                              child: ListView.builder(
-                                  clipBehavior: Clip.hardEdge,
-                                  padding: const EdgeInsets.all(0),
-                                  itemCount: data.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return data[index];
-                                  }),
-                              onRefresh: () async {
-                                getTrendingTopics();
-                                setState(() {});
-                              },
-                              triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                            )
-                          : Container(
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 220),
-                                  RichText(
-                                    text: const TextSpan(
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'Nothing to see here\n',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 34.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextSpan(
-                                          text: '__ yet.',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 34.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+              ),
+            ];
+          },
+          body: FutureBuilder<List<TrendingTopic>>(
+              future: getTrendingTopics(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(child: CircularProgressIndicator());
+                  default:
+                    List<TrendingTopic> data = snapshot.data!;
+                    for (int i = 0; i < data.length; i++) {
+                      data[i].trendingNumber = i + 1;
+                    }
+                    return data.isNotEmpty
+                        ? RefreshIndicator(
+                            child: ListView.builder(
+                                clipBehavior: Clip.hardEdge,
+                                padding: const EdgeInsets.all(0),
+                                itemCount: data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return data[index];
+                                }),
+                            onRefresh: () async {
+                              getTrendingTopics();
+                              setState(() {});
+                            },
+                            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                          )
+                        : Container(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 220),
+                                RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black,
                                     ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Nothing to see here\n',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 34.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: '__ yet.',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 34.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              //padding: const EdgeInsets.all(30),
-                              margin: const EdgeInsets.all(30),
-                            );
-                  }
-                })));
+                                ),
+                              ],
+                            ),
+                            //padding: const EdgeInsets.all(30),
+                            margin: const EdgeInsets.all(30),
+                          );
+                }
+              })),
+      floatingActionButton: FloatingActionButton(
+        // button should open the what's happening page
+        onPressed: () => startAddTweet(context, MY_IP_ADDRESS, "3000"),
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

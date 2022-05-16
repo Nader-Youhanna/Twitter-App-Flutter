@@ -32,6 +32,7 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/notifications");
     try {
       var response = await http.get(url);
+      // print('Response body: ${response.body}');
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         if (data != null) {
@@ -56,7 +57,7 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     super.initState();
 //function to send token should be put here
     // WidgetsBinding.instance!.addPostFrameCallback((_) =>
-    //     _getNotifications()); //function is called everytime we open the page
+    //_getNotifications()); //function is called everytime we open the page
   }
 
   @override

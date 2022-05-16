@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import '../../constants.dart';
+import '../../functions/tweet_functions.dart';
 import 'notification_bar.dart';
 import 'all_notifications_list.dart';
 import 'mentions_list.dart';
@@ -38,7 +40,7 @@ class NotificationsPage extends StatelessWidget {
         drawer: Drawer(),
         floatingActionButton: FloatingActionButton(
           // button should open the what's happening page
-          onPressed: () => {},
+          onPressed: () => startAddTweet(context, MY_IP_ADDRESS, "3000"),
           child: const Icon(Icons.add),
         ),
       ),
