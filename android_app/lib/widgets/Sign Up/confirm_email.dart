@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import './terms_and_conditions.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:android_app/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
-class ConfirmEmail extends StatelessWidget {
+class ConfirmEmail extends StatefulWidget {
   var username;
   var email;
   var dob;
@@ -14,14 +19,54 @@ class ConfirmEmail extends StatelessWidget {
     @required this.dob,
   });
 
+  @override
+  State<ConfirmEmail> createState() => _ConfirmEmailState();
+}
+
+class _ConfirmEmailState extends State<ConfirmEmail> {
+  var _code = '0';
+  var _codeIsValid = false;
+  var _codeIsEntered = false;
+
+  Future<void> verifyEmail() async {
+    setState(
+      () async {
+        _codeIsValid = true;
+        return;
+
+        //BACKEND REQUEST
+        var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup-confirm/$_code');
+        var response = await http.post(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: json.encode(
+            <String, String>{},
+          ),
+        );
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
+        final extractedMyInfo =
+            json.decode(response.body) as Map<String, dynamic>;
+        if (extractedMyInfo['status'] == 'Success') {
+          _codeIsValid = true;
+        } else {
+          _codeIsValid = false;
+        }
+      },
+    );
+  }
+
   void _goToTermsAndConditions(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return TermsAndConditions(
-          name: name,
-          username: username,
-          email: email,
-          dob: dob,
+          name: widget.name,
+          username: widget.username,
+          email: widget.email,
+          dob: widget.dob,
         );
       }),
     );
@@ -80,12 +125,55 @@ class ConfirmEmail extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 100),
-            const Text('A confirmation link has been sent to your email.'),
-            const SizedBox(height: 200),
+            const Text('''Please copy and paste the 6-digit verification code.
+            that has been sent to your e-mail'''),
+            const SizedBox(height: 30),
+            VerificationCode(
+              textStyle: const TextStyle(
+                color: Colors.blue,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              length: 6,
+              keyboardType: TextInputType.number,
+              cursorColor: Colors.blue,
+              clearAll: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Clear All',
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      decoration: TextDecoration.underline,
+                      color: Colors.blue),
+                ),
+              ),
+              onCompleted: (String value) {
+                _code = value;
+              },
+              onEditing: (_) {},
+            ),
+            const SizedBox(height: 30),
+            _codeIsEntered
+                ? _codeIsValid
+                    ? const Text('')
+                    : const Text(
+                        'Invalid Code',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontFamily: 'RalewayMedium',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                : const Text(''),
+            const SizedBox(height: 180),
             ElevatedButton(
-              child: const Text('I have confirmed my email'),
-              onPressed: () {
-                _goToTermsAndConditions(context);
+              child: const Text('Enter'),
+              onPressed: () async {
+                _codeIsEntered = true;
+                await verifyEmail();
+                print(
+                    "Code: $_code\nCode is entered: $_codeIsEntered\nCode is valid: $_codeIsValid");
               },
             ),
           ],

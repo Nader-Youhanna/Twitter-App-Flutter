@@ -39,14 +39,16 @@ class _SignUpState extends State<SignUp> {
   ///This is a navigation function that redirects to confirm email page
   void _goToConfirmEmail(BuildContext ctx) {
     Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return ConfirmEmail(
-          name: _name,
-          username: _username,
-          email: _email,
-          dob: '${_dob.year}-${_dob.month}-${_dob.day}',
-        );
-      }),
+      MaterialPageRoute(
+        builder: (_) {
+          return ConfirmEmail(
+            name: _name,
+            username: _username,
+            email: _email,
+            dob: '${_dob.year}-${_dob.month}-${_dob.day}',
+          );
+        },
+      ),
     );
   }
 
