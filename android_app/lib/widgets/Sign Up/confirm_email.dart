@@ -30,24 +30,28 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
 
   Future<void> verifyEmail() async {
     setState(
-      () async {
+      () {
+        //if (_code == '123456') _codeIsValid = true;
         _codeIsValid = true;
         return;
-
-        //BACKEND REQUEST
-        var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup-confirm/$_code');
-        var response = await http.post(
-          url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: json.encode(
-            <String, String>{},
-          ),
-        );
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-
+      },
+    );
+    return;
+    //BACKEND REQUEST
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup-confirm/$_code');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(
+        <String, String>{},
+      ),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    setState(
+      () {
         final extractedMyInfo =
             json.decode(response.body) as Map<String, dynamic>;
         if (extractedMyInfo['status'] == 'Success') {
@@ -57,6 +61,10 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
         }
       },
     );
+  }
+
+  void _goBack(BuildContext ctx) {
+    Navigator.of(ctx).pop();
   }
 
   void _goToTermsAndConditions(BuildContext ctx) {
@@ -92,7 +100,9 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                     Icons.arrow_back,
                     size: 29,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _goBack(context);
+                  },
                 ),
 
                 //New logo
@@ -172,6 +182,9 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
               onPressed: () async {
                 _codeIsEntered = true;
                 await verifyEmail();
+                if (_codeIsValid) {
+                  _goToTermsAndConditions(context);
+                }
                 print(
                     "Code: $_code\nCode is entered: $_codeIsEntered\nCode is valid: $_codeIsValid");
               },
