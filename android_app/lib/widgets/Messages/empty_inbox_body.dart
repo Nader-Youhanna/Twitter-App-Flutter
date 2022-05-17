@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'messages_users_list.dart';
 
 class EmptyInboxBody extends StatelessWidget {
   @override
@@ -43,7 +44,7 @@ class EmptyInboxBody extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
                       ),
-                      onPressed: () {},
+                      onPressed: () => _goToUsersList(context),
                       child: const Text(
                         'Write a message',
                       ),
@@ -55,6 +56,63 @@ class EmptyInboxBody extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _goToUsersList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) {
+        return MessagesUsersList();
+      }),
+    );
+  }
+
+  void startAddNewMessage(BuildContext ctx) {
+    var tweetTextController = TextEditingController();
+    showModalBottomSheet(
+      context: ctx,
+      builder: (bCtx) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                  },
+                  child: Text('Cancel'),
+                ),
+                const Spacer(),
+              ],
+            ),
+            //add tweet
+            Container(
+              padding: const EdgeInsets.all(10),
+              //take input text from user
+              child: TextField(
+                decoration: const InputDecoration.collapsed(
+                  hintStyle: TextStyle(
+                    fontFamily: 'RalewayMedium',
+                    fontSize: 14.5,
+                  ),
+                  hintText: 'What\'s happening?',
+                ),
+                controller: tweetTextController,
+              ),
+            )
+          ],
+        );
+      },
+      isScrollControlled: true,
+      enableDrag: false,
+      useRootNavigator: true,
     );
   }
 }

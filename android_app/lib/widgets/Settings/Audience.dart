@@ -7,7 +7,8 @@ import 'dart:convert';
 class Audience extends StatefulWidget {
   //const Audience({Key? key}) : super(key: key);
   bool isPrivate = false;
-  Audience(this.isPrivate);
+  String token;
+  Audience(this.isPrivate, this.token);
   @override
   State<Audience> createState() => _AudienceState();
 }

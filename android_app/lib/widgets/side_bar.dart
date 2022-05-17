@@ -25,7 +25,7 @@ class SideBar extends StatelessWidget {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(username, 1, false);
+        return Profile(username, false);
       }),
     );
   }
@@ -145,7 +145,7 @@ class SideBar extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return Settings();
+                    return Settings(token);
                   },
                 ),
               );
@@ -182,7 +182,9 @@ class SideBar extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) {
-                      return AdminViewMain();
+                      return AdminViewMain(
+                        selectedIndex: 0,
+                      );
                     },
                   ),
                 );

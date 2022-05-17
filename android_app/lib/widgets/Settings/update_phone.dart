@@ -7,8 +7,9 @@ import 'package:country_code_picker/country_code_picker.dart';
 
 ///class to create the update phone settings page
 class UpdatePhone extends StatefulWidget {
-  const UpdatePhone({Key? key}) : super(key: key);
-
+  //const UpdatePhone({Key? key}) : super(key: key);
+  String token;
+  UpdatePhone(this.token);
   @override
   State<UpdatePhone> createState() => _UpdatePhoneState();
 }
@@ -18,9 +19,23 @@ class _UpdatePhoneState extends State<UpdatePhone> {
   String _phone = '';
 
   ///function to send post request for the updated phone number to the mock server
-  Future<void> httpRequestPost() async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
-    var response = await http.post(url, body: {'phone': '${_phone}'});
+  Future<void> httpRequestPatch() async {
+    var url =
+        Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/Account-info/Email');
+
+    var response = await http.patch(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjg4ZWNlOWEzNjc3NWIzNDZlNmE2OCIsImlhdCI6MTY1MjY1MzgyMywiZXhwIjoxNjYxMjkzODIzfQ.UPDwftWISguZHasxOJB9F_Uyltgsi2R9azbwgJqzuno',
+      },
+      body: json.encode(
+        <String, String>{
+          "email": "${_phone}",
+        },
+      ),
+    );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -132,11 +147,12 @@ class _UpdatePhoneState extends State<UpdatePhone> {
                       _isPhoneEntered == false
                           ? (showAlertDialog(context))
                           : (setState(() {
-                              httpRequestPost();
+                              httpRequestPatch();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Settings()));
+                                      builder: (context) =>
+                                          Settings(widget.token)));
                             }));
                     },
                     child: Text('Next', style: TextStyle(fontSize: 14)),
@@ -148,7 +164,9 @@ class _UpdatePhoneState extends State<UpdatePhone> {
           TextButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Settings()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Settings(widget.token)));
             },
             child: Text(
               'Cancel',

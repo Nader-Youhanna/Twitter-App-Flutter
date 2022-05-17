@@ -2,6 +2,7 @@ import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:android_app/constants.dart';
 import '../../constants.dart';
 
 ///class to create updat email page
@@ -9,6 +10,7 @@ class UpdateEmail extends StatefulWidget {
   // const UpdateEmail({Key? key}) : super(key: key);
   static const _widthOfTextFields = 320.0;
   String email;
+  String Token;
   var _emailIsValid = false;
 
   ///function to check validity of email address and that it is in the correct format
@@ -18,7 +20,7 @@ class UpdateEmail extends StatefulWidget {
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
 
-  UpdateEmail(this.email);
+  UpdateEmail(this.email, this.Token);
   @override
   State<UpdateEmail> createState() => _UpdateEmailState();
 }
@@ -31,9 +33,24 @@ class _UpdateEmailState extends State<UpdateEmail> {
     Navigator.of(ctx).pop();
   }
 
-  Future<void> httpRequestPost() async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
-    var response = await http.post(url, body: {'email': '${_email}'});
+  Future<void> httpRequestPatch() async {
+    var url =
+        Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/Account-info/Email');
+
+    var response = await http.patch(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjg4ZWNlOWEzNjc3NWIzNDZlNmE2OCIsImlhdCI6MTY1MjY1MzgyMywiZXhwIjoxNjYxMjkzODIzfQ.UPDwftWISguZHasxOJB9F_Uyltgsi2R9azbwgJqzuno',
+      },
+      body: json.encode(
+        <String, String>{
+          "email": "${_email}",
+        },
+      ),
+    );
+
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -155,11 +172,12 @@ class _UpdateEmailState extends State<UpdateEmail> {
                           ? (showAlertDialog(context))
                           : (widget._emailIsValid
                               ? (setState(() {
-                                  httpRequestPost();
+                                  httpRequestPatch();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Settings()));
+                                          builder: (context) =>
+                                              Settings(widget.Token)));
                                 }))
                               : showAlertDialog(context));
                     },
@@ -172,7 +190,9 @@ class _UpdateEmailState extends State<UpdateEmail> {
           TextButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Settings()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Settings(widget.Token)));
             },
             child: Text(
               'Cancel',

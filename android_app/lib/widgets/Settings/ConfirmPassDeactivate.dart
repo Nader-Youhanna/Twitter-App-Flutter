@@ -9,11 +9,12 @@ class ConfirmforDeactivate extends StatefulWidget {
   var _passwordIsCorrect = false;
   var _passwordIsValid = false;
   var password;
+  String token;
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
 
-  ConfirmforDeactivate(this.password);
+  ConfirmforDeactivate(this.password, this.token);
   @override
   State<ConfirmforDeactivate> createState() => _ConfirmforDeactivateState();
 }
@@ -49,8 +50,10 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Settings())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => Settings(widget.token))));
               },
             ),
           ),

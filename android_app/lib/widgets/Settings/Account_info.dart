@@ -14,8 +14,9 @@ class AccountInfo extends StatefulWidget {
   String phone;
   String country;
   var password;
-  AccountInfo(
-      this.username, this.email, this.phone, this.country, this.password);
+  String Token;
+  AccountInfo(this.username, this.email, this.phone, this.country,
+      this.password, this.Token);
   @override
   State<AccountInfo> createState() => _AccountInfoState();
 }
@@ -70,7 +71,7 @@ class _AccountInfoState extends State<AccountInfo> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              Update_username(widget.username)));
+                              Update_username(widget.username, widget.Token)));
                 },
                 child: ListTile(
                     title: Text(
@@ -87,8 +88,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VerifyPassword(
-                              widget.password, widget.email, false)));
+                          builder: (context) => VerifyPassword(widget.password,
+                              widget.email, false, widget.Token)));
                 },
                 child: ListTile(
                     title: Text(
@@ -105,8 +106,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VerifyPassword(
-                              widget.password, widget.email, true)));
+                          builder: (context) => VerifyPassword(widget.password,
+                              widget.email, true, widget.Token)));
                 },
                 child: ListTile(
                     title: Text(
