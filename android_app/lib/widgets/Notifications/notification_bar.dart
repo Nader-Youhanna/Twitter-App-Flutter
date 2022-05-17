@@ -4,7 +4,7 @@ import 'package:android_app/widgets/user_profile/profile.dart';
 
 ///class to create the notification's sliding bar
 class NotificationBar extends StatelessWidget {
-  const NotificationBar();
+  NotificationBar();
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
@@ -13,6 +13,10 @@ class NotificationBar extends StatelessWidget {
     );
   }
 
+  CircleAvatar userImage = const CircleAvatar(
+    backgroundImage: AssetImage('assets/images/user_icon2.png'),
+    radius: 12.0,
+  ); //should be fetched in the constructor
   @override
   Widget build(BuildContext context) {
     const List<String> _tabs = <String>['All', 'Mentions'];

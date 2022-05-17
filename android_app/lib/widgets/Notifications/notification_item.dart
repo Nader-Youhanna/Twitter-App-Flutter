@@ -16,8 +16,8 @@ class NotificationItem extends StatelessWidget {
 
   ///the tweet that the notification is concerned with
   CircleAvatar userImage = const CircleAvatar(
-    backgroundImage: AssetImage('assets/images/user_icon.png'),
-    radius: 13.0,
+    backgroundImage: AssetImage('assets/images/user_icon2.png'),
+    radius: 18.0,
   );
 
 //named constructor to map the elements fetched from server
@@ -57,8 +57,8 @@ class NotificationItem extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          leading: userImage,
           onTap: type ? () => {_viewTweet(context)} : () => {},
-          leading: userImage, //should be dynamic and fetched from backend
           title: RichText(
             text: TextSpan(
               children: <TextSpan>[
@@ -82,7 +82,6 @@ class NotificationItem extends StatelessWidget {
                 ) //the tweet text fetched from backend
               //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
               : Text(''),
-
           trailing: PopupMenuButton(
             //button to display the see less list
             elevation: 20,

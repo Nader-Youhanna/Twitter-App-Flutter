@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 //to have a default value for the avatar
-const CircleAvatar userImages = const CircleAvatar(
-  backgroundImage: AssetImage('assets/images/user_icon.png'),
+const CircleAvatar userImages = CircleAvatar(
+  backgroundImage: AssetImage('assets/images/user_icon2.png'),
   radius: 25.0,
 );
 
@@ -12,27 +12,26 @@ class SearchItem extends StatelessWidget {
   late String _handle;
   CircleAvatar _userImage = userImages;
 
-  late String tweetText;
+  late String trends;
   //all data concerning tweets and users are named and optional
   //we will only need them according to set type
-  // SearchItem(
-  //     {this.tweetText = '',
-  //     this.username = '',
-  //     this.handle = '',
-  //     this.userImage = userImages});
 
   ///named constructor to map the data fetched from servers
   SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem) {
     // _tweetText = jsonSearchItem['tweetText'] as String;
     username = jsonSearchItem['username'] as String;
     _handle = jsonSearchItem['handle'] as String;
+    trends = jsonSearchItem['trends'] as String;
+  }
+  SearchItem.jsonSearchTrend(Map<String, dynamic> jsonSearchItem) {
+    trends = jsonSearchItem['trend'] as String;
   }
   @override
   Widget build(BuildContext context) {
     return username == ''
         ? ListTile(
             title: Text(
-              tweetText,
+              trends,
               style: TextStyle(color: Colors.black),
             ),
           )

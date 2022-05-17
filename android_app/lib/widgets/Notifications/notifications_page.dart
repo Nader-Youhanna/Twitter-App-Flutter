@@ -26,7 +26,7 @@ class NotificationsPage extends StatelessWidget {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                const NotificationBar(), //the bar that gives us either the all notifications page or the mentions page
+                NotificationBar(), //the bar that gives us either the all notifications page or the mentions page
               ];
             },
             body: TabBarView(

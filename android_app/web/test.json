@@ -1,4 +1,66 @@
 {
+  "search": [
+    {
+      "username":"",
+      "handle":"",
+      "trends":"trending1"
+    },
+    {
+      "username":"",
+      "handle":"",
+      "trends":"trending2"
+    },
+    {
+      "username":"",
+      "handle":"",
+      "trends":"trending3"
+    },
+    {
+      "username":"Remonda",
+      "handle":"@remoo",
+      "trends":" "
+    },
+    {
+      "username": "Habiba",
+      "handle": "@HabibaAssem77",
+      "trends":" "
+    },
+    {
+      "username": "Nora",
+      "handle": "@NoraMo55",
+      "trends":" "
+    },
+    {
+      "username": "Noran",
+      "handle": "@NouraanAhmed4",
+      "trends":" "
+    },
+    {
+      "username": "Hassan",
+      "handle": "@HassanAbdallah",
+      "trends":" "
+    },
+    {
+      "username":"Nader",
+      "handle":"@nido",
+      "trends":" "
+    },
+    {
+      "username":"Nader",
+      "handle":"@nido",
+      "trends":" "
+    },
+    {
+      "username":"Ahmed",
+      "handle":"@ahmedmoh123",
+      "trends":" "
+    },
+    {
+      "username":"Moaz",
+      "handle":"@momo56",
+      "trends":" "
+    }
+  ],
   "trends": [
     {
       "hashtag": "#Ramadan_karim",

@@ -49,19 +49,6 @@ class ExplorePageState extends State<ExplorePage> {
     //     _getTrendingTopics()); //function is called everytime we open the page
   }
 
-//Function to get the list of trending topics and their number of tweets from backend
-  // void _getTrendingTopics() async {
-  //   print("Adding trending topiicss");
-  //   httpRequestGet("http://${MY_IP_ADDRESS}:3000/trends", null).then((value) {
-  //     setState(() {
-  //       widget.trends.clear();
-  //       for (var i = 0; i < value.length; i++) {
-  //         widget.trends.add(TrendingTopic.jsonTrend(value[i]));
-  //         widget.trends[i].trendingNumber = i;
-  //       }
-  //     });
-  //   });
-  // }
   ///Function to fetch the list of trending topics and their number of tweets from backend
   Future<List<TrendingTopic>> getTrendingTopics() async {
     List<TrendingTopic> topicList = <TrendingTopic>[];
@@ -69,7 +56,13 @@ class ExplorePageState extends State<ExplorePage> {
     print("fetching trending topics");
     var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/trends");
     try {
-      var response = await http.get(url);
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         topicList = data.map((e) => TrendingTopic.jsonTrend(e)).toList();
@@ -108,7 +101,9 @@ class ExplorePageState extends State<ExplorePage> {
                         }), //button should open to side bar,
                 actions: [
                   Container(
-                    width: isAndroid ? width * (290 / 392.7) : 290,
+                    width: isAndroid
+                        ? width * (290 / 392.7)
+                        : width * (1190 / 1280),
                     padding: const EdgeInsets.all(10),
                     child: TextField(
                         showCursor: false,

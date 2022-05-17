@@ -14,16 +14,27 @@ class BuildingSuggestions {
 
     var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/search");
     try {
-      var response = await http.get(url);
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         searchResults = data.map((e) => SearchItem.jsonSearchItem(e)).toList();
         if (query != null) {
           //we filter the list that we got according to the query
+
           searchResults = searchResults
-              .where((element) => element.username
-                  .toLowerCase()
-                  .contains((query.toLowerCase())))
+              .where((element) => element.username != ""
+                  ? element.username
+                      .toLowerCase()
+                      .contains((query.toLowerCase()))
+                  : element.trends
+                      .toLowerCase()
+                      .contains((query.toLowerCase())))
               .toList();
         }
       } else {

@@ -33,8 +33,14 @@ class TrendingTweetsState extends State<TrendingTweets> {
 
   ///sends topic to backend to get list of tweets
   Future<void> sendTrend(Map<String, dynamic> data) async {
-    return await httpRequestPost("http://${MY_IP_ADDRESS}:3000/openTrend/",
-        data, <String, String>{"": ""});
+    return await httpRequestPost(
+      "http://${MY_IP_ADDRESS}:3000/openTrend/",
+      data,
+      <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + token
+      },
+    );
   }
 
   ///Function to get the list of trending tweets and their types from backend
@@ -44,7 +50,13 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print("fetching trending tweets based on topic");
     var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/trendingTweets");
     try {
-      var response = await http.get(url);
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         tweetList = data.map((e) => Tweet.jsonTweet(e, false, true)).toList();
@@ -123,42 +135,6 @@ class TrendingTweetsState extends State<TrendingTweets> {
                             );
                           }),
                     ),
-                    // PopupMenuButton(
-                    //   //button to display the see less list
-                    //   icon: const Icon(
-                    //     Icons.more_vert,
-                    //     color: Colors.blueGrey,
-                    //   ),
-                    //   elevation: 10,
-                    //   itemBuilder: (BuildContext context) {
-                    //     return [
-                    //       const PopupMenuItem<Text>(
-                    //         child: Text(
-                    //           "Search settings", //this is supposed to be static
-                    //           style: TextStyle(
-                    //             fontSize: 13,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       const PopupMenuItem<Text>(
-                    //         child: Text(
-                    //           "Save this search", //this is supposed to be static
-                    //           style: TextStyle(
-                    //             fontSize: 13,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       const PopupMenuItem<Text>(
-                    //         child: Text(
-                    //           "Share", //this is supposed to be static
-                    //           style: TextStyle(
-                    //             fontSize: 13,
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ];
-                    //   },
-                    // ),
                     SizedBox(width: 40),
                   ],
                 ),

@@ -3,6 +3,7 @@ import './user_search_item.dart';
 import 'search_item.dart';
 import '../user_profile/profile.dart';
 import './building_suggestions.dart';
+import 'trending_tweets.dart';
 
 CircleAvatar userImages = const CircleAvatar(
   //will be removed once apis are connected
@@ -16,6 +17,14 @@ class MySearchDelegate extends SearchDelegate {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return Profile("", 1, false);
+      }),
+    );
+  }
+
+  void _goToTweetList(BuildContext ctx, String data) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return TrendingTweets(data);
       }),
     );
   }
@@ -96,14 +105,13 @@ class MySearchDelegate extends SearchDelegate {
                       final suggestion = data[index];
                       return GestureDetector(
                         child: suggestion,
-                        onTap: suggestion.username != ' '
+                        onTap: suggestion.username != ''
                             //this means the suggestion item is a user
                             ? () => _goToUserProfile(context)
-                            : () => close(
-                                //we will not need this function this is temporary
+                            : () => _goToTweetList(
                                 context,
                                 suggestion
-                                    .tweetText), //this means the suggestion item is a tweet
+                                    .trends), //this means the suggestion item is a tweet
                       );
                     },
                   );
