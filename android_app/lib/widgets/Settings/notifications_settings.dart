@@ -6,9 +6,9 @@ import 'dart:convert';
 
 class notificationsSettings extends StatefulWidget {
   // const notificationsSettings({Key? key}) : super(key: key);
-
+  String token;
   String _username = "username";
-  notificationsSettings(this._username);
+  notificationsSettings(this._username, this.token);
   @override
   State<notificationsSettings> createState() => _notificationsSettingsState();
 }
@@ -58,8 +58,10 @@ class _notificationsSettingsState extends State<notificationsSettings> {
             leading: BackButton(
               color: Colors.black,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Settings()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Settings(widget.token)));
               },
             ),
           ),

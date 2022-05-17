@@ -21,6 +21,26 @@ Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
   return json.decode(response.body);
 }
 
+///This function returns the response of the http Patch request. It takes URL, body and headers as parameters.
+Future<void> httpRequestPatch(
+    String urlStr, Map reqBody, Map reqHeaders) async {
+  var url = Uri.parse(urlStr);
+  if (reqBody == null) {
+    reqBody = <String, dynamic>{};
+  }
+  if (reqHeaders == null) {
+    reqHeaders = <String, String>{};
+  }
+  var body = json.encode(reqBody);
+  var response = await http.patch(
+    url,
+    body: body,
+    headers: reqHeaders as Map<String, String>,
+  );
+  print(response.body);
+  return json.decode(response.body);
+}
+
 /// This function returns the response of the http POST request. It takes URL, body and headers as parameters.
 Future<Map<String, dynamic>> httpRequestGet(
     String urlStr, Map? headersMap) async {

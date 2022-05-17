@@ -8,13 +8,14 @@ import '../../constants.dart';
 class ChangePassword extends StatefulWidget {
   String Password;
   var _passwordIsValid = false;
+  String Token;
 
   ///function to check validity of password (>=8  characters)
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
 
-  ChangePassword(this.Password);
+  ChangePassword(this.Password, this.Token);
 
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
@@ -87,7 +88,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Settings()));
+                                  builder: (context) =>
+                                      Settings(widget.Token)));
                         });
                       } else {
                         if (_ConfirmePassword != _newPassword) {

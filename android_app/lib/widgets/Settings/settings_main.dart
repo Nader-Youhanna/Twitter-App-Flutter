@@ -16,8 +16,9 @@ import 'package:android_app/widgets/Settings/notifications_settings.dart';
 
 ///class to create settings page with navigators to each settings options
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-
+  //const Settings({Key? key}) : super(key: key);
+  String token;
+  Settings(this.token);
   @override
   State<Settings> createState() => _SettingsState();
 }
@@ -112,7 +113,12 @@ class _SettingsState extends State<Settings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AccountInfo(
-                                    username, email, phone, country, Password)),
+                                    username,
+                                    email,
+                                    phone,
+                                    country,
+                                    Password,
+                                    widget.token)),
                           );
                         },
                       ),
@@ -136,7 +142,8 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChangePassword(Password)),
+                                builder: (context) =>
+                                    ChangePassword(Password, widget.token)),
                           );
                         },
                       ),
@@ -160,7 +167,8 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Audience(isPrivate)));
+                                  builder: (context) =>
+                                      Audience(isPrivate, widget.token)));
                         },
                       ),
                     ),
@@ -183,8 +191,8 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      notificationsSettings(username)));
+                                  builder: (context) => notificationsSettings(
+                                      username, widget.token)));
                         },
                       ),
                     ),
@@ -208,7 +216,11 @@ class _SettingsState extends State<Settings> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Deactivate(
-                                      Name, username, isPrivate, Password)));
+                                      Name,
+                                      username,
+                                      isPrivate,
+                                      Password,
+                                      widget.token)));
                         },
                       ),
                     )

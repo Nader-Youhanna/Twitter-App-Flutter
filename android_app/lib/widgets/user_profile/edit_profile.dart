@@ -46,7 +46,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Profile("", 1, false)),
+                MaterialPageRoute(builder: (context) => Profile("", false)),
               );
             },
           ),
@@ -56,7 +56,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Profile("", 1, false)));
+                        builder: (context) => Profile("", false)));
               },
               child: Text(
                 'Save',

@@ -30,7 +30,7 @@ class _TimelineState extends State<Timeline> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Profile("", 1, false);
+          return Profile("", false);
         },
       ),
     );
@@ -40,7 +40,7 @@ class _TimelineState extends State<Timeline> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Settings();
+          return Settings(token);
         },
       ),
     );

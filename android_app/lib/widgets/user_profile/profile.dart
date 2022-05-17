@@ -31,10 +31,10 @@ const List<Choice> choices = <Choice>[
 ///class tat creates user profile page, whether this user is myself or another user
 class Profile extends StatefulWidget {
   String username = 'Default user';
-  int userId = 0;
+//int userId = 0;
   bool isAdmin = false;
 
-  Profile(this.username, this.userId, this.isAdmin);
+  Profile(this.username, this.isAdmin);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -45,7 +45,6 @@ class _ProfileState extends State<Profile> {
   var _followersCount = 0;
   var _followingCount = 0;
   String bio = "bio";
-  String uid = "";
   var selectedItem = "";
 
   void _goBack(BuildContext ctx) {
@@ -69,7 +68,7 @@ class _ProfileState extends State<Profile> {
   ///function to create a sharable link of the current profile
   void _ShareProfile() {
     print("share working");
-    Share.share("/profile/${uid}");
+    Share.share("/profile/${widget.username}");
   }
 
   @override

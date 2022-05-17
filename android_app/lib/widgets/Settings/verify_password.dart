@@ -14,13 +14,14 @@ class VerifyPassword extends StatefulWidget {
   String email;
   var _passwordIsValid = false;
   bool ISemail;
+  String token;
 
   ///function to check validity of input password
   bool isPasswordValid(var password) {
     return _passwordIsValid = password.length >= 8;
   }
 
-  VerifyPassword(this.password, this.email, this.ISemail);
+  VerifyPassword(this.password, this.email, this.ISemail, this.token);
   @override
   State<VerifyPassword> createState() => _VerifyPasswordState();
 }
@@ -148,9 +149,10 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (widget.ISemail)
-                                            ? (context) =>
-                                                UpdateEmail(widget.email)
-                                            : (context) => UpdatePhone())))
+                                            ? (context) => UpdateEmail(
+                                                widget.email, widget.token)
+                                            : (context) =>
+                                                UpdatePhone(widget.token))))
                                 : showAlertDialog(context));
                       },
                       child: Text('Next', style: TextStyle(fontSize: 14)),
@@ -161,8 +163,10 @@ class _VerifyPasswordState extends State<VerifyPassword> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Settings()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Settings(widget.token)));
               },
               child: Text(
                 'Cancel',

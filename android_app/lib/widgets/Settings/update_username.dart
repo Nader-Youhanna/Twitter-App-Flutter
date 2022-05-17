@@ -8,7 +8,8 @@ import '../../constants.dart';
 class Update_username extends StatefulWidget {
   // const Update_username({Key? key}) : super(key: key);
   var _username;
-  Update_username(this._username);
+  String token;
+  Update_username(this._username, this.token);
   @override
   State<Update_username> createState() => _Update_usernameState();
 }
@@ -18,6 +19,7 @@ class _Update_usernameState extends State<Update_username> {
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   var _nameIsEntered = false;
   var _nameIsValid = false;
+  String username = "";
 
   ///function to check validity of name and whether it has a match in the server
   bool _isNameValid(var name) {
@@ -25,12 +27,23 @@ class _Update_usernameState extends State<Update_username> {
   }
 
   ///function to send post request to server with the new username
-  Future<void> httpRequestPost() async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
-    var response =
-        await http.post(url, body: {'username': '${widget._username}'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  Future<void> httpRequestPatch() async {
+    var url = Uri.parse(
+        'http://${MY_IP_ADDRESS}:3000/settings/Account-info/Username');
+
+    var response = await http.patch(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjg4ZWNlOWEzNjc3NWIzNDZlNmE2OCIsImlhdCI6MTY1MjY1MzgyMywiZXhwIjoxNjYxMjkzODIzfQ.UPDwftWISguZHasxOJB9F_Uyltgsi2R9azbwgJqzuno',
+      },
+      body: json.encode(
+        <String, String>{
+          "username": "${widget._username}",
+        },
+      ),
+    );
   }
 
   void _goBack(BuildContext ctx) {
@@ -73,9 +86,11 @@ class _Update_usernameState extends State<Update_username> {
               TextButton(
                   onPressed: () {
                     setState(() {
-                      httpRequestPost();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Settings()));
+                      httpRequestPatch();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Settings(widget.token)));
                     });
                   },
                   child: Text(
