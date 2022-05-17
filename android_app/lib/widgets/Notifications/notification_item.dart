@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../Tweets/tweet.dart';
+import '../user_profile/profile.dart';
 import './notification_tweet.dart';
 
 ///class to  create the elements that apears in the notifications list
@@ -26,22 +28,25 @@ class NotificationItem extends StatelessWidget {
     notificationType = jsonNotification['type'] as String;
     tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
   }
-  bool type = true;
 
   ///function that constructs notification string according to the type fetched from server
   String getType() {
     String msg = ' ';
     if (notificationType == 'like') {
       msg = '  liked your tweet';
-      type = true;
     } else if (notificationType == 'retweet') {
       msg = '  retweeted your tweet';
-      type = true;
-    } else if (notificationType == 'block') {
-      msg = '  blocked you';
-      type = false;
     }
+
     return msg;
+  }
+
+  void _goToUserProfile(BuildContext ctx, String user) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile(user, false);
+      }),
+    );
   }
 
   void _viewTweet(BuildContext ctx) {
@@ -58,14 +63,18 @@ class NotificationItem extends StatelessWidget {
       children: [
         ListTile(
           leading: userImage,
-          onTap: type ? () => {_viewTweet(context)} : () => {},
+          onTap: () => {_viewTweet(context)},
           title: RichText(
             text: TextSpan(
-              children: <TextSpan>[
+              children: [
                 TextSpan(
                   text: username,
                   style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      _goToUserProfile(context, username);
+                    },
                 ),
                 TextSpan(
                   text: getType(), //notification type fetched from backend
@@ -74,14 +83,13 @@ class NotificationItem extends StatelessWidget {
               ],
             ),
           ),
-          subtitle: type
-              ? Text(
-                  tweet.getTweetText(),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ) //the tweet text fetched from backend
-              //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
-              : Text(''),
+          subtitle: Text(
+            tweet.getTweetText(),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ) //the tweet text fetched from backend
+          //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
+          ,
           trailing: PopupMenuButton(
             //button to display the see less list
             elevation: 20,

@@ -13,10 +13,10 @@ CircleAvatar userImages = const CircleAvatar(
 
 ///class to create search bar withh suggestions list and results it extends a predefined class in flutter which is SearchDelegate
 class MySearchDelegate extends SearchDelegate {
-  void _goToUserProfile(BuildContext ctx) {
+  void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile("", false);
+        return Profile(user, false);
       }),
     );
   }
@@ -107,7 +107,8 @@ class MySearchDelegate extends SearchDelegate {
                         child: suggestion,
                         onTap: suggestion.username != ''
                             //this means the suggestion item is a user
-                            ? () => _goToUserProfile(context)
+                            ? () =>
+                                _goToUserProfile(context, suggestion.username)
                             : () => _goToTweetList(
                                 context,
                                 suggestion

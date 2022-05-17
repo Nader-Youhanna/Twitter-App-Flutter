@@ -80,7 +80,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
   void initState() {
     super.initState();
     sendTrend(widget.mapTopic);
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((_) => sendTrend(widget.mapTopic));
   }
 
