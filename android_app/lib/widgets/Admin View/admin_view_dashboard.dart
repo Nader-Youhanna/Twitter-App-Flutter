@@ -28,9 +28,12 @@ class AdminViewDashBoard extends StatelessWidget {
           final value = PieChartSectionData(
             color: data.color,
             value: data.percent,
-            title: '$data.name',
+            //title: data.name,
+            title: '${data.percent.toStringAsFixed(0)}%',
             titleStyle: const TextStyle(
-              color: Colors.green,
+              fontFamily: 'RalewayMedium',
+              fontWeight: FontWeight.bold,
+              //color: Colors.white,
               fontSize: 18,
             ),
           );
@@ -42,42 +45,51 @@ class AdminViewDashBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          const SizedBox(height: 20),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 70),
-              StatisticsCard(
-                title: 'Users/Day',
-                value: '720',
-                percentage: '20',
-                increase: false,
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    return ListView(
+      children: [
+        const SizedBox(height: 20),
+        Row(
+          children: <Widget>[
+            const SizedBox(width: 70),
+            StatisticsCard(
+              title: 'Users/Day',
+              value: '720',
+              percentage: '20',
+              increase: false,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: <Widget>[
+            const SizedBox(width: 70),
+            StatisticsCard(
+              title: 'Users/Week',
+              value: '4,285',
+              percentage: '18',
+              increase: true,
+            ),
+          ],
+        ),
+        SizedBox(height: screenHeight * 0.08),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.08),
+            Container(
+              width: 300,
+              height: 100,
+              child: PieChart(
+                PieChartData(
+                  centerSpaceRadius: 40,
+                  sections: getSections(),
+                ),
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 70),
-              StatisticsCard(
-                title: 'Users/Week',
-                value: '4,285',
-                percentage: '18',
-                increase: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          // PieChart(
-          //   PieChartData(
-          //     centerSpaceRadius: 20,
-          //     sections: getSections(),
-          //   ),
-          // ),
-        ],
-      ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
