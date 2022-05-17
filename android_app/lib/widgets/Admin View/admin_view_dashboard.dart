@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'admin_view_main.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'statistics_card.dart';
-import 'test.dart';
 
 class Data {
   final String name;
@@ -29,9 +28,12 @@ class AdminViewDashBoard extends StatelessWidget {
           final value = PieChartSectionData(
             color: data.color,
             value: data.percent,
-            title: '$data.name',
+            //title: data.name,
+            title: '${data.percent.toStringAsFixed(0)}%',
             titleStyle: const TextStyle(
-              color: Colors.green,
+              fontFamily: 'RalewayMedium',
+              fontWeight: FontWeight.bold,
+              //color: Colors.white,
               fontSize: 18,
             ),
           );
@@ -80,7 +82,7 @@ class AdminViewDashBoard extends StatelessWidget {
               height: 100,
               child: PieChart(
                 PieChartData(
-                  centerSpaceRadius: 20,
+                  centerSpaceRadius: 40,
                   sections: getSections(),
                 ),
               ),
