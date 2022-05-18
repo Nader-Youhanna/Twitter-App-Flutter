@@ -30,11 +30,11 @@ const List<Choice> choices = <Choice>[
 
 ///class tat creates user profile page, whether this user is myself or another user
 class Profile extends StatefulWidget {
-  String username = 'Default user';
+  String _username = 'Default user';
 //int userId = 0;
   bool isAdmin = false;
 
-  Profile(this.username, this.isAdmin);
+  Profile(this._username, this.isAdmin);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -42,9 +42,18 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String username = 'username';
+  String name = "";
+  bool protectedTweets = false;
+  String city = "";
+  String country = "";
+  String bio = "bio";
+  DateTime birthdate = DateTime.parse("2001-09-12T00:00:00.000Z");
+  DateTime createdAt = DateTime.parse("2022-04-25T02:26:31.367Z");
   var _followersCount = 0;
   var _followingCount = 0;
-  String bio = "bio";
+  bool _myProfile = true;
+  bool _alreadyFollowed = false;
+  String website = "";
   var selectedItem = "";
 
   void _goBack(BuildContext ctx) {
@@ -68,7 +77,7 @@ class _ProfileState extends State<Profile> {
   ///function to create a sharable link of the current profile
   void _ShareProfile() {
     print("share working");
-    Share.share("/profile/${widget.username}");
+    Share.share("/profile/${widget._username}");
   }
 
   @override
@@ -83,8 +92,6 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     //String dropdownValue = 'One';
     var _tabs = ["Tweets", "Tweets & replies", "Media", "Likes"];
-    bool _myProfile = true;
-    bool _alreadyFollowed = false;
 
     return MaterialApp(
       theme: ThemeData(
@@ -218,7 +225,7 @@ class _ProfileState extends State<Profile> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            const Edit_Profile()));
+                                                            Edit_Profile()));
                                               },
                                             )
                                           : Follow_button(_alreadyFollowed),
@@ -232,7 +239,7 @@ class _ProfileState extends State<Profile> {
                               margin: EdgeInsets.only(top: 0),
                               padding: EdgeInsets.only(left: 15, right: 32),
                               child: Text(
-                                username,
+                                widget._username,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
