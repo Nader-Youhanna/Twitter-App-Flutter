@@ -4,14 +4,8 @@ import 'package:android_app/widgets/user_profile/profile.dart';
 
 ///class to create the notification's sliding bar
 class NotificationBar extends StatelessWidget {
-  NotificationBar();
-  void _goToUserProfile(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return Profile("", false);
-      }),
-    );
-  }
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+  NotificationBar(this._scaffoldKey);
 
   CircleAvatar userImage = const CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon2.png'),
@@ -25,11 +19,14 @@ class NotificationBar extends StatelessWidget {
       pinned: true,
       floating: true,
       leading: IconButton(
-          icon: const Icon(
-              Icons.person_rounded), //should be changed to google profile icon
-          color: Colors.black,
-          onPressed: () =>
-              {_goToUserProfile(context)}), //button should open to side bar
+        icon: const Icon(
+            Icons.person_rounded), //should be changed to google profile icon
+        color: Colors.black,
+        onPressed: () {
+          _scaffoldKey.currentState!.openDrawer();
+        },
+        //button should open to side bar
+      ),
       actions: [
         IconButton(
             icon: const Icon(Icons.settings_outlined),

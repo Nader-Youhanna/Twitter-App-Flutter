@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import '../../functions/http_functions.dart';
 import '../../constants.dart';
@@ -49,6 +51,9 @@ class _TrendingTopicState extends State<TrendingTopic> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return ListTile(
       onTap: () {
         _goToTweetList(context, widget.hashtag);
@@ -85,31 +90,72 @@ class _TrendingTopicState extends State<TrendingTopic> {
           ),
         ],
       ),
-      trailing: PopupMenuButton(
-        //button to display the see less list
-
-        elevation: 10,
-        itemBuilder: (BuildContext context) {
-          return [
-            const PopupMenuItem<Text>(
-              child: Text(
-                "Not interested in this", //this is supposed to be static
-                style: TextStyle(
-                  fontSize: 13,
+      trailing: IconButton(
+          color: Color.fromARGB(255, 194, 211, 219),
+          icon: Icon(Icons.more_vert),
+          onPressed: () {
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
-              ),
-            ),
-            const PopupMenuItem<Text>(
-              child: Text(
-                "This trend is harmful or spammy", //this is supposed to be static
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-            )
-          ];
-        },
-      ),
+                context: context,
+                builder: (builder) {
+                  return Container(
+                      width: width,
+                      alignment: Alignment.bottomLeft,
+                      height: height * (120 / 825.5),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40.0),
+                              topRight: Radius.circular(40.0))),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  minimumSize: MaterialStateProperty.all(
+                                      Size.fromHeight(40)),
+                                  alignment: Alignment.bottomLeft,
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
+                              child: Text(
+                                "Not interested in this",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color.fromARGB(255, 82, 82, 82),
+                                    fontStyle: FontStyle.normal),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, //should be a function to delete trend from list--> send to backend
+                            ),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  minimumSize: MaterialStateProperty.all(
+                                      Size.fromHeight(40)),
+                                  alignment: Alignment.centerLeft,
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
+                              child: Text(
+                                "This trend is harmful or spammy",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color.fromARGB(255, 82, 82, 82),
+                                    fontStyle: FontStyle.normal),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, //should be a function to delete trend from list--> send to back end to delete it
+                            ),
+                          ]));
+                });
+          }),
       isThreeLine: true,
     );
   }

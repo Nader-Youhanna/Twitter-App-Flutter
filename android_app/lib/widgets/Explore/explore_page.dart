@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 import '../../functions/tweet_functions.dart';
+import '../side_bar.dart';
 import './search_bar_explore.dart';
 import './user_search_item.dart';
 import './search_item.dart';
@@ -31,6 +32,7 @@ class ExplorePage extends StatefulWidget {
 
 ///class to create the explore page with the search bar and the list of trends
 class ExplorePageState extends State<ExplorePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var _appBarText = 'Search Twitter';
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
@@ -84,6 +86,8 @@ class ExplorePageState extends State<ExplorePage> {
     print("height: $height \n");
     print("width is $width");
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: SideBar(name: 'nido', username: 'nido123'),
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -96,9 +100,10 @@ class ExplorePageState extends State<ExplorePage> {
                     icon: const Icon(Icons
                         .person_rounded), //should be changed to google profile icon
                     color: Colors.black,
-                    onPressed: () => {
-                          _goToUserProfile(context)
-                        }), //button should open to side bar,
+                    onPressed: () {
+                      // _goToUserProfile(context)
+                      _scaffoldKey.currentState!.openDrawer();
+                    }), //button should open to side bar,
                 actions: [
                   Container(
                     width: isAndroid

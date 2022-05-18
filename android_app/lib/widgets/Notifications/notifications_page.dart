@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import '../../constants.dart';
 import '../../functions/tweet_functions.dart';
+import '../side_bar.dart';
 import 'notification_bar.dart';
 import 'all_notifications_list.dart';
 import 'mentions_list.dart';
@@ -13,6 +14,7 @@ class NotificationsPage extends StatelessWidget {
   String username = 'Default user';
   String token = '';
   bool isAdmin = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   ///constructor to set the user credentials
   NotificationsPage(this.username, this.token, this.isAdmin);
@@ -21,12 +23,15 @@ class NotificationsPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer: SideBar(name: 'nido', username: 'nido123'),
+        key: _scaffoldKey,
         body: NotificationListener<ScrollNotification>(
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                NotificationBar(), //the bar that gives us either the all notifications page or the mentions page
+                NotificationBar(
+                    _scaffoldKey), //the bar that gives us either the all notifications page or the mentions page
               ];
             },
             body: TabBarView(
@@ -37,7 +42,6 @@ class NotificationsPage extends StatelessWidget {
             ),
           ),
         ),
-        drawer: Drawer(),
         floatingActionButton: FloatingActionButton(
           // button should open the what's happening page
           onPressed: () => startAddTweet(context, MY_IP_ADDRESS, "3000"),

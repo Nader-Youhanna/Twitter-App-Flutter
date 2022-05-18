@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, prefer_const_constructors
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../Tweets/tweet.dart';
@@ -59,6 +61,11 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    // print("height: $height \n");
+    // print("width is $width");
     return Column(
       children: [
         ListTile(
@@ -90,21 +97,49 @@ class NotificationItem extends StatelessWidget {
           ) //the tweet text fetched from backend
           //style: TextStyle(fontSize: 12, color: Colors.blueGrey))
           ,
-          trailing: PopupMenuButton(
-            //button to display the see less list
-            elevation: 20,
-
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem<Text>(
-                  child: Text(
-                    "See less often", //this is supposed to be static
-                    style: TextStyle(fontSize: 13),
-                  ),
-                )
-              ];
-            },
-          ),
+          trailing: IconButton(
+              color: Color.fromARGB(255, 194, 211, 219),
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    context: context,
+                    builder: (builder) {
+                      return Container(
+                        width: width,
+                        alignment: Alignment.centerLeft,
+                        height: height * (100 / 825.5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(40.0),
+                                topRight: Radius.circular(40.0))),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              minimumSize: MaterialStateProperty.all(
+                                  Size.fromHeight(40)),
+                              alignment: Alignment.centerLeft,
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.white)),
+                          child: Text(
+                            "See less often",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 82, 82, 82),
+                                fontStyle: FontStyle.normal),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            print("pressed");
+                          }, //should be a function to delete notification from list
+                        ),
+                      );
+                    });
+              }),
           isThreeLine: true,
         ),
       ],

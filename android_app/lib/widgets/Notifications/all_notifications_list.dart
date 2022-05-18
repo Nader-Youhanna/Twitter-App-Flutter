@@ -1,4 +1,5 @@
 import 'package:android_app/widgets/Tweets/tweet.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -51,9 +52,10 @@ class AllNotificationsListState extends State<AllNotificationsList> {
 
 //should impliment function to send token to backend
 
+  bool isAndroid = true;
   @override
   void initState() {
-    // TODO: implement initState
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     super.initState();
 //function to send token should be put here
     // WidgetsBinding.instance!.addPostFrameCallback((_) =>
@@ -62,6 +64,11 @@ class AllNotificationsListState extends State<AllNotificationsList> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    // print("height: $height \n");
+    // print("width is $width");
     return FutureBuilder<List<NotificationItem>>(
         future: getNotifications(),
         builder: (context, snapshot) {
@@ -71,76 +78,83 @@ class AllNotificationsListState extends State<AllNotificationsList> {
             default:
               List<NotificationItem> data = snapshot.data!;
               return Container(
-                child: data.isNotEmpty
-                    ? Stack(children: [
-                        RefreshIndicator(
-                          child: ListView.builder(
-                            clipBehavior: Clip.hardEdge,
-                            padding: const EdgeInsets.all(0),
-                            itemCount: data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                //this container should contain actual notifications not list elements
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black,
-                                      offset: Offset(0.0, 1.0), //(x,y)
-                                      blurRadius: 1.0,
-                                    ),
-                                  ],
-                                ),
-                                padding: const EdgeInsets.all(0),
-                                height: 100,
-                                //color: Colors.white,
-                                child: data[index],
-                              );
+                  child: data.isNotEmpty
+                      ? Stack(children: [
+                          RefreshIndicator(
+                            child: ListView.builder(
+                              clipBehavior: Clip.hardEdge,
+                              padding: const EdgeInsets.all(0),
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  //this container should contain actual notifications not list elements
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black,
+                                        offset: Offset(0.0, 1.0), //(x,y)
+                                        blurRadius: 1.0,
+                                      ),
+                                    ],
+                                  ),
+                                  padding: const EdgeInsets.all(0),
+                                  height: height * (100 / 825.5),
+                                  //color: Colors.white,
+                                  child: data[index],
+                                );
+                              },
+                            ),
+                            onRefresh: () async {
+                              getNotifications();
+                              setState(() {});
                             },
+                            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                          )
+                        ])
+                      : RefreshIndicator(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                SizedBox(height: height * (220 / 825.5)),
+                                RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Join the conversation\n',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 100, 99, 99),
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //padding: const EdgeInsets.all(30),
+                            margin: const EdgeInsets.all(30),
                           ),
                           onRefresh: () async {
                             getNotifications();
                             setState(() {});
                           },
                           triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                        )
-                      ])
-                    : Container(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 220),
-                            RichText(
-                              text: const TextSpan(
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Join the conversation\n',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 100, 99, 99),
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        //padding: const EdgeInsets.all(30),
-                        margin: const EdgeInsets.all(30),
-                      ),
-              );
+                        ));
           }
         });
   }
