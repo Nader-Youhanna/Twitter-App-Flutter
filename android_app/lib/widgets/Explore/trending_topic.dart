@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../functions/http_functions.dart';
 import '../../constants.dart';
@@ -41,8 +42,10 @@ class _TrendingTopicState extends State<TrendingTopic> {
     );
   }
 
+  bool isAndroid = true;
   @override
   void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     super.initState();
     // setState(() {
     //   widget.trendingNumber++;
@@ -103,7 +106,7 @@ class _TrendingTopicState extends State<TrendingTopic> {
                   return Container(
                       width: width,
                       alignment: Alignment.bottomLeft,
-                      height: height * (120 / 825.5),
+                      height: isAndroid ? height * (120 / 825.5) : 150,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(

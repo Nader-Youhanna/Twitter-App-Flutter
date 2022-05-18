@@ -48,7 +48,8 @@ dependencies:
   
   #Pie Chart
   fl_chart: ^0.50.5
-
+  #for user statistics line chart
+  syncfusion_flutter_charts: ^20.1.56
   #Verification code
   flutter_verification_code: ^1.1.3
 

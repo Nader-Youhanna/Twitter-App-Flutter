@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:android_app/widgets/Admin%20View/user_statistics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,15 @@ class AdminViewUser extends StatelessWidget {
     );
   }
 
-  void _banUser(BuildContext context) {
+  void _goToUserStatistics(BuildContext ctx, String user) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return UserStatistics();
+      }),
+    );
+  }
+
+  void _banUser(BuildContext context, double width) {
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -55,7 +64,7 @@ class AdminViewUser extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 140,
+                width: isAndroid ? width * (140 / 329.7) : 200,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -96,90 +105,176 @@ class AdminViewUser extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            username,
-            textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 122, 122, 122),
-            ),
-          ),
-          Row(mainAxisSize: MainAxisSize.min, children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 3, 136, 8),
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(2, 25),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Statistics',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-            ),
-            SizedBox(
-              width: isAndroid ? width * (6 / 329.7) : 10,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(2, 25),
-              ),
-              onPressed: () {
-                _goToUserProfile(context, name);
-              },
-              child: Text(
-                'Profile',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-            ),
-            SizedBox(
-              width: isAndroid ? width * (6 / 329.7) : 10,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(2, 25),
-              ),
-              onPressed: () {
-                _banUser(context);
-              },
-              child: Text(
-                'Ban',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-            ),
-            SizedBox(
-              width: isAndroid ? width * (6 / 329.7) : 10,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(2, 25),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Reports',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
+      subtitle: isAndroid
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  username,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 122, 122, 122),
+                  ),
+                ),
+                Row(mainAxisSize: MainAxisSize.min, children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 3, 136, 8),
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      minimumSize: Size(2, 25),
+                    ),
+                    onPressed: () {
+                      _goToUserStatistics(context, name);
+                    },
+                    child: Text(
+                      'Statistics',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  ),
+                  SizedBox(
+                    width: isAndroid ? width * (6 / 329.7) : 10,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      minimumSize: Size(2, 25),
+                    ),
+                    onPressed: () {
+                      _goToUserProfile(context, name);
+                    },
+                    child: Text(
+                      'Profile',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  ),
+                  SizedBox(
+                    width: isAndroid ? width * (6 / 329.7) : 10,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      minimumSize: Size(2, 25),
+                    ),
+                    onPressed: () {
+                      _banUser(context, width);
+                    },
+                    child: Text(
+                      'Ban',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  ),
+                  SizedBox(
+                    width: isAndroid ? width * (6 / 329.7) : 10,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      minimumSize: Size(2, 25),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Reports',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  )
+                ]),
+              ],
             )
-          ]),
-        ],
-      ),
+          : Text(
+              username,
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 122, 122, 122),
+              ),
+            ),
+      trailing: isAndroid
+          ? Container()
+          : Row(mainAxisSize: MainAxisSize.min, children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 3, 136, 8),
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(2, 35),
+                ),
+                onPressed: () {
+                  _goToUserStatistics(context, name);
+                },
+                child: Text(
+                  'Statistics',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
+              SizedBox(
+                width: isAndroid ? width * (6 / 329.7) : 10,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(2, 35),
+                ),
+                onPressed: () {
+                  _goToUserProfile(context, name);
+                },
+                child: Text(
+                  'Profile',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
+              SizedBox(
+                width: isAndroid ? width * (6 / 329.7) : 10,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(2, 35),
+                ),
+                onPressed: () {
+                  _banUser(context, width);
+                },
+                child: Text(
+                  'Ban',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
+              SizedBox(
+                width: isAndroid ? width * (6 / 329.7) : 10,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(2, 35),
+                ),
+                onPressed: () {},
+                child: Text(
+                  'Reports',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
+              SizedBox(width: 40),
+            ]),
     );
   }
 }

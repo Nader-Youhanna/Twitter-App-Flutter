@@ -1,4 +1,5 @@
 import 'package:android_app/widgets/Tweets/tweet.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../functions/http_functions.dart';
 import '../../constants.dart';
@@ -77,8 +78,11 @@ class TrendingTweetsState extends State<TrendingTweets> {
   @override
 
   ///at every callback to the page we send a new request for the list of tweets
+
+  bool isAndroid = true;
+  @override
   void initState() {
-    super.initState();
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     sendTrend(widget.mapTopic);
     WidgetsBinding.instance
         .addPostFrameCallback((_) => sendTrend(widget.mapTopic));
@@ -86,6 +90,9 @@ class TrendingTweetsState extends State<TrendingTweets> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Scaffold(
         body: NestedScrollView(
             headerSliverBuilder:
@@ -108,7 +115,9 @@ class TrendingTweetsState extends State<TrendingTweets> {
                   ), //button should open to side bar,
                   actions: [
                     Container(
-                      width: 290,
+                      width: isAndroid
+                          ? width * (290 / 392.7)
+                          : width * (1190 / 1280),
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                           showCursor: false,

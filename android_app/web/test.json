@@ -457,6 +457,33 @@
       "name":"Nounou",
       "username":"@noraa1990"
     }
+  ],
+  "AdminUserStatsTweets":[
+    {
+      "name":0,
+      "value":0
+    },
+    {
+      "name":0.5,
+      "value":10
+    },
+    {
+      "name":1,
+      "value":15
+    },
+    {
+      "name":1.5,
+      "value":30
+    },
+    {
+      "name":2,
+      "value":70
+    },
+    {
+      "name":3,
+      "value":100
+    }
+
   ]
   
   
