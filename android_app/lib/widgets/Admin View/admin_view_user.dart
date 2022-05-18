@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../user_profile/profile.dart';
 
 class AdminViewUser extends StatelessWidget {
   String name = "username";
@@ -18,9 +21,70 @@ class AdminViewUser extends StatelessWidget {
     name = jsonAdminUser['name'] as String;
     username = jsonAdminUser['username'] as String;
   }
+  void _goToUserProfile(BuildContext ctx, String user) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile(user, false);
+      }),
+    );
+  }
 
+  void _banUser(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('Ban this user?'),
+            content:
+                const Text('This can\'t be undone and you\'ll ban this user'),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(45, 35),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text(
+                  'Ban',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 140,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 1,
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(25, 35),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  bool isAndroid = (defaultTargetPlatform == TargetPlatform.android);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return ListTile(
       contentPadding: const EdgeInsets.all(8),
       isThreeLine: true,
@@ -54,12 +118,12 @@ class AdminViewUser extends StatelessWidget {
               ),
               onPressed: () {},
               child: Text(
-                'statistics',
+                'Statistics',
                 style: TextStyle(color: Colors.white, fontSize: 11),
               ),
             ),
             SizedBox(
-              width: 4,
+              width: isAndroid ? width * (6 / 329.7) : 10,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -69,14 +133,16 @@ class AdminViewUser extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32.0)),
                 minimumSize: Size(2, 25),
               ),
-              onPressed: () {},
+              onPressed: () {
+                _goToUserProfile(context, name);
+              },
               child: Text(
                 'Profile',
                 style: TextStyle(color: Colors.white, fontSize: 11),
               ),
             ),
             SizedBox(
-              width: 4,
+              width: isAndroid ? width * (6 / 329.7) : 10,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -86,14 +152,16 @@ class AdminViewUser extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32.0)),
                 minimumSize: Size(2, 25),
               ),
-              onPressed: () {},
+              onPressed: () {
+                _banUser(context);
+              },
               child: Text(
                 'Ban',
                 style: TextStyle(color: Colors.white, fontSize: 11),
               ),
             ),
             SizedBox(
-              width: 4,
+              width: isAndroid ? width * (6 / 329.7) : 10,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
