@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:share_plus/share_plus.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:android_app/constants.dart';
+import 'package:android_app/functions/http_functions.dart';
 
 ///class that creates the edit profile settings page (incomplete)
 class Edit_Profile extends StatefulWidget {
@@ -43,7 +44,27 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     });
   }
 
-  Future<void> httpRequestPatch() async {
+  Future<void> getData(String ipAddress, String port) async {
+    Map<String, dynamic> headers = {
+      "authorization": token,
+      "Content-Type": "application/json"
+    };
+    Map<String, dynamic> mapData = await httpRequestGet(
+        "http://" + ipAddress + ":" + port + "/settings/profile", headers);
+
+    if (mapData != null) {
+      HeaderImage = mapData['headerImage'] as String;
+      birthdate = DateTime.parse(mapData['birthdate'] as String);
+      name = mapData['name'] as String;
+      profileImage = mapData['image'] as String;
+      city = mapData['city'] as String;
+      country = mapData['country'] as String;
+      _bio = mapData['bio'] as String;
+      website = mapData['website'] as String;
+    }
+  }
+
+  Future<void> httprequestpatch() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/profile');
 
     var response = await http.patch(
@@ -74,7 +95,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     // TODO: implement initState
 
     setState(() {
-      // httpRequestGet();
+      getData(MY_IP_ADDRESS, "3000");
     });
   }
 
@@ -114,7 +135,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                httpRequestPatch();
+                httprequestpatch();
                 Navigator.push(
                     context,
                     MaterialPageRoute(

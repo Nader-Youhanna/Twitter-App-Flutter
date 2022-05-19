@@ -43,7 +43,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String username = 'username';
   String name = "";
-  bool protectedTweets = false;
+  bool protectedTweets = true;
   String city = "";
   String country = "";
   String bio = "bio";
@@ -51,10 +51,11 @@ class _ProfileState extends State<Profile> {
   DateTime createdAt = DateTime.parse("2022-04-25T02:26:31.367Z");
   var _followersCount = 0;
   var _followingCount = 0;
-  bool _myProfile = true;
+  bool _myProfile = false;
   bool _alreadyFollowed = false;
   String website = "";
   var selectedItem = "";
+  bool followsme = false;
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -265,11 +266,13 @@ class _ProfileState extends State<Profile> {
                                 padding: EdgeInsets.only(left: 10, right: 5),
                                 child: TextButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Accounts_page()));
+                                      _myProfile
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Accounts_page()))
+                                          : (null);
                                     },
                                     child: Text(
                                       '${_followersCount} followers',
@@ -286,11 +289,13 @@ class _ProfileState extends State<Profile> {
                                 padding: EdgeInsets.only(left: 10, right: 32),
                                 child: TextButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Accounts_page()));
+                                      _myProfile
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Accounts_page()))
+                                          : (null);
                                     },
                                     child: Text(
                                       '${_followingCount} following',
@@ -311,14 +316,37 @@ class _ProfileState extends State<Profile> {
                 ),
               ];
             },
-            body: TabBarView(
-              children: [
-                Timeline(username, username),
-                Timeline(username, username),
-                Timeline(username, username),
-                Timeline(username, username),
-              ],
-            ),
+            body: (!_myProfile && protectedTweets && !followsme)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.all(40),
+                            child: Column(
+                              children: <Widget>[
+                                Text("These Tweets are protected.",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 26,
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    "Only confirmed followers have access to ${widget._username}'s tweets and complete profile. Tap the Follow button to send a follow request.")
+                              ],
+                            ))
+                      ])
+                : TabBarView(
+                    children: [
+                      Timeline(username, username),
+                      Timeline(username, username),
+                      Timeline(username, username),
+                      Timeline(username, username),
+                    ],
+                  ),
           ),
         ),
       ),
