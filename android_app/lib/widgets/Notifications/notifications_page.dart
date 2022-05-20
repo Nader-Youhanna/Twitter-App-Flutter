@@ -44,7 +44,7 @@ class NotificationsPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           // button should open the what's happening page
-          onPressed: () => startAddTweet(context, MY_IP_ADDRESS, "3000"),
+          onPressed: () => startAddTweet(context),
           child: const Icon(Icons.add),
         ),
       ),

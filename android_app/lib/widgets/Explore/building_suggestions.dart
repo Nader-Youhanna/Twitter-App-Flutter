@@ -12,7 +12,7 @@ class BuildingSuggestions {
   Future<List<SearchItem>> getSearchItems({String? query}) async {
     print("Adding search elements");
 
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/search?q=bo&f/users");
+    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/searching");
     try {
       var response = await http.get(
         url,
@@ -21,6 +21,7 @@ class BuildingSuggestions {
           'Authorization': 'Bearer ' + token
         },
       );
+      print(response.body);
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         searchResults = data.map((e) => SearchItem.jsonSearchItem(e)).toList();
