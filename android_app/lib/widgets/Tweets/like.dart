@@ -7,7 +7,12 @@ class Like extends StatefulWidget {
   bool isLiked = false;
   final int iconSize;
 
-  Like(this.likeCount, this.isLiked, this.iconSize);
+  Like(this.likeCount, this.isLiked, this.iconSize, {Key? key})
+      : super(key: key) {
+    if (isLiked) {
+      likeColor = Colors.red;
+    }
+  }
 
   @override
   State<Like> createState() => _LikeState();

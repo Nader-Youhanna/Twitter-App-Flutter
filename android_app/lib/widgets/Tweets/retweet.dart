@@ -7,7 +7,12 @@ class Retweet extends StatefulWidget {
   bool isRetweeted = false;
   final int iconSize;
 
-  Retweet(this.retweetCount, this.isRetweeted, this.iconSize);
+  Retweet(this.retweetCount, this.isRetweeted, this.iconSize, {Key? key})
+      : super(key: key) {
+    if (isRetweeted) {
+      retweetColor = Colors.green;
+    }
+  }
 
   @override
   State<Retweet> createState() => _RetweetState();
