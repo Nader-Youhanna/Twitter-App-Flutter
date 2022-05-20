@@ -12,7 +12,7 @@ class BuildingSuggestions {
   Future<List<SearchItem>> getSearchItems({String? query}) async {
     print("Adding search elements");
 
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/search");
+    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/search?q=bo&f/users");
     try {
       var response = await http.get(
         url,

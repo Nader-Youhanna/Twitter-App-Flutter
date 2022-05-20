@@ -25,48 +25,30 @@ class _UserStatisticsState extends State<UserStatistics> {
     Navigator.of(ctx).pop();
   }
 
-  // Future<List<UserTweets>> getUserTweetStats() async {
-  //   List<UserTweets> userData = <UserTweets>[];
-  //   var data = [];
-  //   print("Adding user tweets statistics");
-  //   var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/AdminUserStatsTweets");
-  //   try {
-  //     var response = await http.get(url);
-  //     // print('Response body: ${response.body}');
-  //     if (response.statusCode == 200) {
-  //       data = json.decode(response.body);
-  //       if (data != null) {
-  //         userData = data.map((e) => UserTweets.jsonUserTweets(e)).toList();
-  //       }
-  //     } else {
-  //       print("fetch error");
-  //     }
-  //   } on Exception catch (e) {
-  //     print('error: $e');
-  //   }
-
-  //   return userData;
-  // }
-  /// This function get the tweets from the [ipAddress] and port [port] of the backend and return the response.
   Future<List<UserTweets>> getUserTweetStats() async {
-    print("Adding tweets");
-    Map<String, dynamic> headers = {
-      "authorization": token,
-      "Content-Type": "application/json"
-    };
-    Map<String, dynamic> mapTweet = await httpRequestGet(
-        "http://${MY_IP_ADDRESS}:3000/AdminUserStatsTweets", headers);
-
-    //print("=========" + mapTweet['data'][0].toString());
-    List<UserTweets> tweets = <UserTweets>[];
-    for (int i = 0; i < mapTweet.length; i++) {
-      tweets.add(UserTweets.jsonUserTweets(mapTweet['data'][i]));
+    List<UserTweets> userData = <UserTweets>[];
+    var data = [];
+    print("Adding user tweets statistics");
+    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/AdminUserStatsTweets");
+    try {
+      var response = await http.get(url);
+      // print('Response body: ${response.body}');
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        if (data != null) {
+          userData = data.map((e) => UserTweets.jsonUserTweets(e)).toList();
+        }
+      } else {
+        print("fetch error");
+      }
+    } on Exception catch (e) {
+      print('error: $e');
     }
 
-    return tweets;
+    return userData;
   }
 
-  late List<UserTweets> userData;
+  late List<UserTweets> userData = <UserTweets>[];
   bool isAndroid = true;
   @override
   void initState() {
@@ -75,48 +57,56 @@ class _UserStatisticsState extends State<UserStatistics> {
     WidgetsBinding.instance.addPostFrameCallback((_) => getUserTweetStats());
     //userData = getUserTweetStats() as List<UserTweets>;
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+
+    getUserTweetStats().then((usersData) {
+      userData = usersData;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-                elevation: 0.5,
-                backgroundColor: Colors.white,
-                title: const Text(
-                  "User Statistics",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue),
-                ),
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    //Icons.abc,
-                    color: Colors.black,
+    if (userData != null) {
+      print(userData);
+      return SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                  elevation: 0.5,
+                  backgroundColor: Colors.white,
+                  title: const Text(
+                    "User Statistics",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
                   ),
-                  onPressed: () {
-                    _goBack(context);
-                  },
-                )),
-            body: SingleChildScrollView(
-              child: Column(children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Card(
-                  child: SfCartesianChart(),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Card(
-                  child: SfCartesianChart(),
-                )
-              ]),
-            )));
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      //Icons.abc,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      _goBack(context);
+                    },
+                  )),
+              body: SingleChildScrollView(
+                child: Column(children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Card(
+                    child: SfCartesianChart(),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Card(
+                    child: SfCartesianChart(),
+                  )
+                ]),
+              )));
+    } else
+      return Text("no data");
   }
 }
 

@@ -5,32 +5,32 @@ import './http_functions.dart';
 import '../widgets/Tweets/tweet.dart';
 
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
-Future<void> addTweet(
-    Map<String, dynamic> data, String ipAddress, String port) async {
+Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
   Map<String, dynamic> headers = {
-    "authorization": token,
+    "Authorization": token,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
-    "http://" + ipAddress + ":" + port + "/tweets/",
+    URL.postTweet,
     data,
     headers,
   );
 }
 
 /// This function get the tweets from the [ipAddress] and port [port] of the backend and return the response.
-Future<List<Tweet>> getTweets(String ipAddress, String port) async {
+Future<List<Tweet>> getTweets() async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "authorization": token,
+    "Authorization": token,
     "Content-Type": "application/json"
   };
-  Map<String, dynamic> mapTweet = await httpRequestGet(
-      "http://" + ipAddress + ":" + port + "/home/", headers);
+  Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
 
   //print("=========" + mapTweet['data'][0].toString());
   List<Tweet> tweets = <Tweet>[];
-  for (int i = 0; i < mapTweet.length; i++) {
+  for (int i = 0; i < mapTweet['data'].length; i++) {
+    // print("i = " + i.toString());
+    // print(mapTweet['data'][i].toString());
     tweets.add(Tweet.jsonTweet(mapTweet['data'][i], false, true));
   }
 
@@ -38,7 +38,7 @@ Future<List<Tweet>> getTweets(String ipAddress, String port) async {
 }
 
 /// This function opens the modal sheet to add a new tweet and send it to the [ipAddress] and port [port].
-void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
+void startAddTweet(BuildContext ctx) async {
   String tweetText = "";
   var tweetTextController = TextEditingController();
   showModalBottomSheet(
@@ -65,19 +65,25 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
               TextButton(
                 onPressed: () async {
                   tweetText = tweetTextController.text;
+                  //check for tagged users
+                  List<String?> taggedUsers = [];
+                  RegExp exp = RegExp(r'@[a-zA-Z0-9]+');
+                  Iterable<RegExpMatch> matches = exp.allMatches(tweetText);
+                  for (var match in matches) {
+                    taggedUsers.add(match.group(0));
+                  }
+                  //print(taggedUsers);
                   print(tweetText);
+                  return;
                   var data = <String, dynamic>{
-                    'userId': 1,
-                    'createdAt': '2020-01-01T00:00:00.000Z',
-                    'tweetText': tweetText,
-                    'images': [],
-                    'favouriters': [],
-                    'retweeters': [],
-                    'replies': [],
+                    "userId": "6261594af12e411a8115627f",
+                    "body": tweetText,
+                    "media": ["url1", "url2"],
+                    "taggedUsers": ["624c40e1e42ed8fe5b098d2b"]
                   };
-                  await addTweet(data, ipAddress, port);
+                  await addTweet(data);
                   print("Tweet added");
-                  await getTweets(ipAddress, port);
+                  await getTweets();
                   print("Tweets retrieved");
                   Navigator.pop(ctx);
                 },
@@ -107,4 +113,27 @@ void startAddTweet(BuildContext ctx, String ipAddress, String port) async {
     enableDrag: false,
     useRootNavigator: true,
   );
+}
+
+//get replies
+Future<List<Tweet>> getReplies(String tweetId, String userName) async {
+  Map<String, dynamic> headers = {
+    "Authorization": token,
+    "Content-Type": "application/json"
+  };
+  Map<String, dynamic> mapTweet = await httpRequestGet(
+      URL.getReplies.replaceAll(':tweetId', tweetId), headers);
+
+  //print("=========" + mapTweet['data'][0].toString());
+  List<Tweet> tweets = <Tweet>[];
+  for (int i = 0; i < mapTweet['users'].length; i++) {
+    // print("i = " + i.toString());
+    // print(mapTweet['data'][i].toString());
+
+    Tweet tweet = Tweet.jsonReply(mapTweet['users'][i], false, true);
+    tweet.setReplyTo(userName);
+    tweets.add(tweet);
+  }
+
+  return tweets;
 }

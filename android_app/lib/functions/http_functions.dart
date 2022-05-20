@@ -3,22 +3,18 @@ import 'dart:convert';
 import 'dart:async';
 
 /// This function returns the response of the http POST request. It takes URL, body and headers as parameters.
-Future<void> httpRequestPost(String urlStr, Map reqBody, Map reqHeaders) async {
+Future<Map<String, dynamic>> httpRequestPost(
+    String urlStr, Map reqBody, Map reqHeaders) async {
   var url = Uri.parse(urlStr);
-  if (reqBody == null) {
-    reqBody = <String, dynamic>{};
-  }
-  if (reqHeaders == null) {
-    reqHeaders = <String, String>{};
-  }
+
   var body = json.encode(reqBody);
   var response = await http.post(
     url,
     body: body,
     headers: reqHeaders as Map<String, String>,
   );
-  print(response.body);
-  return json.decode(response.body);
+  print("Status code " + response.statusCode.toString());
+  return json.decode(response.body) as Map<String, dynamic>;
 }
 
 ///This function returns the response of the http Patch request. It takes URL, body and headers as parameters.
@@ -50,17 +46,14 @@ Future<Map<String, dynamic>> httpRequestGet(
 
   if (headersMap != null) {
     request.headers['Content-Type'] = headersMap['Content-Type'];
-    request.headers['authorization'] = headersMap['authorization'];
+    request.headers['Authorization'] = headersMap['Authorization'];
   }
 
   var streamedResponse = await request.send();
 
   var response = await http.Response.fromStream(streamedResponse);
 
-  //Print the last 10 characters of the response body
-  //print(response.body.substring(response.body.length - 15));
   print('Response status: ${response.statusCode}');
-  //print('Response body: ${response.body.substring(1000)}');
   var temp = json.decode(response.body) as Map<String, dynamic>;
 
   return temp;
