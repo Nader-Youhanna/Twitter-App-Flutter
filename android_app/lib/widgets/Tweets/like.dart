@@ -7,8 +7,12 @@ class Like extends StatefulWidget {
   bool isLiked = false;
   final int iconSize;
 
-  Like(this.likeCount, this.isLiked, this.iconSize, {Key? key})
-      : super(key: key) {
+  Function likeTweet;
+
+  Like(this.likeCount, this.isLiked, this.iconSize, Function onPressed,
+      {Key? key})
+      : likeTweet = onPressed,
+        super(key: key) {
     if (isLiked) {
       likeColor = Colors.red;
     }
@@ -35,6 +39,7 @@ class _LikeState extends State<Like> {
             widget.likeCount++;
           }
         });
+        widget.likeTweet();
       },
       icon: Image.asset(
         'assets/images/like_icon.png',

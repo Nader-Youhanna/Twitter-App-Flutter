@@ -5,9 +5,9 @@ import './http_functions.dart';
 import '../widgets/Tweets/tweet.dart';
 
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
-Future<void> addTweet(Map<String, dynamic> data) async {
+Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
   Map<String, dynamic> headers = {
-    "authorization": token,
+    "Authorization": token,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
@@ -21,7 +21,7 @@ Future<void> addTweet(Map<String, dynamic> data) async {
 Future<List<Tweet>> getTweets() async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "authorization": token,
+    "Authorization": token,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
