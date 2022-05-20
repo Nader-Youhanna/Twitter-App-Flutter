@@ -269,7 +269,8 @@ class Tweet extends StatelessWidget {
                       CommentButton(_repliesCount, _iconSize,
                           Tweet.jsonTweet(toJson(), true, true)),
                       //Retweet
-                      Retweet(_retweetersCount, _isRetweeted, _iconSize),
+                      Retweet(
+                          _retweetersCount, _isRetweeted, _iconSize, retweet),
                       //Like
                       Like(_favouritersCount, _isLiked, _iconSize, like),
                       //Share
@@ -327,6 +328,30 @@ class Tweet extends StatelessWidget {
       _isLiked = false;
     } else {
       print("Error liking the tweet. Response is " + response['message']);
+    }
+  }
+
+  // retweet function
+  void retweet() async {
+    //print(_key);
+    String url = URL.retweet;
+    url = url.replaceAll(":tweetId", _key);
+    //print("URL is " + url);
+
+    Map<String, String> headersMap = {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    };
+    var response = await httpRequestPost(url, {}, headersMap);
+
+    if (response['message'] != null) {
+      _retweetersCount++;
+      _isRetweeted = true;
+    } else if (response['message'] == 'unretweeted') {
+      _retweetersCount--;
+      _isRetweeted = false;
+    } else {
+      print("Error retweeting the tweet. Response is " + response['message']);
     }
   }
 

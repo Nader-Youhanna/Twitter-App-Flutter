@@ -7,8 +7,13 @@ class Retweet extends StatefulWidget {
   bool isRetweeted = false;
   final int iconSize;
 
-  Retweet(this.retweetCount, this.isRetweeted, this.iconSize, {Key? key})
-      : super(key: key) {
+  Function retweet;
+
+  Retweet(
+      this.retweetCount, this.isRetweeted, this.iconSize, Function onPressed,
+      {Key? key})
+      : retweet = onPressed,
+        super(key: key) {
     if (isRetweeted) {
       retweetColor = Colors.green;
     }
@@ -24,6 +29,7 @@ class _RetweetState extends State<Retweet> {
     return TextButton.icon(
       onPressed: () {
         print('Retweet Pressed');
+
         setState(() {
           if (widget.isRetweeted) {
             widget.retweetColor = Colors.grey;
@@ -35,6 +41,7 @@ class _RetweetState extends State<Retweet> {
             widget.retweetCount++;
           }
         });
+        widget.retweet();
       },
       icon: Image.asset(
         'assets/images/retweet_icon.png',
