@@ -50,6 +50,7 @@ class _TimelineState extends State<Timeline> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: SideBar(name: 'nido', username: 'nido123'),
@@ -95,16 +96,19 @@ class _TimelineState extends State<Timeline> {
       ),
       body: Container(
         height: mediaQuery.size.height,
-        child: ListView.builder(
-          itemBuilder: (ctx, index) {
-            return widget.tweets[index];
-          },
-          itemCount: widget.tweets.length,
+        child: RefreshIndicator(
+          onRefresh: () => _refresh(),
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              return widget.tweets[index];
+            },
+            itemCount: widget.tweets.length,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => startAddTweet(context, _ipAddress, _port),
+        onPressed: () => startAddTweet(context),
         child: const Icon(Icons.add),
       ),
     );
@@ -123,11 +127,18 @@ class _TimelineState extends State<Timeline> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      List<Tweet> serverTweets = await getTweets(_ipAddress, _port);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      List<Tweet> serverTweets = await getTweets();
       setState(() {
         widget.tweets = serverTweets;
       });
+    });
+  }
+
+  Future<void> _refresh() async {
+    List<Tweet> serverTweets = await getTweets();
+    setState(() {
+      widget.tweets = serverTweets;
     });
   }
 }
