@@ -58,8 +58,8 @@ class _ProfileState extends State<Profile> {
   var selectedItem = "";
   bool followsme = false;
   List<dynamic> userTweets = [];
-  List<dynamic> followers = [];
-  List<dynamic> following = [];
+  List<dynamic> followersList = [];
+  List<dynamic> followingList = [];
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -69,7 +69,7 @@ class _ProfileState extends State<Profile> {
   Future<void> getuserData() async {
     var data;
     print("getting user data");
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/user0");
+    var url = Uri.parse("http://192.168.1.8:3000/${widget._username}");
     try {
       var response = await http.get(
         url,
@@ -306,7 +306,8 @@ class _ProfileState extends State<Profile> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const Accounts_page()));
+                                                  Accounts_page(
+                                                      widget._username)));
                                     },
                                     child: Text(
                                       '${_followersCount} followers',
@@ -327,7 +328,8 @@ class _ProfileState extends State<Profile> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const Accounts_page()));
+                                                  Accounts_page(
+                                                      widget._username)));
                                     },
                                     child: Text(
                                       '${_followingCount} following',

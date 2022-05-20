@@ -725,5 +725,141 @@
     "followersCount": 1,
     "followsMe": false,
     "isMe": false
-  }
+  },
+  "BoodyFollowers": [
+    {
+      "_id": "62842415bb967e3904d9f7ac",
+      "username": "user2",
+      "name": "user2",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/500.jpg",
+      "bio": "I am user2",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842418bb967e3904d9f801",
+      "username": "boody",
+      "name": "Abdelrahman",
+      "image": null,
+      "bio": "",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": true
+    }
+  ],
+  "Boodyfollowing": [
+    {
+      "_id": "62842415bb967e3904d9f7ab",
+      "username": "user1",
+      "name": "user1",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1000.jpg",
+      "bio": "I am user1",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ac",
+      "username": "user2",
+      "name": "user2",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/500.jpg",
+      "bio": "I am user2",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ad",
+      "username": "user3",
+      "name": "user3",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/968.jpg",
+      "bio": "I am user3",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ae",
+      "username": "user4",
+      "name": "user4",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/925.jpg",
+      "bio": "I am user4",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7af",
+      "username": "user5",
+      "name": "user5",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1206.jpg",
+      "bio": "I am user5",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b0",
+      "username": "user6",
+      "name": "user6",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/239.jpg",
+      "bio": "I am user6",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b1",
+      "username": "user7",
+      "name": "user7",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/644.jpg",
+      "bio": "I am user7",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b2",
+      "username": "user8",
+      "name": "user8",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1019.jpg",
+      "bio": "I am user8",
+      "protectedTweets": true,
+      "followsMe": true,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b3",
+      "username": "Boody",
+      "name": "Boody",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1068.jpg",
+      "bio": "I am user9",
+      "protectedTweets": true,
+      "followsMe": true,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842418bb967e3904d9f801",
+      "username": "boody",
+      "name": "Abdelrahman",
+      "image": null,
+      "bio": "",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": true
+    }
+  ]
 }
