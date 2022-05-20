@@ -12,20 +12,18 @@ class SearchItem extends StatelessWidget {
   late String _handle;
   CircleAvatar _userImage = userImages;
 
-  late String trends;
+  late String trends = " ";
   //all data concerning tweets and users are named and optional
   //we will only need them according to set type
 
   ///named constructor to map the data fetched from servers
   SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem) {
     // _tweetText = jsonSearchItem['tweetText'] as String;
-    username = jsonSearchItem['username'] as String;
-    _handle = jsonSearchItem['handle'] as String;
-    trends = jsonSearchItem['trends'] as String;
+    username = jsonSearchItem['name'] as String;
+    _handle = jsonSearchItem['username'] as String;
+    // trends = jsonSearchItem['trends'] as String;
   }
-  SearchItem.jsonSearchTrend(Map<String, dynamic> jsonSearchItem) {
-    trends = jsonSearchItem['trend'] as String;
-  }
+
   @override
   Widget build(BuildContext context) {
     return username == ''

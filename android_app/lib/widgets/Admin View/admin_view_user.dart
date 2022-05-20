@@ -64,7 +64,7 @@ class AdminViewUser extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: isAndroid ? width * (140 / 329.7) : 200,
+                width: isAndroid ? width * (120 / 329.7) : 200,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -199,9 +199,8 @@ class AdminViewUser extends StatelessWidget {
                 color: Color.fromARGB(255, 122, 122, 122),
               ),
             ),
-      trailing: isAndroid
-          ? Container()
-          : Row(mainAxisSize: MainAxisSize.min, children: [
+      trailing: !isAndroid
+          ? Row(mainAxisSize: MainAxisSize.min, children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 3, 136, 8),
@@ -274,7 +273,8 @@ class AdminViewUser extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 40),
-            ]),
+            ])
+          : SizedBox(width: 0, height: 0),
     );
   }
 }
