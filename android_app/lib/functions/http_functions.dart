@@ -57,10 +57,7 @@ Future<Map<String, dynamic>> httpRequestGet(
 
   var response = await http.Response.fromStream(streamedResponse);
 
-  //Print the last 10 characters of the response body
-  //print(response.body.substring(response.body.length - 15));
   print('Response status: ${response.statusCode}');
-  //print('Response body: ${response.body.substring(1000)}');
   var temp = json.decode(response.body) as Map<String, dynamic>;
 
   return temp;
