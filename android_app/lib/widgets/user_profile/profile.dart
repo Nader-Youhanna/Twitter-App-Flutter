@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/user_profile/Follow_button.dart';
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,9 @@ const List<Choice> choices = <Choice>[
   Choice(title: 'Report', icon: Icons.directions_bike),
 ];
 
-///class tat creates user profile page, whether this user is myself or another user
+///class that creates user profile page, whether this user is myself or another user
 class Profile extends StatefulWidget {
-  String _username = 'Default user';
+  String _username = 'Defaultuser';
 //int userId = 0;
   bool isAdmin = false;
 
@@ -56,6 +57,7 @@ class _ProfileState extends State<Profile> {
   String website = "";
   var selectedItem = "";
   bool followsme = false;
+  List<Tweet> userTweets = [];
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();

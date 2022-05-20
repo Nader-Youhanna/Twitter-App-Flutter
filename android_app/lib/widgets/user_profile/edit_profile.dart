@@ -20,14 +20,16 @@ class Edit_Profile extends StatefulWidget {
 }
 
 class _Edit_ProfileState extends State<Edit_Profile> {
-  String HeaderImage = "";
-  String profileImage = "";
-  String name = "nada";
-  String _bio = "this is my bio";
-  String country = "Egypt";
-  String city = "";
-  String website = "www.website.com";
-  DateTime birthdate = DateTime.parse("2022-04-25T02:26:31.367Z");
+  String HeaderImage =
+      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1238.jpg";
+
+  late var profileImage;
+  late var name;
+  late var _bio;
+  late var country;
+  late var city;
+  String website = "";
+  late DateTime birthdate;
 
   Future PickDate(BuildContext context) async {
     final newdate = await showDatePicker(
@@ -44,23 +46,39 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     });
   }
 
-  Future<void> getData(String ipAddress, String port) async {
-    Map<String, dynamic> headers = {
-      "authorization": token,
-      "Content-Type": "application/json"
-    };
-    Map<String, dynamic> mapData = await httpRequestGet(
-        "http://" + ipAddress + ":" + port + "/settings/profile", headers);
-
-    if (mapData != null) {
-      HeaderImage = mapData['headerImage'] as String;
-      birthdate = DateTime.parse(mapData['birthdate'] as String);
-      name = mapData['name'] as String;
-      profileImage = mapData['image'] as String;
-      city = mapData['city'] as String;
-      country = mapData['country'] as String;
-      _bio = mapData['bio'] as String;
-      website = mapData['website'] as String;
+  Future<void> getUserData() async {
+    var data;
+    print("getting user data");
+    var url = Uri.parse("http://34.236.108.123:3000/settings/profile");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            HeaderImage = data['headerImage'];
+            birthdate = DateTime.parse(data['birthdate'] as String);
+            name = data['name'] as String;
+            profileImage = data['image'];
+            city = data['city'] as String;
+            country = data['country'] as String;
+            _bio = data['bio'] as String;
+            website = data['website'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
     }
   }
 
@@ -80,7 +98,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
           "bio": "${_bio}",
           "country": "${country}",
           "city": "${city}",
-          "website": "${website}",
+          //"website": "${website}",
           "birthdate": birthdate.toString()
         },
       ),
@@ -92,10 +110,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     setState(() {
-      getData(MY_IP_ADDRESS, "3000");
+      getUserData();
     });
   }
 
@@ -163,8 +179,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                       width: double.infinity,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/cover_image_sample.jpg"),
+                            image: NetworkImage("${HeaderImage}"),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -274,11 +289,19 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                   Container(
                     width: 200,
                     child: CSCPicker(
+                      flagState: CountryFlag.DISABLE,
                       layout: Layout.horizontal,
                       countrySearchPlaceholder: "Country",
+                      showCities: true,
+                      showStates: true,
+                      defaultCountry: DefaultCountry.Egypt,
                       citySearchPlaceholder: "City",
                       countryDropdownLabel: "*Country",
                       cityDropdownLabel: "*City",
+                      selectedItemStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
                       dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.white,
