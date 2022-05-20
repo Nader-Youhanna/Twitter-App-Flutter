@@ -52,29 +52,64 @@ class _ProfileState extends State<Profile> {
   DateTime createdAt = DateTime.parse("2022-04-25T02:26:31.367Z");
   var _followersCount = 0;
   var _followingCount = 0;
-  bool _myProfile = false;
+  var _myProfile;
   bool _alreadyFollowed = false;
   String website = "";
   var selectedItem = "";
   bool followsme = false;
-  List<Tweet> userTweets = [];
+  List<dynamic> userTweets = [];
+  List<dynamic> followers = [];
+  List<dynamic> following = [];
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
   ///function that sends a get request to the mock server to get the user's information
-  Future<void> httpRequestGet() async {
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
-    var response = await http.get(url);
+  Future<void> getuserData() async {
+    var data;
+    print("getting user data");
+    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/user0");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            username = data['username'] as String;
+            _myProfile = data['isMe'] as bool;
+            name = data['name'] as String;
+            birthdate = DateTime.parse(data['birthdate'] as String);
+            userTweets = data['tweets'] as List<dynamic>;
+            protectedTweets = data['protectedTweets'] as bool;
+            _followingCount = data['followingCount'] as int;
+            _followersCount = data['followersCount'] as int;
 
-    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    setState(() {
-      username = extractedMyInfo["username"];
-      bio = extractedMyInfo["bio"];
-      _followersCount = extractedMyInfo["followers"].length;
-      _followingCount = extractedMyInfo["following"].length;
-    });
+            if (_myProfile == false) {
+              followsme = data['followsMe'] as bool;
+            } else {
+              createdAt = DateTime.parse(data['createdAt'] as String);
+              country = data['country'] as String;
+              city = data['city'] as String;
+              bio = data['bio'] as String;
+              website = data['website'] as String;
+            }
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
   }
 
   ///function to create a sharable link of the current profile
@@ -85,10 +120,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     setState(() {
-      httpRequestGet();
+      getuserData();
     });
   }
 
@@ -228,7 +261,8 @@ class _ProfileState extends State<Profile> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            Edit_Profile()));
+                                                            Edit_Profile(widget
+                                                                ._username)));
                                               },
                                             )
                                           : Follow_button(_alreadyFollowed),
@@ -268,13 +302,11 @@ class _ProfileState extends State<Profile> {
                                 padding: EdgeInsets.only(left: 10, right: 5),
                                 child: TextButton(
                                     onPressed: () {
-                                      _myProfile
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Accounts_page()))
-                                          : (null);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Accounts_page()));
                                     },
                                     child: Text(
                                       '${_followersCount} followers',
@@ -291,13 +323,11 @@ class _ProfileState extends State<Profile> {
                                 padding: EdgeInsets.only(left: 10, right: 32),
                                 child: TextButton(
                                     onPressed: () {
-                                      _myProfile
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Accounts_page()))
-                                          : (null);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Accounts_page()));
                                     },
                                     child: Text(
                                       '${_followingCount} following',
