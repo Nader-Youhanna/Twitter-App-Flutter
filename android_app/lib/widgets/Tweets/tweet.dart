@@ -160,6 +160,27 @@ class Tweet extends StatelessWidget {
 
     _taggedUsers = List<String>.from(jsonTweet['taggedUsers']);
   }
+  Tweet.JsonUserProfileTweet(Map<String, dynamic> jsonTrendingTweet,
+      bool hideButtons, bool hideReplyTo)
+      : _key = jsonTrendingTweet['_id'],
+        _username = jsonTrendingTweet['username'],
+        _displayName = jsonTrendingTweet['name'],
+        _email = "dummy",
+        _tweetBody = jsonTrendingTweet['body'] as String,
+        _repliesCount = 0,
+        _retweetersCount = 0,
+        _favouritersCount = 0,
+        _createdAt = DateTime.parse(
+          jsonTrendingTweet['createdAt'] as String,
+        ),
+
+        //_userId = jsonTweet['userId'] as int,
+        _hideButtons = hideButtons,
+        _hideReplyTo = hideReplyTo,
+        _isLiked = false,
+        _isRetweeted = false,
+        _tweetMedia = List<String>.from(jsonTrendingTweet['media']),
+        _taggedUsers = List<String>.from(jsonTrendingTweet['taggedUsers']);
 
   /*
     Tweet.jsonTweet(

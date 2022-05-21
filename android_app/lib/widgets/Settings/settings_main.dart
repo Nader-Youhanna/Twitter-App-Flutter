@@ -40,7 +40,7 @@ class _SettingsState extends State<Settings> {
   Future<void> getuserData() async {
     var data;
     print("getting user data");
-    var url = Uri.parse("http://192.168.1.8:3000/${widget._username}");
+    var url = Uri.parse("http://34.236.108.123:3000/${widget._username}");
     try {
       var response = await http.get(
         url,

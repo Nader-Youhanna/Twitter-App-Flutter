@@ -29,9 +29,9 @@ class _TweetTabState extends State<TweetTab> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<List<Tweet>> getUserLikes() async {
-    print("Adding tweets");
+    print("Adding user tweets");
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": 'Bearer ' + token,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
@@ -42,7 +42,8 @@ class _TweetTabState extends State<TweetTab> {
     for (int i = 0; i < mapTweet['tweets'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.jsonTweet(mapTweet['tweets'][i], false, true));
+      tweets
+          .add(Tweet.JsonUserProfileTweet(mapTweet['tweets'][i], false, true));
     }
 
     return tweets;

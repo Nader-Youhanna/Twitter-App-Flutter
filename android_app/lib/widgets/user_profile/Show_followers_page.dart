@@ -44,7 +44,7 @@ class _Accounts_pageState extends State<Accounts_page> {
         data = json.decode(response.body);
         for (int i = 0; i < data['followers'].length; i++) {
           followerslist.add(User_Item.jsonUserItem(data['followers'][i]));
-
+//for mock server
           // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
         }
       } else {
@@ -60,7 +60,7 @@ class _Accounts_pageState extends State<Accounts_page> {
     List<User_Item> followinglist = <User_Item>[];
     var data;
     print("fetching following");
-    // var url = Uri.parse("http://192.168.1.8:3000/Boodyfollowing");
+    //var url = Uri.parse("http://192.168.1.8:3000/Boodyfollowing");
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget.username}/following");
     try {
@@ -75,7 +75,7 @@ class _Accounts_pageState extends State<Accounts_page> {
         data = json.decode(response.body);
         for (int i = 0; i < data['following'].length; i++) {
           followinglist.add(User_Item.jsonUserItem(data['following'][i]));
-
+//for mock server
           // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
         }
       } else {

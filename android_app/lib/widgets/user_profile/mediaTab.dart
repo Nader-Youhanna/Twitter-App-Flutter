@@ -32,7 +32,7 @@ class _MediaTabState extends State<MediaTab> {
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": 'Bearer ' + token,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
@@ -43,7 +43,7 @@ class _MediaTabState extends State<MediaTab> {
     for (int i = 0; i < mapTweet['media'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.jsonTweet(mapTweet['media'][i], false, true));
+      tweets.add(Tweet.JsonUserProfileTweet(mapTweet['media'][i], false, true));
     }
 
     return tweets;

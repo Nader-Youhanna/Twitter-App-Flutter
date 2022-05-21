@@ -53,7 +53,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   Future<void> getUserData() async {
     var data;
     print("getting user data");
-    var url = Uri.parse("http://192.168.1.8:3000/SettingsProfile");
+    var url = Uri.parse("http://34.236.108.123:3000/settings/profile");
     try {
       var response = await http.get(
         url,
@@ -75,7 +75,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
             city = data['city'] as String;
             country = data['country'] as String;
             _bio = data['bio'] as String;
-            website = data['website'] as String;
+            //website = data['website'] as String;
           });
         }
       } else {
