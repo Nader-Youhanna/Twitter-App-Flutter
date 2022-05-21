@@ -10,6 +10,7 @@ const CircleAvatar userImages = CircleAvatar(
 class SearchItem extends StatelessWidget {
   late String username;
   late String _handle;
+  String userID = '';
   CircleAvatar _userImage = userImages;
 
   late String trends = " ";
@@ -17,12 +18,12 @@ class SearchItem extends StatelessWidget {
   //we will only need them according to set type
 
   ///named constructor to map the data fetched from servers
-  SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem) {
-    // _tweetText = jsonSearchItem['tweetText'] as String;
-    username = jsonSearchItem['name'] as String;
-    _handle = jsonSearchItem['username'] as String;
-    // trends = jsonSearchItem['trends'] as String;
-  }
+  SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem)
+      : username = jsonSearchItem['name'] as String,
+        _handle = jsonSearchItem['username'] as String,
+        userID = jsonSearchItem['_id'] as String;
+
+  // trends = jsonSearchItem['trends'] as String;
 
   @override
   Widget build(BuildContext context) {

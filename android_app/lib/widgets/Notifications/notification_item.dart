@@ -17,6 +17,8 @@ class NotificationItem extends StatelessWidget {
 
   ///the notification type (like, retweet, block)
   late Tweet tweet;
+  String tweetID = "";
+  String notificationID = "";
 
   ///the tweet that the notification is concerned with
   CircleAvatar userImage = const CircleAvatar(
@@ -26,9 +28,11 @@ class NotificationItem extends StatelessWidget {
 
 //named constructor to map the elements fetched from server
   NotificationItem.jsonNotification(Map<String, dynamic> jsonNotification) {
-    username = jsonNotification['username'] as String;
-    notificationType = jsonNotification['type'] as String;
-    tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
+    username = jsonNotification['sender'] as String;
+    notificationType = jsonNotification['activity'] as String;
+    // tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
+    notificationID = jsonNotification['notificationId'] as String;
+    tweetID = jsonNotification['tweetId'] as String;
   }
 
   ///function that constructs notification string according to the type fetched from server
@@ -38,6 +42,12 @@ class NotificationItem extends StatelessWidget {
       msg = '  liked your tweet';
     } else if (notificationType == 'retweet') {
       msg = '  retweeted your tweet';
+    } else if (notificationType == 'tag') {
+      msg = '  tagged you in a tweet';
+    } else if (notificationType == 'quoteRetweet') {
+      msg = '  retweeted with quote on your tweet';
+    } else if (notificationType == 'reply') {
+      msg = '  replied on your tweet';
     }
 
     return msg;

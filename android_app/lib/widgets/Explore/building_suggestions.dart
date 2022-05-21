@@ -8,42 +8,43 @@ import '../../constants.dart';
 ///this is a class built to fetch the suggestion list for the search bar from server
 class BuildingSuggestions {
   List<SearchItem> searchResults = [];
-  var data = [];
+
   Future<List<SearchItem>> getSearchItems({String? query}) async {
     print("Adding search elements");
 
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/searching");
-    try {
-      var response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
-        },
-      );
-      print(response.body);
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        searchResults = data.map((e) => SearchItem.jsonSearchItem(e)).toList();
-        if (query != null) {
-          //we filter the list that we got according to the query
+    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/search?q=f&f=user");
+    Map<String, dynamic> headers = {
+      "Authorization": token,
+      "Content-Type": "application/json"
+    };
 
-          searchResults = searchResults
-              .where((element) => element.username != ""
-                  ? element.username
-                      .toLowerCase()
-                      .contains((query.toLowerCase()))
-                  : element.trends
-                      .toLowerCase()
-                      .contains((query.toLowerCase())))
-              .toList();
-        }
-      } else {
-        print("fetch error");
-      }
-    } on Exception catch (e) {
-      print('error: $e');
+    var request = http.Request('GET', url);
+    if (headers != null) {
+      request.headers['Content-Type'] = headers['Content-Type'];
+      request.headers['Authorization'] = headers['Authorization'];
     }
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
+
+    print('Response status: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+    var mapData = json.decode(response.body);
+    print("body is decoded");
+
+    searchResults = mapData.map((e) => SearchItem.jsonSearchItem(e)).toList();
+    print("kkkkkkkkkkk");
+    if (query != null) {
+      //we filter the list that we got according to the query
+
+      searchResults = searchResults
+          .where((element) => element.username != ""
+              ? element.username.toLowerCase().contains((query.toLowerCase()))
+              : element.trends.toLowerCase().contains((query.toLowerCase())))
+          .toList();
+    }
+
     return searchResults;
+    // }
   }
 }

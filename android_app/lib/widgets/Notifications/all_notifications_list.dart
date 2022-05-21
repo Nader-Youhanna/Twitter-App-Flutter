@@ -30,7 +30,8 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     List<NotificationItem> notificationList = <NotificationItem>[];
     var data = [];
     print("Adding notifications");
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/notifications");
+    //var url = Uri.parse("http://$MY_IP_ADDRESS:3000/notifications");
+    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/notificationsArray");
     try {
       var response = await http.get(url);
       // print('Response body: ${response.body}');

@@ -65,12 +65,55 @@ class MySearchDelegate extends SearchDelegate {
   @override
 
   ///Function to display search results (needs to be overrriden but it is not used in this case)
-  Widget buildResults(BuildContext context) => Container(
-        child: const Text(
-          "Search result",
-          style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),
-        ),
-      );
+  Widget buildResults(BuildContext context) {
+    return query.isEmpty
+        ? const Center(
+            heightFactor: 5,
+            child: Text(
+              'Try searching for people, topics or keywords',
+              style: TextStyle(
+                color: Color.fromARGB(255, 90, 90, 90),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        : FutureBuilder<List<SearchItem>>(
+            future: _suggestionsList.getSearchItems(query: query),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.data == null)
+                    return Text('no data');
+                  else {
+                    List<SearchItem> data = snapshot.data!;
+                    return ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        height: 1,
+                      ),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        final suggestion = data[index];
+                        return GestureDetector(
+                          child: suggestion,
+                          onTap: suggestion.username != ''
+                              //this means the suggestion item is a user
+                              ? () =>
+                                  _goToUserProfile(context, suggestion.username)
+                              : () => _goToTweetList(
+                                  context,
+                                  suggestion
+                                      .trends), //this means the suggestion item is a tweet
+                        );
+                      },
+                    );
+                  }
+              }
+            });
+  }
 
   ///function to display the search suggestions as the user is writting the query
   @override
