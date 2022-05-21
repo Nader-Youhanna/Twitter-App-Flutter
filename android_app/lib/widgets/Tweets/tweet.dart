@@ -78,6 +78,62 @@ class Tweet extends StatelessWidget {
       );
     }
   }
+  Tweet.jsonTweetByID(
+      Map<String, dynamic> jsonTweetByID, bool hideButtons, bool hideReplyTo)
+      : _key = "",
+        _username = jsonTweetByID['username'] as String,
+        _displayName = jsonTweetByID['name'] as String,
+        _email = jsonTweetByID['email'] as String,
+        _tweetBody = jsonTweetByID['tweetBody'] as String,
+        _repliesCount = jsonTweetByID['repliesCount'] as int,
+        _retweetersCount = jsonTweetByID['retweetersCount'] as int,
+        _favouritersCount = jsonTweetByID['favoritersCount'] as int,
+        _createdAt = DateTime.parse(
+          jsonTweetByID['createdAt'] as String,
+        ),
+
+        //_userId = jsonTweet['userId'] as int,
+        _hideButtons = hideButtons,
+        _hideReplyTo = hideReplyTo,
+        _isLiked =
+            jsonTweetByID['isLikedByUser'].toString().toLowerCase() == 'true',
+        _isRetweeted =
+            jsonTweetByID['isRetweetedByUser'].toString().toLowerCase() ==
+                'true' {
+    _tweetMedia = List<String>.from(jsonTweetByID['tweetMedia']);
+
+    _taggedUsers = List<String>.from(jsonTweetByID['taggedUsers']);
+
+    //set _userImage
+    if (jsonTweetByID['userImage'] != null) {
+      _userImage = CircleAvatar(
+        backgroundImage: NetworkImage(jsonTweetByID['userImage']),
+        backgroundColor: Colors.transparent,
+        radius: 20.0,
+      );
+    }
+  }
+  Tweet.jsonTrendingTweet(Map<String, dynamic> jsonTrendingTweet,
+      bool hideButtons, bool hideReplyTo)
+      : _key = jsonTrendingTweet['_id'],
+        _username = "dummy",
+        _displayName = "dummy",
+        _email = "dummy",
+        _tweetBody = jsonTrendingTweet['body'] as String,
+        _repliesCount = 0,
+        _retweetersCount = 0,
+        _favouritersCount = 0,
+        _createdAt = DateTime.parse(
+          jsonTrendingTweet['createdAt'] as String,
+        ),
+
+        //_userId = jsonTweet['userId'] as int,
+        _hideButtons = hideButtons,
+        _hideReplyTo = hideReplyTo,
+        _isLiked = false,
+        _isRetweeted = false,
+        _tweetMedia = List<String>.from(jsonTrendingTweet['media']),
+        _taggedUsers = List<String>.from(jsonTrendingTweet['taggedUsers']);
 
   Tweet.jsonReply(
       Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)

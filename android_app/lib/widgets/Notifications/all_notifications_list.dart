@@ -28,24 +28,33 @@ class AllNotificationsListState extends State<AllNotificationsList> {
   ///Function to get the list of notifications and their types from backend
   Future<List<NotificationItem>> getNotifications() async {
     List<NotificationItem> notificationList = <NotificationItem>[];
-    var data = [];
+
     print("Adding notifications");
-    //var url = Uri.parse("http://$MY_IP_ADDRESS:3000/notifications");
-    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/notificationsArray");
-    try {
-      var response = await http.get(url);
-      // print('Response body: ${response.body}');
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        if (data != null) {
-          notificationList =
-              data.map((e) => NotificationItem.jsonNotification(e)).toList();
-        }
-      } else {
-        print("fetch error");
-      }
-    } on Exception catch (e) {
-      print('error: $e');
+    var url = Uri.parse(
+        "http://$MY_IP_ADDRESS:3000/getnotifications"); //url used for mock server
+    // var url = Uri.parse(
+    //     "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
+    Map<String, dynamic> headers = {
+      "Authorization": token,
+      "Content-Type": "application/json"
+    };
+    var request = http.Request('GET', url);
+    if (headers != null) {
+      request.headers['Content-Type'] = headers['Content-Type'];
+      request.headers['Authorization'] = headers['Authorization'];
+    }
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
+
+    print('Response status: ${response.statusCode}');
+    //print('Response Body: ${response.body}');
+
+    var mapData = json.decode(response.body);
+
+    for (int i = 0; i < mapData['notificationsArray'].length; i++) {
+      notificationList.add(
+          NotificationItem.jsonNotification(mapData['notificationsArray'][i]));
     }
 
     return notificationList;
