@@ -28,6 +28,7 @@ class _Accounts_pageState extends State<Accounts_page> {
     var data = [];
     print("fetching trending topics");
     var url = Uri.parse("http://192.168.1.8:3000/BoodyFollowers");
+    // var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/${widget._username}/followers");
     try {
       var response = await http.get(
         url,
@@ -53,6 +54,7 @@ class _Accounts_pageState extends State<Accounts_page> {
     var data = [];
     print("fetching trending topics");
     var url = Uri.parse("http://192.168.1.8:3000/Boodyfollowing");
+    // var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/${widget._username}/following");
     try {
       var response = await http.get(
         url,
