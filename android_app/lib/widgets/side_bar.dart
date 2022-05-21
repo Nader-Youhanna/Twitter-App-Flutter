@@ -145,7 +145,7 @@ class SideBar extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return Settings(token);
+                    return Settings(token, username, "");
                   },
                 ),
               );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../functions/tweet_functions.dart';
@@ -6,6 +7,8 @@ import './Tweets/tweet.dart';
 import '../widgets/user_profile/profile.dart';
 import './side_bar.dart';
 import './Settings/settings_main.dart';
+import 'Explore/search_bar_explore.dart';
+import 'Search/timeline_delegate.dart';
 
 /// This class is used to represent the timeline page.
 class Timeline extends StatefulWidget {
@@ -40,7 +43,7 @@ class _TimelineState extends State<Timeline> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Settings(token);
+          return Settings(token, widget._userName, "");
         },
       ),
     );
@@ -50,13 +53,15 @@ class _TimelineState extends State<Timeline> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     _setIPAddress(MY_IP_ADDRESS);
-
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Scaffold(
       key: _scaffoldKey,
       drawer: SideBar(name: 'nido', username: 'nido123'),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 2.0,
+        elevation: 0.0,
         leading: IconButton(
           icon: const Icon(
               Icons.person_rounded), //should be changed to google profile icon
@@ -68,21 +73,37 @@ class _TimelineState extends State<Timeline> {
         ),
         actions: [
           Container(
-            width: 260,
+            width: isAndroid ? width * (290 / 392.7) : width * (1190 / 1280),
             padding: const EdgeInsets.all(10),
             child: TextField(
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(10.0),
-                hintStyle: const TextStyle(
-                  fontFamily: 'RalewayMedium',
-                  fontSize: 14.5,
+                showCursor: false,
+                readOnly: true,
+                decoration: InputDecoration(
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(10.0),
+                  fillColor: Color.fromARGB(255, 229, 233, 235),
+                  hintStyle: const TextStyle(
+                    fontSize: 14.5,
+                    color: Color.fromARGB(255, 100, 99, 99),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: _appBarText,
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                hintText: _appBarText,
-              ),
-            ),
+                // onTap: () {
+                //   //redirects us to the page with the searching elements
+                //   showSearch(
+                //       context: context,
+                //       delegate: MySearchDelegate(' '));
+                // }
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: TimelineSearchDelegate(),
+                  );
+                }),
           ),
 
           IconButton(
@@ -124,8 +145,10 @@ class _TimelineState extends State<Timeline> {
     }
   }
 
+  bool isAndroid = true;
   @override
   void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       List<Tweet> serverTweets = await getTweets();
