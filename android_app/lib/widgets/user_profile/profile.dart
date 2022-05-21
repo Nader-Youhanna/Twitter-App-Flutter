@@ -1,6 +1,10 @@
 import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:android_app/widgets/user_profile/Follow_button.dart';
 import 'package:android_app/widgets/user_profile/LikesTab.dart';
+import 'package:android_app/widgets/user_profile/TweetsandrepliesTab.dart';
+import 'package:android_app/widgets/user_profile/Tweetstab.dart';
+import 'package:android_app/widgets/user_profile/mediaTab.dart';
+
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/timeline.dart';
@@ -411,10 +415,10 @@ class _ProfileState extends State<Profile> {
                               ])
                         : TabBarView(
                             children: [
+                              TweetTab(username, username),
+                              TweetsAndReplies(username, username),
+                              MediaTab(username, username),
                               LikesTab(username, username),
-                              Timeline(username, username),
-                              Timeline(username, username),
-                              Timeline(username, username),
                             ],
                           ),
                   ),

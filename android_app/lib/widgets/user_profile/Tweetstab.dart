@@ -14,18 +14,18 @@ import 'package:android_app/functions/http_functions.dart';
 import '../../constants.dart';
 
 /// This class is used to represent the timeline page.
-class LikesTab extends StatefulWidget {
+class TweetTab extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
 
   String _name = "";
   String _username = "";
 
-  LikesTab(this._name, this._username);
+  TweetTab(this._name, this._username);
   @override
-  State<LikesTab> createState() => _LikesTabState();
+  State<TweetTab> createState() => _TweetTabState();
 }
 
-class _LikesTabState extends State<LikesTab> {
+class _TweetTabState extends State<TweetTab> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<List<Tweet>> getUserLikes() async {
@@ -35,14 +35,14 @@ class _LikesTabState extends State<LikesTab> {
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
-        "http://192.168.1.8:3000/${widget._username}/likes", headers);
+        "http://192.168.1.8:3000/${widget._username}", headers);
 
     //print("=========" + mapTweet['data'][0].toString());
     List<Tweet> tweets = <Tweet>[];
-    for (int i = 0; i < mapTweet['likes'].length; i++) {
+    for (int i = 0; i < mapTweet['tweets'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.jsonTweet(mapTweet['likes'][i], false, true));
+      tweets.add(Tweet.jsonTweet(mapTweet['tweets'][i], false, true));
     }
 
     return tweets;
