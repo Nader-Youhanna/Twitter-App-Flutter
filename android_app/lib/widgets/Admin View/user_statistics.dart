@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +31,25 @@ class _UserStatisticsState extends State<UserStatistics> {
     List<UserTweets> userData = <UserTweets>[];
     var data = [];
     print("Adding user tweets statistics");
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/AdminUserStatsTweets");
-    try {
-      var response = await http.get(url);
-      // print('Response body: ${response.body}');
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        if (data != null) {
-          userData = data.map((e) => UserTweets.jsonUserTweets(e)).toList();
-        }
-      } else {
-        print("fetch error");
-      }
-    } on Exception catch (e) {
-      print('error: $e');
+    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/AdminUserStatsTweets");
+    Map<String, dynamic> headers = {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
+    var request = http.Request('GET', url);
+    if (headers != null) {
+      request.headers['Content-Type'] = headers['Content-Type'];
+      request.headers['Authorization'] = headers['Authorization'];
+    }
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
+
+    print('Response status: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+    var mapData = json.decode(response.body);
+    for (int i = 0; i < mapData.length; i++) {
+      userData.add(UserTweets.jsonUserTweets(mapData[i]));
     }
 
     return userData;
@@ -50,6 +57,10 @@ class _UserStatisticsState extends State<UserStatistics> {
 
   late List<UserTweets> userData = <UserTweets>[];
   bool isAndroid = true;
+  void setData() async {
+    userData = await getUserTweetStats();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,15 +68,16 @@ class _UserStatisticsState extends State<UserStatistics> {
     WidgetsBinding.instance.addPostFrameCallback((_) => getUserTweetStats());
     //userData = getUserTweetStats() as List<UserTweets>;
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
-
-    getUserTweetStats().then((usersData) {
-      userData = usersData;
+    setState(() {
+      setData();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print("testing user data");
     if (userData != null) {
+      print("printingt");
       print(userData);
       return SafeArea(
           child: Scaffold(
@@ -116,7 +128,14 @@ class UserTweets {
   String name = "Page A";
 
   UserTweets.jsonUserTweets(Map<String, dynamic> jsonUserTweets) {
-    value = jsonUserTweets['value'] as double;
-    x = jsonUserTweets['name'] as double;
+    value = checkDouble(jsonUserTweets['value']);
+    x = checkDouble(jsonUserTweets['name']);
+  }
+  static double checkDouble(dynamic value) {
+    if (value is String) {
+      return double.parse(value);
+    } else {
+      return value.toDouble();
+    }
   }
 }

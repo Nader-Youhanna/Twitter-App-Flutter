@@ -26,7 +26,7 @@ class NotificationTweetState extends State<NotificationTweet> {
     var url = Uri.parse(
         "http://$MY_IP_ADDRESS:3000/home/$tweetID/getTweetById"); //url used for mock server and backend
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -76,8 +76,23 @@ class NotificationTweetState extends State<NotificationTweet> {
               case ConnectionState.waiting:
                 return Center(child: CircularProgressIndicator());
               default:
-                List<Tweet> data = snapshot.data!;
-                return data[0];
+                if (snapshot.data == null) {
+                  return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // SizedBox(height: 100),
+                        Center(child: CircularProgressIndicator()),
+                        SizedBox(height: 50),
+                        Center(
+                          child: Text('Server error..please wait'),
+                        )
+                      ]);
+                } else {
+                  List<Tweet> data = snapshot.data!;
+                  return data[0];
+                }
             }
           }),
     );

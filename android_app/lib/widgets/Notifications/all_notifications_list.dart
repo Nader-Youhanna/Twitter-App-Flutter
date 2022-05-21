@@ -86,85 +86,100 @@ class AllNotificationsListState extends State<AllNotificationsList> {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             default:
-              List<NotificationItem> data = snapshot.data!;
-              return Container(
-                  child: data.isNotEmpty
-                      ? Stack(children: [
-                          RefreshIndicator(
-                            child: ListView.builder(
-                              clipBehavior: Clip.hardEdge,
-                              padding: const EdgeInsets.all(0),
-                              itemCount: data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  //this container should contain actual notifications not list elements
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black,
-                                        offset: Offset(0.0, 1.0), //(x,y)
-                                        blurRadius: 1.0,
-                                      ),
-                                    ],
-                                  ),
-                                  padding: const EdgeInsets.all(0),
-                                  height: height * (100 / 825.5),
-                                  //color: Colors.white,
-                                  child: data[index],
-                                );
+              if (snapshot.data == null) {
+                return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      // SizedBox(height: 100),
+                      Center(child: CircularProgressIndicator()),
+                      SizedBox(height: 50),
+                      Center(
+                        child: Text('Server error..please wait'),
+                      )
+                    ]);
+              } else {
+                List<NotificationItem> data = snapshot.data!;
+                return Container(
+                    child: data.isNotEmpty
+                        ? Stack(children: [
+                            RefreshIndicator(
+                              child: ListView.builder(
+                                clipBehavior: Clip.hardEdge,
+                                padding: const EdgeInsets.all(0),
+                                itemCount: data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    //this container should contain actual notifications not list elements
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black,
+                                          offset: Offset(0.0, 1.0), //(x,y)
+                                          blurRadius: 1.0,
+                                        ),
+                                      ],
+                                    ),
+                                    padding: const EdgeInsets.all(0),
+                                    height: height * (100 / 825.5),
+                                    //color: Colors.white,
+                                    child: data[index],
+                                  );
+                                },
+                              ),
+                              onRefresh: () async {
+                                getNotifications();
+                                setState(() {});
                               },
+                              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                            )
+                          ])
+                        : RefreshIndicator(
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: height * (220 / 825.5)),
+                                  RichText(
+                                    text: const TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Join the conversation\n',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 30.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 100, 99, 99),
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //padding: const EdgeInsets.all(30),
+                              margin: const EdgeInsets.all(30),
                             ),
                             onRefresh: () async {
                               getNotifications();
                               setState(() {});
                             },
                             triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                          )
-                        ])
-                      : RefreshIndicator(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                SizedBox(height: height * (220 / 825.5)),
-                                RichText(
-                                  text: const TextSpan(
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.black,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Join the conversation\n',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 30.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 100, 99, 99),
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 15.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            //padding: const EdgeInsets.all(30),
-                            margin: const EdgeInsets.all(30),
-                          ),
-                          onRefresh: () async {
-                            getNotifications();
-                            setState(() {});
-                          },
-                          triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                        ));
+                          ));
+              }
           }
         });
   }

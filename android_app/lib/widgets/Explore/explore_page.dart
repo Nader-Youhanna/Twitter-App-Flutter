@@ -58,7 +58,7 @@ class ExplorePageState extends State<ExplorePage> {
     print("fetching trending topics");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore");
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -71,7 +71,7 @@ class ExplorePageState extends State<ExplorePage> {
     var response = await http.Response.fromStream(streamedResponse);
 
     print('Response status: ${response.statusCode}');
-    //print('Response Body: ${response.body}');
+    print('Response Body: ${response.body}');
     var mapData = json.decode(response.body);
     for (int i = 0; i < mapData['hashtags'].length; i++) {
       topicList.add(TrendingTopic.jsonTrend(mapData['hashtags'][i]));
@@ -170,58 +170,74 @@ class ExplorePageState extends State<ExplorePage> {
                   case ConnectionState.waiting:
                     return Center(child: CircularProgressIndicator());
                   default:
-                    List<TrendingTopic> data = snapshot.data!;
-                    for (int i = 0; i < data.length; i++) {
-                      data[i].trendingNumber = i + 1;
-                    }
-                    return data.isNotEmpty
-                        ? RefreshIndicator(
-                            child: ListView.builder(
-                                clipBehavior: Clip.hardEdge,
-                                padding: const EdgeInsets.all(0),
-                                itemCount: data.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return data[index];
-                                }),
-                            onRefresh: () async {
-                              getTrendingTopics();
-                              setState(() {});
-                            },
-                            triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                          )
-                        : Container(
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 220),
-                                RichText(
-                                  text: const TextSpan(
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.black,
+                    if (snapshot.data == null) {
+                      return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            // SizedBox(height: 100),
+                            Center(child: CircularProgressIndicator()),
+                            SizedBox(height: 50),
+                            Center(
+                              child: Text('Server error..please wait'),
+                            )
+                          ]);
+                    } else {
+                      List<TrendingTopic> data = snapshot.data!;
+                      for (int i = 0; i < data.length; i++) {
+                        data[i].trendingNumber = i + 1;
+                      }
+                      return data.isNotEmpty
+                          ? RefreshIndicator(
+                              child: ListView.builder(
+                                  clipBehavior: Clip.hardEdge,
+                                  padding: const EdgeInsets.all(0),
+                                  itemCount: data.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return data[index];
+                                  }),
+                              onRefresh: () async {
+                                getTrendingTopics();
+                                setState(() {});
+                              },
+                              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                            )
+                          : Container(
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 220),
+                                  RichText(
+                                    text: const TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Nothing to see here\n',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 34.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        TextSpan(
+                                          text: '__ yet.',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 34.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Nothing to see here\n',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 34.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text: '__ yet.',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 34.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            //padding: const EdgeInsets.all(30),
-                            margin: const EdgeInsets.all(30),
-                          );
+                                ],
+                              ),
+                              //padding: const EdgeInsets.all(30),
+                              margin: const EdgeInsets.all(30),
+                            );
+                    }
                 }
               })),
       floatingActionButton: FloatingActionButton(

@@ -1,5 +1,5 @@
 {
-  "search?q=bo&f": {
+  "search?q=f&f=user": {
     "users": [
       {
         "_id": "62688cbf2b7b14dcc3879869",
@@ -877,56 +877,12 @@
   ],
   "AdminUserStatsTweets": [
     {
-      "name": 0,
-      "value": 0
-    },
-    {
-      "name": 0.5,
-      "value": 10
-    },
-    {
-      "name": 1,
-      "value": 15
-    },
-    {
-      "name": 1.5,
-      "value": 30
-    },
-    {
-      "name": 2,
-      "value": 70
-    },
-    {
-      "name": 3,
-      "value": 100
+      "name": 10.89,
+      "value": 5.00
     }
+   
   ],
-  "AdminUserStatsTweets": [
-    {
-      "name": 0,
-      "value": 0
-    },
-    {
-      "name": 0.5,
-      "value": 10
-    },
-    {
-      "name": 1,
-      "value": 15
-    },
-    {
-      "name": 1.5,
-      "value": 30
-    },
-    {
-      "name": 2,
-      "value": 70
-    },
-    {
-      "name": 3,
-      "value": 100
-    }
-  ],
+  
   "SettingsProfile": {
     "headerImage": [],
     "_id": "624c57aea9c0d76fb5d6afff",

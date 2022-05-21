@@ -76,9 +76,20 @@ class TimelineSearchDelegate extends SearchDelegate {
                 case ConnectionState.waiting:
                   return Center(child: CircularProgressIndicator());
                 default:
-                  if (snapshot.data == null)
-                    return Text('no data');
-                  else {
+                  if (snapshot.data == null) {
+                    return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          // SizedBox(height: 100),
+                          Center(child: CircularProgressIndicator()),
+                          SizedBox(height: 50),
+                          Center(
+                            child: Text('Server error..please wait'),
+                          )
+                        ]);
+                  } else {
                     List<Tweet> data = snapshot.data!;
                     return ListView.separated(
                       separatorBuilder: (BuildContext context, int index) =>
@@ -129,29 +140,44 @@ class TimelineSearchDelegate extends SearchDelegate {
                 case ConnectionState.waiting:
                   return Center(child: CircularProgressIndicator());
                 default:
-                  List<Tweet> data = snapshot.data!;
-                  return ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(
-                      height: 1,
-                    ),
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      final suggestion = data[index];
-                      // return GestureDetector(
-                      //   child: suggestion,
-                      //   onTap: suggestion.username != ''
-                      //       //this means the suggestion item is a user
-                      //       ? () =>
-                      //           _goToUserProfile(context, suggestion.username)
-                      //       : () => _goToTweetList(
-                      //           context,
-                      //           suggestion
-                      //               .trends), //this means the suggestion item is a tweet
-                      // );
-                      return suggestion;
-                    },
-                  );
+                  if (snapshot.data == null) {
+                    return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          // SizedBox(height: 100),
+                          Center(child: CircularProgressIndicator()),
+                          SizedBox(height: 50),
+                          Center(
+                            child: Text('Server error..please wait'),
+                          )
+                        ]);
+                  } else {
+                    List<Tweet> data = snapshot.data!;
+                    return ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        height: 1,
+                      ),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        final suggestion = data[index];
+                        // return GestureDetector(
+                        //   child: suggestion,
+                        //   onTap: suggestion.username != ''
+                        //       //this means the suggestion item is a user
+                        //       ? () =>
+                        //           _goToUserProfile(context, suggestion.username)
+                        //       : () => _goToTweetList(
+                        //           context,
+                        //           suggestion
+                        //               .trends), //this means the suggestion item is a tweet
+                        // );
+                        return suggestion;
+                      },
+                    );
+                  }
               }
             });
   }

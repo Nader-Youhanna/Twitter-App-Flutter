@@ -21,7 +21,7 @@ Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
 Future<List<Tweet>> getTweets() async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "Authorization": token,
+    "Authorization": "Bearer " + token,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
