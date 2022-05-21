@@ -9,10 +9,10 @@ class Deactivate extends StatefulWidget {
   String name;
   String username;
   bool isPrivate;
-  String password;
+  String email; //needed to pass for covfirm deactivate and nav to settings
+  //String password;
   String token;
-  Deactivate(
-      this.name, this.username, this.isPrivate, this.password, this.token);
+  Deactivate(this.name, this.username, this.isPrivate, this.token, this.email);
   @override
   State<Deactivate> createState() => _DeactivateState();
 }
@@ -185,8 +185,8 @@ class _DeactivateState extends State<Deactivate> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        Settings(widget.token)));
+                                    builder: (context) => Settings(widget.token,
+                                        widget.username, widget.email)));
                           },
                       )
                     ],
@@ -213,7 +213,9 @@ class _DeactivateState extends State<Deactivate> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ConfirmforDeactivate(
-                                    widget.password, widget.token)));
+                                    widget.token,
+                                    widget.username,
+                                    widget.email)));
                       },
                     ),
                   ),

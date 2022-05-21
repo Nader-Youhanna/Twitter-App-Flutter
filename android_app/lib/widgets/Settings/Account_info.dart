@@ -13,10 +13,9 @@ class AccountInfo extends StatefulWidget {
   String email;
   String phone;
   String country;
-  var password;
+  // var password;
   String Token;
-  AccountInfo(this.username, this.email, this.phone, this.country,
-      this.password, this.Token);
+  AccountInfo(this.username, this.email, this.phone, this.country, this.Token);
   @override
   State<AccountInfo> createState() => _AccountInfoState();
 }
@@ -70,8 +69,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              Update_username(widget.username, widget.Token)));
+                          builder: (context) => Update_username(
+                              widget.username, widget.Token, widget.email)));
                 },
                 child: ListTile(
                     title: Text(
@@ -88,8 +87,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VerifyPassword(widget.password,
-                              widget.email, false, widget.Token)));
+                          builder: (context) => VerifyPassword(false,
+                              widget.Token, widget.username, widget.email)));
                 },
                 child: ListTile(
                     title: Text(
@@ -106,8 +105,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VerifyPassword(widget.password,
-                              widget.email, true, widget.Token)));
+                          builder: (context) => VerifyPassword(true,
+                              widget.Token, widget.username, widget.email)));
                 },
                 child: ListTile(
                     title: Text(
@@ -117,7 +116,7 @@ class _AccountInfoState extends State<AccountInfo> {
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
-                    trailing: Text('${widget.email}')),
+                    trailing: Icon(Icons.email)),
               ),
               GestureDetector(
                 onTap: () {},

@@ -9,19 +9,17 @@ import './update_phone.dart';
 
 ///class that creates a page that verifies the user's current password for extra privacy before changing important information
 class VerifyPassword extends StatefulWidget {
-  var _passwordIsCorrect = false;
-  var password;
-  String email;
-  var _passwordIsValid = false;
   bool ISemail;
   String token;
+  String username;
+  String email; //needed to send to backend and verify password
 
   ///function to check validity of input password
-  bool isPasswordValid(var password) {
-    return _passwordIsValid = password.length >= 8;
-  }
+  // bool isPasswordValid(var password) {
+  //   return _passwordIsValid = password.length >= 8;
+  // }
 
-  VerifyPassword(this.password, this.email, this.ISemail, this.token);
+  VerifyPassword(this.ISemail, this.token, this.username, this.email);
   @override
   State<VerifyPassword> createState() => _VerifyPasswordState();
 }
@@ -29,13 +27,77 @@ class VerifyPassword extends StatefulWidget {
 class _VerifyPasswordState extends State<VerifyPassword> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
+  String lastValidatedPassword = "";
+  String lastRejectedPassword = "";
+
+  bool _validateCredentials(String password) {
+    if (lastValidatedPassword == password) {
+      return true;
+    } else if (lastRejectedPassword == password) {
+      return false;
+    } else {
+      _validateCredentialsAsync(password);
+      return false;
+    }
+  }
+
+  Future<void> _validateCredentialsAsync(String password) async {
+    //Real server response:
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(
+        <String, String>{
+          'email': widget.email,
+          'password': password,
+        },
+      ),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedMyInfo['status'] == 'Success') {
+      lastValidatedPassword = password;
+      print('Success');
+      print(lastValidatedPassword);
+    } else {
+      lastRejectedPassword = password;
+    }
+    _validateCredentials(password);
+    // _passwordKey.currentState!
+    //     .validate(); // this will re-initiate the validation
+
+    //MOCK SERVER
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    // var response = await http.get(url);
+    // final extractedMyInfo = json.decode(response.body) as List<dynamic>;
+    // print(extractedMyInfo);
+    // for (int i = 0; i < extractedMyInfo.length; i++) {
+    //   if (extractedMyInfo[i]['username'] == widget.username &&
+    //       extractedMyInfo[i]['password'] == password) {
+    //     widget.name = extractedMyInfo[i]['name'];
+    //     lastValidatedPassword = password;
+    //   }
+    // }
+    // lastRejectedPassword = password;
+
+    _passwordKey.currentState!
+        .validate(); // this will re-initiate the validation
+  }
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
   var _password;
-
+  var _passwordIsEntered = false;
   var _passwordIsVisible = false;
+  var _passwordIsValid = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,20 +168,20 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                   ),
                   obscureText: !_passwordIsVisible,
                   onChanged: (value) {
-                    setState(() {
-                      if (_passwordKey.currentState!.validate()) {
+                    if (value.isNotEmpty) {
+                      setState(() {
                         _password = value;
-                        widget._passwordIsValid = true;
-                      }
-                    });
+                        _passwordIsEntered = true;
+                      });
+                    }
                   },
                   validator: (value) {
-                    if (value != null &&
-                        widget.isPasswordValid(value) &&
-                        value == widget.password) {
-                      widget._passwordIsCorrect = true;
+                    if (value == null) {
+                      return 'Incorrect';
                     } else {
-                      return 'Password incorrect';
+                      return _validateCredentials(value)
+                          ? null
+                          : 'Username or password is Invalid';
                     }
                   },
                 ),
@@ -142,18 +204,18 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                         ),
                       ),
                       onPressed: () {
-                        _password == null
-                            ? (showAlertDialog(context))
-                            : (widget._passwordIsCorrect
-                                ? (Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (widget.ISemail)
-                                            ? (context) => UpdateEmail(
-                                                widget.email, widget.token)
-                                            : (context) =>
-                                                UpdatePhone(widget.token))))
-                                : showAlertDialog(context));
+                        if (_passwordKey.currentState!.validate()) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (widget.ISemail)
+                                      ? (context) => UpdateEmail(widget.token,
+                                          widget.username, widget.email)
+                                      : (context) => UpdatePhone(widget.token,
+                                          widget.username, widget.email)));
+                        } else {
+                          showAlertDialog(context);
+                        }
                       },
                       child: Text('Next', style: TextStyle(fontSize: 14)),
                     ),
@@ -166,7 +228,8 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Settings(widget.token)));
+                        builder: (context) => Settings(
+                            widget.token, widget.username, widget.email)));
               },
               child: Text(
                 'Cancel',

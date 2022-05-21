@@ -18,7 +18,9 @@ import 'package:android_app/widgets/Settings/notifications_settings.dart';
 class Settings extends StatefulWidget {
   //const Settings({Key? key}) : super(key: key);
   String token;
-  Settings(this.token);
+  String _username;
+  String email = "nadatarek2710@gmail.com";
+  Settings(this.token, this._username, this.email);
   @override
   State<Settings> createState() => _SettingsState();
 }
@@ -29,25 +31,45 @@ class _SettingsState extends State<Settings> {
   }
 
   String Name = "Nada";
-  String username = "Nadausername";
-  String email = "nadatarek2710@gmail.com";
+
   String phone = "123";
   String country = "Egypt";
-  String Password = "12345678";
+  //String Password = "12345678";
   bool isPrivate = false;
 
   ///function to fetch user data from mock server (username, email, phone and country)
-  Future<void> httpRequestGet() async {
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/profile');
-    var response = await http.get(url);
-
-    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
-    setState(() {
-      username = extractedMyInfo["username"];
-      email = extractedMyInfo["email"];
-      phone = extractedMyInfo["phone"];
-      country = extractedMyInfo["country"];
-    });
+  Future<void> getuserData() async {
+    var data;
+    print("getting user data");
+    var url = Uri.parse("http://192.168.1.8:3000/${widget._username}");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            //username = data['username'] as String;
+            Name = data['name'] as String;
+            isPrivate = data['protectedTweets'] as bool;
+            country = data['country'] as String;
+            //city = data['city'] as String;
+            //website = data['website'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
   }
 
   @override
@@ -113,11 +135,10 @@ class _SettingsState extends State<Settings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AccountInfo(
-                                    username,
-                                    email,
+                                    widget._username,
+                                    widget.email,
                                     phone,
                                     country,
-                                    Password,
                                     widget.token)),
                           );
                         },
@@ -142,8 +163,10 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ChangePassword(Password, widget.token)),
+                                builder: (context) => ChangePassword(
+                                    widget.token,
+                                    widget._username,
+                                    widget.email)),
                           );
                         },
                       ),
@@ -192,7 +215,9 @@ class _SettingsState extends State<Settings> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => notificationsSettings(
-                                      username, widget.token)));
+                                      widget._username,
+                                      widget.token,
+                                      widget.email)));
                         },
                       ),
                     ),
@@ -217,10 +242,10 @@ class _SettingsState extends State<Settings> {
                               MaterialPageRoute(
                                   builder: (context) => Deactivate(
                                       Name,
-                                      username,
+                                      widget._username,
                                       isPrivate,
-                                      Password,
-                                      widget.token)));
+                                      widget.token,
+                                      widget.email)));
                         },
                       ),
                     )

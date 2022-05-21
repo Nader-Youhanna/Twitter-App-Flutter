@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../constants.dart';
 
 ///class to create Audience settings page which allows the user to choose priavcy of their account
 class Audience extends StatefulWidget {
@@ -19,12 +20,24 @@ class _AudienceState extends State<Audience> {
   }
 
   ///function to fetch data from mock server
-  Future<void> httpRequestPost() async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
-    var response =
-        await http.post(url, body: {'protected': '${widget.isPrivate}'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  Future<void> httpRequestPatchPrivate() async {
+    var url = Uri.parse(
+        "http://${MY_IP_ADDRESS}:3000//settings/Account-info/Protected-tweets");
+
+    //var body = json.encode(reqBody);
+    var response = await http.patch(
+      url,
+      body: null,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + token
+      },
+    );
+    print("${response.statusCode}");
+    if (response.statusCode == 200) {
+      print("${response.body}");
+      return json.decode(response.body);
+    }
   }
 
   @override
@@ -95,7 +108,9 @@ class _AudienceState extends State<Audience> {
                 onChanged: (value) {
                   setState(() {
                     widget.isPrivate = value;
-                    httpRequestPost();
+                    setState(() {
+                      httpRequestPatchPrivate();
+                    });
                   });
                 },
                 activeTrackColor: Colors.green,

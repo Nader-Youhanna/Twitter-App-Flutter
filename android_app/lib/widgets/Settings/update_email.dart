@@ -9,9 +9,10 @@ import '../../constants.dart';
 class UpdateEmail extends StatefulWidget {
   // const UpdateEmail({Key? key}) : super(key: key);
   static const _widthOfTextFields = 320.0;
-  String email;
+  String Pass_email; //just to navigate
   String Token;
   var _emailIsValid = false;
+  String _username;
 
   ///function to check validity of email address and that it is in the correct format
   bool isEmailValid(var email) {
@@ -20,7 +21,7 @@ class UpdateEmail extends StatefulWidget {
         RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email));
   }
 
-  UpdateEmail(this.email, this.Token);
+  UpdateEmail(this.Token, this._username, this.Pass_email);
   @override
   State<UpdateEmail> createState() => _UpdateEmailState();
 }
@@ -94,7 +95,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
           SizedBox(
             width: 320,
             child: Text(
-              'your current email is ${widget.email}. What would you like to update it to? Your email is not displayed in your public profile on Sirius.',
+              ' What would you like to update your current email to? Your email is not displayed in your public profile on Sirius.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'RalewayMedium',
@@ -176,8 +177,10 @@ class _UpdateEmailState extends State<UpdateEmail> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              Settings(widget.Token)));
+                                          builder: (context) => Settings(
+                                              widget.Token,
+                                              widget._username,
+                                              widget.Pass_email)));
                                 }))
                               : showAlertDialog(context));
                     },
@@ -192,7 +195,8 @@ class _UpdateEmailState extends State<UpdateEmail> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Settings(widget.Token)));
+                      builder: (context) => Settings(
+                          widget.Token, widget._username, widget.Pass_email)));
             },
             child: Text(
               'Cancel',

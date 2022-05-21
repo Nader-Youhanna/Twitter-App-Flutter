@@ -8,19 +8,30 @@ class notificationsSettings extends StatefulWidget {
   // const notificationsSettings({Key? key}) : super(key: key);
   String token;
   String _username = "username";
-  notificationsSettings(this._username, this.token);
+  String email; //just to navigate
+  notificationsSettings(this._username, this.token, this.email);
   @override
   State<notificationsSettings> createState() => _notificationsSettingsState();
 }
 
 class _notificationsSettingsState extends State<notificationsSettings> {
   bool push_notification = false;
-  Future<void> httpRequestPost() async {
-    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/profile');
-    var response =
-        await http.post(url, body: {'protected': '${push_notification}'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+
+  Future<void> httpRequestPatch() async {
+    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/Notifications');
+
+    var response = await http.patch(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+        body: null);
+
+    print("${response.statusCode}");
+    if (response.statusCode == 200) {
+      print("${response.body}");
+      return json.decode(response.body);
+    }
   }
 
   @override
@@ -61,7 +72,8 @@ class _notificationsSettingsState extends State<notificationsSettings> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Settings(widget.token)));
+                        builder: (context) => Settings(
+                            widget.token, widget._username, widget.email)));
               },
             ),
           ),
@@ -94,7 +106,9 @@ class _notificationsSettingsState extends State<notificationsSettings> {
                 onChanged: (value) {
                   setState(() {
                     push_notification = value;
-                    httpRequestPost();
+                    setState(() {
+                      httpRequestPatch();
+                    });
                   });
                 },
                 activeTrackColor: Colors.green,

@@ -8,8 +8,9 @@ import '../../constants.dart';
 class Update_username extends StatefulWidget {
   // const Update_username({Key? key}) : super(key: key);
   var _username;
+  String email; //only needed to navigate back to settings
   String token;
-  Update_username(this._username, this.token);
+  Update_username(this._username, this.token, this.email);
   @override
   State<Update_username> createState() => _Update_usernameState();
 }
@@ -35,8 +36,7 @@ class _Update_usernameState extends State<Update_username> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjg4ZWNlOWEzNjc3NWIzNDZlNmE2OCIsImlhdCI6MTY1MjY1MzgyMywiZXhwIjoxNjYxMjkzODIzfQ.UPDwftWISguZHasxOJB9F_Uyltgsi2R9azbwgJqzuno',
+        'Authorization': 'Bearer ' + token,
       },
       body: json.encode(
         <String, String>{
@@ -86,11 +86,15 @@ class _Update_usernameState extends State<Update_username> {
               TextButton(
                   onPressed: () {
                     setState(() {
-                      httpRequestPatch();
+                      setState(() {
+                        httpRequestPatch();
+                      });
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Settings(widget.token)));
+                              builder: (context) => Settings(widget.token,
+                                  widget._username, widget.email)));
                     });
                   },
                   child: Text(

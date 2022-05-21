@@ -9,7 +9,9 @@ import 'package:country_code_picker/country_code_picker.dart';
 class UpdatePhone extends StatefulWidget {
   //const UpdatePhone({Key? key}) : super(key: key);
   String token;
-  UpdatePhone(this.token);
+  String username;
+  final String email; //just to nav
+  UpdatePhone(this.token, this.username, this.email);
   @override
   State<UpdatePhone> createState() => _UpdatePhoneState();
 }
@@ -151,8 +153,10 @@ class _UpdatePhoneState extends State<UpdatePhone> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          Settings(widget.token)));
+                                      builder: (context) => Settings(
+                                          widget.token,
+                                          widget.username,
+                                          widget.email)));
                             }));
                     },
                     child: Text('Next', style: TextStyle(fontSize: 14)),
@@ -166,7 +170,8 @@ class _UpdatePhoneState extends State<UpdatePhone> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Settings(widget.token)));
+                      builder: (context) => Settings(
+                          widget.token, widget.username, widget.email)));
             },
             child: Text(
               'Cancel',

@@ -18,27 +18,95 @@ import '../../constants.dart';
 
 class ConfirmforDeactivate extends StatefulWidget {
   //const ConfirmforDeactivate({Key? key}) : super(key: key);
-  var _passwordIsCorrect = false;
-  var _passwordIsValid = false;
-  var password;
-  String token;
-  bool isPasswordValid(var password) {
-    return _passwordIsValid = password.length >= 8;
-  }
 
-  ConfirmforDeactivate(this.password, this.token);
+  //var password;
+  String token;
+  String username;
+  String email; //needed to cofirm password
+
+  ConfirmforDeactivate(this.token, this.username, this.email);
   @override
   State<ConfirmforDeactivate> createState() => _ConfirmforDeactivateState();
 }
 
 class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+
+  String lastValidatedPassword = "";
+  String lastRejectedPassword = "";
   var _password;
+  var _passwordIsEntered = false;
+  var _passwordIsVisible = false;
+  var _passwordIsValid = false;
+
+  //var _password;
   bool success = false;
+
+  bool _validateCredentials(String password) {
+    if (lastValidatedPassword == password) {
+      return true;
+    } else if (lastRejectedPassword == password) {
+      return false;
+    } else {
+      _validateCredentialsAsync(password);
+      return false;
+    }
+  }
+
+  Future<void> _validateCredentialsAsync(String password) async {
+    //Real server response:
+    var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(
+        <String, String>{
+          'email': widget.email,
+          'password': password,
+        },
+      ),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedMyInfo['status'] == 'Success') {
+      lastValidatedPassword = password;
+      print('Success');
+      print(lastValidatedPassword);
+    } else {
+      lastRejectedPassword = password;
+    }
+    _validateCredentials(password);
+    // _passwordKey.currentState!
+    //     .validate(); // this will re-initiate the validation
+
+    //MOCK SERVER
+    // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
+    // var response = await http.get(url);
+    // final extractedMyInfo = json.decode(response.body) as List<dynamic>;
+    // print(extractedMyInfo);
+    // for (int i = 0; i < extractedMyInfo.length; i++) {
+    //   if (extractedMyInfo[i]['username'] == widget.username &&
+    //       extractedMyInfo[i]['password'] == password) {
+    //     widget.name = extractedMyInfo[i]['name'];
+    //     lastValidatedPassword = password;
+    //   }
+    // }
+    // lastRejectedPassword = password;
+
+    _passwordKey.currentState!
+        .validate(); // this will re-initiate the validation
+  }
+
   Future<void> Getrequestdeactivate() async {
     var data;
     print("sending deacitvate request");
     var url = Uri.parse("http://192.168.1.8:3000/settings/Deactivate-account");
+    //var url = Uri.parse("http://192.168.1.8:3000/DeactivateAccount");
+
     try {
       var response = await http.get(
         url,
@@ -54,6 +122,9 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
         if (data != null) {
           setState(() {
             success = data['success'] as bool;
+            if (success == true) {
+              print('deactivate success');
+            }
           });
         }
       } else {
@@ -95,7 +166,8 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => Settings(widget.token))));
+                        builder: ((context) => Settings(
+                            widget.token, widget.username, widget.email))));
               },
             ),
           ),
@@ -141,19 +213,21 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                   decoration: InputDecoration(hintText: 'Password'),
                   onChanged: (value) {
                     setState(() {
-                      if (_passwordKey.currentState!.validate()) {
-                        _password = value;
-                        widget._passwordIsValid = true;
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          _password = value;
+                          _passwordIsEntered = true;
+                        });
                       }
                     });
                   },
                   validator: (value) {
-                    if (value != null &&
-                        widget.isPasswordValid(value) &&
-                        value == widget.password) {
-                      widget._passwordIsCorrect = true;
+                    if (value == null) {
+                      return 'incorrect';
                     } else {
-                      return 'Password incorrect';
+                      return _validateCredentials(value)
+                          ? null
+                          : 'password incorrect';
                     }
                   },
                 ),
@@ -177,13 +251,13 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                           ),
                         ),
                         onPressed: () {
-                          _password == null
-                              ? (showAlertDialog(context))
-                              : (widget._passwordIsCorrect
-                                  ? (setState(() {
-                                      Getrequestdeactivate();
-                                    }))
-                                  : showAlertDialog(context));
+                          if (_passwordKey.currentState!.validate()) {
+                            setState(() {
+                              Getrequestdeactivate();
+                            });
+                          } else {
+                            showAlertDialog(context);
+                          }
                         },
                         child:
                             Text('Deactivate', style: TextStyle(fontSize: 17)),
