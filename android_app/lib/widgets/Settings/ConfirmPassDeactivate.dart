@@ -3,6 +3,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/Settings/settings_main.dart';
 import 'package:flutter/gestures.dart';
+import 'package:android_app/widgets/Tweets/tweet.dart';
+import 'package:android_app/widgets/user_profile/Follow_button.dart';
+import 'package:android_app/widgets/user_profile/LikesTab.dart';
+
+import 'package:android_app/widgets/timeline.dart';
+import 'package:android_app/widgets/user_profile/Show_followers_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:share_plus/share_plus.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../constants.dart';
 
 class ConfirmforDeactivate extends StatefulWidget {
   //const ConfirmforDeactivate({Key? key}) : super(key: key);
@@ -22,6 +34,36 @@ class ConfirmforDeactivate extends StatefulWidget {
 class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
   var _password;
+  bool success = false;
+  Future<void> Getrequestdeactivate() async {
+    var data;
+    print("sending deacitvate request");
+    var url = Uri.parse("http://192.168.1.8:3000/settings/Deactivate-account");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      if (response.statusCode == 200) {
+        data = json.encode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            success = data['success'] as bool;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error:$e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -135,11 +177,13 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                           ),
                         ),
                         onPressed: () {
-                          // _password == null
-                          //     ? (showAlertDialog(context))
-                          //     : (widget._passwordIsCorrect
-                          //         ? ()
-                          //         : showAlertDialog(context));
+                          _password == null
+                              ? (showAlertDialog(context))
+                              : (widget._passwordIsCorrect
+                                  ? (setState(() {
+                                      Getrequestdeactivate();
+                                    }))
+                                  : showAlertDialog(context));
                         },
                         child:
                             Text('Deactivate', style: TextStyle(fontSize: 17)),
