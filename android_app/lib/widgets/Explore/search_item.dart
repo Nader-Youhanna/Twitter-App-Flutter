@@ -18,10 +18,19 @@ class SearchItem extends StatelessWidget {
   //we will only need them according to set type
 
   ///named constructor to map the data fetched from servers
-  SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem)
-      : username = jsonSearchItem['name'] as String,
-        _handle = jsonSearchItem['username'] as String,
-        userID = jsonSearchItem['_id'] as String;
+  SearchItem.jsonSearchItem(Map<String, dynamic> jsonSearchItem) {
+    username = jsonSearchItem['name'] as String;
+    _handle = jsonSearchItem['username'] as String;
+    userID = jsonSearchItem['_id'] as String;
+    //set _userImage
+    if (jsonSearchItem['image'] != null) {
+      _userImage = CircleAvatar(
+        backgroundImage: NetworkImage(jsonSearchItem['image']),
+        backgroundColor: Colors.transparent,
+        radius: 20.0,
+      );
+    }
+  }
 
   // trends = jsonSearchItem['trends'] as String;
 

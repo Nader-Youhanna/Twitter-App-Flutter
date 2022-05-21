@@ -16,7 +16,7 @@ class NotificationItem extends StatelessWidget {
   String notificationType = " ";
 
   ///the notification type (like, retweet, block)
-  late Tweet tweet;
+  String tweetText = '';
   String tweetID = "";
   String notificationID = "";
 
@@ -33,6 +33,14 @@ class NotificationItem extends StatelessWidget {
     // tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
     notificationID = jsonNotification['notificationId'] as String;
     tweetID = jsonNotification['tweetId'] as String;
+    tweetText = jsonNotification['tweetText'] as String;
+    if (jsonNotification['image'] != null) {
+      userImage = CircleAvatar(
+        backgroundImage: NetworkImage(jsonNotification['image']),
+        backgroundColor: Colors.transparent,
+        radius: 20.0,
+      );
+    }
   }
 
   ///function that constructs notification string according to the type fetched from server
@@ -64,7 +72,7 @@ class NotificationItem extends StatelessWidget {
   void _viewTweet(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return NotificationTweet(tweet);
+        return NotificationTweet(tweetID);
       }),
     );
   }
@@ -101,7 +109,7 @@ class NotificationItem extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            tweet.getTweetText(),
+            tweetText,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ) //the tweet text fetched from backend

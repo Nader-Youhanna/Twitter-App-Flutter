@@ -14,15 +14,16 @@ class TrendingTopic extends StatefulWidget {
   int trendingNumber = 1;
 
   ///the number displayed with the topic
-  String numberOfTweets = "0";
+  int numberOfTweets = 0;
 
   ///the number of tweets for each topic
 
   ///named constructor to map the data fetched from server
   TrendingTopic.jsonTrend(Map<String, dynamic> jsonTrend) {
-    hashtag = jsonTrend['hashtag'] as String;
-    numberOfTweets = jsonTrend['retweets'] as String;
+    hashtag = jsonTrend['body'] as String;
+    numberOfTweets = jsonTrend['tweetsCount'] as int;
   }
+  late String tweetNumber = numberOfTweets.toString();
   @override
   State<TrendingTopic> createState() => _TrendingTopicState();
 
@@ -30,7 +31,7 @@ class TrendingTopic extends StatefulWidget {
   late String header = trendingNumber.toString() + " . Trending";
 
   ///construnctions the string that contains the number of tweets
-  late String retweets = numberOfTweets + " Tweets";
+  late String retweets = tweetNumber + " Tweets";
 }
 
 class _TrendingTopicState extends State<TrendingTopic> {

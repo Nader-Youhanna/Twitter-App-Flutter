@@ -17,7 +17,7 @@ class TrendingTweets extends StatefulWidget {
 
   ///class takes the concerned topic in its constructor
   TrendingTweets(this.topic);
-  late Map<String, dynamic> mapTopic = {"hashtag": topic};
+  //late Map<String, dynamic> mapTopic = {"hashtag": topic};
   @override
   State<TrendingTweets> createState() => TrendingTweetsState();
 }
@@ -32,40 +32,43 @@ class TrendingTweetsState extends State<TrendingTweets> {
     );
   }
 
-  ///sends topic to backend to get list of tweets
-  Future<Map<String, dynamic>> sendTrend(Map<String, dynamic> data) async {
-    return await httpRequestPost(
-      "http://${MY_IP_ADDRESS}:3000/openTrend/",
-      data,
-      <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + token
-      },
-    );
-  }
+  // ///sends topic to backend to get list of tweets
+  // Future<Map<String, dynamic>> sendTrend(Map<String, dynamic> data) async {
+  //   return await httpRequestPost(
+  //     "http://${MY_IP_ADDRESS}:3000/openTrend/",
+  //     data,
+  //     <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //       'Authorization': 'Bearer ' + token
+  //     },
+  //   );
+  // }
 
   ///Function to get the list of trending tweets and their types from backend
   Future<List<Tweet>> getTrendingTweets() async {
     List<Tweet> tweetList = <Tweet>[];
+    String hashtag = widget.topic;
     var data = [];
     print("fetching trending tweets based on topic");
-    var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/trendingTweets");
-    try {
-      var response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
-        },
-      );
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        tweetList = data.map((e) => Tweet.jsonTweet(e, false, true)).toList();
-      } else {
-        print("fetch error");
-      }
-    } on Exception catch (e) {
-      print('error: $e');
+    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore/$hashtag");
+    Map<String, dynamic> headers = {
+      "Authorization": token,
+      "Content-Type": "application/json"
+    };
+    var request = http.Request('GET', url);
+    if (headers != null) {
+      request.headers['Content-Type'] = headers['Content-Type'];
+      request.headers['Authorization'] = headers['Authorization'];
+    }
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
+
+    print('Response status: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+    var mapData = json.decode(response.body);
+    for (int i = 0; i < mapData['tweets'].length; i++) {
+      tweetList.add(Tweet.jsonTrendingTweet(mapData['tweets'][i], false, true));
     }
 
     return tweetList;
@@ -83,9 +86,9 @@ class TrendingTweetsState extends State<TrendingTweets> {
   @override
   void initState() {
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
-    sendTrend(widget.mapTopic);
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => sendTrend(widget.mapTopic));
+
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => sendTrend(widget.mapTopic));
   }
 
   @override
