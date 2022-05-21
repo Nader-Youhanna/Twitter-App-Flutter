@@ -24,11 +24,14 @@ class _Accounts_pageState extends State<Accounts_page> {
   List<User_Item> followers = [];
   List<User_Item> following = [];
 
-  Future<void> getFollowers() async {
-    var data = [];
-    print("fetching trending topics");
-    var url = Uri.parse("http://192.168.1.8:3000/BoodyFollowers");
-    // var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/${widget._username}/followers");
+  Future<List<User_Item>> getFollowers() async {
+    List<User_Item> followerslist = <User_Item>[];
+
+    var data;
+    print("fetching followers");
+    //var url = Uri.parse("http://192.168.1.8:3000/BoodyFollowers");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget.username}/followers");
     try {
       var response = await http.get(
         url,
@@ -39,22 +42,27 @@ class _Accounts_pageState extends State<Accounts_page> {
       );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
-        setState(() {
-          followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
-        });
+        for (int i = 0; i < data['followers'].length; i++) {
+          followerslist.add(User_Item.jsonUserItem(data['followers'][i]));
+
+          // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
+        }
       } else {
         print("fetch error");
       }
     } on Exception catch (e) {
       print('error: $e');
     }
+    return followerslist;
   }
 
-  Future<void> getFollowing() async {
-    var data = [];
-    print("fetching trending topics");
-    var url = Uri.parse("http://192.168.1.8:3000/Boodyfollowing");
-    // var url = Uri.parse("http://${MY_IP_ADDRESS}:3000/${widget._username}/following");
+  Future<List<User_Item>> getFollowing() async {
+    List<User_Item> followinglist = <User_Item>[];
+    var data;
+    print("fetching following");
+    // var url = Uri.parse("http://192.168.1.8:3000/Boodyfollowing");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget.username}/following");
     try {
       var response = await http.get(
         url,
@@ -65,22 +73,30 @@ class _Accounts_pageState extends State<Accounts_page> {
       );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
-        setState(() {
-          following = data.map((e) => User_Item.jsonUserItem(e)).toList();
-        });
+        for (int i = 0; i < data['following'].length; i++) {
+          followinglist.add(User_Item.jsonUserItem(data['following'][i]));
+
+          // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
+        }
       } else {
         print("fetch error");
       }
     } on Exception catch (e) {
       print('error: $e');
     }
+    return followinglist;
   }
 
   @override
   void initState() {
-    setState(() {
-      getFollowers();
-      getFollowing();
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      List<User_Item> followersfetched = await getFollowers();
+      List<User_Item> followingfetched = await getFollowing();
+      setState(() {
+        followers = followersfetched;
+        following = followingfetched;
+      });
     });
   }
 

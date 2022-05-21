@@ -35,7 +35,7 @@ class _TweetTabState extends State<TweetTab> {
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
-        "http://192.168.1.8:3000/${widget._username}", headers);
+        "http://${MY_IP_ADDRESS}:3000/${widget._username}", headers);
 
     //print("=========" + mapTweet['data'][0].toString());
     List<Tweet> tweets = <Tweet>[];

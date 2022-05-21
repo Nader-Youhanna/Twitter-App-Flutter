@@ -35,7 +35,8 @@ class _TweetsAndRepliesState extends State<TweetsAndReplies> {
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
-        "http://192.168.1.8:3000/${widget._username}/with_replies", headers);
+        "http://${MY_IP_ADDRESS}:3000/${widget._username}/with_replies",
+        headers);
 
     //print("=========" + mapTweet['data'][0].toString());
     List<Tweet> tweets = <Tweet>[];

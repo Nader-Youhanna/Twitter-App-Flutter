@@ -35,14 +35,14 @@ class _LikesTabState extends State<LikesTab> {
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(
-        "http://192.168.1.8:3000/${widget._username}/likes", headers);
+        "http://${MY_IP_ADDRESS}:3000/${widget._username}/likes", headers);
 
     //print("=========" + mapTweet['data'][0].toString());
     List<Tweet> tweets = <Tweet>[];
     for (int i = 0; i < mapTweet['likes'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.jsonTweet(mapTweet['likes'][i], false, true));
+      tweets.add(Tweet.jsonTweetByID(mapTweet['likes'][i], false, true));
     }
 
     return tweets;

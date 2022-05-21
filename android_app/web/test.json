@@ -982,7 +982,51 @@
     "createdAt": "2022-04-25T02:26:31.367Z",
     "followingCount": 50,
     "followersCount": 60,
-    "isMe": true
+    "isMe": true,
+    "likes": [
+      {
+        "_id": "6286f8d76eadfa4af1f626bf",
+        "isReply": false,
+        "isQuoteRetweet": false,
+        "media": [],
+        "favoriters": [
+          "6286c9518b9d668593143a5a",
+          "6286c9518b9d668593143a5b"
+        ],
+        "retweeters": [
+          "6286c9518b9d668593143a5b"
+        ],
+        "quotedRetweets": [],
+        "hashtags": [],
+        "replies": [],
+        "taggedUsers": [],
+        "createdAt": "2022-05-20T02:11:35.307Z",
+        "body": "ffff",
+        "__v": 3
+      },
+      [
+        {
+          "_id": "6286f8d76eadfa4af1f626bf",
+          "isReply": false,
+          "isQuoteRetweet": false,
+          "media": [],
+          "favoriters": [
+            "6286c9518b9d668593143a5a",
+            "6286c9518b9d668593143a5b"
+          ],
+          "retweeters": [
+            "6286c9518b9d668593143a5b"
+          ],
+          "quotedRetweets": [],
+          "hashtags": [],
+          "replies": [],
+          "taggedUsers": [],
+          "createdAt": "2022-05-20T02:11:35.307Z",
+          "body": "ffff",
+          "__v": 3
+        }
+      ]
+    ]
   },
   "roon": {
     "username": "roon",
