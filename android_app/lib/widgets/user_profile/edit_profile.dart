@@ -10,26 +10,30 @@ import 'package:share_plus/share_plus.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:android_app/constants.dart';
 import 'package:android_app/functions/http_functions.dart';
+import 'package:country_state_city_pro/country_state_city_pro.dart';
+import 'dart:io';
 
 ///class that creates the edit profile settings page (incomplete)
 class Edit_Profile extends StatefulWidget {
-  const Edit_Profile({Key? key}) : super(key: key);
-
+  //const Edit_Profile({Key? key}) : super(key: key);
+  String username;
+  Edit_Profile(this.username);
   @override
   State<Edit_Profile> createState() => _Edit_ProfileState();
 }
 
 class _Edit_ProfileState extends State<Edit_Profile> {
-  String HeaderImage =
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1238.jpg";
-
+  late var HeaderImage;
   late var profileImage;
   late var name;
   late var _bio;
   late var country;
   late var city;
-  String website = "";
-  late DateTime birthdate;
+  late String website = "";
+  late DateTime birthdate = DateTime(2000, 05, 15);
+  TextEditingController countrypick = TextEditingController();
+  TextEditingController statepick = TextEditingController();
+  TextEditingController citypick = TextEditingController();
 
   Future PickDate(BuildContext context) async {
     final newdate = await showDatePicker(
@@ -49,7 +53,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   Future<void> getUserData() async {
     var data;
     print("getting user data");
-    var url = Uri.parse("http://34.236.108.123:3000/settings/profile");
+    var url = Uri.parse("http://192.168.1.8:3000/SettingsProfile");
     try {
       var response = await http.get(
         url,
@@ -96,9 +100,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         <String, String>{
           "name": "${name}",
           "bio": "${_bio}",
-          "country": "${country}",
-          "city": "${city}",
-          //"website": "${website}",
+          "country": "${countrypick.text}",
+          "city": "${citypick.text}",
+          "website": "${website}",
           "birthdate": birthdate.toString()
         },
       ),
@@ -144,7 +148,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Profile("", false)),
+                MaterialPageRoute(
+                    builder: (context) => Profile(widget.username, false)),
               );
             },
           ),
@@ -155,7 +160,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Profile("", false)));
+                        builder: (context) =>
+                            Profile("${widget.username}", false)));
               },
               child: Text(
                 'Save',
@@ -179,7 +185,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                       width: double.infinity,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage("${HeaderImage}"),
+                            image: NetworkImage(
+                                "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1238.jpg"),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -287,38 +294,43 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                     alignment: Alignment.centerLeft,
                   ),
                   Container(
-                    width: 200,
-                    child: CSCPicker(
-                      flagState: CountryFlag.DISABLE,
-                      layout: Layout.horizontal,
-                      countrySearchPlaceholder: "Country",
-                      showCities: true,
-                      showStates: true,
-                      defaultCountry: DefaultCountry.Egypt,
-                      citySearchPlaceholder: "City",
-                      countryDropdownLabel: "*Country",
-                      cityDropdownLabel: "*City",
-                      selectedItemStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                      dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.white,
-                          border: Border.all(
-                              color: Colors.grey.shade300, width: 1)),
-                      onCountryChanged: (value) {
-                        setState(() {
-                          country = value;
-                        });
-                      },
-                      onCityChanged: (value) {
-                        setState(() {
-                          city = value.toString();
-                        });
-                      },
-                    ),
-                  )
+                      width: 200,
+                      child: CountryStateCityPicker(
+                          city: citypick,
+                          country: countrypick,
+                          state: statepick,
+                          textFieldInputBorder: UnderlineInputBorder())
+                      // CSCPicker(
+                      //   flagState: CountryFlag.DISABLE,
+                      //   layout: Layout.horizontal,
+                      //   countrySearchPlaceholder: "Country",
+                      //   showCities: true,
+                      //   showStates: true,
+                      //   defaultCountry: DefaultCountry.Egypt,
+                      //   citySearchPlaceholder: "City",
+                      //   countryDropdownLabel: "*Country",
+                      //   cityDropdownLabel: "*City",
+                      //   selectedItemStyle: TextStyle(
+                      //     color: Colors.black,
+                      //     fontSize: 14,
+                      //   ),
+                      //   dropdownDecoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                      //       color: Colors.white,
+                      //       border: Border.all(
+                      //           color: Colors.grey.shade300, width: 1)),
+                      //   onCountryChanged: (value) {
+                      //     setState(() {
+                      //       country = value;
+                      //     });
+                      //   },
+                      //   onCityChanged: (value) {
+                      //     setState(() {
+                      //       city = value.toString();
+                      //     });
+                      //   },
+                      // ),
+                      )
                 ],
               ),
               Row(
