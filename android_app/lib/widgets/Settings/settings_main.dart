@@ -31,7 +31,6 @@ class _SettingsState extends State<Settings> {
   }
 
   String Name = "Nada";
-
   String phone = "123";
   String country = "Egypt";
   //String Password = "12345678";
