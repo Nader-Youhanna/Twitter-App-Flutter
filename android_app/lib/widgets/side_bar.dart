@@ -52,17 +52,21 @@ class SideBar extends StatelessWidget {
             ),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.asset(
-                  'assets/images/user_icon2.png',
-                  fit: BoxFit.fill,
-                ),
-              ),
+                  // child: Image.asset(
+                  //   'assets/images/user_icon2.png',
+                  //   fit: BoxFit.fill,
+                  // ),
+                  child: Image.network(
+                userImage,
+                fit: BoxFit.fill,
+              )),
             ),
             decoration: const BoxDecoration(
               color: Colors.blue,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/images/cover_image_sidebar.jpg'),
+                image: AssetImage(
+                    'assets/images/cover_image_sidebar.jpg'), //Cover Image
               ),
             ),
           ),
