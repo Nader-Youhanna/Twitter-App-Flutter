@@ -71,7 +71,7 @@ class ExplorePageState extends State<ExplorePage> {
     var response = await http.Response.fromStream(streamedResponse);
 
     print('Response status: ${response.statusCode}');
-    // print('Response Body: ${response.body}');
+    print('Response Body: ${response.body}');
     var mapData = json.decode(response.body);
     for (int i = 0; i < mapData['hashtags'].length; i++) {
       topicList.add(TrendingTopic.jsonTrend(mapData['hashtags'][i]));
