@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:android_app/widgets/Admin%20View/user_reports.dart';
 import 'package:android_app/widgets/Admin%20View/user_statistics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,23 +18,32 @@ class AdminViewUser extends StatelessWidget {
     this.name,
     this.username,
   );
-
+  bool isDeleted = false;
   AdminViewUser.jsonAdminUser(Map<String, dynamic> jsonAdminUser) {
     name = jsonAdminUser['name'] as String;
     username = jsonAdminUser['username'] as String;
-  }
-  void _goToUserProfile(BuildContext ctx, String user) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
-      }),
-    );
   }
 
   void _goToUserStatistics(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return UserStatistics();
+      }),
+    );
+  }
+
+  void _goToUserReports(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return UserReports();
+      }),
+    );
+  }
+
+  void _goToUserProfile(BuildContext ctx, String user) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile(user, false);
       }),
     );
   }
@@ -56,6 +66,7 @@ class AdminViewUser extends StatelessWidget {
                   minimumSize: Size(45, 35),
                 ),
                 onPressed: () {
+                  isDeleted = true;
                   Navigator.of(ctx).pop();
                 },
                 child: Text(
@@ -183,7 +194,9 @@ class AdminViewUser extends StatelessWidget {
                           borderRadius: BorderRadius.circular(32.0)),
                       minimumSize: Size(2, 25),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _goToUserReports(context);
+                    },
                     child: Text(
                       'Reports',
                       style: TextStyle(color: Colors.white, fontSize: 11),
@@ -266,7 +279,9 @@ class AdminViewUser extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32.0)),
                   minimumSize: Size(2, 35),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _goToUserReports(context);
+                },
                 child: Text(
                   'Reports',
                   style: TextStyle(color: Colors.white, fontSize: 14),

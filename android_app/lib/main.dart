@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         create: (context) => GoogleSignInProvider(),
         child: MaterialApp(
           home: Scaffold(
-            body: Settings(token, "user6", "user6@gmail.com"),
+            body: StartPage(),
           ),
         ),
       ),

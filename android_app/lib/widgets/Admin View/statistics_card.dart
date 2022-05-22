@@ -49,7 +49,15 @@ class StatisticsCard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminViewMain(selectedIndex: 1),
+                          builder: (context) => AdminViewMain(
+                            selectedIndex: 1,
+                            name: '',
+                            userName: ' ',
+                            userImage: ' ',
+                            isAdmin: true,
+                            email: ' ',
+                            token: '',
+                          ),
                         ),
                       );
                     },
