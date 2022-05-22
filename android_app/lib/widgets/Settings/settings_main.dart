@@ -30,11 +30,11 @@ class _SettingsState extends State<Settings> {
     Navigator.of(ctx).pop();
   }
 
-  String Name = "Nada";
+  late String Name = "Nada";
   String phone = "123";
-  String country = "Egypt";
+  late String country = "Egypt";
   //String Password = "12345678";
-  bool isPrivate = false;
+  late bool isPrivate = false;
 
   ///function to fetch user data from mock server (username, email, phone and country)
   Future<void> getuserData() async {
@@ -72,6 +72,12 @@ class _SettingsState extends State<Settings> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      getuserData();
+    });
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
