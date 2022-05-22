@@ -9,8 +9,20 @@ import 'notification_item.dart';
 
 ///Same as the notifications but with mentions
 class MentionsList extends StatefulWidget {
-  const MentionsList();
+  MentionsList(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
   @override
   State<MentionsList> createState() => _MentionsListState();
 }
@@ -27,7 +39,7 @@ class _MentionsListState extends State<MentionsList> {
     var url = Uri.parse(
         "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + constToken,
+      "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -45,14 +57,17 @@ class _MentionsListState extends State<MentionsList> {
     var mapData = json.decode(response.body);
 
     for (int i = 0; i < mapData['notificationsArray'].length; i++) {
-      if (NotificationItem.jsonNotification(mapData['notificationsArray'][i])
+      if (NotificationItem.jsonNotification(
+                      mapData['notificationsArray'][i], widget.token)
                   .notificationType ==
               'reply' ||
-          NotificationItem.jsonNotification(mapData['notificationsArray'][i])
+          NotificationItem.jsonNotification(
+                      mapData['notificationsArray'][i], widget.token)
                   .notificationType ==
-              'tag')
+              'tag') {
         notificationList.add(NotificationItem.jsonNotification(
-            mapData['notificationsArray'][i]));
+            mapData['notificationsArray'][i], widget.token));
+      }
     }
     return notificationList;
   }
@@ -84,18 +99,6 @@ class _MentionsListState extends State<MentionsList> {
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.data == null) {
-                // return Column(
-                //     mainAxisSize: MainAxisSize.max,
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: <Widget>[
-                //       // SizedBox(height: 100),
-                //       Center(child: CircularProgressIndicator()),
-                //       SizedBox(height: 50),
-                //       Center(
-                //         child: Text('Server error..please wait'),
-                //       )
-                //     ]);
                 return Container(
                   child: Column(
                     children: [

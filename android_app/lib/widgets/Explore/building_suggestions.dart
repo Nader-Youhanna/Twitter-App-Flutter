@@ -7,13 +7,13 @@ import '../../constants.dart';
 
 ///this is a class built to fetch the suggestion list for the search bar from server
 class BuildingSuggestions {
-  Future<List<SearchItem>> getSearchItems({String? query}) async {
+  Future<List<SearchItem>> getSearchItems(String? query, String token) async {
     List<SearchItem> searchResults = [];
     print("Adding search elements");
     //var url = Uri.parse("http://$MY_IP_ADDRESS:3000/searching");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/search?q=f&f=user");
     Map<String, dynamic> headers = {
-      "Authorization": "Bearer " + constToken,
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json"
     };
 

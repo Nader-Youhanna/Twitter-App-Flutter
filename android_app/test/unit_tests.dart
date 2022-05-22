@@ -75,7 +75,9 @@ void main() {
       test(
         "Notification test",
         () {
-          final notificationItem = NotificationItem();
+          final notificationItem = NotificationItem(
+            token: '',
+          );
           notificationItem.notificationType = 'like';
           String message = notificationItem.getType();
           expect(message, '  liked your tweet');

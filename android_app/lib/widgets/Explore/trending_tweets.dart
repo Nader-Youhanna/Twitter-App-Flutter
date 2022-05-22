@@ -15,8 +15,21 @@ class TrendingTweets extends StatefulWidget {
   ///the trending topic is the only data memeber in the class
   String topic = "";
 
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
+
   ///class takes the concerned topic in its constructor
-  TrendingTweets(this.topic);
+  TrendingTweets(this.topic,
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
   //late Map<String, dynamic> mapTopic = {"hashtag": topic};
   @override
   State<TrendingTweets> createState() => TrendingTweetsState();
@@ -32,18 +45,6 @@ class TrendingTweetsState extends State<TrendingTweets> {
     );
   }
 
-  // ///sends topic to backend to get list of tweets
-  // Future<Map<String, dynamic>> sendTrend(Map<String, dynamic> data) async {
-  //   return await httpRequestPost(
-  //     "http://${MY_IP_ADDRESS}:3000/openTrend/",
-  //     data,
-  //     <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //       'Authorization': 'Bearer ' + token
-  //     },
-  //   );
-  // }
-
   ///Function to get the list of trending tweets and their types from backend
   Future<List<Tweet>> getTrendingTweets() async {
     List<Tweet> tweetList = <Tweet>[];
@@ -52,7 +53,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print("fetching trending tweets based on topic");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore/$hashtag");
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + constToken,
+      "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -142,7 +143,14 @@ class TrendingTweetsState extends State<TrendingTweets> {
                           onTap: () async {
                             await showSearch(
                               context: context,
-                              delegate: MySearchDelegate(),
+                              delegate: MySearchDelegate(
+                                name: widget.name,
+                                userName: widget.userName,
+                                userImage: widget.userImage,
+                                isAdmin: widget.isAdmin,
+                                email: widget.email,
+                                token: widget.token,
+                              ),
                               query: widget.topic,
                             );
                           }),
@@ -164,7 +172,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
+                            children: const <Widget>[
                               // SizedBox(height: 100),
                               Center(child: CircularProgressIndicator()),
                               SizedBox(height: 50),

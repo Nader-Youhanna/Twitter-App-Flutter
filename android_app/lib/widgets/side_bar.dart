@@ -103,9 +103,12 @@ class SideBar extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) {
                   return NotificationsPage(
-                    username,
-                    token,
-                    isAdmin,
+                    name: name,
+                    userName: username,
+                    userImage: userImage,
+                    isAdmin: isAdmin,
+                    email: email,
+                    token: token,
                   );
                 }),
               );

@@ -7,10 +7,11 @@ import 'dart:convert';
 
 ///Class that holds the page that displays the tweet with whivh the notification is concerned
 class NotificationTweet extends StatefulWidget {
-  String tweetID;
+  String tweetID = '';
+  String token = '';
   @override
   State<NotificationTweet> createState() => NotificationTweetState();
-  NotificationTweet(this.tweetID);
+  NotificationTweet({required this.tweetID, required this.token});
 }
 
 class NotificationTweetState extends State<NotificationTweet> {
@@ -26,7 +27,7 @@ class NotificationTweetState extends State<NotificationTweet> {
     var url = Uri.parse(
         "http://$MY_IP_ADDRESS:3000/home/$tweetID/getTweetById"); //url used for mock server and backend
     Map<String, dynamic> headers = {
-      "Authorization": "Bearer " + constToken,
+      "Authorization": "Bearer " + widget.token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -74,14 +75,14 @@ class NotificationTweetState extends State<NotificationTweet> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               default:
                 if (snapshot.data == null) {
                   return Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      children: const <Widget>[
                         // SizedBox(height: 100),
                         Center(child: CircularProgressIndicator()),
                         SizedBox(height: 50),

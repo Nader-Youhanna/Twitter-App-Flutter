@@ -24,14 +24,34 @@ class MySearchDelegate extends SearchDelegate {
   void _goToTweetList(BuildContext ctx, String data) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return TrendingTweets(data);
+        return TrendingTweets(
+          data,
+          name: name,
+          userName: userName,
+          userImage: userImage,
+          isAdmin: isAdmin,
+          email: email,
+          token: token,
+        );
       }),
     );
   }
 
   BuildingSuggestions _suggestionsList = BuildingSuggestions();
 
-  MySearchDelegate();
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
+  MySearchDelegate(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
   ///function to create leading icon in search bar
   @override
@@ -79,18 +99,18 @@ class MySearchDelegate extends SearchDelegate {
             ),
           )
         : FutureBuilder<List<SearchItem>>(
-            future: _suggestionsList.getSearchItems(query: query),
+            future: _suggestionsList.getSearchItems(query, token),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 default:
                   if (snapshot.data == null) {
                     return Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
+                        children: const <Widget>[
                           // SizedBox(height: 100),
                           Center(child: CircularProgressIndicator()),
                           SizedBox(height: 50),
@@ -140,7 +160,7 @@ class MySearchDelegate extends SearchDelegate {
             ),
           )
         : FutureBuilder<List<SearchItem>>(
-            future: _suggestionsList.getSearchItems(query: query),
+            future: _suggestionsList.getSearchItems(query, token),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
