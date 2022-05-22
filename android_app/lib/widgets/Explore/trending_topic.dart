@@ -8,10 +8,18 @@ import './trending_tweets.dart';
 
 /// class to create the elements that appear in the trending page (its data (hashtag, number of tweets) is fetched from the server)
 class TrendingTopic extends StatefulWidget {
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token = ' ';
+
   String hashtag = '';
 
   ///the trending topic
   int trendingNumber = 1;
+  int rank = 1;
 
   ///the number displayed with the topic
   int numberOfTweets = 0;
@@ -19,16 +27,30 @@ class TrendingTopic extends StatefulWidget {
   ///the number of tweets for each topic
 
   ///named constructor to map the data fetched from server
-  TrendingTopic.jsonTrend(Map<String, dynamic> jsonTrend) {
+  TrendingTopic.jsonTrend(
+      Map<String, dynamic> jsonTrend,
+      String getname,
+      String getuserName,
+      String getuserImage,
+      bool getisAdmin,
+      String getemail,
+      String gettoken) {
+    name = getname;
+    userName = getuserName;
+    userImage = getuserImage;
+    isAdmin = getisAdmin;
+    email = getemail;
+    token = gettoken;
     hashtag = jsonTrend['body'] as String;
     numberOfTweets = jsonTrend['tweetsCount'] as int;
+    rank = jsonTrend['rank'] as int;
   }
   late String tweetNumber = numberOfTweets.toString();
   @override
   State<TrendingTopic> createState() => _TrendingTopicState();
 
   ///construnctions the header string that is going to be displayed befor the topic
-  late String header = trendingNumber.toString() + " . Trending";
+  late String header = rank.toString() + " . Trending";
 
   ///construnctions the string that contains the number of tweets
   late String retweets = tweetNumber + " Tweets";
@@ -38,7 +60,15 @@ class _TrendingTopicState extends State<TrendingTopic> {
   void _goToTweetList(BuildContext ctx, String data) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return TrendingTweets(data);
+        return TrendingTweets(
+          data,
+          name: widget.name,
+          userName: widget.userName,
+          userImage: widget.userImage,
+          isAdmin: widget.isAdmin,
+          email: widget.email,
+          token: widget.token,
+        );
       }),
     );
   }

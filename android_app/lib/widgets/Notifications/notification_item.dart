@@ -11,7 +11,8 @@ import 'dart:convert';
 
 ///class to  create the elements that apears in the notifications list
 class NotificationItem extends StatelessWidget {
-  NotificationItem();
+  late String token;
+  NotificationItem({required this.token});
 
   String username = "username";
 
@@ -30,7 +31,9 @@ class NotificationItem extends StatelessWidget {
   );
 
 //named constructor to map the elements fetched from server
-  NotificationItem.jsonNotification(Map<String, dynamic> jsonNotification) {
+  NotificationItem.jsonNotification(
+      Map<String, dynamic> jsonNotification, String getToken) {
+    token = getToken;
     username = jsonNotification['sender'] as String;
     notificationType = jsonNotification['activity'] as String;
     // tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
@@ -69,7 +72,7 @@ class NotificationItem extends StatelessWidget {
   ///function to delete notification when user chooses see less often
   Future<void> deleteNotification(String id) async {
     Map<String, String> headers = {
-      "Authorization": 'Bearer ' + constToken,
+      "Authorization": 'Bearer ' + token,
       "Content-Type": "application/json"
     };
     var url =
@@ -90,7 +93,7 @@ class NotificationItem extends StatelessWidget {
   void _viewTweet(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return NotificationTweet(tweetID);
+        return NotificationTweet(tweetID: tweetID, token: token);
       }),
     );
   }

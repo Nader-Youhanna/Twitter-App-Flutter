@@ -204,7 +204,7 @@ Future<List<File>?> getImage(ImagePicker picker) async {
     final pickedFile = await picker.pickMultiImage();
 
     int maxImages = 4;
-    if (pickedFile != null && pickedFile!.length < 4) {
+    if (pickedFile != null && pickedFile.length < 4) {
       maxImages = pickedFile.length;
     }
     List<File> _image = [];

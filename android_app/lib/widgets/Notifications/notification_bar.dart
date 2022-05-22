@@ -2,15 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 
+import '../Settings/settings_main.dart';
+
 ///class to create the notification's sliding bar
 class NotificationBar extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey;
-  NotificationBar(this._scaffoldKey);
 
-  CircleAvatar userImage = const CircleAvatar(
-    backgroundImage: AssetImage('assets/images/user_icon2.png'),
-    radius: 12.0,
-  ); //should be fetched in the constructor
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token = '';
+  NotificationBar(
+    this._scaffoldKey, {
+    required this.name,
+    required this.userName,
+    required this.userImage,
+    required this.isAdmin,
+    required this.email,
+    required this.token,
+  });
+
+  void _goToSettings(BuildContext ctx, String user, String email) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Settings(token, user, email);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const List<String> _tabs = <String>['All', 'Mentions'];
@@ -19,19 +42,24 @@ class NotificationBar extends StatelessWidget {
       pinned: true,
       floating: true,
       leading: IconButton(
-        icon: const Icon(
-            Icons.person_rounded), //should be changed to google profile icon
-        color: Colors.black,
-        onPressed: () {
-          _scaffoldKey.currentState!.openDrawer();
-        },
-        //button should open to side bar
-      ),
+          // icon:
+          //     const Icon(Icons.add), //should be changed to google profile icon
+          icon: CircleAvatar(
+            //will be removed once apis are connected
+            backgroundImage: NetworkImage(userImage),
+            radius: 18.0,
+          ),
+          color: Colors.black,
+          onPressed: () {
+            _scaffoldKey.currentState!.openDrawer();
+          }),
       actions: [
         IconButton(
             icon: const Icon(Icons.settings_outlined),
             color: Colors.black,
-            onPressed: () => {}), //button shoud direct to setings
+            onPressed: () => {
+                  _goToSettings(context, userName, email)
+                }), //button shoud direct to setings
       ],
       bottom: TabBar(
         indicatorColor: Colors.blue,
