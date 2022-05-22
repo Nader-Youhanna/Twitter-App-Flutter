@@ -1,15 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../../constants.dart';
 
 ///class that creates the follow/unfollow button and changes it state based of following or not
 class Follow_button extends StatefulWidget {
+  String _username;
   bool _alreadyfollowed;
-  Follow_button(this._alreadyfollowed);
+
+  Follow_button(this._alreadyfollowed, this._username);
 
   @override
   State<Follow_button> createState() => _Follow_buttonState();
 }
 
 class _Follow_buttonState extends State<Follow_button> {
+  String Status = "0";
+
+  Future<void> Follow_user() async {
+    var data;
+    print("following user");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget._username}/follow");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      print("${response.body}");
+
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            Status = data['status'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
+  }
+
+  Future<void> UnFollow_user() async {
+    var data;
+    print("following user");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget._username}/unfollow");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      print("${response.body}");
+
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            Status = data['status'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -28,9 +99,20 @@ class _Follow_buttonState extends State<Follow_button> {
         ),
       ),
       onPressed: () {
-        setState(() {
-          widget._alreadyfollowed = !widget._alreadyfollowed;
-        });
+        if (widget._alreadyfollowed) {
+          setState(() {
+            UnFollow_user();
+          });
+        } else {
+          setState(() {
+            Follow_user();
+          });
+        }
+        if (Status == "success") {
+          setState(() {
+            widget._alreadyfollowed = !widget._alreadyfollowed;
+          });
+        }
       },
     );
   }

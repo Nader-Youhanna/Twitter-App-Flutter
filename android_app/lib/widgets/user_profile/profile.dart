@@ -33,7 +33,8 @@ const List<Choice> choices = <Choice>[
   ),
   Choice(title: 'Block', icon: Icons.directions_bike),
   Choice(title: 'Mute', icon: Icons.directions_bike),
-  Choice(title: 'Report', icon: Icons.directions_bike),
+  Choice(title: 'Report not interested', icon: Icons.directions_bike),
+  Choice(title: 'Report spam', icon: Icons.directions_bike),
 ];
 
 ///class that creates user profile page, whether this user is myself or another user
@@ -68,9 +69,74 @@ class _ProfileState extends State<Profile> {
   late List<dynamic> followersList = [];
   late List<dynamic> followingList = [];
   late final Future? myFuture;
+  String statusReport = "failed";
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
+  }
+
+  Future<void> reportUsernotInt() async {
+    var data;
+    print("getting user data");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget._username}/report?q=1");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      print("${response.body}");
+
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            statusReport = data['message'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
+  }
+
+  Future<void> reportUserSpam() async {
+    var data;
+    print("getting user data");
+    var url =
+        Uri.parse("http://34.236.108.123:3000/${widget._username}/report?q=2");
+    try {
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+      print("${response.statusCode}");
+      print("${response.body}");
+
+      if (response.statusCode == 200) {
+        data = json.decode(response.body);
+        print("${response.body}");
+        if (data != null) {
+          setState(() {
+            statusReport = data['message'] as String;
+          });
+        }
+      } else {
+        print('fetch error');
+      }
+    } on Exception catch (e) {
+      print('error: $e');
+    }
   }
 
   ///function that sends a get request to the mock server to get the user's information
@@ -151,289 +217,297 @@ class _ProfileState extends State<Profile> {
             return Center(child: CircularProgressIndicator());
 
           default:
-            if (snapshot.data == null)
-              return Center(
-                child: Text('Server Down'),
-              );
-            else
-              return MaterialApp(
-                theme: ThemeData(
-                    appBarTheme: AppBarTheme(
-                        backgroundColor: Colors.white, centerTitle: true),
-                    tabBarTheme: TabBarTheme(labelColor: Colors.black)),
-                home: Scaffold(
-                  appBar: PreferredSize(
-                    preferredSize: Size.fromHeight(50.0),
-                    child: AppBar(
-                      leading: BackButton(
-                        color: Colors.white,
-                        onPressed: () {
-                          _goBack(context);
+            // if (snapshot.data == null)
+            //   return Center(
+            //     child: Text('Server Down'),
+            //   );
+            // else
+            return MaterialApp(
+              theme: ThemeData(
+                  appBarTheme: AppBarTheme(
+                      backgroundColor: Colors.white, centerTitle: true),
+                  tabBarTheme: TabBarTheme(labelColor: Colors.black)),
+              home: Scaffold(
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(50.0),
+                  child: AppBar(
+                    leading: BackButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        _goBack(context);
+                      },
+                    ),
+                    //IconButton
+                    actions: <Widget>[
+                      IconButton(
+                          icon: Icon(Icons.search),
+                          tooltip: 'search Icon',
+                          onPressed: () {},
+                          color: Colors.white),
+                      PopupMenuButton(
+                        itemBuilder: (BuildContext context) {
+                          return choices.map((Choice choice) {
+                            return PopupMenuItem<Choice>(
+                              value: choice,
+                              child: Text(choice.title),
+                            );
+                          }).toList();
+                        },
+                        onSelected: (value) {
+                          if (value == 'Report not interested') {
+                            setState(() {
+                              reportUsernotInt();
+                            });
+                          } else if (value == "Report spam") {
+                            setState(() {
+                              reportUserSpam();
+                            });
+                          }
                         },
                       ),
-                      //IconButton
-                      actions: <Widget>[
-                        IconButton(
-                            icon: Icon(Icons.search),
-                            tooltip: 'search Icon',
-                            onPressed: () {},
-                            color: Colors.white),
-                        PopupMenuButton(
-                          itemBuilder: (BuildContext context) {
-                            return choices.map((Choice choice) {
-                              return PopupMenuItem<Choice>(
-                                value: choice,
-                                child: Text(choice.title),
-                              );
-                            }).toList();
-                          },
-                          onSelected: (value) {
-                            _ShareProfile;
-                          },
-                        ),
-                      ],
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/images/cover_image_sample.jpg',
-                              fit: BoxFit.cover,
-                            ),
-                            const DecoratedBox(
-                                decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment(0.0, 0.5),
-                                end: Alignment.center,
-                                colors: <Color>[
-                                  Color(0x60000000),
-                                  Color(0x00000000),
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  body: DefaultTabController(
-                    length: _tabs.length,
-                    child: NestedScrollView(
-                      headerSliverBuilder:
-                          (BuildContext context, bool innerBoxIsScrolled) {
-                        return <Widget>[
-                          SliverOverlapAbsorber(
-                            handle:
-                                NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                    context),
-                            sliver: SliverAppBar(
-                              //title: const Text('Books'),
-                              pinned: true,
-                              floating: false,
-                              expandedHeight: 220.0,
-                              stretch: true,
-                              onStretchTrigger: () {
-                                return Future<void>.value();
-                              },
-                              forceElevated: innerBoxIsScrolled,
-                              bottom: TabBar(
-                                tabs: _tabs
-                                    .map((String name) => Tab(text: name))
-                                    .toList(),
-                              ),
-                              flexibleSpace: FlexibleSpaceBar(
-                                collapseMode: CollapseMode.pin,
-                                background: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          padding: EdgeInsets.only(
-                                              left: 15, right: 32),
-                                          child: new CircleAvatar(
-                                            backgroundImage: new AssetImage(
-                                                'assets/images/user_icon.png'),
-                                            radius: 35,
-                                            backgroundColor: Colors.grey,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: <Widget>[
-                                              Container(
-                                                margin: EdgeInsets.all(10),
-                                                child: _myProfile
-                                                    ? ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: Colors.white,
-                                                          shape:
-                                                              StadiumBorder(),
-                                                          shadowColor:
-                                                              Colors.black,
-                                                          side: BorderSide(
-                                                              width: 1,
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      68,
-                                                                      68,
-                                                                      68)),
-                                                          minimumSize:
-                                                              Size(100, 30),
-                                                        ),
-                                                        child: Text(
-                                                          'Edit Profile',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      Edit_Profile(
-                                                                          widget
-                                                                              ._username)));
-                                                        },
-                                                      )
-                                                    : Follow_button(
-                                                        _alreadyFollowed),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.only(top: 0),
-                                        padding: EdgeInsets.only(
-                                            left: 15, right: 32),
-                                        child: Text(
-                                          widget._username,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'PlayfairDisplay',
-                                            fontStyle: FontStyle.italic,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: EdgeInsets.only(top: 10.0),
-                                        padding: EdgeInsets.only(
-                                            left: 15, right: 32),
-                                        child: Text(
-                                          bio,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15.0),
-                                        )),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 0.0, bottom: 10),
-                                          padding: EdgeInsets.only(
-                                              left: 10, right: 5),
-                                          child: TextButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Accounts_page(widget
-                                                                ._username)));
-                                              },
-                                              child: Text(
-                                                '${_followersCount} followers',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 185, 182, 182),
-                                                  fontSize: 12.0,
-                                                ),
-                                              )),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 0.0, bottom: 10),
-                                          padding: EdgeInsets.only(
-                                              left: 10, right: 32),
-                                          child: TextButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Accounts_page(widget
-                                                                ._username)));
-                                              },
-                                              child: Text(
-                                                '${_followingCount} following',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 185, 182, 182),
-                                                  fontSize: 12.0,
-                                                ),
-                                              )),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                    ],
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/images/cover_image_sample.jpg',
+                            fit: BoxFit.cover,
                           ),
-                        ];
-                      },
-                      body: (!_myProfile && protectedTweets && !followsme)
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                  Container(
-                                      padding: EdgeInsets.all(40),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text("These Tweets are protected.",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 26,
-                                              )),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                              "Only confirmed followers have access to ${widget._username}'s tweets and complete profile. Tap the Follow button to send a follow request.")
-                                        ],
-                                      ))
-                                ])
-                          : TabBarView(
-                              children: [
-                                TweetTab(username, username),
-                                TweetsAndReplies(username, username),
-                                MediaTab(username, username),
-                                LikesTab(username, username),
+                          const DecoratedBox(
+                              decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(0.0, 0.5),
+                              end: Alignment.center,
+                              colors: <Color>[
+                                Color(0x60000000),
+                                Color(0x00000000),
                               ],
                             ),
+                          ))
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              );
+                body: DefaultTabController(
+                  length: _tabs.length,
+                  child: NestedScrollView(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverOverlapAbsorber(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context),
+                          sliver: SliverAppBar(
+                            //title: const Text('Books'),
+                            pinned: true,
+                            floating: false,
+                            expandedHeight: 220.0,
+                            stretch: true,
+                            onStretchTrigger: () {
+                              return Future<void>.value();
+                            },
+                            forceElevated: innerBoxIsScrolled,
+                            bottom: TabBar(
+                              tabs: _tabs
+                                  .map((String name) => Tab(text: name))
+                                  .toList(),
+                            ),
+                            flexibleSpace: FlexibleSpaceBar(
+                              collapseMode: CollapseMode.pin,
+                              background: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        padding: EdgeInsets.only(
+                                            left: 15, right: 32),
+                                        child: new CircleAvatar(
+                                          backgroundImage: new AssetImage(
+                                              'assets/images/user_icon.png'),
+                                          radius: 35,
+                                          backgroundColor: Colors.grey,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.all(10),
+                                              child: _myProfile
+                                                  ? ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        primary: Colors.white,
+                                                        shape: StadiumBorder(),
+                                                        shadowColor:
+                                                            Colors.black,
+                                                        side: BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    68,
+                                                                    68,
+                                                                    68)),
+                                                        minimumSize:
+                                                            Size(100, 30),
+                                                      ),
+                                                      child: Text(
+                                                        'Edit Profile',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    Edit_Profile(
+                                                                        widget
+                                                                            ._username)));
+                                                      },
+                                                    )
+                                                  : Follow_button(
+                                                      _alreadyFollowed,
+                                                      widget._username),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.only(top: 0),
+                                      padding:
+                                          EdgeInsets.only(left: 15, right: 32),
+                                      child: Text(
+                                        widget._username,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'PlayfairDisplay',
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
+                                  Container(
+                                      margin: EdgeInsets.only(top: 10.0),
+                                      padding:
+                                          EdgeInsets.only(left: 15, right: 32),
+                                      child: Text(
+                                        bio,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15.0),
+                                      )),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: 0.0, bottom: 10),
+                                        padding:
+                                            EdgeInsets.only(left: 10, right: 5),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Accounts_page(widget
+                                                              ._username)));
+                                            },
+                                            child: Text(
+                                              '${_followersCount} followers',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 185, 182, 182),
+                                                fontSize: 12.0,
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: 0.0, bottom: 10),
+                                        padding: EdgeInsets.only(
+                                            left: 10, right: 32),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Accounts_page(widget
+                                                              ._username)));
+                                            },
+                                            child: Text(
+                                              '${_followingCount} following',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 185, 182, 182),
+                                                fontSize: 12.0,
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
+                    body: (!_myProfile && protectedTweets && !followsme)
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                                Container(
+                                    padding: EdgeInsets.all(40),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text("These Tweets are protected.",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 26,
+                                            )),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                            "Only confirmed followers have access to ${widget._username}'s tweets and complete profile. Tap the Follow button to send a follow request.")
+                                      ],
+                                    ))
+                              ])
+                        : TabBarView(
+                            children: [
+                              TweetTab(username, username),
+                              TweetsAndReplies(username, username),
+                              MediaTab(username, username),
+                              LikesTab(username, username),
+                            ],
+                          ),
+                  ),
+                ),
+              ),
+            );
         }
       },
     );
