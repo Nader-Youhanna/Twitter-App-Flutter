@@ -16,9 +16,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  var messages = [];
+  List<Message> messages = [];
 
-  var users = [];
+  String newMessageText = '';
+  List<MessagesUser> users = [];
 
   void initState() {
     super.initState();
@@ -45,6 +46,50 @@ class _ChatPageState extends State<ChatPage> {
         Message(messageText: 'Hello', user: users[0]),
       ];
     });
+  }
+
+  Widget _buildMesageComposer() {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        height: 70,
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.camera_alt,
+                color: Color.fromARGB(255, 3, 72, 129),
+              ),
+            ),
+            Expanded(
+              child: TextField(
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) {
+                  newMessageText = value;
+                },
+                decoration: const InputDecoration.collapsed(
+                  hintText: 'Type a message',
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  Message newMessage = Message(
+                    messageText: newMessageText,
+                    user:
+                        MessagesUser(name: 'Nader', username: widget.username),
+                  );
+                  messages.insert(0, newMessage);
+                });
+              },
+              icon: const Icon(
+                Icons.send,
+                color: Color.fromARGB(255, 3, 72, 129),
+              ),
+            )
+          ],
+        ));
   }
 
   Widget _buildMessage(Message message, bool isMe) {
@@ -168,6 +213,7 @@ class _ChatPageState extends State<ChatPage> {
                   }),
             ),
           ),
+          _buildMesageComposer(),
         ],
       ),
     );
