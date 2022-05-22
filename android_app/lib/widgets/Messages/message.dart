@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'messages_user.dart';
 
 class Message extends StatelessWidget {
   bool left;
-
+  MessagesUser? user;
   String messageText;
+
   Message({required this.left, required this.messageText});
 
   @override
@@ -20,7 +22,7 @@ class Message extends StatelessWidget {
               color: left ? Colors.blue : Colors.white,
               elevation: 10,
               margin: EdgeInsets.only(
-                  left: left ? 0 : screenWidth * 0.62,
+                  left: left ? 0 : screenWidth * 0.6,
                   right: left ? screenWidth * 0.1 : 0),
               child: Column(
                 children: [

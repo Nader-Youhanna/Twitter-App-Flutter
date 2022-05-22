@@ -10,6 +10,7 @@ import 'forgot_password.dart';
 class EnterPasswordPage extends StatefulWidget {
   String name = 'Nader';
   final username;
+  String token = '';
 
   EnterPasswordPage({
     @required this.username,
@@ -38,7 +39,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
   Future<void> _validateCredentialsAsync(String password) async {
     //COMMENT THIS LINE TO CONNECT TO REAL SERVER RESPONSE
-    //_goToTimeline(context);
+    _goToTimeline(context);
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(
@@ -61,6 +62,9 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       lastValidatedPassword = password;
       print('Success');
       print(lastValidatedPassword);
+      print("TOKEN: ");
+      print(extractedMyInfo['token']);
+      widget.token = extractedMyInfo['token'];
       _goToTimeline(context);
     } else {
       lastRejectedPassword = password;
@@ -108,7 +112,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           return MyNavigationBar(
             name: widget.name,
             username: widget.username,
-            token: '',
+            token: widget.token,
             isAdmin: false,
           );
         }),
