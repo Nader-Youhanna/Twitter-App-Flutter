@@ -62,7 +62,7 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
-    _setIPAddress(MY_IP_ADDRESS);
+    //_setIPAddress(MY_IP_ADDRESS);
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;

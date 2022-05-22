@@ -14,6 +14,7 @@ class URL {
   static String postTweet = 'http://$serverIP:$serverPort/home/compose-tweet/';
   static String getReplies =
       'http://$serverIP:$serverPort/home/:tweetId/getReplies/';
+  static String postReply = 'http://$serverIP:$serverPort/home/:tweetId/reply/';
   static String getSearchElements =
       'http://$serverIP:$serverPort/search?q=f&f=user';
   static String getNotifications =
