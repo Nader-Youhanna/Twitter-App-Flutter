@@ -19,12 +19,16 @@ class MyNavigationBar extends StatefulWidget {
   final String username;
   final String token;
   final bool isAdmin;
+  final String userImage;
+  final String email;
   //MyNavigationBar();
   MyNavigationBar({
     required this.name,
     required this.username,
     required this.token,
     required this.isAdmin,
+    required this.userImage,
+    required this.email,
   });
 
   @override

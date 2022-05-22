@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:android_app/widgets/Explore/explore_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,12 +9,15 @@ import 'forgot_password.dart';
 
 ///This is the enter password page
 class EnterPasswordPage extends StatefulWidget {
-  String name = 'Nader';
-  final username;
+  String name = '';
+  String username;
   String token = '';
+  bool isAdmin = false;
+  String userImage = '';
+  String email = '';
 
   EnterPasswordPage({
-    @required this.username,
+    required this.username,
   });
 
   @override
@@ -65,6 +69,22 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       print("TOKEN: ");
       print(extractedMyInfo['token']);
       widget.token = extractedMyInfo['token'];
+      var urlHome = Uri.parse('http://$MY_IP_ADDRESS:3000/home');
+      var responseHome = await http.get(
+        urlHome,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + widget.token,
+        },
+      );
+      print('Response status: ${responseHome.statusCode}');
+      print('Response body: ${responseHome.body}');
+      final extractedMyInfoHome =
+          json.decode(responseHome.body) as Map<String, dynamic>;
+      print('isAdmin: ');
+      print(extractedMyInfoHome['isAdmin']);
+      print('username');
+      print(extractedMyInfoHome['userName']);
       _goToTimeline(context);
     } else {
       lastRejectedPassword = password;
@@ -113,7 +133,9 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
             name: widget.name,
             username: widget.username,
             token: widget.token,
-            isAdmin: false,
+            isAdmin: widget.isAdmin,
+            userImage: widget.userImage,
+            email: widget.email,
           );
         }),
       );
