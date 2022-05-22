@@ -22,7 +22,9 @@ class TermsAndConditions extends StatelessWidget {
           name: name,
           username: username,
           token: token,
-          isAdmin: false,
+          isAdmin: false, //get this
+          email: email,
+          userImage: '', //get this
         );
       }),
     );
