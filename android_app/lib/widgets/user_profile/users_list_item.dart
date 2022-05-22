@@ -72,7 +72,7 @@ class User_Item extends StatelessWidget {
                     ],
                   ),
                 ),
-                trailing: Follow_button(_alreadyfollowed),
+                trailing: Follow_button(_alreadyfollowed, username),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 0),
