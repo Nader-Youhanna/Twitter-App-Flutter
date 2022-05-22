@@ -1,13 +1,27 @@
+import 'dart:io';
+
 import 'package:android_app/constants.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
 
 import './http_functions.dart';
 import '../widgets/Tweets/tweet.dart';
 
+import 'dart:convert';
+import 'dart:ffi';
+import 'dart:async';
+import 'package:async/async.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
 Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
-  Map<String, dynamic> headers = {
-    "Authorization": token,
+  Map<String, String> headers = {
+    "Authorization": 'Bearer ' + token,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
@@ -41,78 +55,169 @@ Future<List<Tweet>> getTweets() async {
 void startAddTweet(BuildContext ctx) async {
   String tweetText = "";
   var tweetTextController = TextEditingController();
+  List<File>? _image = [];
+  final picker = ImagePicker();
+  List<http.MultipartFile> files = <http.MultipartFile>[];
+
+  //get width and height of the screen
+  double width = MediaQuery.of(ctx).size.width;
+  double height = MediaQuery.of(ctx).size.height;
   showModalBottomSheet(
     context: ctx,
     builder: (bCtx) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter mystate) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(ctx);
-                },
-                child: Text('Cancel'),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
               ),
-              const Spacer(),
-              TextButton(
-                onPressed: () async {
-                  tweetText = tweetTextController.text;
-                  //check for tagged users
-                  List<String?> taggedUsers = [];
-                  RegExp exp = RegExp(r'@[a-zA-Z0-9]+');
-                  Iterable<RegExpMatch> matches = exp.allMatches(tweetText);
-                  for (var match in matches) {
-                    taggedUsers.add(match.group(0));
-                  }
-                  //print(taggedUsers);
-                  print(tweetText);
-                  return;
-                  var data = <String, dynamic>{
-                    "userId": "6261594af12e411a8115627f",
-                    "body": tweetText,
-                    "media": ["url1", "url2"],
-                    "taggedUsers": ["624c40e1e42ed8fe5b098d2b"]
-                  };
-                  await addTweet(data);
-                  print("Tweet added");
-                  await getTweets();
-                  print("Tweets retrieved");
-                  Navigator.pop(ctx);
-                },
-                child: Text('Tweet'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () async {
+                      tweetText = tweetTextController.text;
+                      //check for tagged users
+                      List<String?> taggedUsers = [];
+                      RegExp exp = RegExp(r'@[a-zA-Z0-9]+');
+                      Iterable<RegExpMatch> matches = exp.allMatches(tweetText);
+                      for (var match in matches) {
+                        taggedUsers.add(match.group(0));
+                      }
+
+                      var data = {
+                        "body": tweetText,
+                        "taggedUsers": taggedUsers,
+                      };
+
+                      if (_image != null) {
+                        //there is an image
+                        print("sending with image");
+                        try {
+                          upload(_image!, data, 'http://10.0.2.2:3000/post');
+                        } catch (e) {
+                          print(e);
+                        }
+                      } else {
+                        //no image
+                        print("sending without image");
+                        addTweet(data);
+                      }
+
+                      //print(taggedUsers);
+                      Navigator.pop(ctx);
+                      return;
+                    },
+                    child: Text('Tweet'),
+                  ),
+                ],
               ),
-            ],
-          ),
-          //add tweet
-          Container(
-            padding: const EdgeInsets.all(10),
-            //take input text from user
-            child: TextField(
-              decoration: const InputDecoration.collapsed(
-                hintStyle: TextStyle(
-                  fontFamily: 'RalewayMedium',
-                  fontSize: 14.5,
+              //add tweet
+              Container(
+                padding: const EdgeInsets.all(10),
+                //take input text from user
+                child: TextField(
+                  decoration: const InputDecoration.collapsed(
+                    hintStyle: TextStyle(
+                      fontFamily: 'RalewayMedium',
+                      fontSize: 14.5,
+                    ),
+                    hintText: 'What\'s happening?',
+                  ),
+                  controller: tweetTextController,
                 ),
-                hintText: 'What\'s happening?',
               ),
-              controller: tweetTextController,
-            ),
-          )
-        ],
+              if (_image != null)
+                Row(
+                  children: [
+                    for (int i = 0; i < _image!.length; i++)
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.file(_image![i],
+                            width: width / 5, height: height / 5),
+                      ),
+                  ],
+                ),
+
+              //Add image button
+              TextButton.icon(
+                  onPressed: () async {
+                    _image = await getImage(picker);
+
+                    mystate() {}
+                  },
+                  icon: const Icon(Icons.image),
+                  label: const Text('Add Image'))
+            ],
+          );
+        },
       );
     },
     isScrollControlled: true,
     enableDrag: false,
     useRootNavigator: true,
   );
+}
+
+void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
+  var uri = Uri.parse(url);
+  var request = http.MultipartRequest("POST", uri);
+
+  for (int i = 0; i < imageFile.length; i++) {
+    var stream =
+        http.ByteStream(DelegatingStream.typed(imageFile[i].openRead()));
+    var length = await imageFile[i].length();
+    var multipartFile = http.MultipartFile('image', stream, length,
+        filename: basename(imageFile[i].path));
+    request.files.add(multipartFile);
+  }
+
+  request.headers['Authorization'] = 'Bearer ' + token;
+  //convert data to Map<String,String>
+  for (var key in data.keys) {
+    request.fields[key] = data[key].toString();
+  }
+
+  // send
+  var response = await request.send();
+  print(response.statusCode);
+
+  // listen for response
+  response.stream.transform(utf8.decoder).listen((value) {
+    print(value);
+  });
+}
+
+Future<List<File>?> getImage(ImagePicker picker) async {
+  if (Platform.isAndroid) {
+    final pickedFile = await picker.pickMultiImage();
+
+    int maxImages = 4;
+    if (pickedFile!.length < 4) {
+      maxImages = pickedFile!.length;
+    }
+    List<File> _image = [];
+    for (int i = 0; i < maxImages; i++) {
+      _image.add(File(pickedFile[i].path));
+    }
+    if (pickedFile.isNotEmpty) {
+      return _image;
+    } else {
+      print('No image selected.');
+      return null;
+    }
+  }
 }
 
 //get replies

@@ -63,6 +63,7 @@ dependencies:
   country_code_picker: ^2.0.2
   csc_picker: ^0.2.6
   country_state_city_pro: ^0.0.3
+  image_picker: ^0.8.5+3
   
  
 dev_dependencies:
