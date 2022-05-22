@@ -69,7 +69,7 @@ class NotificationItem extends StatelessWidget {
   ///function to delete notification when user chooses see less often
   Future<void> deleteNotification(String id) async {
     Map<String, String> headers = {
-      "Authorization": 'Bearer ' + token,
+      "Authorization": 'Bearer ' + constToken,
       "Content-Type": "application/json"
     };
     var url =

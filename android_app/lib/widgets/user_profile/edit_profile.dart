@@ -59,7 +59,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");
@@ -93,7 +93,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + constToken,
       },
       body: json.encode(
         <String, String>{

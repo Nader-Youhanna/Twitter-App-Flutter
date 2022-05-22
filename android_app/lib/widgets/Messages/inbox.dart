@@ -6,12 +6,14 @@ import '../side_bar.dart';
 import 'messages_users_list.dart';
 
 class Inbox extends StatefulWidget {
-  final token;
-  final username;
+  final String token, email, username, name, userImage;
   @override
   Inbox({
-    @required this.token,
-    @required this.username,
+    required this.token,
+    required this.username,
+    required this.email,
+    required this.name,
+    required this.userImage,
   });
   @override
   State<Inbox> createState() => _InboxState();
@@ -41,7 +43,7 @@ class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideBar(name: 'nido', username: 'nido123'),
+      // drawer: SideBar(name: 'nido', username: 'nido123'),
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -82,7 +84,9 @@ class _InboxState extends State<Inbox> {
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
       floatingActionButton: FloatingActionButton(
         //New Message
-        onPressed: () => {_goToUsersList(context)},
+        onPressed: () {
+          _goToUsersList(context);
+        },
         child: const Icon(
           Icons.mail,
           size: 30,

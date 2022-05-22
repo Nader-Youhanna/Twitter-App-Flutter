@@ -10,15 +10,17 @@ import 'Notifications/notifications_page.dart';
 
 ///This is the Sidebar that opens when you swipe or click the left corner icon
 class SideBar extends StatelessWidget {
-  final name, username;
-  final isAdmin = true;
-  final token = '';
+  final String name, username, email, token, userImage;
+  final bool isAdmin;
+
   @override
   SideBar({
-    @required this.name,
-    @required this.username,
-    //@required this.token,
-    //@required this.isAdmin,
+    required this.name,
+    required this.username,
+    required this.token,
+    required this.isAdmin,
+    required this.email,
+    required this.userImage,
   });
 
   ///This is a navigation function that redirects to login page
@@ -50,17 +52,21 @@ class SideBar extends StatelessWidget {
             ),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.asset(
-                  'assets/images/user_icon2.png',
-                  fit: BoxFit.fill,
-                ),
-              ),
+                  // child: Image.asset(
+                  //   'assets/images/user_icon2.png',
+                  //   fit: BoxFit.fill,
+                  // ),
+                  child: Image.network(
+                userImage,
+                fit: BoxFit.fill,
+              )),
             ),
             decoration: const BoxDecoration(
               color: Colors.blue,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/images/cover_image_sidebar.jpg'),
+                image: AssetImage(
+                    'assets/images/cover_image_sidebar.jpg'), //Cover Image
               ),
             ),
           ),
@@ -135,6 +141,9 @@ class SideBar extends StatelessWidget {
                   return Inbox(
                     username: username,
                     token: token,
+                    email: email,
+                    name: name,
+                    userImage: userImage,
                   );
                 }),
               );

@@ -27,7 +27,7 @@ class _Follow_buttonState extends State<Follow_button> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");
@@ -59,7 +59,7 @@ class _Follow_buttonState extends State<Follow_button> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");

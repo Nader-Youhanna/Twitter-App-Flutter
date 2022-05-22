@@ -31,7 +31,7 @@ class _TweetsAndRepliesState extends State<TweetsAndReplies> {
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + token,
+      "Authorization": 'Bearer ' + constToken,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(

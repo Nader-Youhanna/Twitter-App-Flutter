@@ -10,14 +10,14 @@ import 'forgot_password.dart';
 ///This is the enter password page
 class EnterPasswordPage extends StatefulWidget {
   String name = '';
-  String username;
+  String username = '';
   String token = '';
   bool isAdmin = false;
   String userImage = '';
   String email = '';
 
   EnterPasswordPage({
-    required this.username,
+    required this.email,
   });
 
   @override
@@ -43,7 +43,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
   Future<void> _validateCredentialsAsync(String password) async {
     //COMMENT THIS LINE TO CONNECT TO REAL SERVER RESPONSE
-    _goToTimeline(context);
+    //_goToTimeline(context);
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(
@@ -53,7 +53,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       },
       body: json.encode(
         <String, String>{
-          'email': widget.username,
+          'email': widget.email,
           'password': password,
         },
       ),
@@ -81,10 +81,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       print('Response body: ${responseHome.body}');
       final extractedMyInfoHome =
           json.decode(responseHome.body) as Map<String, dynamic>;
-      print('isAdmin: ');
-      print(extractedMyInfoHome['isAdmin']);
-      print('username');
-      print(extractedMyInfoHome['userName']);
+      widget.userImage = extractedMyInfoHome['userImage'];
+      widget.name = extractedMyInfoHome['name'];
+      widget.isAdmin = extractedMyInfoHome['isAdmin'];
+      widget.username = extractedMyInfoHome['userName'];
       _goToTimeline(context);
     } else {
       lastRejectedPassword = password;
@@ -221,7 +221,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.username,
+                    widget.email,
                     style: const TextStyle(
                       fontFamily: 'RalewayMedium',
                       fontSize: 16,
@@ -268,7 +268,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     } else {
                       return _validateCredentials(value)
                           ? null
-                          : 'Username or password is Invalid';
+                          : 'Email or password is Invalid';
                     }
                   },
                 ),

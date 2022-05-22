@@ -23,7 +23,7 @@ class NotificationsPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: SideBar(name: 'nido', username: 'nido123'),
+        //drawer: SideBar(name: 'nido', username: 'nido123'),
         key: _scaffoldKey,
         body: NotificationListener<ScrollNotification>(
           child: NestedScrollView(

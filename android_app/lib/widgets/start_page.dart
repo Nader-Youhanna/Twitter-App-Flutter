@@ -53,6 +53,8 @@ class StartPage extends StatelessWidget {
               username: user.displayName!,
               token: '',
               isAdmin: false,
+              email: '',
+              userImage: '',
             );
           } else if (snapshot.hasError) {
             return const Center(child: Text('Something went Wrong!'));

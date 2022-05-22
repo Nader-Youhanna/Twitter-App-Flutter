@@ -14,10 +14,20 @@ import 'Search/timeline_delegate.dart';
 class Timeline extends StatefulWidget {
   List<Tweet> tweets = <Tweet>[];
 
-  String _name = "";
-  String _userName = "";
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
 
-  Timeline(this._name, this._userName);
+  Timeline(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
   @override
   State<Timeline> createState() => _TimelineState();
 }
@@ -43,7 +53,7 @@ class _TimelineState extends State<Timeline> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Settings(token, widget._userName, "");
+          return Settings(constToken, widget.userName, "");
         },
       ),
     );
@@ -58,7 +68,14 @@ class _TimelineState extends State<Timeline> {
     double width = size.width;
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SideBar(name: 'nido', username: 'nido123'),
+      drawer: SideBar(
+        name: widget.name,
+        username: widget.userName,
+        userImage: widget.userImage,
+        isAdmin: widget.isAdmin,
+        email: widget.email,
+        token: widget.token,
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,

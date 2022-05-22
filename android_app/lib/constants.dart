@@ -1,6 +1,6 @@
 const MY_IP_ADDRESS = '34.236.108.123';
 // const MY_IP_ADDRESS = '192.168.1.14';
-const String token =
+const String constToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODZjOTUxOGI5ZDY2ODU5MzE0M2E1YiIsImlhdCI6MTY1MzE3NTMyOCwiZXhwIjoxNjYxODE1MzI4fQ.uTYQ9umCNOjoU4fLYV8FMl6vwzQUEGfGkqcBPR99JQY';
 
 class URL {
