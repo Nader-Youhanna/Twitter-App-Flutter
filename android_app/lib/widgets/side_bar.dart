@@ -137,6 +137,9 @@ class SideBar extends StatelessWidget {
                   return Inbox(
                     username: username,
                     token: token,
+                    email: email,
+                    name: name,
+                    userImage: userImage,
                   );
                 }),
               );

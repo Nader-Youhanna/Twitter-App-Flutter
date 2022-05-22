@@ -73,6 +73,9 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     Inbox(
       username: widget.username,
       token: widget.token,
+      email: widget.email,
+      name: widget.name,
+      userImage: widget.userImage,
     ),
   ];
 

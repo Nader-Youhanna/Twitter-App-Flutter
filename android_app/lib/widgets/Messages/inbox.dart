@@ -6,12 +6,14 @@ import '../side_bar.dart';
 import 'messages_users_list.dart';
 
 class Inbox extends StatefulWidget {
-  final token;
-  final username;
+  final String token, email, username, name, userImage;
   @override
   Inbox({
-    @required this.token,
-    @required this.username,
+    required this.token,
+    required this.username,
+    required this.email,
+    required this.name,
+    required this.userImage,
   });
   @override
   State<Inbox> createState() => _InboxState();
