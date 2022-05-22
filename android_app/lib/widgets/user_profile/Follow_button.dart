@@ -23,8 +23,9 @@ class _Follow_buttonState extends State<Follow_button> {
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/follow");
     try {
-      var response = await http.get(
+      var response = await http.post(
         url,
+        body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + constToken
@@ -55,8 +56,9 @@ class _Follow_buttonState extends State<Follow_button> {
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/unfollow");
     try {
-      var response = await http.get(
+      var response = await http.delete(
         url,
+        body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + constToken
@@ -108,11 +110,9 @@ class _Follow_buttonState extends State<Follow_button> {
             Follow_user();
           });
         }
-        if (Status == "success") {
-          setState(() {
-            widget._alreadyfollowed = !widget._alreadyfollowed;
-          });
-        }
+        setState(() {
+          widget._alreadyfollowed = !widget._alreadyfollowed;
+        });
       },
     );
   }
