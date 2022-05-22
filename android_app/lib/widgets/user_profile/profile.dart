@@ -77,7 +77,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> reportUsernotInt() async {
     var data;
-    print("getting user data");
+    print("reporting user");
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/report?q=1");
     try {
@@ -109,7 +109,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> reportUserSpam() async {
     var data;
-    print("getting user data");
+    print("reporting spam");
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/report?q=2");
     try {
@@ -254,14 +254,17 @@ class _ProfileState extends State<Profile> {
                           }).toList();
                         },
                         onSelected: (value) {
-                          if (value == 'Report not interested') {
+                          print('we are here');
+                          if (value == choices[3]) {
                             setState(() {
                               reportUsernotInt();
                             });
-                          } else if (value == "Report spam") {
+                            print(statusReport);
+                          } else if (value == choices[4]) {
                             setState(() {
                               reportUserSpam();
                             });
+                            print(statusReport);
                           }
                         },
                       ),
