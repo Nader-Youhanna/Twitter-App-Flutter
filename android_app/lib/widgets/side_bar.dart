@@ -197,6 +197,12 @@ class SideBar extends StatelessWidget {
                     builder: (_) {
                       return AdminViewMain(
                         selectedIndex: 0,
+                        name: name,
+                        userName: username,
+                        userImage: userImage,
+                        isAdmin: isAdmin,
+                        email: email,
+                        token: token,
                       );
                     },
                   ),

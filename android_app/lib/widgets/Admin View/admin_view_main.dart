@@ -4,7 +4,20 @@ import './admin_view_users.dart';
 
 class AdminViewMain extends StatelessWidget {
   int selectedIndex = 0;
-  AdminViewMain({required this.selectedIndex});
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
+  AdminViewMain(
+      {required this.selectedIndex,
+      required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,7 +48,14 @@ class AdminViewMain extends StatelessWidget {
           body: TabBarView(
             children: [
               AdminViewDashBoard(),
-              AdminViewUsers(),
+              AdminViewUsers(
+                name: name,
+                userName: userName,
+                userImage: userImage,
+                isAdmin: isAdmin,
+                email: email,
+                token: token,
+              ),
             ],
           ),
         ),

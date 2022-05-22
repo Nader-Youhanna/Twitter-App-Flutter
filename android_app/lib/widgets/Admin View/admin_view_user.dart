@@ -18,17 +18,10 @@ class AdminViewUser extends StatelessWidget {
     this.name,
     this.username,
   );
-
+  bool isDeleted = false;
   AdminViewUser.jsonAdminUser(Map<String, dynamic> jsonAdminUser) {
     name = jsonAdminUser['name'] as String;
     username = jsonAdminUser['username'] as String;
-  }
-  void _goToUserProfile(BuildContext ctx, String user) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
-      }),
-    );
   }
 
   void _goToUserStatistics(BuildContext ctx, String user) {
@@ -43,6 +36,14 @@ class AdminViewUser extends StatelessWidget {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return UserReports();
+      }),
+    );
+  }
+
+  void _goToUserProfile(BuildContext ctx, String user) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Profile(user, false);
       }),
     );
   }
@@ -65,6 +66,7 @@ class AdminViewUser extends StatelessWidget {
                   minimumSize: Size(45, 35),
                 ),
                 onPressed: () {
+                  isDeleted = true;
                   Navigator.of(ctx).pop();
                 },
                 child: Text(
@@ -277,7 +279,9 @@ class AdminViewUser extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32.0)),
                   minimumSize: Size(2, 35),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _goToUserReports(context);
+                },
                 child: Text(
                   'Reports',
                   style: TextStyle(color: Colors.white, fontSize: 14),

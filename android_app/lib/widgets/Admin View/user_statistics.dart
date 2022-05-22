@@ -23,6 +23,7 @@ class UserStatistics extends StatefulWidget {
 }
 
 class _UserStatisticsState extends State<UserStatistics> {
+  late TooltipBehavior _tooltipBehavior;
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -62,6 +63,7 @@ class _UserStatisticsState extends State<UserStatistics> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _tooltipBehavior = TooltipBehavior(enable: true);
 
     //userData = getUserTweetStats() as List<UserTweets>;
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
@@ -115,6 +117,7 @@ class _UserStatisticsState extends State<UserStatistics> {
                   ),
                   Card(
                     child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehavior,
                         legend: Legend(
                           textStyle: TextStyle(
                             fontSize: 15,
@@ -134,6 +137,7 @@ class _UserStatisticsState extends State<UserStatistics> {
                         series: <ChartSeries>[
                           // Renders line chart
                           LineSeries<ChartData, String>(
+                              enableTooltip: true,
                               legendIconType: LegendIconType.image,
                               name: '20%',
                               dataSource: chartData1,
@@ -146,6 +150,7 @@ class _UserStatisticsState extends State<UserStatistics> {
                   ),
                   Card(
                     child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehavior,
                         legend: Legend(
                           textStyle: TextStyle(
                             fontSize: 15,
@@ -165,6 +170,7 @@ class _UserStatisticsState extends State<UserStatistics> {
                         series: <ChartSeries>[
                           // Renders line chart
                           LineSeries<ChartData, String>(
+                              enableTooltip: true,
                               legendIconType: LegendIconType.image,
                               name: '30%',
                               dataSource: chartData2,
