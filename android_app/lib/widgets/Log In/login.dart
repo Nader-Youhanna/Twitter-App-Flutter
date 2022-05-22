@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
   void _enterPassword(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return EnterPasswordPage(username: _username);
+        return EnterPasswordPage(email: _username);
       }),
     );
   }

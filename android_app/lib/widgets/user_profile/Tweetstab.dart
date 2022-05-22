@@ -31,7 +31,7 @@ class _TweetTabState extends State<TweetTab> {
   Future<List<Tweet>> getUserLikes() async {
     print("Adding user tweets");
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + token,
+      "Authorization": 'Bearer ' + constToken,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(

@@ -21,7 +21,7 @@ import 'package:path/path.dart';
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
 Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
   Map<String, String> headers = {
-    "Authorization": 'Bearer ' + token,
+    "Authorization": 'Bearer ' + constToken,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
@@ -35,7 +35,7 @@ Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
 Future<List<Tweet>> getTweets() async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "Authorization": "Bearer " + token,
+    "Authorization": "Bearer " + constToken,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
@@ -183,7 +183,7 @@ void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
     request.files.add(multipartFile);
   }
 
-  request.headers['Authorization'] = 'Bearer ' + token;
+  request.headers['Authorization'] = 'Bearer ' + constToken;
   //convert data to Map<String,String>
   for (var key in data.keys) {
     request.fields[key] = data[key].toString();
@@ -223,7 +223,7 @@ Future<List<File>?> getImage(ImagePicker picker) async {
 //get replies
 Future<List<Tweet>> getReplies(String tweetId, String userName) async {
   Map<String, dynamic> headers = {
-    "Authorization": token,
+    "Authorization": constToken,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(

@@ -13,7 +13,7 @@ class BuildingSuggestions {
     //var url = Uri.parse("http://$MY_IP_ADDRESS:3000/searching");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/search?q=f&f=user");
     Map<String, dynamic> headers = {
-      "Authorization": "Bearer " + token,
+      "Authorization": "Bearer " + constToken,
       "Content-Type": "application/json"
     };
 

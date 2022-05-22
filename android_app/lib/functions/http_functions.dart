@@ -19,7 +19,7 @@ Future<void> httpMultipartFilePostRequest(
     //var request = http.MultipartRequest("POST", Uri.parse(URL.postTweet));
     var request =
         http.MultipartRequest("POST", Uri.parse('http://10.0.2.2:3000/post'));
-    request.headers['Authorization'] = token;
+    request.headers['Authorization'] = constToken;
     request.headers['Content-Type'] = 'multipart/form-data';
 
     request = jsonToFormData(request, data);

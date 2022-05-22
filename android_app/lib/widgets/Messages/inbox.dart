@@ -41,7 +41,7 @@ class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideBar(name: 'nido', username: 'nido123'),
+      // drawer: SideBar(name: 'nido', username: 'nido123'),
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -82,7 +82,9 @@ class _InboxState extends State<Inbox> {
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
       floatingActionButton: FloatingActionButton(
         //New Message
-        onPressed: () => {_goToUsersList(context)},
+        onPressed: () {
+          _goToUsersList(context);
+        },
         child: const Icon(
           Icons.mail,
           size: 30,

@@ -27,7 +27,7 @@ class _MentionsListState extends State<MentionsList> {
     var url = Uri.parse(
         "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + token,
+      "Authorization": 'Bearer ' + constToken,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);

@@ -10,15 +10,17 @@ import 'Notifications/notifications_page.dart';
 
 ///This is the Sidebar that opens when you swipe or click the left corner icon
 class SideBar extends StatelessWidget {
-  final name, username;
-  final isAdmin = true;
-  final token = '';
+  final String name, username, email, token, userImage;
+  final bool isAdmin;
+
   @override
   SideBar({
-    @required this.name,
-    @required this.username,
-    //@required this.token,
-    //@required this.isAdmin,
+    required this.name,
+    required this.username,
+    required this.token,
+    required this.isAdmin,
+    required this.email,
+    required this.userImage,
   });
 
   ///This is a navigation function that redirects to login page

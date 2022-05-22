@@ -100,7 +100,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + constToken,
       },
       body: json.encode(
         <String, String>{
@@ -160,8 +160,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Settings(
-                                      token, widget.username, widget.email)));
+                                  builder: (context) => Settings(constToken,
+                                      widget.username, widget.email)));
                         });
                       } else {
                         showAlertDialog(context);

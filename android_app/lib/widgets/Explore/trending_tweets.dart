@@ -52,7 +52,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print("fetching trending tweets based on topic");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore/$hashtag");
     Map<String, dynamic> headers = {
-      "Authorization":'Bearer '+ token,
+      "Authorization": 'Bearer ' + constToken,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);

@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");
@@ -122,7 +122,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");
@@ -154,7 +154,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       print("${response.statusCode}");

@@ -53,10 +53,13 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   late final List<Widget> _widgetOptions = <Widget>[
     Timeline(
-      widget.username,
-      widget.token,
+      name: widget.name,
+      userName: widget.username,
+      userImage: widget.userImage,
+      isAdmin: widget.isAdmin,
+      email: widget.email,
+      token: widget.token,
     ),
-    //Timeline(),
     ExplorePage(
       widget.username,
       widget.token,
@@ -67,7 +70,6 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       widget.token,
       widget.isAdmin,
     ),
-
     Inbox(
       username: widget.username,
       token: widget.token,
