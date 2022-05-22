@@ -105,7 +105,7 @@ void startAddTweet(BuildContext ctx) async {
                         //there is an image
                         print("sending with image");
                         try {
-                          upload(_image!, data, 'http://10.0.2.2:3000/post');
+                          upload(_image!, data, URL.postTweet);
                         } catch (e) {
                           print(e);
                         }
@@ -119,7 +119,7 @@ void startAddTweet(BuildContext ctx) async {
                       Navigator.pop(ctx);
                       return;
                     },
-                    child: Text('Tweet'),
+                    child: const Text('Tweet'),
                   ),
                 ],
               ),
@@ -204,14 +204,14 @@ Future<List<File>?> getImage(ImagePicker picker) async {
     final pickedFile = await picker.pickMultiImage();
 
     int maxImages = 4;
-    if (pickedFile!.length < 4) {
-      maxImages = pickedFile!.length;
+    if (pickedFile != null && pickedFile!.length < 4) {
+      maxImages = pickedFile.length;
     }
     List<File> _image = [];
     for (int i = 0; i < maxImages; i++) {
-      _image.add(File(pickedFile[i].path));
+      _image.add(File(pickedFile![i].path));
     }
-    if (pickedFile.isNotEmpty) {
+    if (pickedFile!.isNotEmpty) {
       return _image;
     } else {
       print('No image selected.');
