@@ -13,10 +13,11 @@ class Data {
 
 class PieData {
   static List<Data> data = [
-    Data(name: 'Blue', percent: 40, color: Colors.blue),
+    Data(name: 'Blue', percent: 30, color: Colors.blue),
     Data(name: 'Red', percent: 30, color: Colors.red),
     Data(name: 'Yellow', percent: 20, color: Colors.yellow),
     Data(name: 'Green', percent: 10, color: Colors.green),
+    Data(name: 'Purple', percent: 10, color: Colors.purple),
   ];
 }
 
@@ -28,13 +29,11 @@ class AdminViewDashBoard extends StatelessWidget {
           final value = PieChartSectionData(
             color: data.color,
             value: data.percent,
-            //title: data.name,
-            title: '${data.percent.toStringAsFixed(0)}%',
+            title: '${data.name} ${data.percent.toStringAsFixed(0)}%',
             titleStyle: const TextStyle(
               fontFamily: 'RalewayMedium',
               fontWeight: FontWeight.bold,
-              //color: Colors.white,
-              fontSize: 18,
+              fontSize: 15,
             ),
           );
           return MapEntry(index, value);
@@ -82,7 +81,7 @@ class AdminViewDashBoard extends StatelessWidget {
               height: 100,
               child: PieChart(
                 PieChartData(
-                  centerSpaceRadius: 40,
+                  centerSpaceRadius: 50,
                   sections: getSections(),
                 ),
               ),

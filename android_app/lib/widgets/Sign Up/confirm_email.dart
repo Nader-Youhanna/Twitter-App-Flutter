@@ -27,19 +27,21 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
   var _code = '0';
   var _codeIsValid = false;
   var _codeIsEntered = false;
+  String _token = '';
 
   Future<void> verifyEmail() async {
-    setState(
-      () {
-        //if (_code == '123456') _codeIsValid = true;
-        _codeIsValid = true;
-        return;
-      },
-    );
-    return;
+    // setState(
+    //   () {
+    //     //if (_code == '123456') _codeIsValid = true;
+    //     _codeIsValid = true;
+    //     return;
+    //   },
+    // );
+    // return;
+
     //BACKEND REQUEST
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup-confirm/$_code');
-    var response = await http.post(
+    var response = await http.patch(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -56,6 +58,9 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
             json.decode(response.body) as Map<String, dynamic>;
         if (extractedMyInfo['status'] == 'Success') {
           _codeIsValid = true;
+          _token = extractedMyInfo['token'];
+          print('TOKEN = ');
+          print(_token);
         } else {
           _codeIsValid = false;
         }
@@ -75,6 +80,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
           username: widget.username,
           email: widget.email,
           dob: widget.dob,
+          token: _token,
         );
       }),
     );
@@ -138,30 +144,42 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
             const Text('''Please copy and paste the 6-digit verification code.
             that has been sent to your e-mail'''),
             const SizedBox(height: 30),
-            VerificationCode(
-              textStyle: const TextStyle(
-                color: Colors.blue,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+
+            Container(
+              width: 300,
+              child: TextField(
+                onChanged: (value) {
+                  _code = value;
+                  _codeIsEntered = true;
+                },
               ),
-              length: 6,
-              keyboardType: TextInputType.number,
-              cursorColor: Colors.blue,
-              clearAll: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Clear All',
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      decoration: TextDecoration.underline,
-                      color: Colors.blue),
-                ),
-              ),
-              onCompleted: (String value) {
-                _code = value;
-              },
-              onEditing: (_) {},
             ),
+
+            //---------------VERIFICATION CODE-----------------------
+            // VerificationCode(
+            //   textStyle: const TextStyle(
+            //     color: Colors.blue,
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            //   length: 6,
+            //   keyboardType: TextInputType.number,
+            //   cursorColor: Colors.blue,
+            //   clearAll: const Padding(
+            //     padding: EdgeInsets.all(8.0),
+            //     child: Text(
+            //       'Clear All',
+            //       style: TextStyle(
+            //           fontSize: 14.0,
+            //           decoration: TextDecoration.underline,
+            //           color: Colors.blue),
+            //     ),
+            //   ),
+            //   onCompleted: (String value) {
+            //     _code = value;
+            //   },
+            //   onEditing: (_) {},
+            // ),
             const SizedBox(height: 30),
             _codeIsEntered
                 ? _codeIsValid

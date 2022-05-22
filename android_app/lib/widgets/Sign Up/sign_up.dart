@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './confirm_email.dart';
+import 'choose_password.dart';
 
 class SignUp extends StatefulWidget {
   static const _widthOfTextFields = 320.0;
@@ -36,19 +37,16 @@ class _SignUpState extends State<SignUp> {
     Navigator.of(ctx).pop();
   }
 
-  ///This is a navigation function that redirects to confirm email page
-  void _goToConfirmEmail(BuildContext ctx) {
+  void _goToChoosePassword(BuildContext ctx) {
     Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return ConfirmEmail(
-            name: _name,
-            username: _username,
-            email: _email,
-            dob: '${_dob.year}-${_dob.month}-${_dob.day}',
-          );
-        },
-      ),
+      MaterialPageRoute(builder: (_) {
+        return ChoosePassword(
+          name: _name,
+          username: _username,
+          email: _email,
+          dob: '${_dob.year}-${_dob.month}-${_dob.day}',
+        );
+      }),
     );
   }
 
@@ -321,7 +319,7 @@ class _SignUpState extends State<SignUp> {
                   child: const Text('Next'),
                   onPressed: (_allIsEntered)
                       ? () {
-                          _goToConfirmEmail(context);
+                          _goToChoosePassword(context);
                         }
                       : () {},
                   style: (!_allIsEntered)

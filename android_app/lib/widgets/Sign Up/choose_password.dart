@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/Sign%20Up/confirm_email.dart';
 import 'package:flutter/material.dart';
 import '../bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
@@ -25,18 +26,17 @@ class ChoosePassword extends StatefulWidget {
 class _ChoosePasswordState extends State<ChoosePassword> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
-  void _goToTimeline(BuildContext ctx) {
-    _sendDataToBackend();
+  void _goToConfirmEmail(BuildContext ctx) {
     Navigator.of(ctx).pop();
     Navigator.of(ctx).pop();
     Navigator.of(ctx).pop();
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return MyNavigationBar(
+        return ConfirmEmail(
           name: widget.name,
           username: widget.username,
-          token: '',
-          isAdmin: false,
+          email: widget.email,
+          dob: widget.dob,
         );
       }),
     );
@@ -51,7 +51,8 @@ class _ChoosePasswordState extends State<ChoosePassword> {
 
     //Backend Server
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/signup');
-    var response = await http.post(
+    var response = await http
+        .post(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -65,9 +66,19 @@ class _ChoosePasswordState extends State<ChoosePassword> {
           'birthdate': widget.dob,
         },
       ),
-    );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    )
+        .then((response) {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      final extractedMyInfo =
+          json.decode(response.body) as Map<String, dynamic>;
+      if (extractedMyInfo['status'] == 'success') {
+        print("Success");
+        _goToConfirmEmail(context);
+      } else {
+        print("Failed");
+      }
+    });
 
     //MOCK SERVER
     // var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
@@ -217,7 +228,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
                   child: const Text('Next'),
                   onPressed: widget._passwordIsValid
                       ? () {
-                          _goToTimeline(context);
+                          _sendDataToBackend();
                         }
                       : () {},
                   style: (!widget._passwordIsValid)

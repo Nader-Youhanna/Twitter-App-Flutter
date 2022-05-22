@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import '../bottom_nav_bar.dart';
 import './choose_password.dart';
 
 class TermsAndConditions extends StatelessWidget {
-  final name, username, email, dob;
+  final name, username, email, dob, token;
   TermsAndConditions({
     @required this.name,
     @required this.username,
     @required this.email,
     @required this.dob,
+    @required this.token,
   });
+
+  void _goToTimeline(BuildContext ctx) {
+    // Navigator.of(ctx).pop();
+    // Navigator.of(ctx).pop();
+    // Navigator.of(ctx).pop();
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return MyNavigationBar(
+          name: name,
+          username: username,
+          token: token,
+          isAdmin: false,
+        );
+      }),
+    );
+  }
 
   static const _widthOfTextFields = 280.0;
   static const _textFieldsFontSize = 18.0;
@@ -191,7 +209,7 @@ class TermsAndConditions extends StatelessWidget {
                 'Sign Up',
               ),
               onPressed: () {
-                _goToChoosePassword(context);
+                _goToTimeline(context);
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
