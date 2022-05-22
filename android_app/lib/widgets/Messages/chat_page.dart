@@ -191,30 +191,36 @@ class _ChatPageState extends State<ChatPage> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
                 ),
+                child: ListView.builder(
+                    reverse: true,
+                    itemCount: messages.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Message message = messages[index];
+                      final bool isMe =
+                          message.user.username == widget.username;
+                      print(
+                          "Message username: ${message.user.username} - Widget.username: ${widget.username}");
+                      return _buildMessage(message, isMe);
+                    }),
               ),
-              child: ListView.builder(
-                  reverse: true,
-                  itemCount: messages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Message message = messages[index];
-                    final bool isMe = message.user.username == widget.username;
-                    print(
-                        "Message username: ${message.user.username} - Widget.username: ${widget.username}");
-                    return _buildMessage(message, isMe);
-                  }),
             ),
-          ),
-          _buildMesageComposer(),
-        ],
+            _buildMesageComposer(),
+          ],
+        ),
       ),
     );
   }
