@@ -46,10 +46,15 @@ Future<Map<String, dynamic>> httpRequestPost(
   var url = Uri.parse(urlStr);
 
   var body = json.encode(reqBody);
+  //convert reqHeaders to Map<String,String>
+  var headers = Map<String, String>();
+  for (var key in reqHeaders.keys) {
+    headers[key] = reqHeaders[key].toString();
+  }
   var response = await http.post(
     url,
     body: body,
-    headers: reqHeaders as Map<String, String>,
+    headers: headers,
   );
   print("Status code " + response.statusCode.toString());
   return json.decode(response.body) as Map<String, dynamic>;

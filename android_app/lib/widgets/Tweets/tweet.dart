@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:ffi';
+
 import 'package:android_app/constants.dart';
 import 'package:android_app/functions/http_functions.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +26,18 @@ class Tweet extends StatelessWidget {
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 20.0,
   ); //This will be the profile picture of the user who tweeted it. Get it from userId
-  final String _tweetBody;
+  late final String _tweetBody;
   List<String> _tweetMedia = <String>[];
+  List<String> _hashtags = <String>[];
   int _repliesCount;
   int _retweetersCount;
   int _favouritersCount;
 
+  GlobalKey gKey = GlobalKey();
+
   bool _isLiked;
   bool _isRetweeted;
+  bool _isBookmarked;
 
   //final DateTime _updatedAt;
   final DateTime _createdAt;
@@ -42,7 +48,7 @@ class Tweet extends StatelessWidget {
   final bool _hideButtons;
   bool _hideReplyTo;
 
-  String _replyToUsername = "@username";
+  String _replyToUsername = "";
 
   Tweet.jsonTweet(
       Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
@@ -64,20 +70,82 @@ class Tweet extends StatelessWidget {
         _isLiked =
             jsonTweet['isLikedByUser'].toString().toLowerCase() == 'true',
         _isRetweeted =
-            jsonTweet['isRetweetedByUser'].toString().toLowerCase() == 'true' {
+            jsonTweet['isRetweetedByUser'].toString().toLowerCase() == 'true',
+        _isBookmarked =
+            jsonTweet['isBookmarkedByUser'].toString().toLowerCase() == 'true' {
     _tweetMedia = List<String>.from(jsonTweet['tweetMedia']);
 
     _taggedUsers = List<String>.from(jsonTweet['taggedUsers']);
+    if (jsonTweet['hashtags'] != null) {
+      _hashtags = List<String>.from(jsonTweet['hashtags']);
+    } else {
+      _hashtags = <String>[];
+    }
 
     //set _userImage
     if (jsonTweet['userImage'] != null) {
+      print(jsonTweet['userImage']);
       _userImage = CircleAvatar(
-        backgroundImage: NetworkImage(jsonTweet['userImage']),
+        backgroundImage: NetworkImage(jsonTweet['userImage'], scale: 1.0),
         backgroundColor: Colors.transparent,
         radius: 20.0,
       );
     }
   }
+
+  Tweet.jsonReply2(
+      Map<String, dynamic> jsonReply, bool hideButtons, bool hideReplyTo)
+      : _key = jsonReply['key'] as String,
+        _username = jsonReply['username'] as String,
+        _displayName = jsonReply['name'] as String,
+        _email = jsonReply['email'] as String,
+        _repliesCount = jsonReply['repliesCount'] as int,
+        _retweetersCount = jsonReply['retweetersCount'] as int,
+        _favouritersCount = jsonReply['favoritersCount'] as int,
+        _createdAt = DateTime.parse(
+          jsonReply['createdAt'] as String,
+        ),
+
+        //_userId = jsonTweet['userId'] as int,
+        _hideButtons = hideButtons,
+        _hideReplyTo = hideReplyTo,
+        _isLiked =
+            jsonReply['isLikedByUser'].toString().toLowerCase() == 'true',
+        _isRetweeted =
+            jsonReply['isRetweetedByUser'].toString().toLowerCase() == 'true',
+        _isBookmarked =
+            jsonReply['isBookmarkedByUser'].toString().toLowerCase() == 'true' {
+    if (jsonReply['replyBody'] != null) {
+      _tweetBody = jsonReply['replyBody'] as String;
+    } else {
+      _tweetBody = "";
+    }
+    if (jsonReply['hashtags'] != null) {
+      _hashtags = List<String>.from(jsonReply['hashtags']);
+    } else {
+      _hashtags = <String>[];
+    }
+    _tweetMedia = List<String>.from(jsonReply['media']);
+
+    _taggedUsers = List<String>.from(jsonReply['taggedUsers']);
+
+    //set _userImage
+    if (jsonReply['image'] != null) {
+      //print(jsonReply['image']);
+      _userImage = CircleAvatar(
+        backgroundImage: NetworkImage(jsonReply['image'], scale: 1.0),
+        backgroundColor: Colors.transparent,
+        radius: 20.0,
+      );
+    } else {
+      print("no image");
+      _userImage = CircleAvatar(
+        backgroundImage: AssetImage('assets/images/user_icon.png'),
+        radius: 20.0,
+      );
+    }
+  }
+
   Tweet.jsonTweetByID(
       Map<String, dynamic> jsonTweetByID, bool hideButtons, bool hideReplyTo)
       : _key = "",
@@ -99,6 +167,9 @@ class Tweet extends StatelessWidget {
             jsonTweetByID['isLikedByUser'].toString().toLowerCase() == 'true',
         _isRetweeted =
             jsonTweetByID['isRetweetedByUser'].toString().toLowerCase() ==
+                'true',
+        _isBookmarked =
+            jsonTweetByID['isBookmarkedByUser'].toString().toLowerCase() ==
                 'true' {
     _tweetMedia = List<String>.from(jsonTweetByID['tweetMedia']);
 
@@ -107,7 +178,7 @@ class Tweet extends StatelessWidget {
     //set _userImage
     if (jsonTweetByID['userImage'] != null) {
       _userImage = CircleAvatar(
-        backgroundImage: NetworkImage(jsonTweetByID['userImage']),
+        backgroundImage: NetworkImage(jsonTweetByID['userImage'], scale: 1.0),
         backgroundColor: Colors.transparent,
         radius: 20.0,
       );
@@ -132,6 +203,7 @@ class Tweet extends StatelessWidget {
         _hideReplyTo = hideReplyTo,
         _isLiked = false,
         _isRetweeted = false,
+        _isBookmarked = false,
         _tweetMedia = List<String>.from(jsonTrendingTweet['media']),
         _taggedUsers = List<String>.from(jsonTrendingTweet['taggedUsers']);
 
@@ -155,7 +227,9 @@ class Tweet extends StatelessWidget {
         _isLiked =
             jsonTweet['isLikedByUser'].toString().toLowerCase() == 'true',
         _isRetweeted =
-            jsonTweet['isRetweetedByUser'].toString().toLowerCase() == 'true' {
+            jsonTweet['isRetweetedByUser'].toString().toLowerCase() == 'true',
+        _isBookmarked =
+            jsonTweet['isBookmarkedByUser'].toString().toLowerCase() == 'true' {
     _tweetMedia = List<String>.from(jsonTweet['media']);
 
     _taggedUsers = List<String>.from(jsonTweet['taggedUsers']);
@@ -179,6 +253,7 @@ class Tweet extends StatelessWidget {
         _hideReplyTo = hideReplyTo,
         _isLiked = false,
         _isRetweeted = false,
+        _isBookmarked = false,
         _tweetMedia = List<String>.from(jsonTrendingTweet['media']),
         _taggedUsers = List<String>.from(jsonTrendingTweet['taggedUsers']);
 
@@ -226,6 +301,8 @@ class Tweet extends StatelessWidget {
         'taggedUsers': _taggedUsers,
         'isLikedByUser': _isLiked,
         'isRetweetedByUser': _isRetweeted,
+        'isBookmarkedByUser': _isBookmarked,
+        'hashtags': _hashtags,
 
         //'userId': _userId,
       };
@@ -233,12 +310,12 @@ class Tweet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
+    //get replies
+    List<Widget> replies = [];
     return InkWell(
       onTap: () {
         print("Tweet pressed");
         print("No. of replies = " + _repliesCount.toString());
-        //get replies here
-        //var replies = httpRequestGet("http://" + MY_IP_ADDRESS + ":3000/home/" , headersMap)
         showModalBottomSheet(
             isScrollControlled: true,
             enableDrag: false,
@@ -249,6 +326,7 @@ class Tweet extends StatelessWidget {
                 future: showReplies(context),
                 builder: (BuildContext ctx, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
+                    replies.add(snapshot.data!);
                     return snapshot.data ??
                         Container(child: Text("No replies"));
                   } else if (snapshot.connectionState ==
@@ -313,11 +391,11 @@ class Tweet extends StatelessWidget {
                   ],
                 ),
                 //Replying to
-                if (!this._hideReplyTo)
+                if (!_hideReplyTo)
                   Container(
                     padding: EdgeInsets.all(5),
                     child: Text(
-                      "Replying to @$_replyToUsername . ",
+                      "Replying to $_username . ",
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -343,8 +421,7 @@ class Tweet extends StatelessWidget {
                   Row(
                     children: [
                       //Comment
-                      CommentButton(_repliesCount, _iconSize,
-                          Tweet.jsonTweet(toJson(), true, true)),
+                      CommentButton(_repliesCount, _iconSize, this),
                       //Retweet
                       Retweet(
                           _retweetersCount, _isRetweeted, _iconSize, retweet),
@@ -365,6 +442,13 @@ class Tweet extends StatelessWidget {
   //Show replies
   Future<Widget> showReplies(BuildContext context) async {
     var replies = await getReplies(_key.toString(), _username);
+
+    var repliesWidget = <Widget>[];
+    repliesWidget.add(this);
+    for (int i = 0; i < replies.length; i++) {
+      repliesWidget
+          .add(Tweet.jsonTweet(replies.elementAt(i).toJson(), false, false));
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -377,7 +461,7 @@ class Tweet extends StatelessWidget {
         ),
         Expanded(
           child: ListView(
-            children: [this],
+            children: repliesWidget,
           ),
         ),
       ],
@@ -484,5 +568,10 @@ class Tweet extends StatelessWidget {
   /// Sets the reply to username
   void setReplyTo(String username) {
     _username = username;
+  }
+
+  //get tweed id
+  String getTweetId() {
+    return _key;
   }
 }
