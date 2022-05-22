@@ -10,14 +10,14 @@ class BuildingSuggestions {
   Future<List<SearchItem>> getSearchItems({String? query}) async {
     List<SearchItem> searchResults = [];
     print("Adding search elements");
-
+    //var url = Uri.parse("http://$MY_IP_ADDRESS:3000/searching");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/search?q=f&f=user");
     Map<String, dynamic> headers = {
       "Authorization": "Bearer " + token,
       "Content-Type": "application/json"
     };
 
-    var request = http.Request('GET', Uri.parse(URL.getSearchElements));
+    var request = http.Request('GET', url);
     if (headers != null) {
       request.headers['Content-Type'] = headers['Content-Type'];
       request.headers['Authorization'] = headers['Authorization'];

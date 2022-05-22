@@ -39,7 +39,7 @@ class NotificationTweetState extends State<NotificationTweet> {
     var response = await http.Response.fromStream(streamedResponse);
 
     print('Response status: ${response.statusCode}');
-    //print('Response Body: ${response.body}');
+    print('Response Body: ${response.body}');
 
     var mapData = json.decode(response.body);
 

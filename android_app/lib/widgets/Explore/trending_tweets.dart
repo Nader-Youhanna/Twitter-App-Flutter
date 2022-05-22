@@ -52,7 +52,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print("fetching trending tweets based on topic");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore/$hashtag");
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization":'Bearer '+ token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -68,7 +68,7 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print('Response Body: ${response.body}');
     var mapData = json.decode(response.body);
     for (int i = 0; i < mapData['tweets'].length; i++) {
-      tweetList.add(Tweet.jsonTrendingTweet(mapData['tweets'][i], false, true));
+      tweetList.add(Tweet.jsonTweet(mapData['tweets'][i], false, true));
     }
 
     return tweetList;
@@ -159,21 +159,36 @@ class TrendingTweetsState extends State<TrendingTweets> {
                     case ConnectionState.waiting:
                       return Center(child: CircularProgressIndicator());
                     default:
-                      List<Tweet> data = snapshot.data!;
-                      return RefreshIndicator(
-                        child: ListView.builder(
-                            clipBehavior: Clip.hardEdge,
-                            padding: const EdgeInsets.all(0),
-                            itemCount: data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return data[index];
-                            }),
-                        onRefresh: () async {
-                          getTrendingTweets();
-                          setState(() {});
-                        },
-                        triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                      );
+                      if (snapshot.data == null) {
+                        return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              // SizedBox(height: 100),
+                              Center(child: CircularProgressIndicator()),
+                              SizedBox(height: 50),
+                              Center(
+                                child: Text('Server error..please wait'),
+                              )
+                            ]);
+                      } else {
+                        List<Tweet> data = snapshot.data!;
+                        return RefreshIndicator(
+                          child: ListView.builder(
+                              clipBehavior: Clip.hardEdge,
+                              padding: const EdgeInsets.all(0),
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return data[index];
+                              }),
+                          onRefresh: () async {
+                            getTrendingTweets();
+                            setState(() {});
+                          },
+                          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                        );
+                      }
                   }
                 })));
   }

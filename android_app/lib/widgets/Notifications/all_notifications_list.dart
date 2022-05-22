@@ -30,12 +30,12 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     List<NotificationItem> notificationList = <NotificationItem>[];
 
     print("Adding notifications");
-    var url = Uri.parse(
-        "http://$MY_IP_ADDRESS:3000/getnotifications"); //url used for mock server
     // var url = Uri.parse(
-    //     "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
+    //     "http://$MY_IP_ADDRESS:3000/getnotifications"); //url used for mock server
+    var url = Uri.parse(
+        "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": 'Bearer ' + token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -53,10 +53,21 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     var mapData = json.decode(response.body);
 
     for (int i = 0; i < mapData['notificationsArray'].length; i++) {
-      notificationList.add(
-          NotificationItem.jsonNotification(mapData['notificationsArray'][i]));
+      if (NotificationItem.jsonNotification(mapData['notificationsArray'][i])
+                  .notificationType !=
+              'reply' &&
+          NotificationItem.jsonNotification(mapData['notificationsArray'][i])
+                  .notificationType !=
+              'tag')
+        notificationList.add(NotificationItem.jsonNotification(
+            mapData['notificationsArray'][i]));
     }
-
+    // for (int j = 0; j < notificationList.length; j++) {
+    //   if (notificationList[j].notificationType == 'reply' ||
+    //       notificationList[j].notificationType == 'tag') {
+    //     notificationList.removeAt(j);
+    //   }
+    // }
     return notificationList;
   }
 
@@ -87,18 +98,53 @@ class AllNotificationsListState extends State<AllNotificationsList> {
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.data == null) {
-                return Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      // SizedBox(height: 100),
-                      Center(child: CircularProgressIndicator()),
-                      SizedBox(height: 50),
-                      Center(
-                        child: Text('Server error..please wait'),
-                      )
-                    ]);
+                // return Column(
+                //     mainAxisSize: MainAxisSize.max,
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: <Widget>[
+                //       // SizedBox(height: 100),
+                //       Center(child: CircularProgressIndicator()),
+                //       SizedBox(height: 50),
+                //       Center(
+                //         child: Text('Server error..please wait'),
+                //       )
+                //     ]);
+                return Container(
+                  child: Column(
+                    children: [
+                      SizedBox(height: height * (220 / 825.5)),
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Join the conversation\n',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text:
+                                  'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 100, 99, 99),
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  //padding: const EdgeInsets.all(30),
+                  margin: const EdgeInsets.all(30),
+                );
               } else {
                 List<NotificationItem> data = snapshot.data!;
                 return Container(

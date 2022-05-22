@@ -99,18 +99,11 @@ class TimelineSearchDelegate extends SearchDelegate {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         final suggestion = data[index];
-                        // return GestureDetector(
-                        //   child: suggestion,
-                        //   onTap: suggestion.username != ''
-                        //       //this means the suggestion item is a user
-                        //       ? () =>
-                        //           _goToUserProfile(context, suggestion.username)
-                        //       : () => _goToTweetList(
-                        //           context,
-                        //           suggestion
-                        //               .trends), //this means the suggestion item is a tweet
-                        // );
-                        return suggestion;
+                        return GestureDetector(
+                          child: suggestion,
+                          onTap: () {},
+                        );
+                        // return suggestion;
                       },
                     );
                   }
@@ -163,18 +156,11 @@ class TimelineSearchDelegate extends SearchDelegate {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         final suggestion = data[index];
-                        // return GestureDetector(
-                        //   child: suggestion,
-                        //   onTap: suggestion.username != ''
-                        //       //this means the suggestion item is a user
-                        //       ? () =>
-                        //           _goToUserProfile(context, suggestion.username)
-                        //       : () => _goToTweetList(
-                        //           context,
-                        //           suggestion
-                        //               .trends), //this means the suggestion item is a tweet
-                        // );
-                        return suggestion;
+                        return GestureDetector(
+                          child: suggestion,
+                          onTap: () {},
+                        );
+                        // return suggestion;
                       },
                     );
                   }
