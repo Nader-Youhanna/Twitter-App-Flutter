@@ -173,7 +173,7 @@ void startAddTweet(BuildContext ctx) async {
 Future<Map<String, dynamic>> addComment(
     String tweetId, Map<String, dynamic> data) async {
   Map<String, dynamic> headers = {
-    "Authorization": "Bearer " + token,
+    "Authorization": "Bearer " + constToken,
     "Content-Type": "application/json"
   };
 

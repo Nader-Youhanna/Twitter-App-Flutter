@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'messages_user.dart';
 
 class Message extends StatelessWidget {
-  bool left;
-  MessagesUser? user;
+  bool left = false;
+  MessagesUser user;
   String messageText;
+  String time = '02:30 PM';
 
-  Message({required this.left, required this.messageText});
+  Message({
+    required this.messageText,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {

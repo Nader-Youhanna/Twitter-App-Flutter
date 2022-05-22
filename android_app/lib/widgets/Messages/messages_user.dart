@@ -7,10 +7,10 @@ class MessagesUser extends StatelessWidget {
     backgroundImage: AssetImage('assets/images/user_icon2.png'),
     radius: 20,
   );
-  MessagesUser(
-    this.name,
-    this.username,
-  );
+  MessagesUser({
+    required this.name,
+    required this.username,
+  });
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -24,7 +24,7 @@ class MessagesUser extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        username,
+        '@$username',
         style: const TextStyle(
           color: Color.fromARGB(255, 122, 122, 122),
         ),
