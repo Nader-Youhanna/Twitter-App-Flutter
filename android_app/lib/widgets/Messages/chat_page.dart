@@ -36,12 +36,20 @@ class _ChatPageState extends State<ChatPage> {
         Message(messageText: 'I\'m fine', user: users[0]),
         Message(messageText: 'How are you?', user: users[1]),
         Message(messageText: 'Hello', user: users[0]),
+        Message(messageText: 'Bye', user: users[1]),
+        Message(messageText: 'See you later', user: users[0]),
+        Message(messageText: 'I\'m fine too', user: users[1]),
+        Message(messageText: 'And you ?', user: users[0]),
+        Message(messageText: 'I\'m fine', user: users[0]),
+        Message(messageText: 'How are you?', user: users[1]),
+        Message(messageText: 'Hello', user: users[0]),
       ];
     });
   }
 
   Widget _buildMessage(Message message, bool isMe) {
-    return Container(
+    final Container msg = Container(
+      width: MediaQuery.of(context).size.width * 0.75,
       margin: isMe
           ? const EdgeInsets.only(
               top: 8.0,
@@ -51,7 +59,6 @@ class _ChatPageState extends State<ChatPage> {
           : const EdgeInsets.only(
               top: 8.0,
               bottom: 8.0,
-              right: 80.0,
             ),
       padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
       decoration: BoxDecoration(
@@ -82,10 +89,34 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(height: 4.0),
           Text(message.messageText,
               style: TextStyle(
-                color: isMe ? Color.fromARGB(255, 124, 6, 150) : Colors.black,
+                color: isMe ? Color.fromARGB(255, 90, 5, 136) : Colors.black,
               )),
         ],
       ),
+    );
+    if (isMe) {
+      return msg;
+    }
+    return Row(
+      children: [
+        msg,
+        IconButton(
+          onPressed: () {
+            setState(() {
+              message.isHearted = !message.isHearted;
+            });
+          },
+          icon: message.isHearted
+              ? const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              : const Icon(
+                  Icons.favorite_border,
+                  color: Colors.red,
+                ),
+        ),
+      ],
     );
   }
 

@@ -6,6 +6,7 @@ class Message extends StatelessWidget {
   MessagesUser user;
   String messageText;
   String time = '02:30 PM';
+  bool isHearted = false;
 
   Message({
     required this.messageText,
