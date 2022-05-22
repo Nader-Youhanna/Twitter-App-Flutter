@@ -1,7 +1,9 @@
 import 'package:android_app/widgets/Messages/empty_inbox_body.dart';
-import 'package:android_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
+
+import '../side_bar.dart';
+import 'messages_users_list.dart';
 
 class Inbox extends StatefulWidget {
   final token;
@@ -26,9 +28,21 @@ class _InboxState extends State<Inbox> {
     );
   }
 
+  void _goToUsersList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) {
+        return MessagesUsersList();
+      }),
+    );
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideBar(name: 'nido', username: 'nido123'),
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2.0,
@@ -36,8 +50,10 @@ class _InboxState extends State<Inbox> {
             icon: const Icon(Icons
                 .person_rounded), //should be changed to google profile icon
             color: Colors.black,
-            onPressed: () =>
-                {_goToUserProfile(context)}), //button should open to side bar,
+            onPressed: () {
+              //_goToUserProfile(context);
+              _scaffoldKey.currentState!.openDrawer();
+            }), //button should open to side bar,
         actions: [
           Container(
             width: 260,
@@ -66,7 +82,7 @@ class _InboxState extends State<Inbox> {
       body: _inboxIsEmpty ? EmptyInboxBody() : EmptyInboxBody(),
       floatingActionButton: FloatingActionButton(
         //New Message
-        onPressed: () => {},
+        onPressed: () => {_goToUsersList(context)},
         child: const Icon(
           Icons.mail,
           size: 30,

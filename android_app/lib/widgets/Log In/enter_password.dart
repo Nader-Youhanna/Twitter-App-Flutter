@@ -37,7 +37,8 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   }
 
   Future<void> _validateCredentialsAsync(String password) async {
-    _goToTimeline(context);
+    //COMMENT THIS LINE TO CONNECT TO REAL SERVER RESPONSE
+    //_goToTimeline(context);
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(
