@@ -57,28 +57,35 @@ class _UserStatisticsState extends State<UserStatistics> {
 
   late List<UserTweets> userData = <UserTweets>[];
   bool isAndroid = true;
-  void setData() async {
-    userData = await getUserTweetStats();
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getUserTweetStats());
+
     //userData = getUserTweetStats() as List<UserTweets>;
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
-    setState(() {
-      setData();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("testing user data");
+    final List<ChartData> chartData1 = [
+      ChartData('Page A', 0),
+      ChartData('Page B', 10),
+      ChartData('Page C', 15),
+      ChartData('Page D', 30),
+      ChartData('Page E', 70),
+      ChartData('Page F', 120)
+    ];
+    final List<ChartData> chartData2 = [
+      ChartData('Page A', 10),
+      ChartData('Page B', 20),
+      ChartData('Page C', 15),
+      ChartData('Page D', 20),
+      ChartData('Page E', 30),
+      ChartData('Page F', 5)
+    ];
     if (userData != null) {
-      print("printingt");
-      print(userData);
       return SafeArea(
           child: Scaffold(
               appBar: AppBar(
@@ -107,19 +114,75 @@ class _UserStatisticsState extends State<UserStatistics> {
                     height: 20,
                   ),
                   Card(
-                    child: SfCartesianChart(),
+                    child: SfCartesianChart(
+                        legend: Legend(
+                          textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.green,
+                          ),
+                          image: AssetImage('assets/images/Arrow.png'),
+                          isVisible: true,
+                          title: LegendTitle(
+                              text: 'Tweets',
+                              textStyle: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontFamily: 'bold')),
+                          position: LegendPosition.top,
+                        ),
+                        primaryXAxis: CategoryAxis(),
+                        series: <ChartSeries>[
+                          // Renders line chart
+                          LineSeries<ChartData, String>(
+                              legendIconType: LegendIconType.image,
+                              name: '20%',
+                              dataSource: chartData1,
+                              xValueMapper: (ChartData data, _) => data.x,
+                              yValueMapper: (ChartData data, _) => data.y)
+                        ]),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Card(
-                    child: SfCartesianChart(),
+                    child: SfCartesianChart(
+                        legend: Legend(
+                          textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.red,
+                          ),
+                          image: AssetImage('assets/images/Arrow_Down.png'),
+                          isVisible: true,
+                          title: LegendTitle(
+                              text: 'Followers',
+                              textStyle: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontFamily: 'bold')),
+                          position: LegendPosition.top,
+                        ),
+                        primaryXAxis: CategoryAxis(),
+                        series: <ChartSeries>[
+                          // Renders line chart
+                          LineSeries<ChartData, String>(
+                              legendIconType: LegendIconType.image,
+                              name: '30%',
+                              dataSource: chartData2,
+                              xValueMapper: (ChartData data, _) => data.x,
+                              yValueMapper: (ChartData data, _) => data.y)
+                        ]),
                   )
                 ]),
               )));
     } else
       return Text("no data");
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double y;
 }
 
 class UserTweets {

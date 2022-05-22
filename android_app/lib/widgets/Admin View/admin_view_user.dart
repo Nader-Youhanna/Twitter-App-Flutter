@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:android_app/widgets/Admin%20View/user_reports.dart';
 import 'package:android_app/widgets/Admin%20View/user_statistics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,14 @@ class AdminViewUser extends StatelessWidget {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return UserStatistics();
+      }),
+    );
+  }
+
+  void _goToUserReports(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return UserReports();
       }),
     );
   }
@@ -183,7 +192,9 @@ class AdminViewUser extends StatelessWidget {
                           borderRadius: BorderRadius.circular(32.0)),
                       minimumSize: Size(2, 25),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _goToUserReports(context);
+                    },
                     child: Text(
                       'Reports',
                       style: TextStyle(color: Colors.white, fontSize: 11),

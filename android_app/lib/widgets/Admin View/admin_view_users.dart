@@ -10,6 +10,33 @@ class AdminViewUsers extends StatefulWidget {
 }
 
 class AdminViewUsersState extends State<AdminViewUsers> {
+  List<Map<String, String>> jsonAdminUser = [
+    {"name": "Habiba", "username": "@habiba25"},
+    {"name": "Farida", "username": "@fofaaa34"},
+    {"name": "Ahmed", "username": "@Moodi77"},
+    {"name": "Mohamed", "username": "@MohamedKarim26"},
+    {"name": "Nounou", "username": "@noraa1990"},
+    {"name": "Nader", "username": "@Nidoo"},
+    {"name": "Nada", "username": "@NadaT2000"},
+    {"name": "Habiba", "username": "@HabibaAssem2000"},
+    {"name": "Ahmed", "username": "@Moodi77"},
+    {"name": "Mohamed", "username": "@MohamedKarim26"},
+    {"name": "Nounou", "username": "@noraa1990"}
+  ];
+
+  Future<List<AdminViewUser>> _getStaticAdminUsersList() async {
+    List<AdminViewUser> userList = <AdminViewUser>[];
+    await Future.delayed(const Duration(seconds: 1), () {
+      userList =
+          jsonAdminUser.map((e) => AdminViewUser.jsonAdminUser(e)).toList();
+      for (int i = 0; i < jsonAdminUser.length; i++) {
+        userList.add(AdminViewUser.jsonAdminUser(jsonAdminUser[i]));
+        //print(userList[i].name);
+      }
+    });
+    return userList;
+  }
+
   Future<List<AdminViewUser>> _getAdminUsersList() async {
     List<AdminViewUser> userList = <AdminViewUser>[];
     var data = [];
@@ -42,7 +69,7 @@ class AdminViewUsersState extends State<AdminViewUsers> {
     double height = size.height;
 
     return FutureBuilder<List<AdminViewUser>>(
-        future: _getAdminUsersList(),
+        future: _getStaticAdminUsersList(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
