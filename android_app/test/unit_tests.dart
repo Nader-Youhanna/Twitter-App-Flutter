@@ -57,6 +57,10 @@ void main() {
           final sidebar = SideBar(
             name: 'Nader',
             username: 'nido123',
+            token: '',
+            isAdmin: false,
+            userImage: '',
+            email: '',
           );
 
           var actual = sidebar.name;
@@ -71,7 +75,9 @@ void main() {
       test(
         "Notification test",
         () {
-          final notificationItem = NotificationItem();
+          final notificationItem = NotificationItem(
+            token: '',
+          );
           notificationItem.notificationType = 'like';
           String message = notificationItem.getType();
           expect(message, '  liked your tweet');

@@ -1,3 +1,5 @@
+import 'package:android_app/functions/tweet_functions.dart';
+
 import './tweet.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +8,7 @@ class CommentButton extends StatefulWidget {
   int _commentators;
   final Color commentColor = Colors.grey;
   final int iconSize;
-  final Tweet tweet;
+  Tweet tweet;
   late String _userName;
 
   CommentButton(this._commentators, this.iconSize, this.tweet, {Key? key})
@@ -17,6 +19,8 @@ class CommentButton extends StatefulWidget {
 }
 
 class _CommentButtonState extends State<CommentButton> {
+  List<Widget> _commentWidgets = <Widget>[];
+  var _commentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     widget._userName = widget.tweet.getUserName();
@@ -35,7 +39,9 @@ class _CommentButtonState extends State<CommentButton> {
   }
 
   /// This function opens the modal sheet to add a new comment and send it to the backend.
-  void _addComment(BuildContext ctx) {
+  void _addComment(BuildContext ctx) async {
+    var repliesWidgets = await showReplies();
+
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
@@ -63,6 +69,34 @@ class _CommentButtonState extends State<CommentButton> {
                     TextButton(
                       onPressed: () async {
                         //TODO Send comment to server
+                        String comment = _commentController.text;
+                        _commentController.clear();
+                        //search for hashtag
+                        RegExp exp = RegExp(r'#\w+');
+                        Iterable<RegExpMatch> matches = exp.allMatches(comment);
+                        List<String> hashtags = [];
+                        for (var match in matches) {
+                          hashtags.add(match.group(0)!);
+                        }
+
+                        //search for tagged users
+                        List<String> taggedUsers = [];
+                        exp = RegExp(r'@[a-zA-Z0-9]+');
+                        matches = exp.allMatches(comment);
+                        for (var match in matches) {
+                          taggedUsers.add(match.group(0)!);
+                        }
+
+                        var data = {
+                          "body": comment,
+                          "taggedUsers": taggedUsers,
+                          "hashtags": hashtags,
+                        };
+
+                        //send data to server
+                        var response =
+                            await addComment(widget.tweet.getTweetId(), data);
+
                         Navigator.pop(ctx);
                       },
                       child: const Text('Reply'),
@@ -71,6 +105,14 @@ class _CommentButtonState extends State<CommentButton> {
                 ),
                 //Tweet that is being replied to
                 widget.tweet,
+                Container(
+                  height: MediaQuery.of(ctx).size.height * 0.5,
+                  child: ListView.builder(
+                      itemBuilder: (bCtx, index) {
+                        return repliesWidgets[index];
+                      },
+                      itemCount: repliesWidgets.length),
+                ),
                 //Replying to @username
                 Container(
                   padding: const EdgeInsets.all(10),
@@ -78,8 +120,9 @@ class _CommentButtonState extends State<CommentButton> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    controller: _commentController,
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Tweet your reply',
                     ),
@@ -89,5 +132,17 @@ class _CommentButtonState extends State<CommentButton> {
             ),
           );
         });
+  }
+
+  Future<List<Widget>> showReplies() async {
+    var replies = await getReplies(
+        widget.tweet.getTweetId().toString(), widget.tweet.getUserName());
+
+    var repliesWidget = <Widget>[];
+    for (int i = 0; i < replies.length; i++) {
+      repliesWidget
+          .add(Tweet.jsonTweet(replies.elementAt(i).toJson(), false, false));
+    }
+    return repliesWidget;
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:android_app/widgets/Explore/explore_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,11 +9,15 @@ import 'forgot_password.dart';
 
 ///This is the enter password page
 class EnterPasswordPage extends StatefulWidget {
-  String name = 'Nader';
-  final username;
+  String name = '';
+  String username = '';
+  String token = '';
+  bool isAdmin = false;
+  String userImage = '';
+  String email = '';
 
   EnterPasswordPage({
-    @required this.username,
+    required this.email,
   });
 
   @override
@@ -37,7 +42,8 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
   }
 
   Future<void> _validateCredentialsAsync(String password) async {
-    _goToTimeline(context);
+    //COMMENT THIS LINE TO CONNECT TO REAL SERVER RESPONSE
+    //_goToTimeline(context);
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(
@@ -47,7 +53,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       },
       body: json.encode(
         <String, String>{
-          'email': widget.username,
+          'email': widget.email,
           'password': password,
         },
       ),
@@ -60,6 +66,26 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       lastValidatedPassword = password;
       print('Success');
       print(lastValidatedPassword);
+      print("TOKEN: ");
+      print(extractedMyInfo['token']);
+      widget.token = extractedMyInfo['token'];
+      var urlHome = Uri.parse('http://$MY_IP_ADDRESS:3000/home');
+      var responseHome = await http.get(
+        urlHome,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + widget.token,
+        },
+      );
+      print('Response status: ${responseHome.statusCode}');
+      print('Response body: ${responseHome.body}');
+      final extractedMyInfoHome =
+          json.decode(responseHome.body) as Map<String, dynamic>;
+      widget.userImage = extractedMyInfoHome['userImage'];
+      widget.name = extractedMyInfoHome['name'];
+      //widget.isAdmin = extractedMyInfoHome['isAdmin'];
+      widget.isAdmin = true;
+      widget.username = extractedMyInfoHome['userName'];
       _goToTimeline(context);
     } else {
       lastRejectedPassword = password;
@@ -107,8 +133,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           return MyNavigationBar(
             name: widget.name,
             username: widget.username,
-            token: '',
-            isAdmin: false,
+            token: widget.token,
+            isAdmin: widget.isAdmin,
+            userImage: widget.userImage,
+            email: widget.email,
           );
         }),
       );
@@ -194,7 +222,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.username,
+                    widget.email,
                     style: const TextStyle(
                       fontFamily: 'RalewayMedium',
                       fontSize: 16,
@@ -241,7 +269,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     } else {
                       return _validateCredentials(value)
                           ? null
-                          : 'Username or password is Invalid';
+                          : 'Email or password is Invalid';
                     }
                   },
                 ),

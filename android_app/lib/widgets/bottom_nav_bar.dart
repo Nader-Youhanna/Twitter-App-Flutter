@@ -19,12 +19,16 @@ class MyNavigationBar extends StatefulWidget {
   final String username;
   final String token;
   final bool isAdmin;
+  final String userImage;
+  final String email;
   //MyNavigationBar();
   MyNavigationBar({
     required this.name,
     required this.username,
     required this.token,
     required this.isAdmin,
+    required this.userImage,
+    required this.email,
   });
 
   @override
@@ -49,24 +53,35 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   late final List<Widget> _widgetOptions = <Widget>[
     Timeline(
-      widget.username,
-      widget.token,
+      name: widget.name,
+      userName: widget.username,
+      userImage: widget.userImage,
+      isAdmin: widget.isAdmin,
+      email: widget.email,
+      token: widget.token,
     ),
-    //Timeline(),
     ExplorePage(
-      widget.username,
-      widget.token,
-      widget.isAdmin,
+      name: widget.name,
+      userName: widget.username,
+      userImage: widget.userImage,
+      isAdmin: widget.isAdmin,
+      email: widget.email,
+      token: widget.token,
     ),
     NotificationsPage(
-      widget.username,
-      widget.token,
-      widget.isAdmin,
+      name: widget.name,
+      userName: widget.username,
+      userImage: widget.userImage,
+      isAdmin: widget.isAdmin,
+      email: widget.email,
+      token: widget.token,
     ),
-
     Inbox(
       username: widget.username,
       token: widget.token,
+      email: widget.email,
+      name: widget.name,
+      userImage: widget.userImage,
     ),
   ];
 

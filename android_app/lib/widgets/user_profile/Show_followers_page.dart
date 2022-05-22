@@ -38,7 +38,7 @@ class _Accounts_pageState extends State<Accounts_page> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       if (response.statusCode == 200) {
@@ -69,7 +69,7 @@ class _Accounts_pageState extends State<Accounts_page> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + constToken
         },
       );
       if (response.statusCode == 200) {

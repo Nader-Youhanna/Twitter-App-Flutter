@@ -16,13 +16,16 @@ class TermsAndConditions extends StatelessWidget {
     // Navigator.of(ctx).pop();
     // Navigator.of(ctx).pop();
     // Navigator.of(ctx).pop();
+
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
         return MyNavigationBar(
           name: name,
           username: username,
           token: token,
-          isAdmin: false,
+          isAdmin: false, //get this
+          email: email,
+          userImage: '', //get this
         );
       }),
     );

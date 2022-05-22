@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
 import '../../functions/tweet_functions.dart';
+import '../Settings/settings_main.dart';
 import '../side_bar.dart';
 import './search_bar_explore.dart';
 import './user_search_item.dart';
@@ -20,11 +21,21 @@ CircleAvatar userImages = const CircleAvatar(
 
 class ExplorePage extends StatefulWidget {
   ///setting up default credentails for each user (username , token , and if the user is an admin)
-  String username = 'Default user';
-  String token = '';
+
+  String name = "";
+  String userName = "";
+  String userImage = '';
   bool isAdmin = false;
+  String email = '';
+  String token;
   List<TrendingTopic> trends = <TrendingTopic>[];
-  ExplorePage(this.username, this.token, this.isAdmin);
+  ExplorePage(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
   @override
   State<ExplorePage> createState() => ExplorePageState();
@@ -58,7 +69,7 @@ class ExplorePageState extends State<ExplorePage> {
     print("fetching trending topics");
     var url = Uri.parse("http://$MY_IP_ADDRESS:3000/explore");
     Map<String, dynamic> headers = {
-      "Authorization": "Bearer " + token,
+      "Authorization": "Bearer " + widget.token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -74,10 +85,27 @@ class ExplorePageState extends State<ExplorePage> {
     print('Response Body: ${response.body}');
     var mapData = json.decode(response.body);
     for (int i = 0; i < mapData['hashtags'].length; i++) {
-      topicList.add(TrendingTopic.jsonTrend(mapData['hashtags'][i]));
+      topicList.add(TrendingTopic.jsonTrend(
+          mapData['hashtags'][i],
+          widget.name,
+          widget.userName,
+          widget.userImage,
+          widget.isAdmin,
+          widget.email,
+          widget.token));
     }
 
     return topicList;
+  }
+
+  void _goToSettings(BuildContext ctx, String user, String email) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Settings(widget.token, user, email);
+        },
+      ),
+    );
   }
 
   @override
@@ -89,7 +117,14 @@ class ExplorePageState extends State<ExplorePage> {
     print("width is $width");
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SideBar(name: 'nido', username: 'nido123'),
+      drawer: SideBar(
+        name: widget.name,
+        username: widget.userName,
+        userImage: widget.userImage,
+        isAdmin: widget.isAdmin,
+        email: widget.email,
+        token: widget.token,
+      ),
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -99,11 +134,15 @@ class ExplorePageState extends State<ExplorePage> {
                 floating: true,
                 elevation: 0.5,
                 leading: IconButton(
-                    icon: const Icon(Icons
-                        .person_rounded), //should be changed to google profile icon
+                    // icon: const Icon(Icons
+                    //     .person_rounded), //should be changed to google profile icon
+                    icon: CircleAvatar(
+                      //will be removed once apis are connected
+                      backgroundImage: NetworkImage(widget.userImage),
+                      radius: 18.0,
+                    ),
                     color: Colors.black,
                     onPressed: () {
-                      // _goToUserProfile(context)
                       _scaffoldKey.currentState!.openDrawer();
                     }), //button should open to side bar,
                 actions: [
@@ -129,16 +168,18 @@ class ExplorePageState extends State<ExplorePage> {
                           ),
                           hintText: _appBarText,
                         ),
-                        // onTap: () {
-                        //   //redirects us to the page with the searching elements
-                        //   showSearch(
-                        //       context: context,
-                        //       delegate: MySearchDelegate(' '));
-                        // }
                         onTap: () {
+                          //redirects us to the page with the searching elements
                           showSearch(
                             context: context,
-                            delegate: MySearchDelegate(),
+                            delegate: MySearchDelegate(
+                              name: widget.name,
+                              userName: widget.userName,
+                              userImage: widget.userImage,
+                              isAdmin: widget.isAdmin,
+                              email: widget.email,
+                              token: widget.token,
+                            ),
                           );
                         }),
                   ),
@@ -146,7 +187,10 @@ class ExplorePageState extends State<ExplorePage> {
                   IconButton(
                       icon: const Icon(Icons.settings_outlined),
                       color: Colors.black,
-                      onPressed: () => {}), //button shoud direct to setings
+                      onPressed: () => {
+                            _goToSettings(
+                                context, widget.userName, widget.email)
+                          }), //button shoud direct to setings
                 ],
                 bottom: AppBar(
                   title: const Text('Trends',
@@ -171,18 +215,58 @@ class ExplorePageState extends State<ExplorePage> {
                     return Center(child: CircularProgressIndicator());
                   default:
                     if (snapshot.data == null) {
-                      return Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            // SizedBox(height: 100),
-                            Center(child: CircularProgressIndicator()),
-                            SizedBox(height: 50),
-                            Center(
-                              child: Text('Server error..please wait'),
-                            )
-                          ]);
+                      // return Column(
+                      //     mainAxisSize: MainAxisSize.max,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: <Widget>[
+                      //       // SizedBox(height: 100),
+                      //       Center(child: CircularProgressIndicator()),
+                      //       SizedBox(height: 50),
+                      //       Center(
+                      //         child: Text('Server error..please wait'),
+                      //       )
+                      //     ]);
+                      return RefreshIndicator(
+                        child: Container(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 220),
+                              RichText(
+                                text: const TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'Nothing to see here\n',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 34.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: '__ yet.',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 34.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          //padding: const EdgeInsets.all(30),
+                          margin: const EdgeInsets.all(30),
+                        ),
+                        onRefresh: () async {
+                          getTrendingTopics();
+                          setState(() {});
+                        },
+                        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                      );
                     } else {
                       List<TrendingTopic> data = snapshot.data!;
                       for (int i = 0; i < data.length; i++) {

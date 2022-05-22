@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'messages_user.dart';
 
 class Message extends StatelessWidget {
-  bool left;
-
+  bool left = false;
+  MessagesUser user;
   String messageText;
-  Message({required this.left, required this.messageText});
+  String time = '02:30 PM';
+  bool isHearted = false;
+
+  Message({
+    required this.messageText,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class Message extends StatelessWidget {
               color: left ? Colors.blue : Colors.white,
               elevation: 10,
               margin: EdgeInsets.only(
-                  left: left ? 0 : screenWidth * 0.62,
+                  left: left ? 0 : screenWidth * 0.6,
                   right: left ? screenWidth * 0.1 : 0),
               child: Column(
                 children: [

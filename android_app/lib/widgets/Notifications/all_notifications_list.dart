@@ -11,8 +11,20 @@ import '../../functions/http_functions.dart';
 
 class AllNotificationsList extends StatefulWidget {
   //constructor should take user token from notifications page
-  AllNotificationsList();
+  AllNotificationsList(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
   // List<NotificationItem> notificationList = <NotificationItem>[];
   @override
   State<AllNotificationsList> createState() => AllNotificationsListState();
@@ -30,12 +42,12 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     List<NotificationItem> notificationList = <NotificationItem>[];
 
     print("Adding notifications");
-    var url = Uri.parse(
-        "http://$MY_IP_ADDRESS:3000/getnotifications"); //url used for mock server
     // var url = Uri.parse(
-    //     "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
+    //     "http://$MY_IP_ADDRESS:3000/getnotifications"); //url used for mock server
+    var url = Uri.parse(
+        "http://$MY_IP_ADDRESS:3000/home/getNotifications"); //url used for backend
     Map<String, dynamic> headers = {
-      "Authorization": token,
+      "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
     var request = http.Request('GET', url);
@@ -53,10 +65,24 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     var mapData = json.decode(response.body);
 
     for (int i = 0; i < mapData['notificationsArray'].length; i++) {
-      notificationList.add(
-          NotificationItem.jsonNotification(mapData['notificationsArray'][i]));
+      if (NotificationItem.jsonNotification(
+                      mapData['notificationsArray'][i], widget.token)
+                  .notificationType !=
+              'reply' &&
+          NotificationItem.jsonNotification(
+                      mapData['notificationsArray'][i], widget.token)
+                  .notificationType !=
+              'tag') {
+        notificationList.add(NotificationItem.jsonNotification(
+            mapData['notificationsArray'][i], widget.token));
+      }
     }
-
+    // for (int j = 0; j < notificationList.length; j++) {
+    //   if (notificationList[j].notificationType == 'reply' ||
+    //       notificationList[j].notificationType == 'tag') {
+    //     notificationList.removeAt(j);
+    //   }
+    // }
     return notificationList;
   }
 
@@ -87,18 +113,40 @@ class AllNotificationsListState extends State<AllNotificationsList> {
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.data == null) {
-                return Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      // SizedBox(height: 100),
-                      Center(child: CircularProgressIndicator()),
-                      SizedBox(height: 50),
-                      Center(
-                        child: Text('Server error..please wait'),
-                      )
-                    ]);
+                return Container(
+                  child: Column(
+                    children: [
+                      SizedBox(height: height * (220 / 825.5)),
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Join the conversation\n',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text:
+                                  'From Retweets to likes and awhole lot more, this is where all the action happens about you Tweets and followers. You\'ll like it here.',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 100, 99, 99),
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  margin: const EdgeInsets.all(30),
+                );
               } else {
                 List<NotificationItem> data = snapshot.data!;
                 return Container(

@@ -21,7 +21,7 @@ import 'package:path/path.dart';
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
 Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
   Map<String, String> headers = {
-    "Authorization": 'Bearer ' + token,
+    "Authorization": 'Bearer ' + constToken,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
@@ -35,7 +35,7 @@ Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
 Future<List<Tweet>> getTweets() async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "Authorization": "Bearer " + token,
+    "Authorization": "Bearer " + constToken,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
@@ -170,6 +170,20 @@ void startAddTweet(BuildContext ctx) async {
   );
 }
 
+Future<Map<String, dynamic>> addComment(
+    String tweetId, Map<String, dynamic> data) async {
+  Map<String, dynamic> headers = {
+    "Authorization": "Bearer " + constToken,
+    "Content-Type": "application/json"
+  };
+
+  String url = URL.postReply.replaceAll(":tweetId", tweetId);
+  var response = await httpRequestPost(url, data, headers);
+  print(response);
+
+  return response;
+}
+
 void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
   var uri = Uri.parse(url);
   var request = http.MultipartRequest("POST", uri);
@@ -183,7 +197,7 @@ void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
     request.files.add(multipartFile);
   }
 
-  request.headers['Authorization'] = 'Bearer ' + token;
+  request.headers['Authorization'] = 'Bearer ' + constToken;
   //convert data to Map<String,String>
   for (var key in data.keys) {
     request.fields[key] = data[key].toString();
@@ -204,7 +218,7 @@ Future<List<File>?> getImage(ImagePicker picker) async {
     final pickedFile = await picker.pickMultiImage();
 
     int maxImages = 4;
-    if (pickedFile != null && pickedFile!.length < 4) {
+    if (pickedFile != null && pickedFile.length < 4) {
       maxImages = pickedFile.length;
     }
     List<File> _image = [];
@@ -223,7 +237,7 @@ Future<List<File>?> getImage(ImagePicker picker) async {
 //get replies
 Future<List<Tweet>> getReplies(String tweetId, String userName) async {
   Map<String, dynamic> headers = {
-    "Authorization": token,
+    "Authorization": 'Bearer ' + constToken,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(
@@ -231,12 +245,9 @@ Future<List<Tweet>> getReplies(String tweetId, String userName) async {
 
   //print("=========" + mapTweet['data'][0].toString());
   List<Tweet> tweets = <Tweet>[];
-  for (int i = 0; i < mapTweet['users'].length; i++) {
-    // print("i = " + i.toString());
-    // print(mapTweet['data'][i].toString());
-
-    Tweet tweet = Tweet.jsonReply(mapTweet['users'][i], false, true);
-    tweet.setReplyTo(userName);
+  for (int i = 0; i < mapTweet['Replies'].length; i++) {
+    Tweet tweet = Tweet.jsonReply2(mapTweet['Replies'][i], false, false);
+    //tweet.setReplyTo(userName);
     tweets.add(tweet);
   }
 
