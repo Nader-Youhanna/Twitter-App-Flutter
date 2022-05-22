@@ -19,16 +19,13 @@ class _Update_usernameState extends State<Update_username> {
   //const Update_username({Key? key}) : super(key: key);
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   var _nameIsEntered = false;
-  var _nameIsValid = false;
   String username = "";
 
   ///function to check validity of name and whether it has a match in the server
-  bool _isNameValid(var name) {
-    return (_nameIsValid = !RegExp(r"^nader$").hasMatch(name));
-  }
 
   ///function to send post request to server with the new username
   Future<void> httpRequestPatch() async {
+    print('patch change username');
     var url = Uri.parse(
         'http://${MY_IP_ADDRESS}:3000/settings/Account-info/Username');
 
@@ -44,6 +41,8 @@ class _Update_usernameState extends State<Update_username> {
         },
       ),
     );
+    print(response.statusCode);
+    print(response.body);
   }
 
   void _goBack(BuildContext ctx) {
@@ -167,12 +166,12 @@ class _Update_usernameState extends State<Update_username> {
                         labelText: 'Username',
                         labelStyle:
                             const TextStyle(fontFamily: 'RalewayMedium'),
-                        suffixIcon: (_nameIsValid && _nameIsEntered)
+                        suffixIcon: (_nameIsEntered)
                             ? Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.green,
                               )
-                            : (_nameIsEntered && !_nameIsValid)
+                            : (_nameIsEntered)
                                 ? Icon(
                                     Icons.check_circle_outline,
                                     color: Colors.red,
@@ -188,7 +187,7 @@ class _Update_usernameState extends State<Update_username> {
                         });
                       },
                       validator: (value) {
-                        if (value != null && _isNameValid(value)) {
+                        if (value != null) {
                           return null;
                         } else {
                           return 'This username is already taken';
