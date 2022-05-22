@@ -5,6 +5,7 @@ import 'package:android_app/widgets/user_profile/followers_List_scroll.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../constants.dart';
+import 'WhoToFollow.dart';
 
 ///class that shows the followers & following accounts of the user
 class Accounts_page extends StatefulWidget {
@@ -128,8 +129,8 @@ class _Accounts_pageState extends State<Accounts_page> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "username",
-              style: TextStyle(color: Colors.black, fontSize: 12),
+              widget.username,
+              style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: BackButton(
               color: Colors.black,
@@ -140,8 +141,11 @@ class _Accounts_pageState extends State<Accounts_page> {
             actions: <Widget>[
               IconButton(
                 color: Colors.black,
-                onPressed: () {},
-                icon: Icon(Icons.search),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WhoToFOllow()));
+                },
+                icon: Icon(Icons.add_sharp),
                 tooltip: 'search button',
               )
             ],

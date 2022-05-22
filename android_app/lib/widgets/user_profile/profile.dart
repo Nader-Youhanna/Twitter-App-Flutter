@@ -70,6 +70,11 @@ class _ProfileState extends State<Profile> {
   late List<dynamic> followingList = [];
   late final Future? myFuture;
   String statusReport = "failed";
+  CircleAvatar profileImage = CircleAvatar(
+    backgroundImage: new AssetImage('assets/images/user_icon.png'),
+    radius: 35,
+    backgroundColor: Colors.grey,
+  );
 
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
@@ -168,14 +173,23 @@ class _ProfileState extends State<Profile> {
             protectedTweets = data['protectedTweets'] as bool;
             _followingCount = data['followingCount'] as int;
             _followersCount = data['followersCount'] as int;
+            bio = data['bio'] as String;
+
+            if (data['image'] != null) {
+              profileImage = CircleAvatar(
+                backgroundImage: new NetworkImage(data['image']),
+                radius: 35,
+                backgroundColor: Colors.grey,
+              );
+            }
 
             if (_myProfile == false) {
               followsme = data['followsMe'] as bool;
+              _alreadyFollowed = data['followHim'] as bool;
             } else {
               // createdAt = DateTime.parse(data['createdAt'] as String);
               country = data['country'] as String;
               city = data['city'] as String;
-              bio = data['bio'] as String;
               website = data['website'] as String;
             }
           });
@@ -330,12 +344,7 @@ class _ProfileState extends State<Profile> {
                                         margin: EdgeInsets.only(top: 10),
                                         padding: EdgeInsets.only(
                                             left: 15, right: 32),
-                                        child: new CircleAvatar(
-                                          backgroundImage: new AssetImage(
-                                              'assets/images/user_icon.png'),
-                                          radius: 35,
-                                          backgroundColor: Colors.grey,
-                                        ),
+                                        child: profileImage,
                                       ),
                                       Expanded(
                                         child: Row(

@@ -40,10 +40,11 @@ class _MediaTabState extends State<MediaTab> {
 
     //print("=========" + mapTweet['data'][0].toString());
     List<Tweet> tweets = <Tweet>[];
-    for (int i = 0; i < mapTweet['media'].length; i++) {
+    for (int i = 0; i < mapTweet['tweets'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.JsonUserProfileTweet(mapTweet['media'][i], false, true));
+      tweets
+          .add(Tweet.JsonUserProfileTweet(mapTweet['tweets'][i], false, true));
     }
 
     return tweets;
