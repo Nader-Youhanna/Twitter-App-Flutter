@@ -3,6 +3,21 @@ import 'package:flutter/material.dart';
 import 'admin_view_main.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'statistics_card.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double y;
+}
 
 class Data {
   final String name;
@@ -28,6 +43,8 @@ class AdminViewDashBoard extends StatelessWidget {
   bool isAdmin = false;
   String email = '';
   String token;
+  late TooltipBehavior _tooltipBehavior;
+
   AdminViewDashBoard(
       {required this.name,
       required this.userName,
@@ -57,8 +74,27 @@ class AdminViewDashBoard extends StatelessWidget {
         .toList();
   }
 
+  final List<ChartData> chartData1 = [
+    ChartData('Page A', 0),
+    ChartData('Page B', 10),
+    ChartData('Page C', 15),
+    ChartData('Page D', 30),
+    ChartData('Page E', 70),
+    ChartData('Page F', 120)
+  ];
+  final List<ChartData> chartData2 = [
+    ChartData('Page A', 10),
+    ChartData('Page B', 20),
+    ChartData('Page C', 15),
+    ChartData('Page D', 20),
+    ChartData('Page E', 30),
+    ChartData('Page F', 5)
+  ];
+
   @override
   Widget build(BuildContext context) {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return ListView(
@@ -185,6 +221,65 @@ class AdminViewDashBoard extends StatelessWidget {
             ),
           ],
         ),
+        Card(
+          child: SfCartesianChart(
+              tooltipBehavior: _tooltipBehavior,
+              legend: Legend(
+                textStyle: TextStyle(
+                  fontSize: 15,
+                  color: Colors.green,
+                ),
+                image: AssetImage('assets/images/Arrow.png'),
+                isVisible: true,
+                title: LegendTitle(
+                    text: 'Tweets',
+                    textStyle: TextStyle(
+                        fontSize: 15, color: Colors.black, fontFamily: 'bold')),
+                position: LegendPosition.top,
+              ),
+              primaryXAxis: CategoryAxis(),
+              series: <ChartSeries>[
+                // Renders line chart
+                LineSeries<ChartData, String>(
+                    enableTooltip: true,
+                    legendIconType: LegendIconType.image,
+                    name: '20%',
+                    dataSource: chartData1,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y)
+              ]),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Card(
+          child: SfCartesianChart(
+              tooltipBehavior: _tooltipBehavior,
+              legend: Legend(
+                textStyle: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.red,
+                ),
+                image: const AssetImage('assets/images/Arrow_Down.png'),
+                isVisible: true,
+                title: LegendTitle(
+                    text: 'Followers',
+                    textStyle: const TextStyle(
+                        fontSize: 15, color: Colors.black, fontFamily: 'bold')),
+                position: LegendPosition.top,
+              ),
+              primaryXAxis: CategoryAxis(),
+              series: <ChartSeries>[
+                // Renders line chart
+                LineSeries<ChartData, String>(
+                    enableTooltip: true,
+                    legendIconType: LegendIconType.image,
+                    name: '30%',
+                    dataSource: chartData2,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y)
+              ]),
+        )
       ],
     );
   }
