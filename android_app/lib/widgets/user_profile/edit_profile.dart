@@ -29,7 +29,11 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   }
 
   late var HeaderImage;
-  late var profileImage;
+  CircleAvatar profileImage = CircleAvatar(
+    backgroundImage: new AssetImage('assets/images/user_icon.png'),
+    radius: 35,
+    backgroundColor: Colors.grey,
+  );
   late var name;
   late var _bio;
   late var country;
@@ -74,6 +78,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         print("${response.body}");
         if (data != null) {
           setState(() {
+            if (data['image'] != null) {
+              profileImage = CircleAvatar(
+                backgroundImage: new NetworkImage(data['image']),
+                radius: 35,
+                backgroundColor: Colors.grey,
+              );
+            }
             HeaderImage = data['headerImage'];
             birthdate = DateTime.parse(data['birthdate'] as String);
             name = data['name'] as String;
@@ -211,18 +222,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               child: GestureDetector(
                                 onTap: () {},
                                 child: Container(
-                                  padding: EdgeInsets.only(bottom: 20),
-                                  alignment: Alignment.topLeft,
-                                  child: CircleAvatar(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    alignment: Alignment.topLeft,
+                                    child: CircleAvatar(
                                       backgroundColor: Colors.white,
                                       radius: 45,
-                                      child: CircleAvatar(
-                                        backgroundImage: new AssetImage(
-                                            'assets/images/user_icon.png'),
-                                        radius: 40,
-                                        backgroundColor: Colors.grey,
-                                      )),
-                                ),
+                                      child: profileImage,
+                                    )),
                               ),
                             )
                           ],
