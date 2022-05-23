@@ -81,11 +81,15 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     final extractedMyInfo = json.decode(response.body) as Map<String, dynamic>;
     if (extractedMyInfo['status'] == 'Success') {
-      lastValidatedPassword = password;
+      setState(() {
+        lastValidatedPassword = password;
+      });
       print('Success');
       print(lastValidatedPassword);
     } else {
-      lastRejectedPassword = password;
+      setState(() {
+        lastRejectedPassword = password;
+      });
     }
     _validateCredentials(password);
 
@@ -94,7 +98,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   }
 
   Future<void> httpRequestPatchnewPassword() async {
-    var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/reset-password');
+    var url = Uri.parse(
+        'http://${MY_IP_ADDRESS}:3000/reset-password/${widget.Token}');
 
     var response = await http.patch(
       url,

@@ -22,7 +22,7 @@ class _AudienceState extends State<Audience> {
   ///function to fetch data from mock server
   Future<void> httpRequestPatchPrivate() async {
     var url = Uri.parse(
-        "http://${MY_IP_ADDRESS}:3000//settings/Account-info/Protected-tweets");
+        "http://${MY_IP_ADDRESS}:3000/settings/Account-info/Protected-tweets");
 
     //var body = json.encode(reqBody);
     var response = await http.patch(
@@ -34,6 +34,7 @@ class _AudienceState extends State<Audience> {
       },
     );
     print("${response.statusCode}");
+    print(response.body);
     if (response.statusCode == 200) {
       print("${response.body}");
       return json.decode(response.body);
