@@ -1,14 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-//import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -26,34 +23,6 @@ class _UserStatisticsState extends State<UserStatistics> {
   late TooltipBehavior _tooltipBehavior;
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
-  }
-
-  Future<List<UserTweets>> getUserTweetStats() async {
-    List<UserTweets> userData = <UserTweets>[];
-    var data = [];
-    print("Adding user tweets statistics");
-    var url = Uri.parse("http://$MY_IP_ADDRESS:3000/AdminUserStatsTweets");
-    Map<String, dynamic> headers = {
-      "Authorization": "Bearer " + constToken,
-      "Content-Type": "application/json"
-    };
-    var request = http.Request('GET', url);
-    if (headers != null) {
-      request.headers['Content-Type'] = headers['Content-Type'];
-      request.headers['Authorization'] = headers['Authorization'];
-    }
-    var streamedResponse = await request.send();
-
-    var response = await http.Response.fromStream(streamedResponse);
-
-    print('Response status: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-    var mapData = json.decode(response.body);
-    for (int i = 0; i < mapData.length; i++) {
-      userData.add(UserTweets.jsonUserTweets(mapData[i]));
-    }
-
-    return userData;
   }
 
   late List<UserTweets> userData = <UserTweets>[];

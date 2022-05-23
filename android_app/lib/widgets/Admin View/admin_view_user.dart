@@ -15,14 +15,16 @@ class AdminViewUser extends StatelessWidget {
     backgroundImage: AssetImage('assets/images/user_icon2.png'),
     radius: 20,
   );
+  String token = '';
   AdminViewUser(
     this.name,
     this.username,
   );
   bool isDeleted = false;
-  AdminViewUser.jsonAdminUser(Map<String, dynamic> jsonAdminUser) {
+  AdminViewUser.jsonAdminUser(Map<String, dynamic> jsonAdminUser, String t) {
     name = jsonAdminUser['name'] as String;
     username = jsonAdminUser['username'] as String;
+    token = t;
   }
 
   void _goToUserStatistics(BuildContext ctx, String user) {
@@ -44,7 +46,7 @@ class AdminViewUser extends StatelessWidget {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false, constToken);
+        return Profile(user, false, token);
       }),
     );
   }
@@ -290,7 +292,7 @@ class AdminViewUser extends StatelessWidget {
               ),
               SizedBox(width: 40),
             ])
-          : SizedBox(width: 0, height: 0),
+          : null,
     );
   }
 }

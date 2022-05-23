@@ -47,7 +47,14 @@ class AdminViewMain extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              AdminViewDashBoard(),
+              AdminViewDashBoard(
+                name: name,
+                userName: userName,
+                userImage: userImage,
+                isAdmin: isAdmin,
+                email: email,
+                token: token,
+              ),
               AdminViewUsers(
                 name: name,
                 userName: userName,
