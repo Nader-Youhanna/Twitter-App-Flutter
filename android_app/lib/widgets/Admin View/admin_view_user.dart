@@ -289,7 +289,7 @@ class AdminViewUser extends StatelessWidget {
               ),
               SizedBox(width: 40),
             ])
-          : SizedBox(width: 0, height: 0),
+          : null,
     );
   }
 }

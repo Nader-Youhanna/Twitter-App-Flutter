@@ -1,14 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
