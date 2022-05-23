@@ -42,6 +42,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
   }
 
   Future<void> _validateCredentialsAsync(String password) async {
+    print('validating password');
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
     var response = await http.post(
