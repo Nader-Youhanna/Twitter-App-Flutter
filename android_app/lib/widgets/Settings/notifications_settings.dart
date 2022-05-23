@@ -15,6 +15,10 @@ class notificationsSettings extends StatefulWidget {
 }
 
 class _notificationsSettingsState extends State<notificationsSettings> {
+  void _goBack(BuildContext ctx) {
+    Navigator.pop(ctx);
+  }
+
   bool push_notification = false;
 
   Future<void> httpRequestPatch() async {
@@ -69,11 +73,7 @@ class _notificationsSettingsState extends State<notificationsSettings> {
             leading: BackButton(
               color: Colors.black,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Settings(
-                            widget.token, widget._username, widget.email)));
+                _goBack(context);
               },
             ),
           ),

@@ -30,7 +30,7 @@ class _WhoToFOllowState extends State<WhoToFOllow> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -71,7 +71,7 @@ class _WhoToFOllowState extends State<WhoToFOllow> {
   // ];
 
   void _goBack(BuildContext ctx) {
-    Navigator.of(ctx).pop();
+    Navigator.pop(ctx);
   }
 
   @override

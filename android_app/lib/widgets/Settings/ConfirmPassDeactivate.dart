@@ -31,6 +31,9 @@ class ConfirmforDeactivate extends StatefulWidget {
 
 class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+  void _goBack(BuildContext ctx) {
+    Navigator.pop(ctx);
+  }
 
   String lastValidatedPassword = "";
   String lastRejectedPassword = "";
@@ -147,11 +150,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => Settings(
-                            widget.token, widget.username, widget.email))));
+                _goBack(context);
               },
             ),
           ),

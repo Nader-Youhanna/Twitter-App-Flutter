@@ -77,7 +77,7 @@ class _ProfileState extends State<Profile> {
   );
 
   void _goBack(BuildContext ctx) {
-    Navigator.of(ctx).pop();
+    Navigator.pop(ctx);
   }
 
   Future<void> reportUsernotInt() async {
@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -122,7 +122,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -154,7 +154,7 @@ class _ProfileState extends State<Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -228,10 +228,13 @@ class _ProfileState extends State<Profile> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ));
 
           default:
-            // if (snapshot.data == null)
+            // if (!snapshot.)
             //   return Center(
             //     child: Text('Server Down'),
             //   );

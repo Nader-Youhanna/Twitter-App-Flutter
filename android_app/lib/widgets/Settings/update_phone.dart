@@ -17,6 +17,10 @@ class UpdatePhone extends StatefulWidget {
 }
 
 class _UpdatePhoneState extends State<UpdatePhone> {
+  void _goBack(BuildContext ctx) {
+    Navigator.pop(ctx);
+  }
+
   var _isPhoneEntered = false;
   String _phone = '';
 
@@ -166,11 +170,7 @@ class _UpdatePhoneState extends State<UpdatePhone> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Settings(
-                          widget.token, widget.username, widget.email)));
+              _goBack(context);
             },
             child: Text(
               'Cancel',

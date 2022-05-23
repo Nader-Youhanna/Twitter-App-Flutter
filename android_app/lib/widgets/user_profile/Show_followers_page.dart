@@ -139,11 +139,7 @@ class _Accounts_pageState extends State<Accounts_page> {
             leading: BackButton(
               color: Colors.black,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Profile(widget.username, false, widget.token)));
+                _goBack(context);
               },
             ),
             actions: <Widget>[

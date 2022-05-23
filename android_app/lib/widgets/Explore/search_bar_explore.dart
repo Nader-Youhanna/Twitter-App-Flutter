@@ -17,7 +17,7 @@ class MySearchDelegate extends SearchDelegate {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false, constToken);
+        return Profile(user, false, token);
       }),
     );
   }
