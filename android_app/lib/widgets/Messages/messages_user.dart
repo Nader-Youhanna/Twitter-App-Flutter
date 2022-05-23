@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MessagesUser extends StatelessWidget {
+  double screenHeight = 0;
+  double screenWidth = 0;
   String name = "username";
   String username = "@username";
   CircleAvatar userImage = const CircleAvatar(
@@ -13,6 +15,8 @@ class MessagesUser extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return ListTile(
       leading: userImage,
       title: Text(

@@ -17,12 +17,14 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<Message> messages = [];
-
+  double screenHeight = 0;
+  double screenWidth = 0;
   String newMessageText = '';
   List<MessagesUser> users = [];
 
   void initState() {
     super.initState();
+
     setState(() {
       //Fetch data from BD
       users = <MessagesUser>[
@@ -49,8 +51,10 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildMesageComposer() {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         height: 70,
         child: Row(
           children: <Widget>[
@@ -94,7 +98,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
-      width: MediaQuery.of(context).size.width * 0.75,
+      width: screenWidth * 0.75,
       margin: isMe
           ? const EdgeInsets.only(
               top: 8.0,

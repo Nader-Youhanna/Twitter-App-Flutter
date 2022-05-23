@@ -135,7 +135,7 @@ class AdminViewDashBoard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: screenHeight * 0.06),
+        SizedBox(height: screenHeight * 0.05),
         Row(
           children: [
             SizedBox(width: screenWidth * 0.1),
@@ -144,14 +144,14 @@ class AdminViewDashBoard extends StatelessWidget {
               height: 100,
               child: PieChart(
                 PieChartData(
-                  centerSpaceRadius: 30,
+                  centerSpaceRadius: 25,
                   sections: getSections(),
                 ),
               ),
             )
           ],
         ),
-        SizedBox(height: screenHeight * 0.05),
+        SizedBox(height: screenHeight * 0.04),
         Row(
           children: [
             SizedBox(width: screenWidth * 0.35),
@@ -185,7 +185,7 @@ class AdminViewDashBoard extends StatelessWidget {
             SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.blue, size: 22),
             const Text(
-              '#Blue',
+              '#Blue - 30%',
               style: TextStyle(
                 fontFamily: 'RalewayMedium',
                 fontWeight: FontWeight.bold,

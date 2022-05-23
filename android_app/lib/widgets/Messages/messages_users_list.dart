@@ -4,8 +4,12 @@ import 'messages_user.dart';
 import 'chat_page.dart';
 
 class MessagesUsersList extends StatelessWidget {
+  double screenHeight = 0;
+  double screenWidth = 0;
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
