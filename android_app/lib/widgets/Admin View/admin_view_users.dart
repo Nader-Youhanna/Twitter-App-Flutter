@@ -40,10 +40,9 @@ class AdminViewUsersState extends State<AdminViewUsers> {
   Future<List<AdminViewUser>> _getStaticAdminUsersList() async {
     List<AdminViewUser> userList = <AdminViewUser>[];
     await Future.delayed(const Duration(seconds: 1), () {
-      userList =
-          jsonAdminUser.map((e) => AdminViewUser.jsonAdminUser(e)).toList();
       for (int i = 0; i < jsonAdminUser.length; i++) {
-        userList.add(AdminViewUser.jsonAdminUser(jsonAdminUser[i]));
+        userList
+            .add(AdminViewUser.jsonAdminUser(jsonAdminUser[i], widget.token));
         //print(userList[i].name);
       }
     });
@@ -76,7 +75,8 @@ class AdminViewUsersState extends State<AdminViewUsers> {
     // searchResults =
     //     mapData['users'].map((e) => SearchItem.jsonSearchItem(e)).toList();
     for (int i = 0; i < mapData['users'].length; i++) {
-      userList.add(AdminViewUser.jsonAdminUser(mapData['users'][i]));
+      userList
+          .add(AdminViewUser.jsonAdminUser(mapData['users'][i], widget.token));
     }
     return userList;
   }

@@ -13,14 +13,7 @@ CircleAvatar userImages = const CircleAvatar(
 
 ///class to create search bar withh suggestions list and results it extends a predefined class in flutter which is SearchDelegate
 class TimelineSearchDelegate extends SearchDelegate {
-  void _goToUserProfile(BuildContext ctx, String user) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (_) {
-        return Profile(user, false, constToken);
-      }),
-    );
-  }
-
+  
   BuildingTimelineSuggestions _suggestionsList = BuildingTimelineSuggestions();
 
   TimelineSearchDelegate();
