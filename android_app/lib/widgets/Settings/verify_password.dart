@@ -226,11 +226,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Settings(
-                            widget.token, widget.username, widget.email)));
+                _goBack(context);
               },
               child: Text(
                 'Cancel',

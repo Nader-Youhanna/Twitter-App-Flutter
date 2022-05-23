@@ -165,7 +165,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Settings(constToken,
+                                  builder: (context) => Settings(widget.Token,
                                       widget.username, widget.email)));
                         });
                       } else {
