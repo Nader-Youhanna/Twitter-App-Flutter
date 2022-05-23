@@ -15,6 +15,8 @@ class URL {
   static String getReplies =
       'http://$serverIP:$serverPort/home/:tweetId/getReplies/';
   static String postReply = 'http://$serverIP:$serverPort/home/:tweetId/reply/';
+  static String bookmarkTweet =
+      'http://$serverIP:$serverPort/home/:tweetId/bookmarkTweet';
   static String getSearchElements =
       'http://$serverIP:$serverPort/search?q=f&f=user';
   static String getNotifications =

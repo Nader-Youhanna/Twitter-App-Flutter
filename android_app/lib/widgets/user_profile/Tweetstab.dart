@@ -43,8 +43,8 @@ class _TweetTabState extends State<TweetTab> {
     for (int i = 0; i < mapTweet['tweets'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets
-          .add(Tweet.JsonUserProfileTweet(mapTweet['tweets'][i], false, true));
+      tweets.add(Tweet.JsonUserProfileTweet(
+          mapTweet['tweets'][i], false, true, widget.token));
     }
 
     return tweets;
@@ -69,7 +69,7 @@ class _TweetTabState extends State<TweetTab> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => startAddTweet(context),
+        onPressed: () => startAddTweet(context, widget.token),
         child: const Icon(Icons.add),
       ),
     );

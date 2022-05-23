@@ -44,7 +44,8 @@ class NotificationTweetState extends State<NotificationTweet> {
 
     var mapData = json.decode(response.body);
 
-    tweet.add(Tweet.jsonTweetByID(mapData['tweetData'], false, true));
+    tweet.add(
+        Tweet.jsonTweetByID(mapData['tweetData'], false, true, widget.token));
 
     return tweet;
   }

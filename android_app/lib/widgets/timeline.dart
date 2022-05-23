@@ -146,7 +146,7 @@ class _TimelineState extends State<Timeline> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => startAddTweet(context),
+        onPressed: () => startAddTweet(context, widget.token),
         child: const Icon(Icons.add),
       ),
     );
@@ -168,7 +168,7 @@ class _TimelineState extends State<Timeline> {
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      List<Tweet> serverTweets = await getTweets();
+      List<Tweet> serverTweets = await getTweets(widget.token);
       setState(() {
         widget.tweets = serverTweets;
       });
@@ -176,7 +176,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   Future<void> _refresh() async {
-    List<Tweet> serverTweets = await getTweets();
+    List<Tweet> serverTweets = await getTweets(widget.token);
     setState(() {
       widget.tweets = serverTweets;
     });

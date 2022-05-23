@@ -69,7 +69,8 @@ class TrendingTweetsState extends State<TrendingTweets> {
     print('Response Body: ${response.body}');
     var mapData = json.decode(response.body);
     for (int i = 0; i < mapData['tweets'].length; i++) {
-      tweetList.add(Tweet.jsonTweet(mapData['tweets'][i], false, true));
+      tweetList.add(
+          Tweet.jsonTweet(mapData['tweets'][i], false, true, widget.token));
     }
 
     return tweetList;

@@ -43,7 +43,8 @@ class _LikesTabState extends State<LikesTab> {
     for (int i = 0; i < mapTweet['likes'].length; i++) {
       // print("i = " + i.toString());
       // print(mapTweet['data'][i].toString());
-      tweets.add(Tweet.JsonUserProfileTweet(mapTweet['likes'][i], false, true));
+      tweets.add(Tweet.JsonUserProfileTweet(
+          mapTweet['likes'][i], false, true, widget.token));
     }
 
     return tweets;
@@ -68,7 +69,7 @@ class _LikesTabState extends State<LikesTab> {
       ),
       floatingActionButton: FloatingActionButton(
         //add tweet
-        onPressed: () => startAddTweet(context),
+        onPressed: () => startAddTweet(context, widget.token),
         child: const Icon(Icons.add),
       ),
     );

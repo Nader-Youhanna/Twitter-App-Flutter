@@ -22,6 +22,8 @@ class Tweet extends StatelessWidget {
   late String _displayName;
   String _email;
 
+  String _token;
+
   CircleAvatar _userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 20.0,
@@ -50,8 +52,8 @@ class Tweet extends StatelessWidget {
 
   String _replyToUsername = "";
 
-  Tweet.jsonTweet(
-      Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
+  Tweet.jsonTweet(Map<String, dynamic> jsonTweet, bool hideButtons,
+      bool hideReplyTo, String _token)
       : _key = jsonTweet['key'] as String,
         _username = jsonTweet['username'] as String,
         _displayName = jsonTweet['name'] as String,
@@ -63,7 +65,7 @@ class Tweet extends StatelessWidget {
         _createdAt = DateTime.parse(
           jsonTweet['createdAt'] as String,
         ),
-
+        this._token = _token,
         //_userId = jsonTweet['userId'] as int,
         _hideButtons = hideButtons,
         _hideReplyTo = hideReplyTo,
@@ -93,8 +95,8 @@ class Tweet extends StatelessWidget {
     }
   }
 
-  Tweet.jsonReply2(
-      Map<String, dynamic> jsonReply, bool hideButtons, bool hideReplyTo)
+  Tweet.jsonReply2(Map<String, dynamic> jsonReply, bool hideButtons,
+      bool hideReplyTo, String token)
       : _key = jsonReply['key'] as String,
         _username = jsonReply['username'] as String,
         _displayName = jsonReply['name'] as String,
@@ -105,6 +107,7 @@ class Tweet extends StatelessWidget {
         _createdAt = DateTime.parse(
           jsonReply['createdAt'] as String,
         ),
+        this._token = token,
 
         //_userId = jsonTweet['userId'] as int,
         _hideButtons = hideButtons,
@@ -146,8 +149,8 @@ class Tweet extends StatelessWidget {
     }
   }
 
-  Tweet.jsonTweetByID(
-      Map<String, dynamic> jsonTweetByID, bool hideButtons, bool hideReplyTo)
+  Tweet.jsonTweetByID(Map<String, dynamic> jsonTweetByID, bool hideButtons,
+      bool hideReplyTo, String token)
       : _key = "",
         _username = jsonTweetByID['username'] as String,
         _displayName = jsonTweetByID['name'] as String,
@@ -159,6 +162,7 @@ class Tweet extends StatelessWidget {
         _createdAt = DateTime.parse(
           jsonTweetByID['createdAt'] as String,
         ),
+        this._token = token,
 
         //_userId = jsonTweet['userId'] as int,
         _hideButtons = hideButtons,
@@ -185,7 +189,7 @@ class Tweet extends StatelessWidget {
     }
   }
   Tweet.jsonTrendingTweet(Map<String, dynamic> jsonTrendingTweet,
-      bool hideButtons, bool hideReplyTo)
+      bool hideButtons, bool hideReplyTo, String token)
       : _key = jsonTrendingTweet['_id'],
         _username = "dummy",
         _displayName = "dummy",
@@ -197,6 +201,7 @@ class Tweet extends StatelessWidget {
         _createdAt = DateTime.parse(
           jsonTrendingTweet['createdAt'] as String,
         ),
+        this._token = token,
 
         //_userId = jsonTweet['userId'] as int,
         _hideButtons = hideButtons,
@@ -207,8 +212,8 @@ class Tweet extends StatelessWidget {
         _tweetMedia = List<String>.from(jsonTrendingTweet['media']),
         _taggedUsers = List<String>.from(jsonTrendingTweet['taggedUsers']);
 
-  Tweet.jsonReply(
-      Map<String, dynamic> jsonTweet, bool hideButtons, bool hideReplyTo)
+  Tweet.jsonReply(Map<String, dynamic> jsonTweet, bool hideButtons,
+      bool hideReplyTo, String token)
       : _key = "",
         _username = jsonTweet['username'] as String,
         _displayName = jsonTweet['name'] as String,
@@ -217,6 +222,7 @@ class Tweet extends StatelessWidget {
         _repliesCount = 0,
         _retweetersCount = 0,
         _favouritersCount = 0,
+        this._token = token,
 
         //_updatedAt = DateTime.parse(jsonTweet['updatedAt'] as String),
         _createdAt = DateTime.parse(jsonTweet['createdAt'] as String),
@@ -235,7 +241,7 @@ class Tweet extends StatelessWidget {
     _taggedUsers = List<String>.from(jsonTweet['taggedUsers']);
   }
   Tweet.JsonUserProfileTweet(Map<String, dynamic> jsonTrendingTweet,
-      bool hideButtons, bool hideReplyTo)
+      bool hideButtons, bool hideReplyTo, String token)
       : _key = jsonTrendingTweet['_id'],
         _username = jsonTrendingTweet['username'],
         _displayName = jsonTrendingTweet['name'],
@@ -247,6 +253,7 @@ class Tweet extends StatelessWidget {
         _createdAt = DateTime.parse(
           jsonTrendingTweet['createdAt'] as String,
         ),
+        this._token = token,
 
         //_userId = jsonTweet['userId'] as int,
         _hideButtons = hideButtons,
@@ -421,14 +428,14 @@ class Tweet extends StatelessWidget {
                   Row(
                     children: [
                       //Comment
-                      CommentButton(_repliesCount, _iconSize, this),
+                      CommentButton(_repliesCount, _iconSize, this, _token),
                       //Retweet
                       Retweet(
                           _retweetersCount, _isRetweeted, _iconSize, retweet),
                       //Like
                       Like(_favouritersCount, _isLiked, _iconSize, like),
                       //Share
-                      Share(_iconSize),
+                      Bookmark(_iconSize, _isBookmarked, bookmark),
                     ],
                   ),
               ],
@@ -441,13 +448,13 @@ class Tweet extends StatelessWidget {
 
   //Show replies
   Future<Widget> showReplies(BuildContext context) async {
-    var replies = await getReplies(_key.toString(), _username);
+    var replies = await getReplies(_key.toString(), _username, _token);
 
     var repliesWidget = <Widget>[];
     repliesWidget.add(this);
     for (int i = 0; i < replies.length; i++) {
-      repliesWidget
-          .add(Tweet.jsonTweet(replies.elementAt(i).toJson(), false, false));
+      repliesWidget.add(
+          Tweet.jsonTweet(replies.elementAt(i).toJson(), false, false, _token));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -477,7 +484,7 @@ class Tweet extends StatelessWidget {
 
     Map<String, String> headersMap = {
       'Content-Type': 'application/json',
-      'Authorization': constToken
+      'Authorization': _token
     };
     var response = await httpRequestPost(url, {}, headersMap);
 
@@ -501,7 +508,7 @@ class Tweet extends StatelessWidget {
 
     Map<String, String> headersMap = {
       'Content-Type': 'application/json',
-      'Authorization': constToken
+      'Authorization': _token
     };
     var response = await httpRequestPost(url, {}, headersMap);
 
@@ -513,6 +520,25 @@ class Tweet extends StatelessWidget {
       _isRetweeted = false;
     } else {
       print("Error retweeting the tweet. Response is " + response['message']);
+    }
+  }
+
+  void bookmark() async {
+    //print(_key);
+    String url = URL.bookmarkTweet;
+    url = url.replaceAll(":tweetId", _key);
+    //print("URL is " + url);
+
+    Map<String, String> headersMap = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + _token
+    };
+    var response = await httpRequestPost(url, {}, headersMap);
+
+    if (response['message'] != null) {
+      print("Bookmark message is " + response['message']);
+    } else {
+      print("Error bookmarking the tweet. Response is " + response['message']);
     }
   }
 

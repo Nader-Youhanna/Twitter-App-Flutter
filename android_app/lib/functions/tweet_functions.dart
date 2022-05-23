@@ -18,9 +18,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 
 ///This function sends the tweet to the [ipAddress] and port [port] of the backend and return the response.
-Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
+Future<Map<String, dynamic>> addTweet(
+    Map<String, dynamic> data, String token) async {
   Map<String, String> headers = {
-    "Authorization": 'Bearer ' + constToken,
+    "Authorization": 'Bearer ' + token,
     "Content-Type": "application/json"
   };
   return await httpRequestPost(
@@ -31,10 +32,10 @@ Future<Map<String, dynamic>> addTweet(Map<String, dynamic> data) async {
 }
 
 /// This function get the tweets from the [ipAddress] and port [port] of the backend and return the response.
-Future<List<Tweet>> getTweets() async {
+Future<List<Tweet>> getTweets(String token) async {
   print("Adding tweets");
   Map<String, dynamic> headers = {
-    "Authorization": "Bearer " + constToken,
+    "Authorization": "Bearer " + token,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(URL.getTweets, headers);
@@ -44,14 +45,14 @@ Future<List<Tweet>> getTweets() async {
   for (int i = 0; i < mapTweet['data'].length; i++) {
     // print("i = " + i.toString());
     // print(mapTweet['data'][i].toString());
-    tweets.add(Tweet.jsonTweet(mapTweet['data'][i], false, true));
+    tweets.add(Tweet.jsonTweet(mapTweet['data'][i], false, true, token));
   }
 
   return tweets;
 }
 
 /// This function opens the modal sheet to add a new tweet and send it to the [ipAddress] and port [port].
-void startAddTweet(BuildContext ctx) async {
+void startAddTweet(BuildContext ctx, String token) async {
   String tweetText = "";
   var tweetTextController = TextEditingController();
   List<File>? _image = [];
@@ -95,6 +96,16 @@ void startAddTweet(BuildContext ctx) async {
                         taggedUsers.add(match.group(0));
                       }
 
+                      //check for hashtags
+                      List<String?> hashtags = [];
+                      exp = RegExp(r'#[a-zA-Z0-9]+');
+                      matches = exp.allMatches(tweetText);
+                      for (var match in matches) {
+                        String hashtag = match.group(0)!;
+                        hashtag = hashtag.substring(1);
+                        hashtags.add(hashtag);
+                      }
+
                       var data = {
                         "body": tweetText,
                         "taggedUsers": taggedUsers,
@@ -104,14 +115,14 @@ void startAddTweet(BuildContext ctx) async {
                         //there is an image
                         print("sending with image");
                         try {
-                          upload(_image!, data, URL.postTweet);
+                          upload(_image!, data, URL.postTweet, token);
                         } catch (e) {
                           print(e);
                         }
                       } else {
                         //no image
                         print("sending without image");
-                        addTweet(data);
+                        addTweet(data, token);
                       }
 
                       //print(taggedUsers);
@@ -170,9 +181,9 @@ void startAddTweet(BuildContext ctx) async {
 }
 
 Future<Map<String, dynamic>> addComment(
-    String tweetId, Map<String, dynamic> data) async {
+    String tweetId, Map<String, dynamic> data, String token) async {
   Map<String, dynamic> headers = {
-    "Authorization": "Bearer " + constToken,
+    "Authorization": "Bearer " + token,
     "Content-Type": "application/json"
   };
 
@@ -183,7 +194,8 @@ Future<Map<String, dynamic>> addComment(
   return response;
 }
 
-void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
+void upload(List<File> imageFile, Map<String, dynamic> data, String url,
+    String token) async {
   var uri = Uri.parse(url);
   var request = http.MultipartRequest("POST", uri);
 
@@ -196,7 +208,7 @@ void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
     request.files.add(multipartFile);
   }
 
-  request.headers['Authorization'] = 'Bearer ' + constToken;
+  request.headers['Authorization'] = 'Bearer ' + token;
   //convert data to Map<String,String>
   for (var key in data.keys) {
     request.fields[key] = data[key].toString();
@@ -208,12 +220,12 @@ void upload(List<File> imageFile, Map<String, dynamic> data, String url) async {
 
   // listen for response
   response.stream.transform(utf8.decoder).listen((value) {
-    print(value);
+    print('Image response is' + value);
   });
 }
 
 Future<List<File>?> getImage(ImagePicker picker) async {
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || true) {
     final pickedFile = await picker.pickMultiImage();
 
     int maxImages = 4;
@@ -234,9 +246,10 @@ Future<List<File>?> getImage(ImagePicker picker) async {
 }
 
 //get replies
-Future<List<Tweet>> getReplies(String tweetId, String userName) async {
+Future<List<Tweet>> getReplies(
+    String tweetId, String userName, String token) async {
   Map<String, dynamic> headers = {
-    "Authorization": 'Bearer ' + constToken,
+    "Authorization": 'Bearer ' + token,
     "Content-Type": "application/json"
   };
   Map<String, dynamic> mapTweet = await httpRequestGet(
@@ -245,7 +258,7 @@ Future<List<Tweet>> getReplies(String tweetId, String userName) async {
   //print("=========" + mapTweet['data'][0].toString());
   List<Tweet> tweets = <Tweet>[];
   for (int i = 0; i < mapTweet['Replies'].length; i++) {
-    Tweet tweet = Tweet.jsonReply2(mapTweet['Replies'][i], false, false);
+    Tweet tweet = Tweet.jsonReply2(mapTweet['Replies'][i], false, false, token);
     //tweet.setReplyTo(userName);
     tweets.add(tweet);
   }

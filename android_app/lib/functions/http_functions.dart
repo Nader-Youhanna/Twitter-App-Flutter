@@ -13,14 +13,13 @@ jsonToFormData(http.MultipartRequest request, Map<String, dynamic> data) {
   return request;
 }
 
-Future<void> httpMultipartFilePostRequest(
-    Map<String, dynamic> data, List<http.MultipartFile> files) async {
+Future<void> httpMultipartFilePostRequest(Map<String, dynamic> data,
+    List<http.MultipartFile> files, String token) async {
   try {
     //var request = http.MultipartRequest("POST", Uri.parse(URL.postTweet));
-    var request =
-        http.MultipartRequest("POST", Uri.parse('http://10.0.2.2:3000/post'));
-    request.headers['Authorization'] = constToken;
-    request.headers['Content-Type'] = 'multipart/form-data';
+    var request = http.MultipartRequest("POST", Uri.parse(URL.postTweet));
+    request.headers['Authorization'] = token;
+    //request.headers['Content-Type'] = 'multipart/form-data';
 
     request = jsonToFormData(request, data);
 

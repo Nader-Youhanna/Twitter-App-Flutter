@@ -10,8 +10,10 @@ class CommentButton extends StatefulWidget {
   final int iconSize;
   Tweet tweet;
   late String _userName;
+  String _token;
 
-  CommentButton(this._commentators, this.iconSize, this.tweet, {Key? key})
+  CommentButton(this._commentators, this.iconSize, this.tweet, this._token,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -76,7 +78,11 @@ class _CommentButtonState extends State<CommentButton> {
                         Iterable<RegExpMatch> matches = exp.allMatches(comment);
                         List<String> hashtags = [];
                         for (var match in matches) {
-                          hashtags.add(match.group(0)!);
+                          String hashtag = match.group(0)!;
+                          //remove the #
+                          hashtag = hashtag.substring(1);
+
+                          hashtags.add(hashtag);
                         }
 
                         //search for tagged users
@@ -94,8 +100,8 @@ class _CommentButtonState extends State<CommentButton> {
                         };
 
                         //send data to server
-                        var response =
-                            await addComment(widget.tweet.getTweetId(), data);
+                        var response = await addComment(
+                            widget.tweet.getTweetId(), data, widget._token);
 
                         Navigator.pop(ctx);
                       },
@@ -135,13 +141,13 @@ class _CommentButtonState extends State<CommentButton> {
   }
 
   Future<List<Widget>> showReplies() async {
-    var replies = await getReplies(
-        widget.tweet.getTweetId().toString(), widget.tweet.getUserName());
+    var replies = await getReplies(widget.tweet.getTweetId().toString(),
+        widget.tweet.getUserName(), widget._token);
 
     var repliesWidget = <Widget>[];
     for (int i = 0; i < replies.length; i++) {
-      repliesWidget
-          .add(Tweet.jsonTweet(replies.elementAt(i).toJson(), false, false));
+      repliesWidget.add(Tweet.jsonTweet(
+          replies.elementAt(i).toJson(), false, false, widget._token));
     }
     return repliesWidget;
   }

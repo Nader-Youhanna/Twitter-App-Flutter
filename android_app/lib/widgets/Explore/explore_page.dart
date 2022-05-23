@@ -326,7 +326,7 @@ class ExplorePageState extends State<ExplorePage> {
               })),
       floatingActionButton: FloatingActionButton(
         // button should open the what's happening page
-        onPressed: () => startAddTweet(context),
+        onPressed: () => startAddTweet(context, widget.token),
         child: const Icon(Icons.add),
       ),
     );
