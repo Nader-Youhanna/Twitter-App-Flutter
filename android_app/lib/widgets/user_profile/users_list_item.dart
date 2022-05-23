@@ -32,6 +32,18 @@ class User_Item extends StatelessWidget {
       );
     }
   }
+  User_Item.jsonWhoToFollow(Map<String, dynamic> JsonUserItem) {
+    username = JsonUserItem['name'] as String;
+    handle = JsonUserItem['username'] as String;
+    _alreadyfollowed = false;
+    bio = " ";
+    if (JsonUserItem['image'] != null) {
+      userImage = CircleAvatar(
+        backgroundImage: NetworkImage(JsonUserItem['image'] as String),
+        radius: 25.0,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

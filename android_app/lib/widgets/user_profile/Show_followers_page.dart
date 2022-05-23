@@ -1,4 +1,5 @@
 import 'package:android_app/models/user.dart';
+import 'package:android_app/widgets/user_profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/users_list_item.dart';
 import 'package:android_app/widgets/user_profile/followers_List_scroll.dart';
@@ -135,7 +136,10 @@ class _Accounts_pageState extends State<Accounts_page> {
             leading: BackButton(
               color: Colors.black,
               onPressed: () {
-                _goBack(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Profile(widget.username, false)));
               },
             ),
             actions: <Widget>[

@@ -404,17 +404,40 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(top: 0),
                                       padding:
                                           EdgeInsets.only(left: 15, right: 32),
-                                      child: Text(
-                                        widget._username,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'PlayfairDisplay',
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )),
+                                      child: RichText(
+                                        text: TextSpan(children: <TextSpan>[
+                                          TextSpan(
+                                            text: name + " ",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'PlayfairDisplay',
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '@' + widget._username,
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 117, 117, 117),
+                                              fontFamily: 'PlayfairDisplay',
+                                              fontSize: 15.0,
+                                            ),
+                                          )
+                                        ]),
+                                      )
+                                      // Text(
+                                      //   name + ' ' + widget._username,
+                                      //   textAlign: TextAlign.center,
+                                      //   style: TextStyle(
+                                      //     color: Colors.black,
+                                      //     fontFamily: 'PlayfairDisplay',
+                                      //     fontStyle: FontStyle.italic,
+                                      //     fontSize: 17.0,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+                                      ),
                                   Container(
                                       margin: EdgeInsets.only(top: 10.0),
                                       padding:
