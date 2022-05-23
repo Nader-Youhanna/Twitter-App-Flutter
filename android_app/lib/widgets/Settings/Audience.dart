@@ -30,7 +30,7 @@ class _AudienceState extends State<Audience> {
       body: null,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + constToken
+        'Authorization': 'Bearer ' + widget.token
       },
     );
     print("${response.statusCode}");

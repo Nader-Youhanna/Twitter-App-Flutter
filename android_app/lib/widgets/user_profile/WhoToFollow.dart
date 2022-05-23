@@ -9,8 +9,9 @@ import 'dart:convert';
 import '../../constants.dart';
 
 class WhoToFOllow extends StatefulWidget {
-  const WhoToFOllow({Key? key}) : super(key: key);
-
+  //const WhoToFOllow({Key? key}) : super(key: key);
+  String token;
+  WhoToFOllow(this.token);
   @override
   State<WhoToFOllow> createState() => _WhoToFOllowState();
 }
@@ -37,7 +38,8 @@ class _WhoToFOllowState extends State<WhoToFOllow> {
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         for (int i = 0; i < data['accounts'].length; i++) {
-          userList.add(User_Item.jsonWhoToFollow(data['accounts'][i]));
+          userList.add(
+              User_Item.jsonWhoToFollow(data['accounts'][i], widget.token));
 //for mock server
           // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
         }

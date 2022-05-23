@@ -33,8 +33,7 @@ class _Update_usernameState extends State<Update_username> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODZjOTUxOGI5ZDY2ODU5MzE0M2E1YiIsImlhdCI6MTY1MzA2MDc5NSwiZXhwIjoxNjYxNzAwNzk1fQ.8dNCOsL-LXBZ-ozcPljnW_DSldPvkB-oQus4j02uRQs',
+        'Authorization': 'Bearer ' + widget.token,
       },
       body: json.encode(
         <String, String>{

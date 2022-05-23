@@ -112,7 +112,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");

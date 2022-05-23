@@ -17,7 +17,8 @@ import 'dart:io';
 class Edit_Profile extends StatefulWidget {
   //const Edit_Profile({Key? key}) : super(key: key);
   String username;
-  Edit_Profile(this.username);
+  String token;
+  Edit_Profile(this.username, this.token);
   @override
   State<Edit_Profile> createState() => _Edit_ProfileState();
 }
@@ -59,7 +60,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -93,7 +94,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + constToken,
+        'Authorization': 'Bearer ' + widget.token,
       },
       body: json.encode(
         <String, String>{
@@ -148,7 +149,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Profile(widget.username, false)),
+                    builder: (context) =>
+                        Profile(widget.username, false, widget.token)),
               );
             },
           ),
@@ -160,7 +162,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            Profile("${widget.username}", false)));
+                            Profile(widget.username, false, widget.token)));
               },
               child: Text(
                 'Save',

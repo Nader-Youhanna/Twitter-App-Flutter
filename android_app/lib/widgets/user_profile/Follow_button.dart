@@ -7,8 +7,9 @@ import '../../constants.dart';
 class Follow_button extends StatefulWidget {
   String _username;
   bool _alreadyfollowed;
+  String token;
 
-  Follow_button(this._alreadyfollowed, this._username);
+  Follow_button(this._alreadyfollowed, this._username, this.token);
 
   @override
   State<Follow_button> createState() => _Follow_buttonState();
@@ -28,7 +29,7 @@ class _Follow_buttonState extends State<Follow_button> {
         body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -61,7 +62,7 @@ class _Follow_buttonState extends State<Follow_button> {
         body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");

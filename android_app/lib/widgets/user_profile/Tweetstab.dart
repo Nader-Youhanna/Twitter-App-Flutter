@@ -19,8 +19,9 @@ class TweetTab extends StatefulWidget {
 
   String _name = "";
   String _username = "";
+  String token;
 
-  TweetTab(this._name, this._username);
+  TweetTab(this._name, this._username, this.token);
   @override
   State<TweetTab> createState() => _TweetTabState();
 }
@@ -31,7 +32,7 @@ class _TweetTabState extends State<TweetTab> {
   Future<List<Tweet>> getUserLikes() async {
     print("Adding user tweets");
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + constToken,
+      "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(

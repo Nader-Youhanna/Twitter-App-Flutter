@@ -23,7 +23,7 @@ class _notificationsSettingsState extends State<notificationsSettings> {
     var response = await http.patch(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
         body: null);
 

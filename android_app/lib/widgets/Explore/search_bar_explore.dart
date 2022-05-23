@@ -1,3 +1,4 @@
+import 'package:android_app/constants.dart';
 import 'package:flutter/material.dart';
 import './user_search_item.dart';
 import 'search_item.dart';
@@ -16,7 +17,7 @@ class MySearchDelegate extends SearchDelegate {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
+        return Profile(user, false, constToken);
       }),
     );
   }

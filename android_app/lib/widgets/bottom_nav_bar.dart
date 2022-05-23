@@ -46,7 +46,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile("", false);
+        return Profile("", false, widget.token);
       }),
     );
   }

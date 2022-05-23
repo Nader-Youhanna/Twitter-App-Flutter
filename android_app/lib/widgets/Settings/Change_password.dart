@@ -100,7 +100,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + constToken,
+        'Authorization': 'Bearer ' + widget.Token,
       },
       body: json.encode(
         <String, String>{
