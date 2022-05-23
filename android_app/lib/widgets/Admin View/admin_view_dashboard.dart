@@ -22,6 +22,20 @@ class PieData {
 }
 
 class AdminViewDashBoard extends StatelessWidget {
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
+  AdminViewDashBoard(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
+
   List<PieChartSectionData> getSections() {
     return PieData.data
         .asMap()
@@ -58,6 +72,12 @@ class AdminViewDashBoard extends StatelessWidget {
               value: '720',
               percentage: '20',
               increase: false,
+              name: name,
+              userName: userName,
+              userImage: userImage,
+              isAdmin: isAdmin,
+              email: email,
+              token: token,
             ),
           ],
         ),
@@ -70,10 +90,16 @@ class AdminViewDashBoard extends StatelessWidget {
               value: '4,285',
               percentage: '18',
               increase: true,
+              name: name,
+              userName: userName,
+              userImage: userImage,
+              isAdmin: isAdmin,
+              email: email,
+              token: token,
             ),
           ],
         ),
-        SizedBox(height: screenHeight * 0.08),
+        SizedBox(height: screenHeight * 0.06),
         Row(
           children: [
             SizedBox(width: screenWidth * 0.1),
@@ -82,17 +108,17 @@ class AdminViewDashBoard extends StatelessWidget {
               height: 100,
               child: PieChart(
                 PieChartData(
-                  centerSpaceRadius: 50,
+                  centerSpaceRadius: 30,
                   sections: getSections(),
                 ),
               ),
             )
           ],
         ),
-        const SizedBox(height: 70),
+        SizedBox(height: screenHeight * 0.05),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.38),
+            SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.red, size: 22),
             const Text(
               '#Red - 30%',
@@ -106,7 +132,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 5),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.38),
+            SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.yellow, size: 22),
             const Text(
               '#Yellow - 20%',
@@ -120,7 +146,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 5),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.38),
+            SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.blue, size: 22),
             const Text(
               '#Blue',
@@ -134,7 +160,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 5),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.38),
+            SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.green, size: 22),
             const Text(
               '#Green - 10%',
@@ -148,7 +174,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 5),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.38),
+            SizedBox(width: screenWidth * 0.35),
             const Icon(Icons.square, color: Colors.purple, size: 22),
             const Text(
               '#Purple - 10%',
