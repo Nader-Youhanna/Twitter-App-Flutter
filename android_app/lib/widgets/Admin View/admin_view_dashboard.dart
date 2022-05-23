@@ -13,11 +13,11 @@ class Data {
 
 class PieData {
   static List<Data> data = [
-    Data(name: 'Blue', percent: 30, color: Colors.blue),
-    Data(name: 'Red', percent: 30, color: Colors.red),
-    Data(name: 'Yellow', percent: 20, color: Colors.yellow),
-    Data(name: 'Green', percent: 10, color: Colors.green),
-    Data(name: 'Purple', percent: 10, color: Colors.purple),
+    Data(name: '', percent: 30, color: Colors.blue),
+    Data(name: '', percent: 30, color: Colors.red),
+    Data(name: '', percent: 20, color: Colors.yellow),
+    Data(name: '', percent: 10, color: Colors.green),
+    Data(name: '', percent: 10, color: Colors.purple),
   ];
 }
 
@@ -29,7 +29,8 @@ class AdminViewDashBoard extends StatelessWidget {
           final value = PieChartSectionData(
             color: data.color,
             value: data.percent,
-            title: '${data.name} ${data.percent.toStringAsFixed(0)}%',
+            //title: '${data.name} ${data.percent.toStringAsFixed(0)}%',
+            title: '',
             titleStyle: const TextStyle(
               fontFamily: 'RalewayMedium',
               fontWeight: FontWeight.bold,
@@ -51,7 +52,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 20),
         Row(
           children: <Widget>[
-            const SizedBox(width: 70),
+            SizedBox(width: screenWidth * 0.23),
             StatisticsCard(
               title: 'Users/Day',
               value: '720',
@@ -63,7 +64,7 @@ class AdminViewDashBoard extends StatelessWidget {
         const SizedBox(height: 20),
         Row(
           children: <Widget>[
-            const SizedBox(width: 70),
+            SizedBox(width: screenWidth * 0.23),
             StatisticsCard(
               title: 'Users/Week',
               value: '4,285',
@@ -75,7 +76,7 @@ class AdminViewDashBoard extends StatelessWidget {
         SizedBox(height: screenHeight * 0.08),
         Row(
           children: [
-            SizedBox(width: screenWidth * 0.08),
+            SizedBox(width: screenWidth * 0.1),
             Container(
               width: 300,
               height: 100,
@@ -86,6 +87,76 @@ class AdminViewDashBoard extends StatelessWidget {
                 ),
               ),
             )
+          ],
+        ),
+        const SizedBox(height: 70),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.38),
+            const Icon(Icons.square, color: Colors.red, size: 22),
+            const Text(
+              '#Red - 30%',
+              style: TextStyle(
+                fontFamily: 'RalewayMedium',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.38),
+            const Icon(Icons.square, color: Colors.yellow, size: 22),
+            const Text(
+              '#Yellow - 20%',
+              style: TextStyle(
+                fontFamily: 'RalewayMedium',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.38),
+            const Icon(Icons.square, color: Colors.blue, size: 22),
+            const Text(
+              '#Blue',
+              style: TextStyle(
+                fontFamily: 'RalewayMedium',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.38),
+            const Icon(Icons.square, color: Colors.green, size: 22),
+            const Text(
+              '#Green - 10%',
+              style: TextStyle(
+                fontFamily: 'RalewayMedium',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            SizedBox(width: screenWidth * 0.38),
+            const Icon(Icons.square, color: Colors.purple, size: 22),
+            const Text(
+              '#Purple - 10%',
+              style: TextStyle(
+                fontFamily: 'RalewayMedium',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ],
