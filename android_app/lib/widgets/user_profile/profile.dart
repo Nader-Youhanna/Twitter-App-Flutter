@@ -42,8 +42,8 @@ class Profile extends StatefulWidget {
   String _username = 'Defaultuser';
 //int userId = 0;
   bool isAdmin = false;
-
-  Profile(this._username, this.isAdmin);
+  String token;
+  Profile(this._username, this.isAdmin, this.token);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -388,12 +388,15 @@ class _ProfileState extends State<Profile> {
                                                                 builder: (context) =>
                                                                     Edit_Profile(
                                                                         widget
-                                                                            ._username)));
+                                                                            ._username,
+                                                                        widget
+                                                                            .token)));
                                                       },
                                                     )
                                                   : Follow_button(
                                                       _alreadyFollowed,
-                                                      widget._username),
+                                                      widget._username,
+                                                      widget.token),
                                             )
                                           ],
                                         ),
@@ -404,17 +407,40 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(top: 0),
                                       padding:
                                           EdgeInsets.only(left: 15, right: 32),
-                                      child: Text(
-                                        widget._username,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'PlayfairDisplay',
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )),
+                                      child: RichText(
+                                        text: TextSpan(children: <TextSpan>[
+                                          TextSpan(
+                                            text: name + " ",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'PlayfairDisplay',
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '@' + widget._username,
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 117, 117, 117),
+                                              fontFamily: 'PlayfairDisplay',
+                                              fontSize: 15.0,
+                                            ),
+                                          )
+                                        ]),
+                                      )
+                                      // Text(
+                                      //   name + ' ' + widget._username,
+                                      //   textAlign: TextAlign.center,
+                                      //   style: TextStyle(
+                                      //     color: Colors.black,
+                                      //     fontFamily: 'PlayfairDisplay',
+                                      //     fontStyle: FontStyle.italic,
+                                      //     fontSize: 17.0,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+                                      ),
                                   Container(
                                       margin: EdgeInsets.only(top: 10.0),
                                       padding:
@@ -439,8 +465,9 @@ class _ProfileState extends State<Profile> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Accounts_page(widget
-                                                              ._username)));
+                                                          Accounts_page(
+                                                              widget._username,
+                                                              widget.token)));
                                             },
                                             child: Text(
                                               '${_followersCount} followers',
@@ -463,8 +490,9 @@ class _ProfileState extends State<Profile> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Accounts_page(widget
-                                                              ._username)));
+                                                          Accounts_page(
+                                                              widget._username,
+                                                              widget.token)));
                                             },
                                             child: Text(
                                               '${_followingCount} following',
@@ -510,10 +538,11 @@ class _ProfileState extends State<Profile> {
                               ])
                         : TabBarView(
                             children: [
-                              TweetTab(username, username),
-                              TweetsAndReplies(username, username),
-                              MediaTab(username, username),
-                              LikesTab(username, username),
+                              TweetTab(username, username, widget.token),
+                              TweetsAndReplies(
+                                  username, username, widget.token),
+                              MediaTab(username, username, widget.token),
+                              LikesTab(username, username, widget.token),
                             ],
                           ),
                   ),

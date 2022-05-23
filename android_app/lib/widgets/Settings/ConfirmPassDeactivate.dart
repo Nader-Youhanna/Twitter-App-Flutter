@@ -40,7 +40,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   var _passwordIsValid = false;
 
   //var _password;
-  bool success = false;
+  String success = "";
 
   bool _validateCredentials(String password) {
     if (lastValidatedPassword == password) {
@@ -104,35 +104,19 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   Future<void> Getrequestdeactivate() async {
     var data;
     print("sending deacitvate request");
-    var url = Uri.parse("http://192.168.1.8:3000/settings/Deactivate-account");
+    var url =
+        Uri.parse("http://${MY_IP_ADDRESS}:3000/settings/Deactivate-account");
     //var url = Uri.parse("http://192.168.1.8:3000/DeactivateAccount");
 
-    try {
-      var response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
-        },
-      );
-      print("${response.statusCode}");
-      if (response.statusCode == 200) {
-        data = json.encode(response.body);
-        print("${response.body}");
-        if (data != null) {
-          setState(() {
-            success = data['success'] as bool;
-            if (success == true) {
-              print('deactivate success');
-            }
-          });
-        }
-      } else {
-        print('fetch error');
-      }
-    } on Exception catch (e) {
-      print('error:$e');
-    }
+    var response = await http.patch(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + widget.token
+      },
+    );
+    print("${response.statusCode}");
+    print("${response.body}");
   }
 
   @override
@@ -251,13 +235,9 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
                           ),
                         ),
                         onPressed: () {
-                          if (_passwordKey.currentState!.validate()) {
-                            setState(() {
-                              Getrequestdeactivate();
-                            });
-                          } else {
-                            showAlertDialog(context);
-                          }
+                          setState(() {
+                            Getrequestdeactivate();
+                          });
                         },
                         child:
                             Text('Deactivate', style: TextStyle(fontSize: 17)),

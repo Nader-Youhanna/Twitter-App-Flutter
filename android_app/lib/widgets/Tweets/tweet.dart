@@ -1,5 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+<<<<<<< HEAD
+=======
+//import 'dart:ffi';
+
+>>>>>>> d972f0d6cb5e73ccf9f8e613ece699cd1e73df24
 import 'package:android_app/constants.dart';
 import 'package:android_app/functions/http_functions.dart';
 import 'package:flutter/material.dart';

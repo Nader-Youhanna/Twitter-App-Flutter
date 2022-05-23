@@ -7,12 +7,24 @@ import 'package:flutter/material.dart';
 class StatisticsCard extends StatelessWidget {
   String title, value, percentage;
   bool increase;
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
 
   StatisticsCard(
       {required this.title,
       required this.value,
       required this.percentage,
-      required this.increase});
+      required this.increase,
+      required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +58,18 @@ class StatisticsCard extends StatelessWidget {
                 text: TextSpan(
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
+                      print('TOKEN $token');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => AdminViewMain(
                             selectedIndex: 1,
-                            name: '',
-                            userName: ' ',
-                            userImage: ' ',
+                            name: name,
+                            userName: userName,
+                            userImage: userImage,
                             isAdmin: true,
-                            email: ' ',
-                            token: '',
+                            email: email,
+                            token: token,
                           ),
                         ),
                       );

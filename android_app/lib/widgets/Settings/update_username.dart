@@ -33,7 +33,7 @@ class _Update_usernameState extends State<Update_username> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + constToken,
+        'Authorization': 'Bearer ' + widget.token,
       },
       body: json.encode(
         <String, String>{
@@ -181,9 +181,8 @@ class _Update_usernameState extends State<Update_username> {
                       onChanged: (value) {
                         setState(() {
                           _nameIsEntered = value.isNotEmpty;
-                          if (_nameKey.currentState!.validate()) {
-                            widget._username = value;
-                          }
+
+                          widget._username = value;
                         });
                       },
                       validator: (value) {

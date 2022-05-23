@@ -27,7 +27,7 @@ class SideBar extends StatelessWidget {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(username, false);
+        return Profile(username, false, token);
       }),
     );
   }

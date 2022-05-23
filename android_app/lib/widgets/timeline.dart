@@ -43,7 +43,7 @@ class _TimelineState extends State<Timeline> {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Profile("", false);
+          return Profile("", false, widget.token);
         },
       ),
     );

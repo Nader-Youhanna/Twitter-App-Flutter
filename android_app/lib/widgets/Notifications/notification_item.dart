@@ -85,7 +85,7 @@ class NotificationItem extends StatelessWidget {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
+        return Profile(user, false, token);
       }),
     );
   }

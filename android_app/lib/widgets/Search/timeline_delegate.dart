@@ -1,3 +1,4 @@
+import 'package:android_app/constants.dart';
 import 'package:android_app/widgets/Search/timeline_search_suggestions.dart';
 import 'package:android_app/widgets/Tweets/tweet.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class TimelineSearchDelegate extends SearchDelegate {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
+        return Profile(user, false, constToken);
       }),
     );
   }

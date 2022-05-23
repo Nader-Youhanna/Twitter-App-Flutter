@@ -10,7 +10,11 @@ import './http_functions.dart';
 import '../widgets/Tweets/tweet.dart';
 
 import 'dart:convert';
+<<<<<<< HEAD
 
+=======
+//import 'dart:ffi';
+>>>>>>> d972f0d6cb5e73ccf9f8e613ece699cd1e73df24
 import 'dart:async';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;

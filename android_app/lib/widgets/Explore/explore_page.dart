@@ -48,7 +48,7 @@ class ExplorePageState extends State<ExplorePage> {
   void _goToUserProfile(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile("", false);
+        return Profile("", false, widget.token);
       }),
     );
   }

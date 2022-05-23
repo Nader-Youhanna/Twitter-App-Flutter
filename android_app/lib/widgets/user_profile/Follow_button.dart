@@ -7,8 +7,9 @@ import '../../constants.dart';
 class Follow_button extends StatefulWidget {
   String _username;
   bool _alreadyfollowed;
+  String token;
 
-  Follow_button(this._alreadyfollowed, this._username);
+  Follow_button(this._alreadyfollowed, this._username, this.token);
 
   @override
   State<Follow_button> createState() => _Follow_buttonState();
@@ -23,11 +24,12 @@ class _Follow_buttonState extends State<Follow_button> {
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/follow");
     try {
-      var response = await http.get(
+      var response = await http.post(
         url,
+        body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -55,11 +57,12 @@ class _Follow_buttonState extends State<Follow_button> {
     var url =
         Uri.parse("http://34.236.108.123:3000/${widget._username}/unfollow");
     try {
-      var response = await http.get(
+      var response = await http.delete(
         url,
+        body: jsonEncode({}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       print("${response.statusCode}");
@@ -108,11 +111,9 @@ class _Follow_buttonState extends State<Follow_button> {
             Follow_user();
           });
         }
-        if (Status == "success") {
-          setState(() {
-            widget._alreadyfollowed = !widget._alreadyfollowed;
-          });
-        }
+        setState(() {
+          widget._alreadyfollowed = !widget._alreadyfollowed;
+        });
       },
     );
   }

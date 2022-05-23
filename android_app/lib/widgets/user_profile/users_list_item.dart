@@ -8,18 +8,20 @@ import 'package:android_app/widgets/user_profile/Follow_button.dart';
 class User_Item extends StatelessWidget {
   String username = "username";
   String handle = "@username";
+
   bool FollowsBack = true;
   bool _alreadyfollowed = true;
   String bio =
       "this is their bio text containig their description being demonstrated";
+  late String token;
   CircleAvatar userImage = CircleAvatar(
     backgroundImage: AssetImage('assets/images/user_icon.png'),
     radius: 25.0,
   );
   User_Item(this.username, this.handle, this.FollowsBack, this._alreadyfollowed,
-      this.bio);
+      this.bio, this.token);
 
-  User_Item.jsonUserItem(Map<String, dynamic> JsonUserItem) {
+  User_Item.jsonUserItem(Map<String, dynamic> JsonUserItem, String getToken) {
     username = JsonUserItem['name'] as String;
     handle = JsonUserItem['username'] as String;
     FollowsBack = JsonUserItem['followsMe'] as bool;
@@ -31,14 +33,31 @@ class User_Item extends StatelessWidget {
         radius: 25.0,
       );
     }
+    token = getToken;
+  }
+  User_Item.jsonWhoToFollow(
+      Map<String, dynamic> JsonUserItem, String getToken) {
+    username = JsonUserItem['name'] as String;
+    handle = JsonUserItem['username'] as String;
+    _alreadyfollowed = false;
+    bio = " ";
+    if (JsonUserItem['image'] != null) {
+      userImage = CircleAvatar(
+        backgroundImage: NetworkImage(JsonUserItem['image'] as String),
+        radius: 25.0,
+      );
+    }
+    token = getToken;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Profile(handle, false)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Profile(handle, false, token)));
         },
         child: Card(
           clipBehavior: Clip.antiAlias,
@@ -72,7 +91,7 @@ class User_Item extends StatelessWidget {
                     ],
                   ),
                 ),
-                trailing: Follow_button(_alreadyfollowed, username),
+                trailing: Follow_button(_alreadyfollowed, username, token),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 0),

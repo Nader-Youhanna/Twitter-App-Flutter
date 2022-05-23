@@ -1,4 +1,5 @@
 import 'package:android_app/models/user.dart';
+import 'package:android_app/widgets/user_profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:android_app/widgets/user_profile/users_list_item.dart';
 import 'package:android_app/widgets/user_profile/followers_List_scroll.dart';
@@ -11,7 +12,8 @@ import 'WhoToFollow.dart';
 class Accounts_page extends StatefulWidget {
   //const Accounts_page({Key? key}) : super(key: key);
   String username;
-  Accounts_page(this.username);
+  String token;
+  Accounts_page(this.username, this.token);
 
   @override
   State<Accounts_page> createState() => _Accounts_pageState();
@@ -38,13 +40,14 @@ class _Accounts_pageState extends State<Accounts_page> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         for (int i = 0; i < data['followers'].length; i++) {
-          followerslist.add(User_Item.jsonUserItem(data['followers'][i]));
+          followerslist
+              .add(User_Item.jsonUserItem(data['followers'][i], widget.token));
 //for mock server
           // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
         }
@@ -69,13 +72,14 @@ class _Accounts_pageState extends State<Accounts_page> {
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ' + constToken
+          'Authorization': 'Bearer ' + widget.token
         },
       );
       if (response.statusCode == 200) {
         data = json.decode(response.body);
         for (int i = 0; i < data['following'].length; i++) {
-          followinglist.add(User_Item.jsonUserItem(data['following'][i]));
+          followinglist
+              .add(User_Item.jsonUserItem(data['following'][i], widget.token));
 //for mock server
           // followers = data.map((e) => User_Item.jsonUserItem(e)).toList();
         }
@@ -135,15 +139,21 @@ class _Accounts_pageState extends State<Accounts_page> {
             leading: BackButton(
               color: Colors.black,
               onPressed: () {
-                _goBack(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Profile(widget.username, false, widget.token)));
               },
             ),
             actions: <Widget>[
               IconButton(
                 color: Colors.black,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WhoToFOllow()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WhoToFOllow(widget.token)));
                 },
                 icon: Icon(Icons.add_sharp),
                 tooltip: 'search button',

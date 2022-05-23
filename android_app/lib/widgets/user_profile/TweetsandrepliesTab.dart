@@ -19,8 +19,9 @@ class TweetsAndReplies extends StatefulWidget {
 
   String _name = "";
   String _username = "";
+  String token;
 
-  TweetsAndReplies(this._name, this._username);
+  TweetsAndReplies(this._name, this._username, this.token);
   @override
   State<TweetsAndReplies> createState() => _TweetsAndRepliesState();
 }
@@ -31,7 +32,7 @@ class _TweetsAndRepliesState extends State<TweetsAndReplies> {
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {
-      "Authorization": 'Bearer ' + constToken,
+      "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
     Map<String, dynamic> mapTweet = await httpRequestGet(

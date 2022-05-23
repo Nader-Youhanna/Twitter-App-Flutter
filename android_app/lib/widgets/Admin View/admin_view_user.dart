@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:android_app/constants.dart';
 import 'package:android_app/widgets/Admin%20View/user_reports.dart';
 import 'package:android_app/widgets/Admin%20View/user_statistics.dart';
 import 'package:flutter/foundation.dart';
@@ -43,7 +44,7 @@ class AdminViewUser extends StatelessWidget {
   void _goToUserProfile(BuildContext ctx, String user) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        return Profile(user, false);
+        return Profile(user, false, constToken);
       }),
     );
   }
