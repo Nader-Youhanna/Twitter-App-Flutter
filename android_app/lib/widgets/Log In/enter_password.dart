@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:android_app/widgets/Explore/explore_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -27,8 +28,14 @@ class EnterPasswordPage extends StatefulWidget {
 class _EnterPasswordPageState extends State<EnterPasswordPage> {
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
+  bool isAndroid = true;
   String lastValidatedPassword = "";
   String lastRejectedPassword = "";
+  double screenWidth = 0;
+  double screenHeight = 0;
+  void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+  }
 
   bool _validateCredentials(String password) {
     if (lastValidatedPassword == password) {
@@ -83,7 +90,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           json.decode(responseHome.body) as Map<String, dynamic>;
       widget.userImage = extractedMyInfoHome['userImage'];
       widget.name = extractedMyInfoHome['name'];
-      //widget.isAdmin = extractedMyInfoHome['isAdmin'];
+      widget.isAdmin = extractedMyInfoHome['isAdmin'];
       widget.isAdmin = true;
       widget.username = extractedMyInfoHome['userName'];
       _goToTimeline(context);
@@ -151,6 +158,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      screenWidth = MediaQuery.of(context).size.width;
+      screenHeight = MediaQuery.of(context).size.height;
+    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -215,7 +226,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(
+              height: isAndroid
+                  ? screenHeight * (30 / 740)
+                  : screenHeight * (8 / 1000),
+            ),
             SizedBox(
               width: _textFieldWidth,
               child: Column(
@@ -236,7 +251,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(
+              height: isAndroid
+                  ? screenHeight * (20 / 740)
+                  : screenHeight * (8 / 1000),
+            ),
             SizedBox(
               width: _textFieldWidth,
               child: Form(
@@ -275,7 +294,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 395),
+            SizedBox(
+              height:
+                  isAndroid ? screenHeight * (395 / 740) : screenHeight * 0.53,
+            ),
             const Divider(
               height: 2,
               thickness: 0.9,
@@ -283,7 +305,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
             const SizedBox(height: 10),
             Row(
               children: <Widget>[
-                const SizedBox(width: 12),
+                SizedBox(
+                  width: isAndroid
+                      ? screenWidth * (12 / 360)
+                      : screenWidth * (250 / 1000),
+                ),
                 ElevatedButton(
                   child: const Text(
                     'Forgot Password?',
@@ -306,7 +332,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 125),
+                SizedBox(
+                  width: isAndroid
+                      ? screenWidth * (125 / 360)
+                      : screenWidth * (500 / 1000),
+                ),
                 ElevatedButton(
                   child: const Text('Next'),
                   onPressed: () {

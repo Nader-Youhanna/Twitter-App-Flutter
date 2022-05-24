@@ -1,7 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:android_app/constants.dart';
 import 'package:android_app/widgets/Settings/settings_main.dart';
-import 'package:android_app/widgets/user_profile/FollowRequests.dart';
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 import 'package:flutter/foundation.dart';

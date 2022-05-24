@@ -204,7 +204,7 @@ class SideBar extends StatelessWidget {
               size: 27,
             ),
             title: const Text(
-              'follow requests',
+              'Follow Requests',
               style: TextStyle(
                 fontSize: 17,
                 fontFamily: 'RalewayMedium',

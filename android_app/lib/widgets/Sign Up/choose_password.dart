@@ -1,5 +1,6 @@
 import 'package:android_app/widgets/Sign%20Up/confirm_email.dart';
 import 'package:flutter/material.dart';
+import '../Log In/login.dart';
 import '../bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -42,6 +43,14 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     );
   }
 
+  void _goToLogin(BuildContext ctx) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        return Login();
+      }),
+    );
+  }
+
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
@@ -74,7 +83,8 @@ class _ChoosePasswordState extends State<ChoosePassword> {
           json.decode(response.body) as Map<String, dynamic>;
       if (extractedMyInfo['status'] == 'success') {
         print("Success");
-        _goToConfirmEmail(context);
+        //_goToConfirmEmail(context);
+        _goToLogin(context);
       } else {
         print("Failed");
       }
