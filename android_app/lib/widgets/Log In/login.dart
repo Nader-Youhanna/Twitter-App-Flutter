@@ -14,6 +14,9 @@ class _LoginState extends State<Login> {
   String _username = '';
   bool isAndroid = true;
 
+  double screenWidth = 0;
+  double screenHeight = 0;
+
   void initState() {
     isAndroid = (defaultTargetPlatform == TargetPlatform.android);
   }
@@ -42,6 +45,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      screenWidth = MediaQuery.of(context).size.width;
+      screenHeight = MediaQuery.of(context).size.height;
+    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -169,7 +176,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   width: isAndroid
                       ? MediaQuery.of(context).size.width * (125 / 360)
-                      : MediaQuery.of(context).size.width * (200 / 1000),
+                      : MediaQuery.of(context).size.width * (500 / 1000),
                 ),
                 ElevatedButton(
                   child: const Text('Next'),

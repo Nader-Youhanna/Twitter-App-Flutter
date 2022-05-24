@@ -1,9 +1,29 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'messages_users_list.dart';
 
-class EmptyInboxBody extends StatelessWidget {
+class EmptyInboxBody extends StatefulWidget {
+  @override
+  State<EmptyInboxBody> createState() => _EmptyInboxBodyState();
+}
+
+class _EmptyInboxBodyState extends State<EmptyInboxBody> {
+  bool isAndroid = true;
+
+  double screenWidth = 0;
+
+  double screenHeight = 0;
+
+  void initState() {
+    isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      screenWidth = MediaQuery.of(context).size.width;
+      screenHeight = MediaQuery.of(context).size.height;
+    });
     return SingleChildScrollView(
       child: Container(
         child: Center(
@@ -35,8 +55,10 @@ class EmptyInboxBody extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const SizedBox(
-                    width: 30,
+                  SizedBox(
+                    width: isAndroid
+                        ? screenWidth * (30 / 360)
+                        : screenWidth * 0.39,
                   ),
                   SizedBox(
                     height: 38,
