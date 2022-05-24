@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android_app">
    <application
-        android:label="android_app"
+        android:label="Sirius"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
