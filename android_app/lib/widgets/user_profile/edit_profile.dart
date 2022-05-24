@@ -320,9 +320,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                             Container(
                                 width: 200,
                                 child: CountryStateCityPicker(
-                                    city: citypick,
                                     country: countrypick,
                                     state: statepick,
+                                    city: citypick,
                                     textFieldInputBorder:
                                         UnderlineInputBorder())
                                 // CSCPicker(

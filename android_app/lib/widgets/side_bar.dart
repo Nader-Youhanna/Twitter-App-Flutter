@@ -1,3 +1,4 @@
+import 'package:android_app/widgets/user_profile/FollowRequests.dart';
 import 'package:provider/provider.dart';
 import '../providers/google_sign_in.dart';
 import 'package:flutter/material.dart';
@@ -182,6 +183,28 @@ class SideBar extends StatelessWidget {
             ),
             title: Text(
               'Policies',
+              style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'RalewayMedium',
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return FollowRequests(this.username, this.token);
+                  },
+                ),
+              );
+            },
+            leading: const Icon(
+              Icons.follow_the_signs,
+              size: 27,
+            ),
+            title: const Text(
+              'follow requests',
               style: TextStyle(
                 fontSize: 17,
                 fontFamily: 'RalewayMedium',
