@@ -29,6 +29,7 @@ class TweetsAndReplies extends StatefulWidget {
 class _TweetsAndRepliesState extends State<TweetsAndReplies> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  ///function to fetch the user's uploaded tweets and replis from the server and map them into Tweet class objects
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {

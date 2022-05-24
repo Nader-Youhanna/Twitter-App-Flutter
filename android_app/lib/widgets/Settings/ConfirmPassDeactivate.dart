@@ -45,6 +45,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
   //var _password;
   String success = "";
 
+  ///functions to validate the credintials of the user before deactivating
   bool _validateCredentials(String password) {
     if (lastValidatedPassword == password) {
       return true;
@@ -56,6 +57,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
     }
   }
 
+  ///functions to validate the credintials of the user before deactivating
   Future<void> _validateCredentialsAsync(String password) async {
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
@@ -104,6 +106,7 @@ class _ConfirmforDeactivateState extends State<ConfirmforDeactivate> {
         .validate(); // this will re-initiate the validation
   }
 
+  ///function to send deactivate request to the server
   Future<void> Getrequestdeactivate() async {
     var data;
     print("sending deacitvate request");

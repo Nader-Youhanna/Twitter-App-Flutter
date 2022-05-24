@@ -18,6 +18,7 @@ class Follow_button extends StatefulWidget {
 class _Follow_buttonState extends State<Follow_button> {
   String Status = "0";
 
+  ///function to send follow request to server
   Future<void> Follow_user() async {
     var data;
     print("following user");
@@ -51,6 +52,7 @@ class _Follow_buttonState extends State<Follow_button> {
     }
   }
 
+  ///function to send delete request (to unfollow users) to the server
   Future<void> UnFollow_user() async {
     var data;
     print("following user");

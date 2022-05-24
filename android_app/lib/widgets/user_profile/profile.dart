@@ -80,6 +80,7 @@ class _ProfileState extends State<Profile> {
     Navigator.pop(ctx);
   }
 
+  ///function to send report request type 1 to server
   Future<void> reportUsernotInt() async {
     var data;
     print("reporting user");
@@ -112,6 +113,7 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  ///function to send report request type 2 to server
   Future<void> reportUserSpam() async {
     var data;
     print("reporting spam");

@@ -30,6 +30,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
   String lastValidatedPassword = "";
   String lastRejectedPassword = "";
 
+  ///functions to validate the credintials of the user before changing email/phone
   bool _validateCredentials(String password) {
     if (lastValidatedPassword == password) {
       return true;
@@ -41,6 +42,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
     }
   }
 
+  ///functions to validate the credintials of the user before changing email/phone
   Future<void> _validateCredentialsAsync(String password) async {
     print('validating password');
     //Real server response:

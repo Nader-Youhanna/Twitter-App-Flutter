@@ -29,6 +29,7 @@ class TweetTab extends StatefulWidget {
 class _TweetTabState extends State<TweetTab> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  ///function to fetch user tweets from the server and map them into Tweet class objects
   Future<List<Tweet>> getUserLikes() async {
     print("Adding user tweets");
     Map<String, dynamic> headers = {

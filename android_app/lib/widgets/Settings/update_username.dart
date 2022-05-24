@@ -21,9 +21,7 @@ class _Update_usernameState extends State<Update_username> {
   var _nameIsEntered = false;
   String username = "";
 
-  ///function to check validity of name and whether it has a match in the server
-
-  ///function to send post request to server with the new username
+  ///function to send patch request to server with the new username
   Future<void> httpRequestPatch() async {
     print('patch change username');
     var url = Uri.parse(

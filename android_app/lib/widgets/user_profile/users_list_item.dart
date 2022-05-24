@@ -21,6 +21,7 @@ class User_Item extends StatelessWidget {
   User_Item(this.username, this.handle, this.FollowsBack, this._alreadyfollowed,
       this.bio, this.token);
 
+  ///constructor to map a Json file into an object of the class with appropriate fields for a UserItem
   User_Item.jsonUserItem(Map<String, dynamic> JsonUserItem, String getToken) {
     username = JsonUserItem['name'] as String;
     handle = JsonUserItem['username'] as String;
@@ -35,6 +36,8 @@ class User_Item extends StatelessWidget {
     }
     token = getToken;
   }
+
+  ///constructor to map a Json file into an object of the class with appropriate fields for a UserItem for the who to follow page
   User_Item.jsonWhoToFollow(
       Map<String, dynamic> JsonUserItem, String getToken) {
     username = JsonUserItem['name'] as String;

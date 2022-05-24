@@ -17,6 +17,7 @@ class RequestsItem extends StatelessWidget {
     radius: 25.0,
   );
 
+  ///constuctor to map Json data fetched from the server to the specified class members
   RequestsItem.jsonFollowRequest(
       Map<String, dynamic> JsonUserItem, String getToken) {
     username = JsonUserItem['name'] as String;
@@ -30,6 +31,8 @@ class RequestsItem extends StatelessWidget {
     }
     token = getToken;
   }
+
+  ///function to send accept follow request to the server
   Future<void> acceptFollow() async {
     var data;
     print("accepting request");
@@ -60,6 +63,7 @@ class RequestsItem extends StatelessWidget {
     }
   }
 
+  ///function to send reject follow request to the server
   Future<void> RejectRequest() async {
     var data;
     print("rejecting request");

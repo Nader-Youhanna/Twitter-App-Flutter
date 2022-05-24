@@ -34,6 +34,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
     Navigator.of(ctx).pop();
   }
 
+  ///function to send patch request to server to change current email
   Future<void> httpRequestPatch() async {
     var url =
         Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/Account-info/Email');

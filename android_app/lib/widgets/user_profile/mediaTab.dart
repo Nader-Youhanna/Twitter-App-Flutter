@@ -30,6 +30,7 @@ class _MediaTabState extends State<MediaTab> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //var url = "http://${MY_IP_ADDRESS}:3000/${widget._username}/media";
 
+  ///function to fetch media uploaded by user from the server
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {

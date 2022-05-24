@@ -27,6 +27,7 @@ class _Accounts_pageState extends State<Accounts_page> {
   List<User_Item> followers = [];
   List<User_Item> following = [];
 
+  ///function to fetch a list of users that follows the current user from the server
   Future<List<User_Item>> getFollowers() async {
     List<User_Item> followerslist = <User_Item>[];
 
@@ -60,6 +61,7 @@ class _Accounts_pageState extends State<Accounts_page> {
     return followerslist;
   }
 
+  ///function to fetch a list of users that the current user follows from the server
   Future<List<User_Item>> getFollowing() async {
     List<User_Item> followinglist = <User_Item>[];
     var data;

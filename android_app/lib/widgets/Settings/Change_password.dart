@@ -49,6 +49,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   //   print('Response body: ${response.body}');
   // }
 
+  ///functions to validate the credintials of the user before changing password
   bool _validateCredentials(String password) {
     if (lastValidatedPassword == password) {
       _passwordIsCorrect = true;
@@ -61,6 +62,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     }
   }
 
+  ///functions to validate the credintials of the user before changing password
   Future<void> _validateCredentialsAsync(String password) async {
     //Real server response:
     var url = Uri.parse('http://$MY_IP_ADDRESS:3000/login');
@@ -97,6 +99,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         .validate(); // this will re-initiate the validation
   }
 
+  ///function to send a patch request to change current password to the server
   Future<void> httpRequestPatchnewPassword() async {
     var url = Uri.parse(
         'http://${MY_IP_ADDRESS}:3000/reset-password/${widget.Token}');

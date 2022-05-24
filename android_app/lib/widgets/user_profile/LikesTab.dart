@@ -29,6 +29,7 @@ class LikesTab extends StatefulWidget {
 class _LikesTabState extends State<LikesTab> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  ///function to fetch list of liked tweets by the user from the server
   Future<List<Tweet>> getUserLikes() async {
     print("Adding tweets");
     Map<String, dynamic> headers = {

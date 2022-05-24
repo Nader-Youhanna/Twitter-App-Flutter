@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
         create: (context) => GoogleSignInProvider(),
         child: MaterialApp(
           home: Scaffold(
-            body: FollowRequests('user2',
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOGQyYjk3M2NjNmIzNmVlN2ZlOTQzYyIsImlhdCI6MTY1MzQxOTczNiwiZXhwIjoxNjYyMDU5NzM2fQ.MbeJmBmnkBivIhqgBD3U4_lH4k8twxFh-45cAASS6I4"),
+            body: StartPage(),
           ),
         ),
       ),

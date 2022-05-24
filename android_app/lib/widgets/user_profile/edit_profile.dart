@@ -45,6 +45,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   TextEditingController citypick = TextEditingController();
   late final Future? myFuture;
 
+  ///function to initialise the date picker and set dateTime variable with user input
   Future PickDate(BuildContext context) async {
     final newdate = await showDatePicker(
       context: context,
@@ -60,6 +61,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     });
   }
 
+  ///function to fetch user data from the server
   Future<void> getUserData() async {
     var data;
     print("getting user data edit profile");
@@ -103,6 +105,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     }
   }
 
+  ///function to send a patch request with modified user data to the server
   Future<void> httprequestpatch() async {
     print('patcheditprofile');
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/profile');

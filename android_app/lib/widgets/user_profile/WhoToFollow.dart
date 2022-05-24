@@ -19,6 +19,7 @@ class WhoToFOllow extends StatefulWidget {
 class _WhoToFOllowState extends State<WhoToFOllow> {
   List<User_Item> usersList = [];
 
+  ///function to get a list of suggested users from the server
   Future<List<User_Item>> getUsers() async {
     List<User_Item> userList = <User_Item>[];
     var data;

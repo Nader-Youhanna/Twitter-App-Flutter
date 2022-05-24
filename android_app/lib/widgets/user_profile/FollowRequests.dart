@@ -23,12 +23,14 @@ class FollowRequests extends StatefulWidget {
 }
 
 class _FollowRequestsState extends State<FollowRequests> {
+  ///back button go back function
   void _goBack(BuildContext ctx) {
     Navigator.of(ctx).pop();
   }
 
   List<RequestsItem> Requests = [];
 
+  ///function to fetch list of follow requests from server and map them into RequestItem class objects
   Future<List<RequestsItem>> getRequests() async {
     List<RequestsItem> followerslist = <RequestsItem>[];
 

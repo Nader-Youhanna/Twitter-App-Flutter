@@ -21,6 +21,7 @@ class _notificationsSettingsState extends State<notificationsSettings> {
 
   bool push_notification = false;
 
+  ///function to send patch request to server to change push notifications settings
   Future<void> httpRequestPatch() async {
     var url = Uri.parse('http://${MY_IP_ADDRESS}:3000/settings/Notifications');
 

@@ -19,7 +19,7 @@ class _AudienceState extends State<Audience> {
     Navigator.of(ctx).pop();
   }
 
-  ///function to fetch data from mock server
+  ///function to fetch data from server
   Future<void> httpRequestPatchPrivate() async {
     var url = Uri.parse(
         "http://${MY_IP_ADDRESS}:3000/settings/Account-info/Protected-tweets");
