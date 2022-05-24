@@ -83,7 +83,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
           json.decode(responseHome.body) as Map<String, dynamic>;
       widget.userImage = extractedMyInfoHome['userImage'];
       widget.name = extractedMyInfoHome['name'];
-      //widget.isAdmin = extractedMyInfoHome['isAdmin'];
+      widget.isAdmin = extractedMyInfoHome['isAdmin'];
       widget.isAdmin = true;
       widget.username = extractedMyInfoHome['userName'];
       _goToTimeline(context);

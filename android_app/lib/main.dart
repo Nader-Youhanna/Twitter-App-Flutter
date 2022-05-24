@@ -1,7 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:android_app/constants.dart';
 import 'package:android_app/widgets/Settings/settings_main.dart';
-import 'package:android_app/widgets/user_profile/FollowRequests.dart';
 import 'package:android_app/widgets/user_profile/edit_profile.dart';
 import 'package:android_app/widgets/user_profile/profile.dart';
 import 'package:flutter/foundation.dart';
@@ -40,8 +39,7 @@ class MyApp extends StatelessWidget {
         create: (context) => GoogleSignInProvider(),
         child: MaterialApp(
           home: Scaffold(
-            body: FollowRequests('user2',
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOGQyYjk3M2NjNmIzNmVlN2ZlOTQzYyIsImlhdCI6MTY1MzQxOTczNiwiZXhwIjoxNjYyMDU5NzM2fQ.MbeJmBmnkBivIhqgBD3U4_lH4k8twxFh-45cAASS6I4"),
+            body: StartPage(),
           ),
         ),
       ),
