@@ -118,7 +118,14 @@ class _TimelineState extends State<Timeline> {
                 onTap: () {
                   showSearch(
                     context: context,
-                    delegate: TimelineSearchDelegate(),
+                    delegate: TimelineSearchDelegate(
+                      name: widget.name,
+                      userName: widget.userName,
+                      userImage: widget.userImage,
+                      isAdmin: widget.isAdmin,
+                      email: widget.email,
+                      token: widget.token,
+                    ),
                   );
                 }),
           ),

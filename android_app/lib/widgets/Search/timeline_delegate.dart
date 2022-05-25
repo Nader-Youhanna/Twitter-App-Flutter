@@ -13,10 +13,20 @@ CircleAvatar userImages = const CircleAvatar(
 
 ///class to create search bar withh suggestions list and results it extends a predefined class in flutter which is SearchDelegate
 class TimelineSearchDelegate extends SearchDelegate {
-  
   BuildingTimelineSuggestions _suggestionsList = BuildingTimelineSuggestions();
-
-  TimelineSearchDelegate();
+  String name = "";
+  String userName = "";
+  String userImage = '';
+  bool isAdmin = false;
+  String email = '';
+  String token;
+  TimelineSearchDelegate(
+      {required this.name,
+      required this.userName,
+      required this.userImage,
+      required this.isAdmin,
+      required this.email,
+      required this.token});
 
   ///function to create leading icon in search bar
   @override
@@ -64,7 +74,7 @@ class TimelineSearchDelegate extends SearchDelegate {
             ),
           )
         : FutureBuilder<List<Tweet>>(
-            future: _suggestionsList.getSearchItems(query: query),
+            future: _suggestionsList.getSearchItems(query, token),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -121,7 +131,7 @@ class TimelineSearchDelegate extends SearchDelegate {
             ),
           )
         : FutureBuilder<List<Tweet>>(
-            future: _suggestionsList.getSearchItems(query: query),
+            future: _suggestionsList.getSearchItems(query, token),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:

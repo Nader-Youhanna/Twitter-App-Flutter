@@ -50,6 +50,7 @@ class AllNotificationsListState extends State<AllNotificationsList> {
       "Authorization": 'Bearer ' + widget.token,
       "Content-Type": "application/json"
     };
+    print('TOKEN: ${widget.token}');
     var request = http.Request('GET', url);
     if (headers != null) {
       request.headers['Content-Type'] = headers['Content-Type'];
@@ -60,9 +61,11 @@ class AllNotificationsListState extends State<AllNotificationsList> {
     var response = await http.Response.fromStream(streamedResponse);
 
     print('Response status: ${response.statusCode}');
-    //print('Response Body: ${response.body}');
+    print('Response Body: ${response.body}');
 
     var mapData = json.decode(response.body);
+    print('Map Data:');
+    print(mapData.toString());
 
     for (int i = 0; i < mapData['notificationsArray'].length; i++) {
       if (NotificationItem.jsonNotification(
@@ -72,7 +75,11 @@ class AllNotificationsListState extends State<AllNotificationsList> {
           NotificationItem.jsonNotification(
                       mapData['notificationsArray'][i], widget.token)
                   .notificationType !=
-              'tag') {
+              'tag' &&
+          NotificationItem.jsonNotification(
+                      mapData['notificationsArray'][i], widget.token)
+                  .notificationType !=
+              'follow') {
         notificationList.add(NotificationItem.jsonNotification(
             mapData['notificationsArray'][i], widget.token));
       }

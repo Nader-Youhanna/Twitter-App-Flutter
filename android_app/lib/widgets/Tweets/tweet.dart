@@ -484,7 +484,7 @@ class Tweet extends StatelessWidget {
 
     Map<String, String> headersMap = {
       'Content-Type': 'application/json',
-      'Authorization': _token
+      'Authorization': 'Bearer ' + _token
     };
     var response = await httpRequestPost(url, {}, headersMap);
 
@@ -508,7 +508,7 @@ class Tweet extends StatelessWidget {
 
     Map<String, String> headersMap = {
       'Content-Type': 'application/json',
-      'Authorization': _token
+      'Authorization': 'Bearer ' + _token
     };
     var response = await httpRequestPost(url, {}, headersMap);
 

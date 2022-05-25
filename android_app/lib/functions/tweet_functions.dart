@@ -111,7 +111,7 @@ void startAddTweet(BuildContext ctx, String token) async {
                         "taggedUsers": taggedUsers,
                       };
 
-                      if (_image != null) {
+                      if (_image!.isNotEmpty) {
                         //there is an image
                         print("sending with image");
                         try {

@@ -9,8 +9,7 @@ import '../../constants.dart';
 
 ///this is a class built to fetch the suggestion list for the search bar from server
 class BuildingTimelineSuggestions {
-  Future<List<Tweet>> getSearchItems({String? query}) async {
-    String token = '';
+  Future<List<Tweet>> getSearchItems(String? query, String token) async {
     List<Tweet> searchResults = await getTweets(token);
 
     if (query != null) {

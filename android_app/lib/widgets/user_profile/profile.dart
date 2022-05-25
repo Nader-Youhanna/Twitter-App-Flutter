@@ -151,6 +151,7 @@ class _ProfileState extends State<Profile> {
     var data;
     print("getting user data");
     var url = Uri.parse("http://34.236.108.123:3000/${widget._username}");
+    print('USERNAME: ${widget._username}');
     try {
       var response = await http.get(
         url,

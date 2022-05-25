@@ -38,8 +38,11 @@ class NotificationItem extends StatelessWidget {
     notificationType = jsonNotification['activity'] as String;
     // tweet = Tweet.jsonTweet(jsonNotification['notificationTweet'], false, true);
     notificationID = jsonNotification['notificationId'] as String;
-    tweetID = jsonNotification['tweetId'] as String;
-    tweetText = jsonNotification['tweetBody'] as String;
+
+    if (jsonNotification['tweetId'] != null) {
+      tweetText = jsonNotification['tweetBody'] as String;
+      tweetID = jsonNotification['tweetId'] as String;
+    }
     if (jsonNotification['imageSender'] != null) {
       userImage = CircleAvatar(
         backgroundImage: NetworkImage(jsonNotification['imageSender']),

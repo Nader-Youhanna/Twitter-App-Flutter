@@ -76,6 +76,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       print("TOKEN: ");
       print(extractedMyInfo['token']);
       widget.token = extractedMyInfo['token'];
+      widget.isAdmin = true;
       var urlHome = Uri.parse('http://$MY_IP_ADDRESS:3000/home');
       var responseHome = await http.get(
         urlHome,
@@ -88,11 +89,16 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
       print('Response body: ${responseHome.body}');
       final extractedMyInfoHome =
           json.decode(responseHome.body) as Map<String, dynamic>;
-      widget.userImage = extractedMyInfoHome['userImage'];
+      if (extractedMyInfoHome['userImage'] != null) {
+        widget.userImage = extractedMyInfoHome['userImage'];
+      } else {
+        widget.userImage = '';
+      }
       widget.name = extractedMyInfoHome['name'];
-      widget.isAdmin = extractedMyInfoHome['isAdmin'];
-      widget.isAdmin = true;
       widget.username = extractedMyInfoHome['userName'];
+      print('USERNAME AT LOGIN: ${widget.username}');
+      //widget.isAdmin = extractedMyInfoHome['isAdmin'];
+      //widget.isAdmin = true;
       _goToTimeline(context);
     } else {
       lastRejectedPassword = password;
