@@ -1,19 +1,47 @@
+import 'dart:io' show Platform;
+import 'package:android_app/constants.dart';
+import 'package:android_app/widgets/Settings/settings_main.dart';
+import 'package:android_app/widgets/user_profile/edit_profile.dart';
+import 'package:android_app/widgets/user_profile/profile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:provider/provider.dart';
+import './widgets/start_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import './providers/google_sign_in.dart';
 
-import './Tweets/tweet.dart';
-
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    await Firebase.initializeApp();
+    print('Running on Android');
+  } else {
+    await Firebase.initializeApp(
+      // Replace with actual values
+      options: const FirebaseOptions(
+        apiKey: "XXX",
+        appId: "XXX",
+        messagingSenderId: "XXX",
+        projectId: "XXX",
+      ),
+    );
+    print("Running on Browser");
+  }
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Tweet(),
+    return OverlaySupport(
+      child: ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: StartPage(),
+          ),
+        ),
       ),
     );
   }

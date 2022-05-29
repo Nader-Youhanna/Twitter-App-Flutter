@@ -1,0 +1,8 @@
+To run the tests:
+
+1. Open a cmd in the folder "android_app/test"
+2. Run the command: 
+
+    flutter test <filename.dart>
+
+Example: flutte test is_email_valid_test.dart

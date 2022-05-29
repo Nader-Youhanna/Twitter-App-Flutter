@@ -1,0 +1,1094 @@
+{
+  "searching": {
+    "users": [
+      {
+        "_id": "62688cbf2b7b14dcc3879869",
+        "email": "rahmanezzat14@gmail.com",
+        "confirmed": true,
+        "username": "boody",
+        "password": "$2a$12$5GwFikHmvoz9tazdgV4UsewbAsvajd8kGMImJk94LcUY/3qnYLuEa",
+        "birthdate": "2001-07-16T00:00:00.000Z",
+        "name": "Abdelrahman",
+        "following": [],
+        "followers": [],
+        "tweets": [],
+        "likedTweets": [],
+        "retweetedTweets": [],
+        "image": null,
+        "headerImage": null,
+        "city": "Cairo",
+        "country": "Egypt",
+        "notificationFlag": true,
+        "theme": "light",
+        "bio": "",
+        "protectedTweets": false,
+        "createdAt": "2022-04-27T00:22:23.007Z",
+        "updatedAt": "2022-04-27T00:22:23.007Z",
+        "__v": 0
+      },
+      {
+        "_id": "62688cbf2b7b14dcc3879869",
+        "email": "rahmanezzat14@gmail.com",
+        "confirmed": true,
+        "username": "Remonda",
+        "password": "$2a$12$5GwFikHmvoz9tazdgV4UsewbAsvajd8kGMImJk94LcUY/3qnYLuEa",
+        "birthdate": "2001-07-16T00:00:00.000Z",
+        "name": "Remonda",
+        "following": [],
+        "followers": [],
+        "tweets": [],
+        "likedTweets": [],
+        "retweetedTweets": [],
+        "image": null,
+        "headerImage": null,
+        "city": "Cairo",
+        "country": "Egypt",
+        "notificationFlag": true,
+        "theme": "light",
+        "bio": "",
+        "protectedTweets": false,
+        "createdAt": "2022-04-27T00:22:23.007Z",
+        "updatedAt": "2022-04-27T00:22:23.007Z",
+        "__v": 0
+      },
+      {
+        "_id": "62688cbf2b7b14dcc3879869",
+        "email": "rahmanezzat14@gmail.com",
+        "confirmed": true,
+        "username": "@Habiba2000",
+        "password": "$2a$12$5GwFikHmvoz9tazdgV4UsewbAsvajd8kGMImJk94LcUY/3qnYLuEa",
+        "birthdate": "2001-07-16T00:00:00.000Z",
+        "name": "Habiba",
+        "following": [],
+        "followers": [],
+        "tweets": [],
+        "likedTweets": [],
+        "retweetedTweets": [],
+        "image": null,
+        "headerImage": null,
+        "city": "Cairo",
+        "country": "Egypt",
+        "notificationFlag": true,
+        "theme": "light",
+        "bio": "",
+        "protectedTweets": false,
+        "createdAt": "2022-04-27T00:22:23.007Z",
+        "updatedAt": "2022-04-27T00:22:23.007Z",
+        "__v": 0
+      },
+      {
+        "_id": "62688cbf2b7b14dcc3879869",
+        "email": "rahmanezzat14@gmail.com",
+        "confirmed": true,
+        "username": "@NouNou",
+        "password": "$2a$12$5GwFikHmvoz9tazdgV4UsewbAsvajd8kGMImJk94LcUY/3qnYLuEa",
+        "birthdate": "2001-07-16T00:00:00.000Z",
+        "name": "Nora",
+        "following": [],
+        "followers": [],
+        "tweets": [],
+        "likedTweets": [],
+        "retweetedTweets": [],
+        "image": null,
+        "headerImage": null,
+        "city": "Cairo",
+        "country": "Egypt",
+        "notificationFlag": true,
+        "theme": "light",
+        "bio": "",
+        "protectedTweets": false,
+        "createdAt": "2022-04-27T00:22:23.007Z",
+        "updatedAt": "2022-04-27T00:22:23.007Z",
+        "__v": 0
+      }
+    ]
+  },
+  "search": [
+    {
+      "username": "",
+      "handle": "",
+      "trends": "trending1"
+    },
+    {
+      "username": "",
+      "handle": "",
+      "trends": "trending2"
+    },
+    {
+      "username": "",
+      "handle": "",
+      "trends": "trending3"
+    },
+    {
+      "username": "Remonda",
+      "handle": "@remoo",
+      "trends": " "
+    },
+    {
+      "username": "Habiba",
+      "handle": "@HabibaAssem77",
+      "trends": " "
+    },
+    {
+      "username": "Nora",
+      "handle": "@NoraMo55",
+      "trends": " "
+    },
+    {
+      "username": "Noran",
+      "handle": "@NouraanAhmed4",
+      "trends": " "
+    },
+    {
+      "username": "Hassan",
+      "handle": "@HassanAbdallah",
+      "trends": " "
+    },
+    {
+      "username": "Nader",
+      "handle": "@nido",
+      "trends": " "
+    },
+    {
+      "username": "Nader",
+      "handle": "@nido",
+      "trends": " "
+    },
+    {
+      "username": "Ahmed",
+      "handle": "@ahmedmoh123",
+      "trends": " "
+    },
+    {
+      "username": "Moaz",
+      "handle": "@momo56",
+      "trends": " "
+    }
+  ],
+  "explore": {
+    "status": "Success",
+    "success": true,
+    "hashtags": [
+      {
+        "rank": 1,
+        "body": "#Undertaker",
+        "tweetsCount": 4,
+        "type": "News",
+        "id": "1nxqrnc7r"
+      },
+      {
+        "rank": 2,
+        "body": "#Quiz_em",
+        "tweetsCount": 2,
+        "type": "News",
+        "id": "iye3vo4do"
+      },
+      {
+        "rank": 3,
+        "body": "#software_engineering",
+        "tweetsCount": 1,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 4,
+        "body": "#computer_science",
+        "tweetsCount": 1000,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 5,
+        "body": "#faculty",
+        "tweetsCount": 100,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 6,
+        "body": "#test_scrolling",
+        "tweetsCount": 534,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 7,
+        "body": "#test_scrolling",
+        "tweetsCount": 534,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 8,
+        "body": "#test_scrolling",
+        "tweetsCount": 534,
+        "type": "News",
+        "id": "yk04ss1nw"
+      },
+      {
+        "rank": 9,
+        "body": "#biba",
+        "tweetsCount": 534,
+        "type": "News",
+        "id": "yk04ss1nw"
+      }
+    ]
+  },
+  "trends": [
+    {
+      "hashtag": "#Ramadan_karim",
+      "retweets": "550k"
+    },
+    {
+      "hashtag": "#Testing",
+      "retweets": "700k"
+    },
+    {
+      "hashtag": "#Computer_science",
+      "retweets": "4,299"
+    },
+    {
+      "hashtag": "#Software_engineering",
+      "retweets": "3,177"
+    },
+    {
+      "hashtag": "#quiz_EM",
+      "retweets": "8,900"
+    },
+    {
+      "hashtag": "#sham_el_nesim",
+      "retweets": "7000"
+    },
+    {
+      "hashtag": "#faculty",
+      "retweets": "250"
+    },
+    {
+      "hashtag": "#Corona",
+      "retweets": "800k"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "biba",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#Computer_science",
+      "retweets": "4,299"
+    },
+    {
+      "hashtag": "#Software_engineering",
+      "retweets": "3,177"
+    },
+    {
+      "hashtag": "#quiz_EM",
+      "retweets": "8,900"
+    },
+    {
+      "hashtag": "#sham_el_nesim",
+      "retweets": "7000"
+    },
+    {
+      "hashtag": "#faculty",
+      "retweets": "250"
+    },
+    {
+      "hashtag": "#Corona",
+      "retweets": "800k"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "#test_scrolling",
+      "retweets": "300"
+    },
+    {
+      "hashtag": "biba",
+      "retweets": "300"
+    }
+  ],
+ 
+  "getnotifications": {
+    "notificationsArray": [
+      {
+        "notificationId": "6287f758d6965f8dc59d6d00",
+        "sender": "user0",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1185.jpg",
+        "receiver": "user6",
+        "activity": "like",
+        "tweetId": "6287f6e3d6965f8dc59d6c66",
+        "mainString": "user0 liked your tweet",
+        "createdAt": "2022-05-20T20:17:28.899Z",
+        "status": true,
+        "tweetBody": "tweet gdeda"
+      },
+      {
+        "notificationId": "6287f41fd6965f8dc59d6bdd",
+        "sender": "user0",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1185.jpg",
+        "receiver": "user6",
+        "activity": "like",
+        "tweetId": "6287f38cd6965f8dc59d6b60",
+        "mainString": "user0 liked your tweet",
+        "createdAt": "2022-05-20T20:03:43.905Z",
+        "status": true,
+        "tweetBody": "tweet bagarab like 2"
+      },
+      {
+        "notificationId": "6287e51620699cc083de84e0",
+        "sender": "user0",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1185.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "6287e0c6133756a4708bd46b",
+        "mainString": "user0 retweeted your tweet",
+        "createdAt": "2022-05-20T18:59:34.372Z",
+        "status": true,
+        "tweetBody": "tagreba"
+      },
+      {
+        "notificationId": "62879ab50ba0fcdcff6c339a",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:42:13.527Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "62879a370ba0fcdcff6c336c",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:40:07.934Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "628798fd793be5366627c413",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:34:53.985Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "628798f7793be5366627c408",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:34:47.174Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "628798f1793be5366627c3fd",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:34:41.265Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "628798ee793be5366627c3e7",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:34:38.384Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "628798a5793be5366627c3dc",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:33:25.447Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "6287988c793be5366627c3d1",
+        "sender": "user9",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/460.jpg",
+        "receiver": "user6",
+        "activity": "vote",
+        "tweetId": "628527e56cd229f25b32f047",
+        "mainString": "user9 voted on your poll",
+        "createdAt": "2022-05-20T13:33:00.845Z",
+        "status": true,
+        "tweetBody": "TWEET TESSST with poll"
+      },
+      {
+        "notificationId": "6286c9e447420707d5047c47",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "6286bcae0a217918dbe5e755",
+        "mainString": "user5 retweeted your tweet",
+        "createdAt": "2022-05-19T22:51:16.606Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "62858e66d9589df854fa3958",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "quoteRetweet",
+        "tweetId": "62858895bc621e4e78d983c3",
+        "mainString": "user5  retweeted with quote on your tweet",
+        "createdAt": "2022-05-19T00:25:10.377Z",
+        "status": true,
+        "tweetBody": "sending body"
+      },
+      {
+        "notificationId": "62858dffd9589df854fa394a",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "reply",
+        "tweetId": "62858895bc621e4e78d983c3",
+        "mainString": "user5 replied on your tweet",
+        "createdAt": "2022-05-19T00:23:27.345Z",
+        "status": true,
+        "tweetBody": "sending body"
+      },
+      {
+        "notificationId": "62858d89d9589df854fa393b",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "reply",
+        "tweetId": "62858895bc621e4e78d983c3",
+        "mainString": "user5 replied on your tweet",
+        "createdAt": "2022-05-19T00:21:29.007Z",
+        "status": true,
+        "tweetBody": "sending body"
+      },
+      {
+        "notificationId": "62858d37d9589df854fa3915",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "62858895bc621e4e78d983c3",
+        "mainString": "user5 retweeted your tweet",
+        "createdAt": "2022-05-19T00:20:07.689Z",
+        "status": true,
+        "tweetBody": "sending body"
+      },
+      {
+        "notificationId": "62858d34d9589df854fa390b",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "62858895bc621e4e78d983c3",
+        "mainString": "user5 retweeted your tweet",
+        "createdAt": "2022-05-19T00:20:04.526Z",
+        "status": true,
+        "tweetBody": "sending body"
+      },
+      {
+        "notificationId": "62850392498f2cfca1dbc6ed",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "quoteRetweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5  retweeted with quote on your tweet",
+        "createdAt": "2022-05-18T14:32:50.699Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "6285033bf2edeee99b1e52b2",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "quoteRetweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5  retweeted with quote on your tweet",
+        "createdAt": "2022-05-18T14:31:23.169Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "62850301f2edeee99b1e5296",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "quoteRetweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5  retweeted with quote on your tweet",
+        "createdAt": "2022-05-18T14:30:25.631Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "62850185d517aa181fa287e3",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "quoteRetweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5  retweeted with quote on your tweet",
+        "createdAt": "2022-05-18T14:24:05.707Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "6284ed717ac3a188e131b793",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "reply",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5 replied on your tweet",
+        "createdAt": "2022-05-18T12:58:25.678Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "6284ed157ac3a188e131b771",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "reply",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5 replied on your tweet",
+        "createdAt": "2022-05-18T12:56:53.791Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "6284e0b8da865611d2e276ae",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5 retweeted your tweet",
+        "createdAt": "2022-05-18T12:04:08.380Z",
+        "status": true,
+        "tweetBody": ""
+      },
+      {
+        "notificationId": "6284dfef34769806356fb78e",
+        "sender": "user5",
+        "imageSender": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/56.jpg",
+        "receiver": "user6",
+        "activity": "retweet",
+        "tweetId": "6284d3df0ae56f80a9e9b098",
+        "mainString": "user5 retweeted your tweet",
+        "createdAt": "2022-05-18T12:00:47.207Z",
+        "status": false,
+        "tweetBody": ""
+      }
+    ]
+  },
+  "getTweetById": {
+    "tweetData": {
+      "username": "user6",
+      "name": "user6",
+      "email": "user6@gmail.com",
+      "userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/462.jpg",
+      "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "tweetMedia": [],
+      "repliesCount": 0,
+      "retweetersCount": 0,
+      "favoritersCount": 1,
+      "createdAt": "2022-05-18T17:07:49.052Z",
+      "taggedUsers": [
+        "user8",
+        "user0"
+      ],
+      "isLikedByUser": "true",
+      "isRetweetedByUser": "false",
+      "isBookmarkedByUser": false,
+      "isAdmin": false,
+      "poll": "true",
+      "firstChoice": "yomna",
+      "firstChoiceStats": 100,
+      "secondChoice": "mohamed",
+      "secondChoiceStats": 0,
+      "thirdChoice": "",
+      "thirdChoiceStats": 0,
+      "fourthChoice": "",
+      "fourthChoiceStats": 0,
+      "hashtags": []
+    }
+  },
+  "trendingTweets": [
+    {
+      "key": "this is a key",
+      "username": "Nada",
+      "name": "name",
+      "email": "nada@gamel.com",
+      "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "repliesCount": 3,
+      "retweetersCount": 9,
+      "favoritersCount": 0,
+      "updatedAt": "2020-01-01T00:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetMedia": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "taggedUsers": []
+    },
+    {
+      "key": "this is a key",
+      "username": "Nada",
+      "name": "name",
+      "email": "nada@gamel.com",
+      "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "repliesCount": 3,
+      "retweetersCount": 9,
+      "favoritersCount": 0,
+      "updatedAt": "2020-01-01T00:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetMedia": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "taggedUsers": []
+    },
+    {
+      "key": "this is a key",
+      "username": "Nada",
+      "name": "name",
+      "email": "nada@gamel.com",
+      "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "repliesCount": 3,
+      "retweetersCount": 9,
+      "favoritersCount": 0,
+      "updatedAt": "2020-01-01T00:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetMedia": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "taggedUsers": []
+    },
+    {
+      "key": "this is a key",
+      "username": "Nada",
+      "name": "name",
+      "email": "nada@gamel.com",
+      "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "repliesCount": 3,
+      "retweetersCount": 9,
+      "favoritersCount": 0,
+      "updatedAt": "2020-01-01T00:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "tweetMedia": [
+        "assets/images/test_image.png",
+        "assets/images/test_image.png",
+        "assets/images/test_image.png"
+      ],
+      "taggedUsers": []
+    }
+  ],
+  "users": [
+    {
+      "name": "Habiba",
+      "username": "@habiba25"
+    },
+    {
+      "name": "Farida",
+      "username": "@fofaaa34"
+    },
+    {
+      "name": "Ahmed",
+      "username": "@Moodi77"
+    },
+    {
+      "name": "Mohamed",
+      "username": "@MohamedKarim26"
+    },
+    {
+      "name": "Nounou",
+      "username": "@noraa1990"
+    },
+    {
+      "name": "Nader",
+      "username": "@Nidoo"
+    },
+    {
+      "name": "Nada",
+      "username": "@NadaT2000"
+    },
+    {
+      "name": "Habiba",
+      "username": "@HabibaAssem2000"
+    },
+    {
+      "name": "Ahmed",
+      "username": "@Moodi77"
+    },
+    {
+      "name": "Mohamed",
+      "username": "@MohamedKarim26"
+    },
+    {
+      "name": "Nounou",
+      "username": "@noraa1990"
+    }
+  ],
+  "AdminUserStatsTweets": [
+    {
+      "name": 10.89,
+      "value": 5.00
+    }
+   
+  ],
+  
+  "SettingsProfile": {
+    "headerImage": [],
+    "_id": "624c57aea9c0d76fb5d6afff",
+    "birthdate": "2002-12-04T00:00:00.000Z",
+    "name": "boodabooda",
+    "image": [],
+    "city": "Cairo",
+    "country": "Egypt",
+    "bio": "hello world",
+    "website": "www.boody.com"
+  },
+  "Boody": {
+    "username": "Boody",
+    "name": "Abdelrahman",
+    "birthdate": "2001-09-12T00:00:00.000Z",
+    "tweets": [
+      {
+        "key": "this is a key",
+        "username": "Nada",
+        "name": "name",
+        "email": "nada@gamel.com",
+        "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "repliesCount": 3,
+        "retweetersCount": 9,
+        "favoritersCount": 0,
+        "updatedAt": "2020-01-01T00:00:00.000Z",
+        "createdAt": "2020-01-01T00:00:00.000Z",
+        "tweetMedia": [
+          "assets/images/test_image.png",
+          "assets/images/test_image.png",
+          "assets/images/test_image.png"
+        ],
+        "taggedUsers": []
+      },
+      {
+        "key": "this is a key",
+        "username": "Nada",
+        "name": "name",
+        "email": "nada@gamel.com",
+        "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "repliesCount": 3,
+        "retweetersCount": 9,
+        "favoritersCount": 0,
+        "updatedAt": "2020-01-01T00:00:00.000Z",
+        "createdAt": "2020-01-01T00:00:00.000Z",
+        "tweetMedia": [
+          "assets/images/test_image.png",
+          "assets/images/test_image.png",
+          "assets/images/test_image.png"
+        ],
+        "taggedUsers": []
+      },
+      {
+        "key": "this is a key",
+        "username": "Nada",
+        "name": "name",
+        "email": "nada@gamel.com",
+        "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "repliesCount": 3,
+        "retweetersCount": 9,
+        "favoritersCount": 0,
+        "updatedAt": "2020-01-01T00:00:00.000Z",
+        "createdAt": "2020-01-01T00:00:00.000Z",
+        "tweetMedia": [
+          "assets/images/test_image.png",
+          "assets/images/test_image.png",
+          "assets/images/test_image.png"
+        ],
+        "taggedUsers": []
+      },
+      {
+        "key": "this is a key",
+        "username": "Nada",
+        "name": "name",
+        "email": "nada@gamel.com",
+        "tweetBody": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "repliesCount": 3,
+        "retweetersCount": 9,
+        "favoritersCount": 0,
+        "updatedAt": "2020-01-01T00:00:00.000Z",
+        "createdAt": "2020-01-01T00:00:00.000Z",
+        "tweetMedia": [
+          "assets/images/test_image.png",
+          "assets/images/test_image.png",
+          "assets/images/test_image.png"
+        ],
+        "taggedUsers": []
+      }
+    ],
+    "protectedTweets": false,
+    "country": "Egypt",
+    "city": "Cairo",
+    "bio": "",
+    "website": "",
+    "createdAt": "2022-04-25T02:26:31.367Z",
+    "followingCount": 50,
+    "followersCount": 60,
+    "isMe": true,
+    "likes": [
+      {
+        "_id": "6286f8d76eadfa4af1f626bf",
+        "isReply": false,
+        "isQuoteRetweet": false,
+        "media": [],
+        "favoriters": [
+          "6286c9518b9d668593143a5a",
+          "6286c9518b9d668593143a5b"
+        ],
+        "retweeters": [
+          "6286c9518b9d668593143a5b"
+        ],
+        "quotedRetweets": [],
+        "hashtags": [],
+        "replies": [],
+        "taggedUsers": [],
+        "createdAt": "2022-05-20T02:11:35.307Z",
+        "body": "ffff",
+        "__v": 3
+      },
+      [
+        {
+          "_id": "6286f8d76eadfa4af1f626bf",
+          "isReply": false,
+          "isQuoteRetweet": false,
+          "media": [],
+          "favoriters": [
+            "6286c9518b9d668593143a5a",
+            "6286c9518b9d668593143a5b"
+          ],
+          "retweeters": [
+            "6286c9518b9d668593143a5b"
+          ],
+          "quotedRetweets": [],
+          "hashtags": [],
+          "replies": [],
+          "taggedUsers": [],
+          "createdAt": "2022-05-20T02:11:35.307Z",
+          "body": "ffff",
+          "__v": 3
+        }
+      ]
+    ]
+  },
+  "roon": {
+    "username": "roon",
+    "name": "roon",
+    "birthdate": "2001-09-12T00:00:00.000Z",
+    "tweets": [],
+    "protectedTweets": false,
+    "followingCount": 2,
+    "followersCount": 1,
+    "followsMe": false,
+    "isMe": false
+  },
+  "BoodyFollowers": [
+    {
+      "_id": "62842415bb967e3904d9f7ac",
+      "username": "user2",
+      "name": "user2",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/500.jpg",
+      "bio": "I am user2",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842418bb967e3904d9f801",
+      "username": "boody",
+      "name": "Abdelrahman",
+      "image": null,
+      "bio": "",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": true
+    }
+  ],
+  "Boodyfollowing": [
+    {
+      "_id": "62842415bb967e3904d9f7ab",
+      "username": "user1",
+      "name": "user1",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1000.jpg",
+      "bio": "I am user1",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ac",
+      "username": "user2",
+      "name": "user2",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/500.jpg",
+      "bio": "I am user2",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ad",
+      "username": "user3",
+      "name": "user3",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/968.jpg",
+      "bio": "I am user3",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7ae",
+      "username": "user4",
+      "name": "user4",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/925.jpg",
+      "bio": "I am user4",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7af",
+      "username": "user5",
+      "name": "user5",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1206.jpg",
+      "bio": "I am user5",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b0",
+      "username": "user6",
+      "name": "user6",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/239.jpg",
+      "bio": "I am user6",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b1",
+      "username": "user7",
+      "name": "user7",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/644.jpg",
+      "bio": "I am user7",
+      "protectedTweets": true,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b2",
+      "username": "user8",
+      "name": "user8",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1019.jpg",
+      "bio": "I am user8",
+      "protectedTweets": true,
+      "followsMe": true,
+      "followsHim": true,
+      "isMe": false
+    },
+    {
+      "_id": "62842415bb967e3904d9f7b3",
+      "username": "Boody",
+      "name": "Boody",
+      "image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1068.jpg",
+      "bio": "I am user9",
+      "protectedTweets": true,
+      "followsMe": true,
+      "followsHim": false,
+      "isMe": false
+    },
+    {
+      "_id": "62842418bb967e3904d9f801",
+      "username": "boody",
+      "name": "Abdelrahman",
+      "image": null,
+      "bio": "",
+      "protectedTweets": false,
+      "followsMe": false,
+      "followsHim": false,
+      "isMe": true
+    }
+  ],
+  "DeactivateAccount": {
+    "status": "Success",
+    "success": true
+  }
+}

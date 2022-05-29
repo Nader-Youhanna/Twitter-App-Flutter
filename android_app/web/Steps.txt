@@ -1,0 +1,80 @@
+TO SET UP A MOCK server
+
+First time only write this command in cmd
+npm install -g json-server
+
+
+1. Create a JSON file (there is one already created called test.json)
+
+2. Open cmd in the folder containing the JSON file
+
+3. Enter the following command: json-server --watch <FILENAME>
+Example: json-server --watch test.json
+
+4. Open the browser and enter the following URL: http://localhost:3000/
+
+If tou get a connection error you can try this command instead: json-server --watch --host <your IP address> test.json --port 8000
+and opening the following URL in the browser: http://<your IP address>:8000/
+To get your IP address: enter ipconfig in the command prompt
+
+Note: If you are using your real device (not an emulator), then you cannot use localhost
+
+########################################
+TO SEND HTTP REQUESTS IN FLUTTER
+
+1. Add dependency http: ^0.13.4 in pubspec.yaml (mut be latest version because earlier versions don't work)
+
+2. Add 2 imports: 
+    import 'package:http/http.dart' as http;
+    import 'dart:convert';
+
+3. Use the following functions for get and post
+
+
+Example of a post request
+Future<void> httpRequestPost() async {
+  var url = Uri.parse('http://34.236.108.123:3000/signup');
+
+  var response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, String>{
+        "username": "nido",
+        "name": "Nader",
+        "email": "naderyouhanna@gmail.com",
+        "password": "nader-password",
+        "birthdate": "2000-05-15",
+        "country": "Egypt",
+        "city": "Cairo"
+      },
+    ),
+  );
+
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+}
+
+
+Example of a get request
+Future<void> httpRequestGet() async {
+  var url = Uri.parse('http://34.236.108.123:3000/home');
+
+  var response = await http.get(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' +
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjQ5NzZiYjIwYzdhMjMzNDFhNGUxYiIsImlhdCI6MTY1MDkyNDg3NywiZXhwIjoxNjU5NTY0ODc3fQ.S1ZBOjDv6TcU48AEmn-8nHkgGiasZfj6Id2kk9ocYS4'
+    },
+  );
+
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+}
+
+
+
+TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjQ5NzZiYjIwYzdhMjMzNDFhNGUxYiIsImlhdCI6MTY1MDkyNDg3NywiZXhwIjoxNjU5NTY0ODc3fQ.S1ZBOjDv6TcU48AEmn-8nHkgGiasZfj6Id2kk9ocYS4
